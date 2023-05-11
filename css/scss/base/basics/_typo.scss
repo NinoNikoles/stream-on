@@ -1,0 +1,380 @@
+html {
+    letter-spacing: $letterspacing;
+    font-size: rem-calc($font-size-base);
+}
+
+body {
+    font-size: rem-calc($font-size-base);
+}
+
+// -- Base typo --
+h1,.h1, h2,.h2, h3,.h3, h4,.h4, h5,.h5, h6,.h6 {
+    color: var(--font-color-headline);
+    font: {
+        family: var(--headline-font);
+        weight: $headline-weight;
+    }
+    line: {
+        height: $headline-line-height;
+    }
+    margin: {
+        top: 0;
+        bottom: rem-calc($global-margin);
+    }
+    @include transition(color $transition-default);
+}
+
+h1,.h1 { font-size: rem-calc($font-size-h1-small); @include MQ(medium) { font-size: rem-calc($font-size-h1-medium); } }
+h2,.h2 { font-size: rem-calc($font-size-h2-small); @include MQ(medium) { font-size: rem-calc($font-size-h2-medium); } }
+h3,.h3 { font-size: rem-calc($font-size-h3-small); @include MQ(medium) { font-size: rem-calc($font-size-h3-medium); } }
+h4,.h4 { font-size: rem-calc($font-size-h4-small); @include MQ(medium) { font-size: rem-calc($font-size-h4-medium); } }
+h5,.h5 { font-size: rem-calc($font-size-h5-small); @include MQ(medium) { font-size: rem-calc($font-size-h5-medium); } }
+h6,.h6 { font-size: rem-calc($font-size-h6-small); @include MQ(medium) { font-size: rem-calc($font-size-h6-medium); } }
+
+p {
+    color: var(--font-color);
+    font: {
+        family: var(--font-family);
+        size: rem-calc($font-size-paragraph-small);
+        weight: $font-weight-base;
+    }
+    line: {
+        height: $line-height;
+    }
+    margin: {
+        top: 0;
+        bottom: rem-calc($global-margin);
+    }
+    @include transition(color $transition-default);
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($font-size-paragraph-medium);
+        }
+    }
+
+    a, span {
+        margin: {
+            bottom: 0;
+        }
+    }
+}
+
+a {
+    color: var(--primary);
+    font: {
+        family: var(--font-family);
+        size: rem-calc($font-size-paragraph-small);
+        weight: $font-weight-base;
+    }
+    line: {
+        height: $line-height;
+    }
+    text: {
+        decoration: none;
+    }
+    margin: {
+        top: 0;
+        bottom: rem-calc($global-margin);
+    }
+    @include transition(color $transition-default);
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($font-size-paragraph-medium);
+        }
+    }
+
+    &:hover {
+        color: var(--primary-dark);
+    }
+
+    &.text-secondary {
+        color: var(--secondary);
+
+        &:hover {
+            color: var(--secondary-dark);
+        }
+    }
+
+    &.text-tertiary {
+        color: var(--tertiary);
+
+        &:hover {
+            color: var(--tertiary-dark);
+        }
+    }
+
+    &.text-quaternary {
+        color: var(--quaternary);
+
+        &:hover {
+            color: var(--quaternary-dark);
+        }
+    }
+
+    &.text-quinary {
+        color: var(--quinary);
+
+        &:hover {
+            color: var(--quinary-dark);
+        }
+    }
+}
+
+span {
+    color: var(--font-color);
+    font: {
+        family: var(--font-family);
+        size: rem-calc($font-size-paragraph-small);
+        weight: $font-weight-base;
+    }
+    line: {
+        height: $line-height;
+    }
+    letter-spacing: $letterspacing;
+    margin: {
+        top: 0;
+        bottom: rem-calc($global-margin);
+    }
+    @include transition(color $transition-default);
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($font-size-paragraph-medium);
+        }
+    }
+
+    h1, .h1 & { @extend .h1; }
+    h2, .h2 & { @extend .h2; }
+    h3, .h3 & { @extend .h3; }
+    h4, .h4 & { @extend .h4; }
+    h5, .h5 & { @extend .h5; }
+    h6, .h6 & { @extend .h6; }
+}
+
+a, span {
+    display: inline-block;
+}
+
+// -- Lists --
+ol, ul, dl {
+    list-style-position: outside;
+    margin: {
+        top: 0;
+        bottom: rem-calc($global-margin);
+    }
+    padding: 0;
+
+    ol, ul, dl {
+        margin: {
+            left: rem-calc(30);
+            bottom: 0;
+        }
+    }
+
+    &.no-bullets {
+        list-style: none;
+        margin: {
+            left: 0;
+        }
+    }
+}
+
+ul, ol, dl {
+    margin: {
+        left: rem-calc(20);
+    }
+}
+
+ul {
+    list-style-type: disc;
+
+    ul {
+        list-style-type: circle;
+    }
+}
+
+li {
+    color: var(--font-color);
+    font: {
+        family: $font-family;
+        size: rem-calc($font-size-paragraph-small);
+        weight: $font-weight-base;
+    }
+    line: {
+        height: $line-height;
+    }
+    @include transition(color $transition-default);
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($font-size-paragraph-medium);
+        }
+    }
+}
+
+// -- Font Colors --
+.text-white, .text-white > p, .white { color: var(--white); }
+.text-black, .text-black > p, .black { color: var(--black); }
+.text-dark, .text-dark > p, .dark { color: var(--dark); }
+.text-primary, .text-primary > p, .primary { color: var(--primary); }
+.text-secondary, .text-secondary > p, .secondary { color: var(--secondary); }
+.text-tertiary, .text-tertiary > p, .tertiary { color: var(--tertiary); }
+.text-quaternary, .text-quaternary > p, .quaternary { color: var(--quaternary); }
+.text-quinary, .text-quinary > p, .quinary { color: var(--quinary); }
+.text-senary, .text-senary > p, .senary { color: var(--senary); }
+
+.text-success, .text-success > p, .success { color: var(--success); }
+.text-alert, .text-alert > p, .alert { color: var(--alert); }
+.text-warning, .text-warning > p, .warning { color: var(--alert); }
+
+.font-family, .font-family-all * {	font-family: var(--font-family); }
+.font-family-headline, .font-family-headline-all * { font-family: var(--headline-font); }
+.font-family-alternative, .font-family-alternative-all * { font-family: var(--font-family-alternative); }
+
+// -- BG-Varianten Font-Color --
+.bg-primary { @include bg-variant-font-color(var(--bg-primary-font-color)); }
+.bg-primary-light { @include bg-variant-font-color(var(--bg-primary-light-font-color)); }
+.bg-primary-dark { @include bg-variant-font-color(var(--bg-primary-dark-font-color)); }
+
+.bg-secondary { @include bg-variant-font-color(var(--bg-secondary-font-color)); }
+.bg-secondary-light { @include bg-variant-font-color(var(--bg-secondary-light-font-color)); }
+.bg-secondary-dark { @include bg-variant-font-color(var(--bg-secondary-dark-font-color)); }
+
+.bg-tertiary { @include bg-variant-font-color(var(--bg-tertiary-font-color)); }
+.bg-tertiary-light { @include bg-variant-font-color(var(--bg-tertiary-light-font-color)); }
+.bg-tertiary-dark { @include bg-variant-font-color(var(--bg-tertiary-dark-font-color)); }
+
+.bg-quaternary { @include bg-variant-font-color(var(--bg-quaternary-font-color)); }
+.bg-quaternary-light { @include bg-variant-font-color(var(--bg-quaternary-light-font-color)); }
+.bg-quaternary-dark { @include bg-variant-font-color(var(--bg-quaternary-dark-font-color)); }
+
+.bg-quinary { @include bg-variant-font-color(var(--bg-quinary-font-color)); }
+.bg-quinary-light { @include bg-variant-font-color(var(--bg-quinary-light-font-color)); }
+.bg-quinary-dark { @include bg-variant-font-color(var(--bg-quinary-dark-font-color)); }
+
+.bg-grey { @include bg-variant-font-color(var(--bg-grey-font-color)); }
+.bg-white { @include bg-variant-font-color(var(--bg-white-font-color)); }
+.bg-black { @include bg-variant-font-color(var(--bg-black-font-color)); }
+
+// -- Font weight --
+.black{ font-weight: 900; }
+.bold, strong, .strong, b { font-weight: 700;}
+.medium{ font-weight: 500; }
+.regular{ font-weight: 400; }
+.light{ font-weight: 300; }
+.thin{ font-weight: 100; }
+
+// -- Text align --
+.text-center, .t-center { text-align: center !important; }
+.text-left, .t-left { text-align: left !important; }
+.text-right, .t-right { text-align: right !important; }
+.text-justify, .t-justify { text-align: justify !important; }
+.uppercase, .text-uppercase { text-transform: uppercase !important; }
+.lowercase, .text-lowercase { text-transform: lowercase !important; }
+
+// -- Paragraph font sizes --
+.smaller, .text-smaller, .text-smaller > p {
+    font-size: rem-calc($font-size-smaller*0.9);
+    line-height: $line-height-small*0.9;
+
+    @include MQ(medium) {
+        font-size: rem-calc($font-size-smaller);
+        line-height: $line-height-small;
+    }
+
+    a, span {
+        font-size: inherit;
+    }
+}
+
+.small, .text-small, .text-small > p {
+    font-size: rem-calc($font-size-small*0.9);
+    line-height: $line-height-small*0.9;
+
+    @include MQ(medium) {
+        font-size: rem-calc($font-size-small);
+        line-height: $line-height-small;
+    }
+
+    a, span {
+        font-size: inherit;
+    }
+}
+
+.large, .text-large, .text-large > p {
+    font-size: rem-calc($font-size-large*0.8);
+    line-height: $line-height-large;
+
+    @include MQ(small) {
+        font-size: rem-calc($font-size-large);
+        line-height: $line-height-large;
+    }
+
+    a, span {
+        font-size: inherit;
+    }
+}
+
+// -- Quote --
+blockquote {
+    border: {
+        left: {
+            color: var(--grey-dark);
+            style: $border-style;
+            width: rem-calc($border-width);
+        }
+    }
+    color: var(--grey-dark);
+    font: {
+        family: var(--font-family);
+        size: rem-calc($font-size-paragraph-small);
+        weight: var(--font-weight-base);
+    }
+    line: {
+        height: $line-height;
+    }
+    padding: {
+        top: rem-calc($global-padding);
+        right: rem-calc($global-padding);
+        bottom: 0;
+        left: rem-calc($global-padding);
+    }
+    margin: {
+        top: 0;
+        right: 0;
+        bottom: rem-calc($global-margin);
+        left: 0;
+    }
+    @include transition(color $transition-default);
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($font-size-paragraph-medium);
+        }
+    }
+}
+
+span.qoute-author {
+    display: block;
+    font-weight: 500;
+    padding-top: 0;
+    padding-right: 50px;
+    padding-left: 50px;
+    opacity: 0.9;
+
+    @include MQ(medium) {
+        padding-top: 25px;
+    }
+
+    &:before {
+        content: '–';
+        display: inline-block;
+        padding-right: 10px;
+    }
+}
+
+.highlight {
+    font-size: 1.5rem;
+}

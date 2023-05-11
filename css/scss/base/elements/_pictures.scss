@@ -1,0 +1,71 @@
+img {
+    display:block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    position: relative;
+    aspect-ratio: unset;
+}
+
+@each $format, $ratio in $aspect-ratio {
+    .#{$format} {
+        img {
+            aspect-ratio: $ratio;
+        }
+    }
+}
+
+@each $format, $ratio in $aspect-ratio {
+    @each $key, $val in $breakpoints {
+        .#{$key}-#{$format} {
+            img {
+                @include MQ($key) {
+                    aspect-ratio: $ratio;
+                }
+            }
+        }
+    }
+}
+
+img.rounded,
+.rounded img {
+    border-radius: rem-calc($border-radius);
+}
+
+img.rounded-100,
+.rounded-100 img {
+    border-radius: rem-calc(300);
+}
+
+figure,
+.figure {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+
+    > div {
+        width: unset;
+        height: unset;
+    }
+
+    img {
+        object-fit: cover;
+        object-position: center;
+        @include transitions(transform $transition-default, filter $transition-default);
+    }
+}
+
+@for $i from 1 through 100 {
+    .max-height-#{$i} {
+        img, .img {
+            max-height: #{$i}vh;
+        }
+    }
+}
+
+.image-container {
+    width: 100%;
+    margin: {
+        bottom: 0;
+    }
+}

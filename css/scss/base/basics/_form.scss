@@ -1,0 +1,426 @@
+form, .form {
+    padding: 0;
+    margin: 0;
+
+    .innerWrap {
+        width: unset;
+        max-width: none;
+        padding: 0;
+        margin: {
+            left: rem-calc(-$grid-padding);
+            right: rem-calc(-$grid-padding);
+        }
+
+        @for $i from 1 through $grid-columns {
+            .col#{$i} {
+                padding: {
+                    right: rem-calc($grid-padding);
+                    left: rem-calc($grid-padding);
+                }
+            }
+        }
+    }
+
+    span {
+        width: 100%;
+    }
+}
+
+label {
+    display: block;
+    color: var(--input-label-color);
+    font: {
+        family: var(--input-label-font-family);
+        size: rem-calc($input-label-font-size);
+        weight: normal;
+    }
+    line: {
+        height: $line-height;
+    }
+    margin: 0;
+    position: relative;
+    @include transition(color $transition-default);
+
+    span {
+        margin: {
+            bottom: 0;
+        }
+
+        a {
+            margin: {
+                bottom: 0;
+            }
+        }
+    }
+}
+
+.required {
+    display: inline-block;
+    width: auto;
+}
+
+[type='color'],
+[type='date'],
+[type='datetime'],
+[type='datetime-local'],
+[type='email'],
+[type='month'],
+[type='number'],
+[type='password'],
+[type='search'],
+[type='tel'],
+[type='text'],
+[type='time'],
+[type='url'],
+[type='week'],
+select,
+textarea {
+    display: block;
+    background: {
+        color: var(--input-bg);
+    }
+    border: {
+        color: var(--input-border-color);
+        radius: rem-calc($input-border-radius);
+        style: var(--input-border-style);
+        width: rem-calc($input-border-width);
+    }
+    box: {
+        sizing: border-box;
+    }
+    color: var(--input-color);
+    font: {
+        family: var(--input-font-family);
+        size: rem-calc($input-font-size);
+        weight: normal;
+    }
+    line: {
+        height: $line-height;
+    }
+    padding: {
+        top: rem-calc($input-space-vertical);
+        right: rem-calc($input-space-horizontal);
+        bottom: rem-calc($input-space-vertical);
+        left: rem-calc($input-space-horizontal);
+    }
+    width: 100%;
+    max-width: 100%;
+    @include transitions(border-color $transition-default);
+
+    &:focus {
+        border: {
+            color: var(--input-border-color-focus);
+        }
+        outline: none;
+    }
+
+    &::placeholder {
+        color: var(--input-color-placeholder);
+        @include transition(color $transition-default);
+    }
+
+    &:disabled {
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+}
+
+textarea {
+    height: rem-calc(150);
+    resize: none;
+}
+
+input[type="date"] {
+    position: relative;
+
+    &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0;
+        width: rem-calc(30);
+    }
+
+    &::before {
+        content: "\e910";
+        color: var(--font-color);
+        font: {
+            family: $icon-font;
+            size: inherit;
+        }
+        position: absolute;
+        top: 50%;
+        right: rem-calc(15);
+        transform: translateY(-50%);
+        pointer-events: none;
+        z-index: 1;
+        @include transitions(color $transition-default);
+    }
+}
+
+//input[type="dropdown"] {
+//
+//}
+
+input[type="checkbox"] {
+    border: {
+        radius: rem-calc($border-radius);
+    }
+    width: rem-calc(60);
+    height: rem-calc(30);
+    min-width: rem-calc(60);
+    min-height: rem-calc(30);
+    margin: {
+        right: rem-calc(10);
+    }
+    position: relative;
+
+    &::before {
+        background: {
+            color: var(--input-border-color-focus);
+        }
+        border: {
+            radius: rem-calc($border-radius);
+        }
+        content: "";
+        height: rem-calc(20);
+        width: rem-calc(20);
+        position: absolute;
+        top: 50%;
+        left: 25%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        @include transitions(background-color $transition-default, left $transition-default);
+    }
+
+    &::after {
+        content: "";
+        background: {
+            color: var(--body-bg);
+        }
+        border: {
+            color: var(--input-border-color-focus);
+            radius: rem-calc($input-border-radius);
+            style: $input-border-style;
+            width: rem-calc($input-border-width);
+        }
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include transitions(background-color $transition-default, border-color $transition-default);
+    }
+
+    &:checked {
+        &::before {
+            background: {
+                color: var(--white);
+            }
+            left: 75%;
+        }
+
+        &::after {
+            background: {
+                color: var(--primary);
+            }
+            border: {
+                color: var(--primary);
+            }
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+input[type="radio"] {
+    width: rem-calc(20);
+    height: rem-calc(20);
+    min-width: rem-calc(20);
+    min-height: rem-calc(20);
+    margin: {
+        right: rem-calc(10);
+    }
+    position: relative;
+
+    &::before {
+        content: "";
+        background: {
+            color: var(--font-color);
+        }
+        border: {
+            radius: rem-calc(300);
+        }
+        font: {
+            family: var(--icon-font);
+            size: rem-calc(14);
+        }
+        width: 40%;
+        height: 40%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        z-index: 1;
+        @include transitions(background-color $transition-default, transform $transition-default);
+    }
+
+    &::after {
+        content: "";
+        background: {
+            color: var(--body-bg);
+        }
+        border: {
+            color: var(--input-border-color-focus);
+            radius: rem-calc(300);
+            style: $input-border-style;
+            width: rem-calc($input-border-width);
+        }
+        width: rem-calc(20);
+        height: rem-calc(20);
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include transitions(background-color $transition-default, border-color $transition-default);
+    }
+
+    &:checked {
+        &::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+input[type="submit"] {
+    @include button-colors(var(--font-color-invert), var(--font-color-invert), var(--primary), var(--primary-dark));
+}
+
+option {
+    background: {
+        color: var(--body-bg);
+    }
+    color: var(--font-color);
+    font: {
+        family: var(--font-family);
+        size: rem-calc($font-size-paragraph-small);
+        weight: normal;
+    }
+    line: {
+        height: $line-height;
+    }
+    @include transitions(color $transition-default, background-color $transition-default);
+}
+
+select {
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+    cursor: pointer;
+}
+
+[data-form="select"] {
+    margin: {
+        bottom: rem-calc($global-margin);
+    }
+    position: relative;
+
+    &::after {
+        content: "\e917";
+        font: {
+            family: $icon-font;
+            size: rem-calc(20);
+        }
+        position: absolute;
+        top: 50%;
+        right: rem-calc(15);
+        transform: translateY(-50%) rotate(0deg);
+        pointer-events: none;
+        @include transition(all $transition-default);
+    }
+
+    p {
+        margin: {
+            bottom: 0;
+        }
+    }
+
+    select {
+        margin: {
+            bottom: 0;
+        }
+    }
+}
+
+//-- WP Form 7 --
+span.wpcf7-list-item {
+    display: inline-flex;
+    margin: {
+        top: 0;
+        right: rem-calc(16);
+        bottom: 0;
+        left: 0;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+    }
+}
+
+//-- Img Captcha --
+.kc_captcha {
+    .captcha-image {
+        border: {
+            color: var(--input-border-color);
+            style: $input-border-style;
+            width: rem-calc($input-border-width);
+        }
+        @include transition(border $transition-default);
+
+        label {
+            > input {
+                &:focus,
+                &:checked {
+                    + svg {
+                        border: {
+                            color: var(--secondary);
+                            style: $input-border-style;
+                            width: rem-calc($input-border-width);
+                        }
+                        @include transition(border $transition-default);
+                    }
+                }
+            }
+        }
+
+        .cf7ic_instructions {
+            span {
+                display: inline;
+                color: var(--secondary);
+            }
+        }
+    }
+}
+
+//-- Captcha Meldungen --
+.screen-reader-response {
+    ul {
+        display: none;
+    }
+}
+
+//-- Feld Warnung --
+.wpcf7-not-valid-tip {
+    color: var(--alert);
+    font: {
+        size: rem-calc($font-size-small);
+    }
+    line: {
+        height: $line-height-small;
+    }
+}

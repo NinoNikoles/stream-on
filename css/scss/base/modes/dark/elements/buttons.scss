@@ -1,0 +1,39 @@
+/* BUTTONS */
+a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
+	@include button();
+	@include button-colors(var(--black), var(--black), var(--primary), var(--primary-dark));
+
+    &.hollow { @include button-hollow(var(--primary), var(--black), var(--primary), var(--primary)); }
+
+	&.btn-primary { @include button-colors(var(--black), var(--black), var(--primary), var(--primary-dark));
+		&.hollow { @include button-hollow(var(--white), var(--dark), var(--primary), var(--white), var(--primary)); }
+	}
+
+	&.btn-secondary{ @include button-colors(var(--black), var(--black), var(--secondary), var(--secondary-dark));
+		&.hollow { @include button-hollow(var(--white), var(--white), var(--secondary), var(--white), var(--secondary)); }
+	}
+
+	&.btn-tertiary{ @include button-colors(var(--black), var(--black), var(--tertiary), var(--tertiary-dark));
+		&.hollow { @include button-hollow(var(--white), var(--white), var(--tertiary), var(--white), var(--tertiary)); }
+	}
+
+	&.btn-quaternary{ @include button-colors(var(--white), var(--white), var(--quaternary), var(--quaternary-dark));
+		&.hollow { @include button-hollow(var(--white), var(--white), var(--quaternary), var(--white), var(--quaternary)); }
+	}
+
+	&.btn-quinary{ @include button-colors(var(--black), var(--black), var(--quinary), var(--quinary-dark));
+		&.hollow { @include button-hollow(var(--white), var(--white), var(--quinary), var(--white), var(--quinary)); }
+	}
+
+	&.btn-grey { @include button-colors(var(--black), var(--black), var(--grey), var(--grey-dark));
+		&.hollow { @include button-hollow(var(--white), var(--white), var(--grey), var(--white), var(--grey)); }
+	}
+
+	&.btn-white { @include button-colors(var(--black), var(--black), var(--white), var(--primary));
+		&.hollow { @include button-hollow(var(--white), var(--dark), var(--primary), var(--white), var(--primary)); }
+	}
+
+	&.btn-black { @include button-colors(var(--black), var(--black), var(--white), var(--primary));
+		&.hollow { @include button-hollow(var(--white), var(--black), var(--white), var(--white)); }
+	}
+}

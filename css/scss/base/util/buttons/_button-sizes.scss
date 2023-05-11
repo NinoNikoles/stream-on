@@ -1,0 +1,41 @@
+@mixin button-size($btn-size: normal) {
+    font: {
+        size: rem-calc($button-font-size*btn-size($btn-size)*0.8);
+    }
+    padding: {
+        top: rem-calc(($button-padding-top * btn-size($btn-size)) * 0.5);
+        right: rem-calc(($button-padding-right * btn-size($btn-size)) * 0.7);
+        bottom: rem-calc(($button-padding-bottom * btn-size($btn-size)) * 0.5);
+        left: rem-calc(($button-padding-left * btn-size($btn-size)) * 0.7);
+    }
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($button-font-size * btn-size($btn-size));
+        }
+        padding: {
+            top: rem-calc($button-padding-top * btn-size($btn-size));
+            right: rem-calc($button-padding-right * btn-size($btn-size));
+            bottom: rem-calc($button-padding-bottom * btn-size($btn-size));
+            left: rem-calc($button-padding-left * btn-size($btn-size));
+        }
+    }
+
+    &.hollow {
+        padding: {
+            top: rem-calc(($button-padding-top * btn-size($btn-size)) * 0.5);
+            right: rem-calc(($button-padding-right * btn-size($btn-size)) * 0.7);
+            bottom: rem-calc(($button-padding-bottom * btn-size($btn-size)) * 0.5);
+            left: rem-calc(($button-padding-left * btn-size($btn-size)) * 0.7);
+        }
+
+        @include MQ(medium) {
+            padding: {
+                top: rem-calc($button-padding-top * btn-size($btn-size));
+                right: rem-calc($button-padding-right * btn-size($btn-size));
+                bottom: rem-calc($button-padding-bottom * btn-size($btn-size));
+                left: rem-calc($button-padding-left * btn-size($btn-size));
+            }
+        }
+    }
+}

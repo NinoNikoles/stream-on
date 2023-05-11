@@ -1,0 +1,41 @@
+iframe, video, .video, .video-placeholder-normal {
+    display:block;
+    border: none;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+    position: relative;
+    aspect-ratio: unset;
+
+    .intro-header & {
+        max-height: 80vh;
+    }
+}
+
+@each $format, $ratio in $aspect-ratio {
+    .#{$format} {
+        iframe, video, .video, .video-placeholder-normal {
+            aspect-ratio: $ratio;
+        }
+    }
+}
+
+@each $format, $ratio in $aspect-ratio {
+    @each $key, $val in $breakpoints {
+        .#{$key}-#{$format} {
+            iframe, video, .video, .video-placeholder-normal {
+                @include MQ($key) {
+                    aspect-ratio: $ratio;
+                }
+            }
+        }
+    }
+}
+
+@for $i from 1 through 100 {
+    .max-height-#{$i} {
+        iframe, video, .video, .video-placeholder-normal {
+            max-height: #{$i}vh;
+        }
+    }
+}

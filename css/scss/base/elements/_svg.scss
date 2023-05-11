@@ -1,0 +1,109 @@
+.svg-animation{
+    position: relative;
+    display: block;
+    margin-bottom: 2rem;
+
+    svg {
+        transform: unset !important;
+    }
+
+    &--wrapper{
+        // max-width: 480px;
+    }
+
+    div.img-container{
+        position: relative;
+        // background: $cs-grey;
+        // border: 2px solid $cs-grey;
+    }
+
+    div.animation-container{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        // background: $cs-grey-darken;
+        // background: $cs-white;
+
+        span{color: inherit;}
+    }
+
+    div.animation-loading {
+        z-index: 1;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        visibility: hidden;
+        @include transition(all .3s ease-in-out);
+        & > * {
+            max-width: 300px;
+        }
+    }
+
+    &.loading {
+        div.animation-loading {
+            opacity: 1;
+            visibility: visible;
+            @include transition(all .3s ease-in-out);
+        }
+    }
+
+    figure{
+
+        &::after {
+            display: none;
+        }
+
+        img{
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        figcaption{
+            position: relative;
+            background: var(--grey);
+            color: var(--primary);
+            line-height: rem-calc($line-height);
+            text-align: left;
+
+            &:after{
+                content: none;
+            }
+
+            span{
+                color: var(--font-color) !important;
+                font-style: italic;
+                font-weight: 300;
+                display: block;
+            }
+
+            &.before{border-bottom: 20px solid #fff;}
+            &.after{border-top: 20px solid #fff;}
+
+            // &.border-bottom-right{border-bottom-right-radius: 50px;}
+            // &.border-top-right{border-top-right-radius: 50px;}
+            // &.border-bottom-left{border-bottom-left-radius: 50px;}
+            // &.border-top-left{border-top-left-radius: 50px;}
+        }
+    }
+}
+
+
+.small-animation {
+    max-width: 480px;
+
+    .img-container > div > div {
+        transform: none !important;
+    }
+}
+
+
+.acf-block-preview .svg-animation figure img {
+    opacity: 1 !important;
+    visibility: visible !important;
+}

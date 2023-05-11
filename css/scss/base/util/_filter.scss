@@ -1,0 +1,109 @@
+//-- Pictures --
+img.grayscale, .filter-black-and-white{
+    filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id…0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+}
+
+img.saturation, .filter-saturation{
+    filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id…0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
+    -webkit-filter: saturate(0.75);
+    -moz-filter: saturate(0.75);
+    -o-filter: saturate(0.75);
+    -ms-filter: saturate(0.75);
+    filter: saturate(0.75);
+}
+
+img.blur, .filter-blur{
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+img.scale-up {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+img.brightness-low {
+    -webkit-filter: brightness(0.75);
+    -moz-filter: brightness(0.75);
+    -o-filter: brightness(0.75);
+    -ms-filter: brightness(0.75);
+    filter: brightness(0.75);
+}
+
+img.brightness-high {
+    -webkit-filter: brightness(125%);
+    -moz-filter: brightness(125%);
+    -o-filter: brightness(125%);
+    -ms-filter: brightness(125%);
+    filter: brightness(125%);
+}
+
+.filter-brighten, .filter-darken {
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .5;
+        background: black;
+    }
+}
+.filter-brighten::after {
+    background: var(--white);
+}
+
+img.contrast-low {
+    -webkit-filter: contrast(50%);
+    -moz-filter: contrast(50%);
+    -o-filter: contrast(50%);
+    -ms-filter: contrast(50%);
+    filter: contrast(50%);
+}
+
+img.contrast-high {
+    -webkit-filter: contrast(150%);
+    -moz-filter: contrast(150%);
+    -o-filter: contrast(150%);
+    -ms-filter: contrast(150%);
+    filter: contrast(150%);
+}
+
+img.grayscale.brightness-high {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id…0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
+    -webkit-filter: grayscale(100%) brightness(125%);
+    -moz-filter: grayscale(100%) brightness(125%);
+    -o-filter: grayscale(100%) brightness(125%);
+    -ms-filter: grayscale(100%) brightness(125%);
+    filter: grayscale(100%) brightness(125%);
+    filter: gray ;
+}
+
+img.sepia, .filter-sepia {
+    -webkit-filter: sepia(0.5);
+    -moz-filter: sepia(0.5);
+    -o-filter: sepia(0.5);
+    -ms-filter: sepia(0.5);
+    filter: sepia(0.5);
+
+    &:hover {
+        -webkit-filter: sepia(0);
+        -moz-filter: sepia(0);
+        -o-filter: sepia(0);
+        -ms-filter: sepia(0);
+        filter: sepia(0);
+    }
+}

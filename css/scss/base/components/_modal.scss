@@ -1,0 +1,91 @@
+.modal {
+    display: block;
+    background: {
+        color: var(--white);
+    }
+    width: 100%;
+    height: 100%;
+    padding: {
+        top: rem-calc(15);
+        right: rem-calc(15);
+        bottom: rem-calc(15);
+        left: rem-calc(15);
+    }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @include MQ(xsmall) {
+        width: 75%;
+        height: auto;
+    }
+
+    @include MQ(medium) {
+        width: 40%;
+    }
+
+    &.small {
+        @include MQ(medium) {
+            width: 30%;
+        }
+    }
+    &.large {
+        @include MQ(medium) {
+            width: 50%;
+        }
+    }
+    &.full {
+        width: 100%;
+        height: 100%;
+    }
+
+    &-overlay {
+        display: none;
+        background: {
+            color: rgba(0,0,0,0.75);
+        }
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        z-index: 10;
+
+        &[aria-hidden="false"] {
+            opacity: 1;
+        }
+    }
+
+    &-close {
+        width: rem-calc(15);
+        height: rem-calc(15);
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        &::before {
+            content: '\f00d';
+            font: {
+                family: var(--icon-font);
+                size: rem-calc(15);
+            }
+            line: {
+                height: 1;
+            }
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &-content {
+        display: none;
+    }
+
+    .modal-content {
+        display: block;
+    }
+}

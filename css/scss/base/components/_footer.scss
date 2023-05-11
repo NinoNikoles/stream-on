@@ -1,0 +1,3 @@
+footer, .footer {
+  @include transition(background-color $transition-default);
+}

@@ -1,0 +1,106 @@
+.download {
+    &--wrapper {
+        margin: {
+            right: rem-calc(-$space-base);
+            left: rem-calc(-$space-base);
+        }
+
+        @for $i from 1 through $grid-columns {
+            .col#{$i} {
+                padding: {
+                    right: rem-calc($space-base);
+                    left: rem-calc($space-base);
+                }
+            }
+        }
+    }
+
+    &--link {
+        display: inline-block;
+        font-size: 0;
+        position: relative;
+
+        .download--inner {
+            display: flex;
+            flex-direction: row-reverse;
+            background: {
+                color: var(--primary);
+            }
+            position: relative;
+            @include transition(all $transition-default);
+
+            &::before {
+                content: 'd';
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: {
+                    color: var(--primary-light);
+                }
+                color: var(--white);
+                font: {
+                    family: $icon-font;
+                    size: rem-calc(28);
+                    weight: normal;
+                }
+                line-height: 1;
+                min-width: rem-calc(50);
+                min-height: 100%;
+                @include transition(all $transition-default);
+
+                @include MQ(medium) {
+                    font: {
+                        family: $icon-font;
+                        size: rem-calc(36);
+                        weight: normal;
+                    }
+                    min-width: rem-calc(70);
+                }
+            }
+        }
+
+        
+        .download--inner {   
+            &:hover { 
+                background: {
+                    color: var(--secondary);
+                }
+
+                &::before {
+                    background: {
+                        color: var(--secondary-light);
+                    }
+                }
+            }
+        }
+    }
+
+    &--content {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+
+        img {
+            display: none;
+            width: 25%;
+            min-width: rem-calc(100);
+
+            @include MQ(large) {
+                display: block;
+            }
+        }
+    }
+
+    &--infoWrap {
+        /*width: calc(100% - 50px);
+
+        @include MQ(medium) {
+            width: calc(100% - 180px);
+        }*/
+    }
+
+    &--title,
+    &--info {
+        color: var(--white);
+    }
+}

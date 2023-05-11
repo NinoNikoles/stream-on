@@ -1,0 +1,339 @@
+:root,html[data-theme="light"] {
+    @import "project/settings/colors"; //-- Custom --
+    @import "base/settings/colors";  //-- Base --
+
+    //-- Colors --
+    --primary:                          #{$primary};
+    --primary-light:                    #{$primary-light};
+    --primary-dark:                     #{$primary-dark};
+
+    --secondary:                        #{$secondary};
+    --secondary-light:                  #{$secondary-light};
+    --secondary-dark:                   #{$secondary-dark};
+
+    --tertiary:                         #{$tertiary};
+    --tertiary-light:                   #{$tertiary-light};
+    --tertiary-dark:                    #{$tertiary-dark};
+
+    --quaternary:                       #{$quaternary};
+    --quaternary-light:                 #{$quaternary-light};
+    --quaternary-dark:                  #{$quaternary-dark};
+
+    --quinary:                          #{$quinary};
+    --quinary-light:                    #{$quinary-light};
+    --quinary-dark:                     #{$quinary-dark};
+
+    --senary:                           #{$senary};
+    --senary-light:                     #{$senary-light};
+    --senary-dark:                      #{$senary-dark};
+
+    --white:                            #{$white};
+    --black:                            #{$black};
+
+    --grey:                             #{$grey};
+    --grey-light:                       #{$grey-light};
+    --grey-dark:                        #{$grey-dark};
+
+    --dark:                             #{$dark};
+    --dark-light:                       #{$dark-light};
+
+    --success:                          #{$success};
+    --success-light:                    #{$success-light};
+    --success-dark:                     #{$success-dark};
+
+    --warning:                          #{$warning};
+    --warning-light:                    #{$warning-light};
+    --warning-dark:                     #{$warning-dark};
+
+    --alert:                            #{$alert};
+    --alert-light:                      #{$alert-light};
+    --alert-dark:                       #{$alert-dark};
+
+    --offwhite:                         #{$offwhite};
+
+    --bg-primary-font-color:            #{$bg-primary-font-color};
+    --bg-primary-light-font-color:      #{$bg-primary-light-font-color};
+    --bg-primary-dark-font-color:       #{$bg-primary-dark-font-color};
+
+    --bg-secondary-font-color:          #{$bg-secondary-font-color};
+    --bg-secondary-light-font-color:    #{$bg-secondary-light-font-color};
+    --bg-secondary-dark-font-color:     #{$bg-secondary-dark-font-color};
+
+    --bg-tertiary-font-color:           #{$bg-tertiary-font-color};
+    --bg-tertiary-light-font-color:     #{$bg-tertiary-light-font-color};
+    --bg-tertiary-dark-font-color:      #{$bg-tertiary-dark-font-color};
+
+    --bg-quaternary-font-color:         #{$bg-quaternary-font-color};
+    --bg-quaternary-light-font-color:   #{$bg-quaternary-light-font-color};
+    --bg-quaternary-dark-font-color:    #{$bg-quaternary-dark-font-color};
+
+    --bg-quinary-font-color:            #{$bg-quinary-font-color};
+    --bg-quinary-light-font-color:      #{$bg-quinary-light-font-color};
+    --bg-quinary-dark-font-color:       #{$bg-quinary-dark-font-color};
+
+    --bg-white-font-color:              #{$bg-white-font-color};
+    --bg-black-font-color:              #{$bg-black-font-color};
+    --bg-grey-font-color:               #{$bg-grey-font-color};
+
+    --bg-success-font-color:            #{$bg-success-font-color};
+    --bg-success-light-font-color:      #{$bg-success-light-font-color};
+    --bg-success-dark-font-color:       #{$bg-success-dark-font-color};
+
+    --bg-warning-font-color:            #{$bg-warning-font-color};
+    --bg-warning-light-font-color:      #{$bg-warning-light-font-color};
+    --bg-warning-dark-font-color:       #{$bg-warning-dark-font-color};
+
+    --bg-alert-font-color:              #{$bg-alert-font-color};
+    --bg-alert-light-font-color:        #{$bg-alert-light-font-color};
+    --bg-alert-dark-font-color:         #{$bg-alert-dark-font-color};
+
+    --header-bg:                        #{$header-bg};
+    --body-bg:                          #{$body-bg};
+    --footer-bg:                        #{$footer-bg};
+
+    //-- Typography --
+    --font-color:                       #{$font-color};
+    --font-color-headline:              #{$font-color-headline};
+    --font-color-invert:                #{$font-color-invert};
+    --font-family:                      #{$font-family};
+    --font-family-alternative:          #{$font-family-alternative};
+    --headline-font:                    #{$headline-font};
+
+    //-- Global
+    --border-color:                     #{$border-color};
+    --border-color-hover:               #{$border-color-hover};
+
+    //-- Form Settings --
+    --input-bg:                         #{$input-bg};
+    --input-border-color:               #{$input-border-color};
+    --input-border-color-focus:         #{$input-border-color-focus};
+    --input-border-style:               #{$input-border-style};
+    --input-color:                      #{$input-color};
+    --input-color-placeholder:          #{$input-color-placeholder};
+    --input-font-family:                #{$input-font-family};
+    --input-label-color:                #{$input-label-color};
+    --input-label-font-family:          #{$input-label-font-family};
+
+    //-- Table --
+    --table-bg:                         #{$table-bg};
+    --table-light:                      #{$table-light};
+    --table-dark:                       #{$table-dark};
+    --table-border-color:               #{$table-border-color};
+
+    // -- Color Opacity --
+    //@for $i from 5 through 100 {
+    $i: 0;
+    @while $i < 100 {
+        $i: $i + 5;
+
+        --primary-#{$i}:                #{background-opacity($primary, $i)};
+        --primary-light-#{$i}:          #{background-opacity($primary-light, $i)};
+        --primary-dark-#{$i}:           #{background-opacity($primary-dark, $i)};
+
+        --secondary-#{$i}:              #{background-opacity($secondary, $i)};
+        --secondar-lighty-#{$i}:        #{background-opacity($secondary-light, $i)};
+        --secondary-dark-#{$i}:         #{background-opacity($secondary-dark, $i)};
+
+        --tertiary-#{$i}:               #{background-opacity($tertiary, $i)};
+        --tertiary-light-#{$i}:         #{background-opacity($tertiary-light, $i)};
+        --tertiary-dark-#{$i}:          #{background-opacity($tertiary-dark, $i)};
+
+        --quaternary-#{$i}:             #{background-opacity($quaternary, $i)};
+        --quaternary-light-#{$i}:       #{background-opacity($quaternary-light, $i)};
+        --quaternary-dark-#{$i}:        #{background-opacity($quaternary-dark, $i)};
+
+        --quinary-#{$i}:                #{background-opacity($quinary, $i)};
+        --quinary-light-#{$i}:          #{background-opacity($quinary-light, $i)};
+        --quinary-dark-#{$i}:           #{background-opacity($quinary-dark, $i)};
+
+        --senary-#{$i}:                 #{background-opacity($senary, $i)};
+        --senary-light-#{$i}:           #{background-opacity($senary-light, $i)};
+        --senary-dark-#{$i}:            #{background-opacity($senary-dark, $i)};
+        
+        --black-#{$i}:                  #{background-opacity($black, $i)};
+        --white-#{$i}:                  #{background-opacity($white, $i)};
+
+        --success-#{$i}:                #{background-opacity($success, $i)};
+        --success-light-#{$i}:          #{background-opacity($success-light, $i)};
+        --success-dark-#{$i}:           #{background-opacity($success-dark, $i)};
+
+        --warning-#{$i}:                #{background-opacity($warning, $i)};
+        --warning-light-#{$i}:          #{background-opacity($warning-light, $i)};
+        --warning-dark-#{$i}:           #{background-opacity($warning-dark, $i)};
+
+        --alert-#{$i}:                  #{background-opacity($alert, $i)};
+        --alert-light-#{$i}:            #{background-opacity($alert-light, $i)};
+        --alert-dark-#{$i}:             #{background-opacity($alert-dark, $i)};
+
+    }
+}
+
+html[data-theme="dark"] {
+    @import "project/settings/dark-colors";  //-- Custom --
+    @import "base/settings/dark-colors";  //-- Base --
+    
+    //-- Colors --
+    --primary:                          #{$dark-primary};
+    --primary-light:                    #{$dark-primary-light};
+    --primary-dark:                     #{$dark-primary-dark};
+
+    --secondary:                        #{$dark-secondary};
+    --secondary-light:                  #{$dark-secondary-light};
+    --secondary-dark:                   #{$dark-secondary-dark};
+
+    --tertiary:                         #{$dark-tertiary};
+    --tertiary-light:                   #{$dark-tertiary-light};
+    --tertiary-dark:                    #{$dark-tertiary-dark};
+
+    --quaternary:                       #{$dark-quaternary};
+    --quaternary-light:                 #{$dark-quaternary-light};
+    --quaternary-dark:                  #{$dark-quaternary-dark};
+
+    --quinary:                          #{$dark-quinary};
+    --quinary-light:                    #{$dark-quinary-light};
+    --quinary-dark:                     #{$dark-quinary-dark};
+
+    --senary:                           #{$dark-senary};
+    --senary-light:                     #{$dark-senary-light};
+    --senary-dark:                      #{$dark-senary-dark};
+
+    --white:                            #{$white};
+    --black:                            #{$black};
+
+    --grey:                             #{$dark-grey};
+    --grey-light:                       #{$dark-grey-light};
+    --grey-dark:                        #{$dark-grey-dark};
+
+    --dark:                             #{$dark};
+    --dark-light:                       #{$dark-light};
+
+    --success:                          #{$dark-success};
+    --success-light:                    #{$dark-success-light};
+    --succcess-dark:                    #{$dark-success-dark};
+
+    --warning:                          #{$dark-warning};
+    --warning-light:                    #{$dark-warning-light};
+    --warning-dark:                     #{$dark-warning-dark};
+
+    --alert:                            #{$dark-alert};
+    --alert-light:                      #{$dark-alert-light};
+    --alert-dark:                       #{$dark-alert-dark};
+
+    --offwhite:                         #{$offwhite};
+
+    --dp0:                              #{$dp0};
+    --dp1:                              #{$dp1};
+    --dp2:                              #{$dp2};
+    --dp3:                              #{$dp3};
+    --dp4:                              #{$dp4};
+    --dp6:                              #{$dp6};
+    --dp8:                              #{$dp8};
+    --dp12:                             #{$dp12};
+    --dp16:                             #{$dp16};
+    --dp24:                             #{$dp24};
+
+    --bg-primary-font-color:            #{$dark-bg-primary-font-color};
+    --bg-primary-light-font-color:      #{$dark-bg-primary-light-font-color};
+    --bg-primary-dark-font-color:       #{$dark-bg-primary-dark-font-color};
+
+    --bg-secondary-font-color:          #{$dark-bg-secondary-font-color};
+    --bg-secondary-light-font-color:    #{$dark-bg-secondary-light-font-color};
+    --bg-secondary-dark-font-color:     #{$dark-bg-secondary-dark-font-color};
+
+    --bg-tertiary-font-color:           #{$dark-bg-tertiary-font-color};
+    --bg-tertiary-light-font-color:     #{$dark-bg-tertiary-light-font-color};
+    --bg-tertiary-dark-font-color:      #{$dark-bg-tertiary-dark-font-color};
+
+    --bg-quaternary-font-color:         #{$dark-bg-quaternary-font-color};
+    --bg-quaternary-light-font-color:   #{$dark-bg-quaternary-light-font-color};
+    --bg-quaternary-dark-font-color:    #{$dark-bg-quaternary-dark-font-color};
+
+    --bg-quinary-font-color:            #{$dark-bg-quinary-font-color};
+    --bg-quinary-light-font-color:      #{$dark-bg-quinary-light-font-color};
+    --bg-quinary-dark-font-color:       #{$dark-bg-quinary-dark-font-color};
+
+    --bg-white-font-color:              #{$dark-bg-white-font-color};
+    --bg-black-font-color:              #{$dark-bg-black-font-color};
+    --bg-grey-font-color:               #{$dark-bg-grey-font-color};
+
+    --bg-success-font-color:            #{$dark-bg-success-font-color};
+    --bg-success-light-font-color:      #{$dark-bg-success-light-font-color};
+    --bg-success-dark-font-color:       #{$dark-bg-success-dark-font-color};
+
+    --bg-warning-font-color:            #{$dark-bg-warning-font-color};
+    --bg-warning-light-font-color:      #{$dark-bg-warning-light-font-color};
+    --bg-warning-dark-font-color:       #{$dark-bg-warning-dark-font-color};
+
+    --bg-alert-font-color:              #{$dark-bg-alert-font-color};
+    --bg-alert-light-font-color:        #{$dark-bg-alert-light-font-color};
+    --bg-alert-dark-font-color:         #{$dark-bg-alert-dark-font-color};
+
+    --header-bg:                        #{$dark-header-bg};
+    --body-bg:                          #{$dark-body-bg};
+    --footer-bg:                        #{$dark-footer-bg};
+
+    //-- Typography --
+    --font-color:                       #{$dark-font-color};
+    --font-color-headline:              #{$dark-font-color-headline};
+    --font-color-invert:                #{$dark-font-color-invert};
+
+    //-- Global
+    --border-color:                     #{$dark-border-color};
+    --border-color-hover:               #{$dark-border-color-hover};
+
+    //-- Form Settings --
+    --input-bg:                         #{$dark-input-bg};
+    --input-border-color:               #{$dark-input-border-color};
+    --input-border-color-focus:         #{$dark-input-border-color-focus};
+    --input-color:                      #{$dark-input-color};
+    --input-color-placeholder:          #{$dark-input-color-placeholder};
+    --input-label-color:                #{$dark-input-label-color};
+
+    //-- Table --
+    --table-bg:                         #{$dark-table-bg};
+    --table-light:                      #{$dark-table-light};
+    --table-dark:                       #{$dark-table-dark};
+    --table-border-color:               #{$dark-table-border-color};
+
+    // -- Color Opacity --
+    $i: 0;
+    @while $i < 100 {
+        $i: $i + 5;
+
+        --primary-#{$i}:                #{background-opacity($dark-primary, $i)};
+        --primary-light-#{$i}:          #{background-opacity($dark-primary-light, $i)};
+        --primary-dark-#{$i}:           #{background-opacity($dark-primary-dark, $i)};
+
+        --secondary-#{$i}:              #{background-opacity($dark-secondary, $i)};
+        --secondar-lighty-#{$i}:        #{background-opacity($dark-secondary-light, $i)};
+        --secondary-dark-#{$i}:         #{background-opacity($dark-secondary-dark, $i)};
+
+        --tertiary-#{$i}:               #{background-opacity($dark-tertiary, $i)};
+        --tertiary-light-#{$i}:         #{background-opacity($dark-tertiary-light, $i)};
+        --tertiary-dark-#{$i}:          #{background-opacity($dark-tertiary-dark, $i)};
+
+        --quaternary-#{$i}:             #{background-opacity($dark-quaternary, $i)};
+        --quaternary-light-#{$i}:       #{background-opacity($dark-quaternary-light, $i)};
+        --quaternary-dark-#{$i}:        #{background-opacity($dark-quaternary-dark, $i)};
+
+        --quinary-#{$i}:                #{background-opacity($dark-quinary, $i)};
+        --quinary-light-#{$i}:          #{background-opacity($dark-quinary-light, $i)};
+        --quinary-dark-#{$i}:           #{background-opacity($dark-quinary-dark, $i)};
+
+        --senary-#{$i}:                 #{background-opacity($dark-senary, $i)};
+        --senary-light-#{$i}:           #{background-opacity($dark-senary-light, $i)};
+        --senary-dark-#{$i}:            #{background-opacity($dark-senary-dark, $i)};
+
+        --success-#{$i}:                #{background-opacity($dark-success, $i)};
+        --success-light-#{$i}:          #{background-opacity($dark-success-light, $i)};
+        --success-dark-#{$i}:           #{background-opacity($dark-success-dark, $i)};
+
+        --warning-#{$i}:                #{background-opacity($dark-warning, $i)};
+        --warning-light-#{$i}:          #{background-opacity($dark-warning-light, $i)};
+        --warning-dark-#{$i}:           #{background-opacity($dark-warning-dark, $i)};
+
+        --alert-#{$i}:                  #{background-opacity($dark-alert, $i)};
+        --alert-light-#{$i}:            #{background-opacity($dark-alert-light, $i)};
+        --alert-dark-#{$i}:             #{background-opacity($dark-alert-dark, $i)};
+    }
+}

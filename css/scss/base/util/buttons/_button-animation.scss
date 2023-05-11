@@ -1,0 +1,319 @@
+@mixin button-animation($animation: $button-animation, $colorHover: transparent, $bg: transparent, $bgHover: transparent, $borderHover: transparent) {
+    @if $animation == 'default' {
+        &:hover {
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                color: $borderHover;
+            }
+            box-shadow: unset;
+            color: $colorHover;
+
+            &::before,
+            &::after {
+                color: inherit;
+            }
+
+            &::after {
+                display: none;
+            }
+
+            > a {
+                color: $colorHover;
+            }
+        }
+    }
+
+    @if $animation == 'hollow' {
+        &:hover {
+            background: {
+                color: $bgHover;
+            }
+            border-color: $borderHover;
+            color: $colorHover;
+
+            &::after {
+                display: none !important;
+            }
+
+            > a {
+                color: $colorHover;
+            }
+        }
+    }
+
+    @if $animation == 'background-slide' {
+        z-index: 20;
+
+        &::after {
+            display: block;
+            content: "";
+            background: {
+                color: $bgHover;
+            }
+            border-radius: rem-calc($button-border-radius);
+            position: absolute;
+            top: calc(0% - #{rem-calc($button-border-width)});
+            right: calc(0% - #{rem-calc($button-border-width)});
+            bottom: calc(0% - #{rem-calc($button-border-width)});
+            left: calc(0% - #{rem-calc($button-border-width)});
+            transform-origin: right center;
+            transform: scale(0, 1);
+            z-index: -1;
+            @include transition(all $transition-default);
+        }
+
+        &:hover {
+            background: {
+                color: $bg;
+            }
+            color: $colorHover;
+
+            &::after {
+                transform-origin: left center;
+                transform: scale(1, 1);
+            }
+        }
+    }
+
+    @if $animation == 'slick-top-right' {
+        -webkit-box-shadow: -15px 15px 0px 0px $bgHover;
+        -moz-box-shadow: -15px 15px 0px 0px $bgHover;
+        box-shadow: -15px 15px 0px 0px $bgHover;
+        transform: translate(10px, -10px);
+        z-index: auto;
+
+        &:hover {
+            -webkit-box-shadow: 0px 0px 0px 0px $bgHover;
+            -moz-box-shadow: 0px 0px 0px 0px $bgHover;
+            box-shadow: 0px 0px 0px 0px $bgHover;
+            transform: translate(0px, 0px);
+        }
+    }
+
+    @if $animation == 'slick-top-left' {
+        -webkit-box-shadow: 15px 15px 0px 0px $bgHover;
+        -moz-box-shadow: 15px 15px 0px 0px $bgHover;
+        box-shadow: 15px 15px 0px 0px $bgHover;
+        transform: translate(-10px, -10px);
+        z-index: auto;
+
+        &:hover {
+            -webkit-box-shadow: 0px 0px 0px 0px $bgHover;
+            -moz-box-shadow: 0px 0px 0px 0px $bgHover;
+            box-shadow: 0px 0px 0px 0px $bgHover;
+            transform: translate(0px, 0px);
+        }
+    }
+
+    @if $animation == 'slick-bottom-right' {
+        -webkit-box-shadow: -15px -15px 0px 0px $bgHover;
+        -moz-box-shadow: -15px -15px 0px 0px $bgHover;
+        box-shadow: -15px -15px 0px 0px $bgHover;
+        transform: translate(10px, 10px);
+        z-index: auto;
+
+        &:hover {
+            -webkit-box-shadow: 0px 0px 0px 0px $bgHover;
+            -moz-box-shadow: 0px 0px 0px 0px $bgHover;
+            box-shadow: 0px 0px 0px 0px $bgHover;
+            transform: translate(0px, 0px);
+        }
+    }
+
+    @if $animation == 'slick-bottom-left' {
+        -webkit-box-shadow: 15px -15px 0px 0px $bgHover;
+        -moz-box-shadow: 15px -15px 0px 0px $bgHover;
+        box-shadow: 15px -15px 0px 0px $bgHover;
+        transform: translate(-10px, 10px);
+        z-index: auto;
+
+        &:hover {
+            -webkit-box-shadow: 0px 0px 0px 0px $bgHover;
+            -moz-box-shadow: 0px 0px 0px 0px $bgHover;
+            box-shadow: 0px 0px 0px 0px $bgHover;
+            transform: translate(0px, 0px);
+        }
+    }
+
+    @if $animation == 'hover-circle' {
+        border: {
+            color: transparent !important;
+            width: 0 !important;
+        }
+        overflow: hidden;
+        z-index: 0;
+        @include transition(all 0.3s ease-in-out 0.1s);
+
+        &::after {
+            content: '';
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                radius: rem-calc(300);
+            }
+            width: calc(125% + (#{rem-calc($button-border-width)} * 2));
+            padding: {
+                top: calc(125% + (#{rem-calc($button-border-width)} * 2));
+            }
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            overflow: hidden;
+            z-index: -1;
+            @include transition(all 0.3s ease-in-out 0.1s);
+        }
+
+        &.hollow {
+            border: {
+                color: $borderHover !important;
+                width: rem-calc($button-border-width) !important;
+            }
+        }
+
+        &:hover {
+            color: $colorHover;
+            @include transition(all 0.3s ease-in-out 0s);
+
+            &::after {
+                transform: translate(-50%, -50%) scale(1);
+                @include transition(all 0.3s ease-in-out 0s);
+            }
+        }
+    }
+
+    @if $animation == 'top-slide' {
+        z-index: 0;
+
+        &::after {
+            content: '';
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                radius: rem-calc($button-border-radius);
+            }
+            width: calc(100% + (#{rem-calc($button-border-width)} * 2));
+            height: 0;
+            position: absolute;
+            top: -#{rem-calc($button-border-width)};
+            left: -#{rem-calc($button-border-width)};
+            z-index: -1;
+            @include transition(height $transition-default);
+        }
+
+        &:hover {
+            color: $colorHover;
+
+            &::after {
+                height: calc(100% + #{rem-calc($button-border-width)} * 2);
+            }
+        }
+    }
+
+    @if $animation == 'right-slide' {
+        z-index: 0;
+
+        &::after {
+            content: '';
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                radius: rem-calc($button-border-radius);
+            }
+            width: 0;
+            height: calc(100% + (#{rem-calc($button-border-width)} * 2));
+            position: absolute;
+            top: -#{rem-calc($button-border-width)};
+            right: -#{rem-calc($button-border-width)};
+            z-index: -1;
+            @include transition(all $transition-default);
+        }
+
+        &:hover {
+            color: $colorHover;
+
+            &::after {
+                width: calc(100% + #{rem-calc($button-border-width)} * 2);
+            }
+        }
+    }
+
+    @if $animation == 'bottom-slide' {
+        z-index: 0;
+
+        &::after {
+            content: '';
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                radius: rem-calc($button-border-radius);
+            }
+            width: calc(100% + (#{rem-calc($button-border-width)} * 2));
+            height: 0;
+            position: absolute;
+            bottom: -#{rem-calc($button-border-width)};
+            left: -#{rem-calc($button-border-width)};
+            z-index: -1;
+            @include transition(all $transition-default);
+        }
+
+        &:hover {
+            color: $colorHover;
+
+            &::after {
+                height: calc(100% + #{rem-calc($button-border-width)} * 2);
+            }
+        }
+    }
+
+    @if $animation == 'left-slide' {
+        z-index: 0;
+
+        &::after {
+            content: '';
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                radius: rem-calc($button-border-radius);
+            }
+            width: 0;
+            height: calc(100% + (#{rem-calc($button-border-width)} * 2));
+            position: absolute;
+            top: -#{rem-calc($button-border-width)};
+            left: -#{rem-calc($button-border-width)};
+            z-index: -1;
+            @include transition(all $transition-default);
+        }
+
+        &:hover {
+            color: $colorHover;
+
+            &::after {
+                width: calc(100% + #{rem-calc($button-border-width)} * 2);
+            }
+        }
+    }
+
+    @if $animation == 'raise-up' {
+        z-index: 0;
+
+        &:hover {
+            background: {
+                color: $bgHover;
+            }
+            border: {
+                color: $borderHover;
+            }
+            box-shadow: 0 0.5em 0.5em -0.4em $bg;
+            color: $colorHover;
+            transform: translateY(-0.25em);
+        }
+    }
+}

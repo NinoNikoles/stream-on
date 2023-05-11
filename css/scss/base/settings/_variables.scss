@@ -1,0 +1,135 @@
+/*******************
+1. Colors
+2. Typo
+3. Grid
+4. Breakpoints
+5. Space
+6. Globals
+7. Buttons
+8. Form
+9. Utils
+*******************/
+
+//-- Typography --
+$font-family:  					typo(font-family) !default;
+$font-family-alternative:		typo(font-family-alternative) !default;
+$font-size-base:				typo(font-size-base) !default;
+$font-size-large:				$font-size-base + 2 !default;
+$font-size-small:				$font-size-base - 2 !default;
+$font-size-smaller:				$font-size-base - 4 !default;
+$font-weight-base:				typo(font-weight) !default;
+$icon-font:						typo(icon) !default;
+$letterspacing:					typo(letterspacing) !default;
+
+$font-size-h1-small:				font-size(h1, small) !default;
+$font-size-h1-medium:				font-size(h1, medium) !default;
+$font-size-h2-small:				font-size(h2, small) !default;
+$font-size-h2-medium:				font-size(h2, medium) !default;
+$font-size-h3-small:				font-size(h3, small) !default;
+$font-size-h3-medium:				font-size(h3, medium) !default;
+$font-size-h4-small:				font-size(h4, small) !default;
+$font-size-h4-medium:				font-size(h4, medium) !default;
+$font-size-h5-small:				font-size(h5, small) !default;
+$font-size-h5-medium:				font-size(h5, medium) !default;
+$font-size-h6-small:				font-size(h6, small) !default;
+$font-size-h6-medium:				font-size(h6, medium) !default;
+$font-size-paragraph-small:			font-size(paragraph, small) !default;
+$font-size-paragraph-medium:		font-size(paragraph, medium) !default;
+
+$line-height-base:					typo(line-height-base) !default;
+$line-height:				        $line-height-base !default;
+$line-height-large:		            $line-height * 1.2 !default;
+$line-height-small:		            $line-height * 0.8 !default;
+
+$headline-font:					    $font-family-alternative !default;
+$headline-weight:				    700 !default;
+$headline-line-height:			    typo(line-height-headline) !default;
+
+//-- Grid Settings --
+$grid-columns:			grid(columns) !default;
+$grid-max-width: 		grid(max-width) !default;
+$grid-padding: 			grid(padding) !default;
+
+//-- Breakpoints --
+$xxxsmall:  bp(xxxsmall) !default;
+$xxsmall:   bp(xxsmall) !default;
+$xsmall:	bp(xsmall) !default;
+$small:		bp(small) !default;
+$medium:	bp(medium) !default;
+$large:		bp(large) !default;
+$xlarge:	bp(xlarge) !default;
+$xxlarge:	bp(xxlarge) !default;
+$xxxlarge:	bp(xxxlarge) !default;
+
+//-- Space --
+$space-no:      space(no) !default;
+$space-base:    space(base) !default;
+$space-xxs:     space(xxs) !default;
+$space-xs:      space(xs) !default;
+$space-s:       space(s) !default;
+$space-m:       space(m) !default;
+$space-l:       space(l) !default;
+$space-xl:      space(xl) !default;
+$space-xxl:     space(xxl) !default;
+
+//-- Global --
+$border-radius:         global(border-radius) !default;
+$border-style:          global(border-style) !default;
+$border-width:          global(border-width) !default;
+
+$global-margin:         global(margin) !default;
+$global-padding:        global(padding) !default;
+$rounded:               global(rounded) !default;
+
+//-- Buttons --
+$button-border-radius:      btn(border-radius) !default;
+$button-border-width:       btn(border-width) !default;
+$button-border-style:       btn(border-style) !default;
+$button-font-size:          btn(font-size) !default;
+$button-font-weight:        btn(font-weight) !default;
+$button-line-height:        btn(line-height) !default;
+$button-text-transform:     btn(text-transform) !default;
+$button-min-width:          btn(min-width) !default;
+
+$button-padding-top:        btn(padding-top) !default;
+$button-padding-right:      btn(padding-right) !default;
+$button-padding-bottom:     btn(padding-bottom) !default;
+$button-padding-left:       btn(padding-left) !default;
+
+$button-normal-size:        btn-size(normal) !default;
+$button-big-size:           btn-size(big) !default;
+$button-small-size:         btn-size(small) !default;
+
+$button-animation:          btn(animation) !default;
+
+//-- Form Settings --
+$input-border-radius: 		form(border-radius) !default;
+$input-border-style: 		form(border-style) !default;
+$input-border-width: 		form(border-width) !default;
+$input-font-family:	        form(font-family) !default;
+$input-font-size:	        form(font-size) !default;
+$input-font-weight:	        form(font-weight) !default;
+$input-label-font-family:	form(font-family) !default;
+$input-label-font-size:	    form(font-size) !default;
+$input-space-horizontal:    form(space-horizontal) !default;
+$input-space-vertical:      form(space-vertical) !default;
+
+//-- Image / Root Settings --
+$imgPath:			'assets/css/images/' !default;
+$rootPath:			'' !default;
+$domainPart:        '' !default;
+
+//-- Table --
+$table-border-radius:       table(border-radius) !default;
+$table-border-style:        table(border-style) !default;
+$table-border-width:        table(border-width) !default;
+$table-font-size:           table(font-size) !default;
+$table-font-size-small:     table(font-size-small) !default;
+$table-line-height:         $line-height !default;
+$table-space-horizontal:    table(space-horizontal) !default;
+$table-space-vertical:      table(space-vertical) !default;
+
+$mnavheight: rem-calc(50) !default;
+
+//-- Transitions --
+$transition-default:   transition(default) !default;

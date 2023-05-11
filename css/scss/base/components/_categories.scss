@@ -1,0 +1,97 @@
+.category-list {
+    @for $i from 1 through $grid-columns {
+        &.layout-#{$i} {
+            .category {
+                &-item {
+                    @extend .grid;
+                    width: 100%;
+                    min-width: 100%;
+
+                    @include MQ(medium) {
+                        width: 100% / $i;
+                        min-width: 100% / $i;
+                    }
+                }
+            }
+        }
+    }
+
+    .category {
+        &-item {
+            margin: {
+                bottom: rem-calc($global-margin);
+            }
+        }
+
+        &-text {
+            &--wrapperinner {
+                text: {
+                    align: right;
+                }
+            }
+        }
+
+        &-headline {
+            text: {
+                align: left;
+            }
+        }
+
+        &-link.btn {
+            margin: {
+                right: 0;
+                bottom: 0;
+            }
+        }
+
+        &--wrapper {
+            &inner {
+                position: relative;
+            }
+        }
+    }
+
+    a.teaser-wrapper {
+        margin: {
+            bottom: 0;
+        }
+        @include transition(background $transition-default);
+
+        .teaser-headline {
+            margin: {
+                bottom: 0;
+            }
+        }
+
+        $color-list: (
+            'primary': 'primary',
+            'secondary': 'secondary',
+            'tertiary': 'tertiary',
+            'quaternary': 'quaternary',
+            'quinary': 'quinary',
+            'grey': 'grey',
+            'success': 'success',
+            'warning': 'warning',
+            'alert': 'alert'
+        );
+
+        @each $color, $val in $color-list {
+            &.bg-#{$color} {
+                &:hover {
+                    background:{
+                        color: var(--#{$val}-dark) !important;
+                    }
+                }
+            }
+
+            &.bg-#{$color}-light,
+            &.bg-#{$color}-dark {
+                &:hover {
+                    background:{
+                        color: var(--#{$val}) !important;
+                    }
+                }
+            }
+        }
+    }
+}

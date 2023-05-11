@@ -1,0 +1,94 @@
+table, .table {
+    border: {
+        collapse: collapse;
+    }
+    width: 100%;
+    margin: {
+        bottom: rem-calc($global-margin);
+    }
+
+    &.has-fixed-layout {
+        table-layout: fixed;
+    }
+}
+
+thead, .thead, tfoot, .tfoot {
+    tr, .tr {
+        background: {
+            color: transparent;
+        }
+    }
+
+    th, .th,
+    td, .td {
+        font: {
+            weight: 700;
+        }
+        padding: {
+            top: rem-calc($table-space-vertical);
+            right: rem-calc($table-space-horizontal);
+            bottom: rem-calc($table-space-vertical);
+            left: rem-calc($table-space-horizontal);
+        }
+    }
+}
+
+thead, .thead, tbody, .tbody, tfoot, .tfoot {
+    background: {
+        color: var(--table-bg);
+    }
+}
+
+thead, .thead {
+    background: {
+        color: var(--table-dark);
+    }
+}
+
+tbody, .tbody {
+    tr, .tr {
+        &:nth-child(odd) {
+            background: {
+                color: var(--table-light);
+            }
+        }
+    }
+}
+
+th, .th,
+td, .td {
+    font: {
+        size: rem-calc($table-font-size-small);
+        family: $font-family;
+    }
+    line: {
+        height: $table-line-height;
+    }
+    text: {
+        align: left;
+    }
+
+    @include MQ(small) {
+        font: {
+            size: rem-calc($table-font-size);
+        }
+    }
+}
+
+td, .td {
+    padding: {
+        top: rem-calc($table-space-vertical);
+        right: rem-calc($table-space-horizontal);
+        bottom: rem-calc($table-space-vertical);
+        left: rem-calc($table-space-horizontal);
+    }
+}
+
+.tr {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.td {
+    width: 100%;
+}

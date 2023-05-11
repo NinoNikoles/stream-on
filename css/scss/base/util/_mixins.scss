@@ -1,0 +1,136 @@
+/*
+  1. Contextual backgrounds
+  2. Font face
+*/
+
+//-- Contextual backgrounds --
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background: {
+      color: $color !important;
+    }
+    @include transition(background-color $transition-default);
+  }
+}
+
+@mixin bg-variant-gradient($parent, $color1, $color2) {
+  #{$parent} {
+    background: $color1;
+    background: -moz-linear-gradient(135deg, $color1 0%, $color2 100%);
+    background: -webkit-linear-gradient(135deg, $color1 0%, $color2 100%);
+    background: linear-gradient(135deg, $color1 0%, $color2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+  }
+}
+
+@mixin bg-rgba($color, $opacity: .3) {
+  background: $color !important;
+  background: rgba($color, $opacity) !important;
+}
+
+
+@mixin blur($strength){
+  -webkit-filter: blur($strength);
+  -moz-filter: blur($strength);
+  -o-filter: blur($strength);
+  -ms-filter: blur($strength);
+  filter: blur($strength);
+}
+
+@mixin bg-variant-font-color($color: var(--font-color)) {
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: $color;
+  }
+
+  p {
+    color: $color;
+  }
+
+  a {
+    color: $color;
+    text-decoration: underline;
+  }
+
+  span {
+    color: $color;
+  }
+
+  ul, ol{
+    li {
+      color: $color;
+    }
+  } 
+
+  &.text, .text {
+    color: $color;
+  }
+}
+
+@mixin bg-variant-gradient-mix($parent, $color1, $color2, $fontColor) {
+  #{$parent} {
+    background: $color1;
+    background: -moz-linear-gradient(135deg, $color1 10%, $color2 90%);
+    background: -webkit-linear-gradient(135deg, $color1 10%, $color2 90%);
+    background: linear-gradient(135deg, $color1 10%, $color2 90%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    @include bg-variant-font-color($fontColor);
+  }
+}
+
+//-- Font face --
+// =============================================================================
+// String Replace
+// =============================================================================
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// =============================================================================
+// Font Face
+// =============================================================================
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src: null;
+
+  $extmods: (
+      eot: "?",
+      svg: "#" + str-replace($name, " ", "_")
+  );
+
+  $formats: (
+      otf: "opentype",
+      ttf: "truetype"
+  );
+
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($rootPath + $path + "." + $extmod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}
+
+// -- Background-opacity --
+@mixin background-opacity($color, $opacity) {
+  $opacity: $opacity/100;
+  background: {
+    color: $color;
+  }  /*Fallback */
+  background: {
+    color: rgba($color, $opacity);
+  }
+}

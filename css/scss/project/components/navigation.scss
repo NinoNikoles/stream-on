@@ -1,0 +1,20 @@
+nav.header-menu-main {
+    .menu {
+        .menu-item {
+            a {
+                &:not(.subbutton):not(.backbutton) {
+                    color: var(--font-color);
+                }
+            }
+
+            &.current-menu-item > a:not(.subbutton):not(.backbutton),
+            &.current-menu-parent > a:not(.subbutton):not(.backbutton) {
+                color: var(--font-color-invert);
+            }
+
+            > a:not(.subbutton):not(.backbutton):hover {
+                color: var(--font-color-invert);
+            }
+        }
+    }
+}

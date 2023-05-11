@@ -1,0 +1,10 @@
+.fancybox {
+    &__content {
+        width: 100%;
+        
+        @include MQ(xsmall) {
+            width: rem-calc(500);
+        }
+        
+    }
+}

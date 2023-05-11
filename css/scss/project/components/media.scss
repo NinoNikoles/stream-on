@@ -1,0 +1,24 @@
+.media {
+    &-card {
+        position: relative;
+
+        &:hover {
+            img {
+                transform: scale(1.1);
+            }
+        }
+
+        .title {
+            display: block;
+            background: {
+                color: var(--grey-light);
+            }
+            padding: {
+                top: rem-calc(10);
+                right: rem-calc($space-base);
+                bottom: rem-calc($space-base);
+                left: rem-calc($space-base);
+            }
+        }
+    }
+}

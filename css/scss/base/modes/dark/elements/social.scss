@@ -1,0 +1,9 @@
+.social {
+    &--list {
+        &--item {
+            .social-item {
+                color: var(--dark);
+            }
+        }
+    }
+}

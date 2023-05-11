@@ -1,0 +1,24 @@
+{
+  "name": "Grunt-Basis-Setup",
+  "version": "1.5.0",
+  "description": "Basis setup to compile sass files",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "namings": {
+    "js": "global",
+    "css": "global"
+  },
+  "author": "Feedback werbeagentur GmbH",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.5.3",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass": "^3.1.0",
+    "node-sass": "^8.0.0"
+  }
+}

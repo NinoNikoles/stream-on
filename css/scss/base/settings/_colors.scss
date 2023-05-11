@@ -1,0 +1,122 @@
+// -- Colors --
+$primary: color(primary) !default;
+$primary-light: lighten($primary, 35%) !default;
+$primary-dark: darken($primary, 10%) !default;
+
+$secondary: color(secondary) !default;
+$secondary-light: lighten($secondary, 35%) !default;
+$secondary-dark: darken($secondary, 10%) !default;
+
+$tertiary: color(tertiary) !default;
+$tertiary-light: lighten($tertiary, 35%) !default;
+$tertiary-dark: darken($tertiary, 10%) !default;
+
+$quaternary: color(quaternary) !default;
+$quaternary-light: lighten($quaternary, 35%) !default;
+$quaternary-dark: darken($quaternary, 10%) !default;
+
+$quinary: color(quinary) !default;
+$quinary-light: lighten($quinary, 35%) !default;
+$quinary-dark: darken($quinary, 10%) !default;
+
+$senary: color(senary) !default;
+$senary-light: lighten($senary, 35%) !default;
+$senary-dark: darken($senary, 10%) !default;
+
+$white: color(white) !default;
+$black: color(black) !default;
+
+$grey: color(grey) !default;
+$grey-light: lighten($grey, 20%) !default;
+$grey-dark: darken($grey, 15%) !default;
+
+$dark: color(dark) !default;
+$dark-light: lighten($dark, 11%) !default;
+
+$success: color(success) !default;
+$success-light: lighten($success, 35%) !default;
+$success-dark: darken($success, 10%) !default;
+
+$warning: color(warning) !default;
+$warning-light: lighten($warning, 35%) !default;
+$warning-dark: darken($warning, 10%) !default;
+
+$alert: color(alert) !default;
+$alert-light: lighten($alert, 35%) !default;
+$alert-dark: darken($alert, 10%) !default;
+
+$offwhite: color(offwhite) !default;
+
+$dp0:   dm-color(dp0);
+$dp1:   dm-color(dp1);
+$dp2:   dm-color(dp2);
+$dp3:   dm-color(dp3);
+$dp4:   dm-color(dp4);
+$dp6:   dm-color(dp6);
+$dp8:   dm-color(dp8);
+$dp12:  dm-color(dp12);
+$dp16:  dm-color(dp16);
+$dp24:  dm-color(dp24);
+
+$bg-primary-font-color: $white !default;
+$bg-primary-light-font-color: $white !default;
+$bg-primary-dark-font-color: $white !default;
+
+$bg-secondary-font-color: $white !default;
+$bg-secondary-light-font-color: $white !default;
+$bg-secondary-dark-font-color: $white !default;
+
+$bg-tertiary-font-color: $white !default;
+$bg-tertiary-light-font-color: $white !default;
+$bg-tertiary-dark-font-color: $white !default;
+
+$bg-quaternary-font-color: $white !default;
+$bg-quaternary-light-font-color: $white !default;
+$bg-quaternary-dark-font-color: $white !default;
+
+$bg-quinary-font-color: $white !default;
+$bg-quinary-light-font-color: $white !default;
+$bg-quinary-dark-font-color: $white !default;
+
+$bg-white-font-color: $white !default;
+$bg-black-font-color: $white !default;
+$bg-grey-font-color: $white !default;
+
+$bg-success-font-color: $white !default;
+$bg-success-light-font-color: $white !default;
+$bg-success-dark-font-color: $white !default;
+
+$bg-warning-font-color: $white !default;
+$bg-warning-light-font-color: $white !default;
+$bg-warning-dark-font-color: $white !default;
+
+$bg-alert-font-color: $white !default;
+$bg-alert-light-font-color: $white !default;
+$bg-alert-dark-font-color: $white !default;
+
+$header-bg: $white !default;
+$body-bg: $white !default;
+$footer-bg: $black !default;
+
+// -- Typo --
+$font-color:                    typo(color) !default;
+$font-color-headline:			typo(color-headline) !default;
+$font-color-invert:             typo(color-invert) !default;
+
+// -- Global --
+$border-color:          global(border-color) !default;
+$border-color-hover:    global(border-color-hover) !default;
+
+//-- Form Settings --
+$input-bg:					form(background) !default;
+$input-border-color: 		form(border-color) !default;
+$input-border-color-focus:  form(border-color-focus) !default;
+$input-color:				form(color) !default;
+$input-color-placeholder:	form(place-holder-color) !default;
+$input-label-color:		    form(label-color) !default;
+
+//-- Table --
+$table-bg:                  table(background) !default;
+$table-light:               $grey-light !default;
+$table-dark:                $grey-dark !default;
+$table-border-color:        table(border-color) !default;

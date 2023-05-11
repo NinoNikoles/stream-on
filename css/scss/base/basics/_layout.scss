@@ -1,0 +1,514 @@
+body {
+    background: {
+        color: var(--body-bg);
+    }
+}
+
+.main {
+    margin: {
+        top: $mnavheight;
+    }
+}
+
+.border {
+    border: {
+        color: var(--border-color);
+        style: $border-style;
+        width: rem-calc($border-width);
+    }
+}
+
+.box {
+    padding: rem-calc(28);
+
+    @include MQ(medium) {
+        padding: rem-calc(56);
+    }
+}
+
+.rounded {
+    border-radius: rem-calc($rounded);
+}
+
+.desktop-only {
+    @include maxMQ(medium) {
+        display: none;
+    }
+}
+
+.mobile-only {
+    @include MQ(medium) {
+        display: none;
+    }
+}
+
+.xxxsmall-only {
+    @include MQ(xxsmall) {
+        display: none;
+    } 
+}
+
+.xxsmall-only {
+    display: none;
+
+    @include betweenMQ(xxsmall, xsmall) {
+        display: block;
+    }
+}
+
+.xsmall-only {
+    display: none;
+
+    @include betweenMQ(xsmall, small) {
+        display: block;
+    }
+}
+
+.small-only {
+    display: none;
+
+    @include betweenMQ(small, medium) {
+        display: block;
+    }
+}
+
+.medium-only {
+    display: none;
+
+    @include betweenMQ(medium, large) {
+        display: block;
+    }
+}
+
+.large-only {
+    display: none;
+
+    @include betweenMQ(large, xlarge) {
+        display: block;
+    }
+}
+
+.xlarge-only {
+    display: none;
+
+    @include betweenMQ(xlarge, xxlarge) {
+        display: block;
+    }
+}
+
+.xxlarge-only {
+    display: none;
+
+    @include betweenMQ(xxlarge, xxxlarge) {
+        display: block;
+    }
+}
+
+.xxxlarge-only {
+    display: none;
+
+    @include MQ(xxxlarge) {
+        display: block;
+    }
+}
+
+.z-index-xl {
+    z-index: 9999;
+}
+.z-index-l {
+    z-index: 7777;
+}
+.z-index-m {
+    z-index: 5555;
+}
+.z-index-s {
+    z-index: 3333;
+}
+.z-index-xs {
+    z-index: 1111;
+}
+
+.print {
+    display: none;
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+.relative {
+    position: relative;
+}
+.static {
+    position: static;
+}
+.absolute {
+    position: absolute;
+}
+.pos-top {
+    top: 0;
+}
+.pos-bottom {
+    bottom: 0;
+}
+.display-none {
+    display: none;
+}
+.width-auto {
+    width: auto;
+}
+.display-block {
+    display: block;
+}
+.display-inline-flex {
+    display: inline-flex;
+    align-items: stretch;
+
+    @include MQ(medium) {
+        display: block;
+    }
+}
+.display-flex {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    @include MQ(medium) {
+        flex-direction: row;
+    }
+}
+.flex-center {
+        display: flex;
+        align-items: center;
+}
+
+.flex-column {
+    &-reverse {
+        &-mobile {
+            flex-direction: column-reverse;
+            
+            @include MQ(medium) {
+                flex-direction: unset;
+            }
+        }
+    }
+}
+
+.inlineflex-center {
+    display: block;
+
+    @include MQ(medium) {
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+.flex-top {
+    display: block;
+
+    @include MQ(medium) {
+        display: flex;
+        align-items: flex-start;
+    }
+}
+.flex-bottom {
+    display: block;
+
+    @include MQ(medium) {
+        display: flex;
+        align-items: flex-end;
+    }
+}
+.display-flex-medium {
+    display: block;
+
+    @include MQ(medium) {
+        display: flex;
+        align-items: stretch;
+    }
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-column-stretch {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.flex-row-stretch {
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-nowrap {
+    flex-wrap: wrap;
+
+    @include MQ(medium) {
+        flex-wrap: nowrap;
+    }
+}
+
+.flex-stretch {
+    align-items: stretch;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.bg-element-right,
+.bg-element-bottom {
+    position: relative;
+
+    &:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        position: absolute;
+    }
+}
+
+.bg-element-left,
+.bg-element-top {
+    position: relative;
+
+    &:before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        position: absolute;
+    }
+}
+
+.bg-element-top:before { top: -100%; left: 0; }
+.bg-element-right:after {  top: 0; right: -100%; }
+.bg-element-bottom:after { top: 50%; left: 0; }
+.bg-element-left:before { top: 0; left: -100%; }
+
+.pull {
+    &--up {
+        margin-top: -6vw;
+    }
+    &--down {
+        margin-bottom: -6vw;
+    }
+}
+
+.max-width-no {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+.border-no {
+    border: none !important;
+}
+.blocked {
+    display: inline-block;
+    width: 100%;
+}
+.algintop {
+    vertical-align: top;
+}
+.alginmiddle {
+    vertical-align: middle;
+}
+.alginbottom {
+    vertical-align: bottom;
+}
+
+@each $align in (left, right, center, justify) {
+    .text-#{$align} {
+        text-align: $align;
+    }
+}
+
+.auto-center {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: block;
+}
+
+hr {
+    background: var(--grey) none repeat scroll 0 0;
+    height: 2px;
+    margin: 25px 0;
+    border: none;
+    width: 100%;
+}
+
+//-- Background Variants --
+@include bg-variant(".bg-primary", var(--primary));
+@include bg-variant(".bg-primary-light", var(--primary-light));
+@include bg-variant(".bg-primary-dark", var(--primary-dark));
+
+@include bg-variant(".bg-secondary", var(--secondary));
+@include bg-variant(".bg-secondary-light", var(--secondary-light));
+@include bg-variant(".bg-secondary-dark", var(--secondary-dark));
+
+@include bg-variant(".bg-tertiary", var(--tertiary));
+@include bg-variant(".bg-tertiary-light", var(--tertiary-light));
+@include bg-variant(".bg-tertiary-dark", var(--tertiary-dark));
+
+@include bg-variant(".bg-quaternary", var(--quaternary));
+@include bg-variant(".bg-quaternary-light", var(--quaternary-light));
+@include bg-variant(".bg-quaternary-dark", var(--quaternary-dark));
+
+@include bg-variant(".bg-quinary", var(--quinary));
+@include bg-variant(".bg-quinary-light", var(--quinary-light));
+@include bg-variant(".bg-quinary-dark", var(--quinary-dark));
+
+@include bg-variant(".bg-senary", var(--senary));
+@include bg-variant(".bg-senary-light", var(--senary-light));
+@include bg-variant(".bg-senary-dark", var(--senary-dark));
+    
+@include bg-variant(".bg-white", var(--white));
+@include bg-variant(".bg-black", var(--black));
+@include bg-variant(".bg-grey", var(--grey));
+@include bg-variant(".bg-dark", var(--dark));
+
+@include bg-variant(".bg-success", var(--success));
+@include bg-variant(".bg-warning", var(--warning));
+@include bg-variant(".bg-alert", var(--alert));
+
+//-- Background Variants Gradient --
+@include bg-variant-gradient(
+        ".bg-primary-gradient",
+        var(--primary),
+        var(--primary-dark)
+);
+@include bg-variant-gradient(
+        ".bg-secondary-gradient",
+        var(--secondary),
+        var(--secondary-dark)
+);
+@include bg-variant-gradient(
+        ".bg-tertiary-gradient",
+        var(--tertiary),
+        var(--tertiary-dark)
+);
+@include bg-variant-gradient(
+        ".bg-quaternary-gradient",
+        var(--quaternary),
+        var(--quaternary-dark)
+);
+@include bg-variant-gradient(
+        ".bg-quinary-gradient",
+        var(--quinary),
+        var(--quinary-dark)
+);
+@include bg-variant-gradient(
+        ".bg-senary-gradient",
+        var(--senary),
+        var(--senary-dark)
+);
+
+@include bg-variant-gradient-mix(".bg-gradient-primary-secondary", var(--primary), var(--secondary), var(--white));
+@include bg-variant-gradient-mix(".bg-gradient-secondary-tertiary", var(--secondary-), var(--tertiary), var(--white));
+@include bg-variant-gradient-mix(".bg-gradient-tertiary-quaternary", var(--tertiary), var(--quaternary), var(--white));
+@include bg-variant-gradient-mix(".bg-gradient-quaternary-quinary", var(--quaternary), var(--quinary), var(--white));
+@include bg-variant-gradient-mix(".bg-gradient-quinary-primary", var(--quinary), var(--primary), var(--white));
+@include bg-variant-gradient-mix(".bg-gradient-primary-tertiary", var(--primary), var(--tertiary), var(--dark));
+
+//-- Animate --
+.animate {
+    &-fold {
+        &-left {
+            transform: perspective(1000px) rotate3d(0, 1, 0, 90deg);
+            opacity: .5;
+            transform-origin: right;
+            @include transition(all .75s ease);
+            &.visible {
+                opacity: 1;
+                transform: perspective(1000px) rotate3d(0, 1, 0, 0deg);
+            }
+        }
+        &-right {
+            transform: perspective(1000px) rotate3d(0, 1, 0, -90deg);
+            opacity: .5;
+            transform-origin: left;
+            @include transition(all .75s ease);
+            &.visible {
+                opacity: 1;
+                transform: perspective(1000px) rotate3d(0, 1, 0, 0deg);
+            }
+        }
+        &-top {
+            transform: perspective(1000px) rotate3d(1, 0, 0, -90deg);
+            opacity: .5;
+            transform-origin: bottom;
+            @include transition(all .75s ease);
+            &.visible {
+                opacity: 1;
+                transform: perspective(1000px) rotate3d(1, 0, 0, 0deg);
+            }
+        }
+        &-bottom {
+            transform: perspective(1000px) rotate3d(1, 0, 0, 90deg);
+            opacity: .5;
+            transform-origin: top;
+            @include transition(all .75s ease);
+            &.visible {
+                opacity: 1;
+                transform: perspective(1000px) rotate3d(1, 0, 0, 0deg);
+            }
+        }
+    }
+}
+
+//-- Heights --
+.fullHeightChildren {
+    display: inline-flex;
+    align-items: stretch;
+}
+
+@for $i from 1 through 100 {
+    .max-height-#{$i} {
+        max-height: #{$i}vh;
+    }
+}
+
+@for $i from 1 through 100 {
+    .min-height-#{$i} {
+        min-height: #{$i}vh;
+    }
+}
+
+//-- Progress --
+.progress {
+    display: block;
+    background: {
+        color: var(--grey);
+    }
+    width: 100%;
+    height: rem-calc(16);
+    margin: {
+        bottom: rem-calc($global-margin);
+    }
+
+    &-meter {
+        display: block;
+        background: {
+            color: var(--primary);
+        }
+        width: 0;
+        height: 100%;
+        position: relative;
+    }
+}

@@ -1,0 +1,129 @@
+body {
+    .cky {
+        &-preference {
+            &-center {
+                max-height: 100%;
+                border: {
+                    radius: 0;
+                }
+            }
+        }
+
+        &-btn {
+            &.cky-btn-accept {
+                @include button();
+                @include button-colors(var(--white), var(--white), var(--primary), var(--primary-dark));
+                background: {
+                    color: var(--primary) !important;
+                }
+                border: {
+                    color: var(--primary) !important;
+                }
+                color: var(--font-color-invert) !important;
+
+                &:hover {
+                    background: {
+                        color: var(--primary-dark) !important;
+                    }
+                    border: {
+                        color: var(--primary-dark) !important;
+                    }
+                }
+            }
+
+            &.cky-btn-customize,
+            &.cky-btn-preferences,
+            &.cky-btn-reject {
+                @include button();
+                @include button-colors(var(--white), var(--white), var(--primary), var(--primary-dark));
+                @include button-hollow(var(--primary), var(--white), var(--primary), var(--primary));
+                border: {
+                    color: var(--primary) !important;
+                }
+                color: var(--primary) !important;
+
+                &:hover {
+                    background: {
+                        color: var(--primary) !important;
+                    }
+                    color: var(--font-color-invert) !important;
+                }
+            }
+
+            &-revisit {
+                &-wrapper {
+                    background: {
+                        color: var(--primary) !important;
+                    }
+                    border: {
+                        radius: 0;
+                    }
+                    @include transition(background-color $transition-default);
+
+                    &:hover {
+                        background: {
+                            color: var(--primary-dark) !important;
+                        }
+                    }
+
+                    &.cky-revisit {
+                        &-bottom-left {
+                            bottom: 0;
+                            right: 0;
+                        }
+                        &-bottom-left {
+                            bottom: 0;
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-modal {
+            span {
+                margin: {
+                    bottom: 0;
+                }
+            }
+
+            &.cky-modal-open {
+                max-width: 100vw;
+                max-height: 100vh;
+            }
+        }
+
+        &-switch {
+            input[type="checkbox"] {
+                @include transition(background-color $transition-default);
+
+                &:checked {
+                    background-color: var(--primary) !important;
+                }
+
+                &::before {
+                    top: unset;
+                    transform: unset;
+                }
+            }
+        }
+
+        &-cookie-des-table {
+            li {
+                color: var(--dark);
+            }
+        }
+
+        &-footer {
+            &-wrapper {
+                [data-cky-tag="detail-powered-by"] {
+                    a {
+                        margin: {
+                            bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,70 @@
+.parallax {
+    background: {
+        attachment: fixed;
+        position: center;
+        size: cover;
+    }
+
+    .colorWrap {
+        @include transition(background $transition-default);
+    }
+
+    @for $i from 1 through 100 {
+        &.primary-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--primary-#{$i});
+                }
+            }
+        }
+        &.secondary-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--secondary-#{$i});
+                }
+            }
+        }
+        &.tertiary-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--tertiary-#{$i});
+                }
+            }
+        }
+        &.quaternary-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--quaternary-#{$i});
+                }
+            }
+        }
+        &.quinary-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--quinary-#{$i});
+                }
+            }
+        }
+        &.senary-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--senary-#{$i});
+                }
+            }
+        }
+        &.white-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--white-#{$i});
+                }
+            }
+        }
+        &.black-#{$i} {
+            .colorWrap {
+                background: {
+                    color: var(--black-#{$i});
+                }
+            }
+        }
+    }
+}

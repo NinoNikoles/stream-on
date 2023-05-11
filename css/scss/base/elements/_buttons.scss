@@ -1,0 +1,275 @@
+/* BUTTONS */
+a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
+    // For color-order look at buttons mixin
+    @include button();
+    @include button-colors(var(--white), var(--white), var(--black), var(--dark-light));
+    &.hollow { @include button-hollow(); }
+
+    &.btn-primary { @include button-colors(var(--white), var(--white), var(--primary), var(--primary-dark));
+        &.hollow { @include button-hollow(var(--primary), var(--white), var(--primary), var(--primary)); }
+    }
+
+    &.btn-secondary{ @include button-colors(var(--white), var(--white), var(--secondary), var(--secondary-dark));
+        &.hollow { @include button-hollow(var(--secondary), var(--white), var(--secondary) , var(--secondary)); }
+    }
+
+    &.btn-tertiary{ @include button-colors(var(--white), var(--white), var(--tertiary), var(--tertiary-dark));
+        &.hollow { @include button-hollow(var(--tertiary), var(--white), var(--tertiary), var(--tertiary)); }
+    }
+
+    &.btn-quaternary{ @include button-colors(var(--white), var(--white), var(--quaternary), var(--quaternary-dark));
+        &.hollow { @include button-hollow(var(--quaternary), var(--white), var(--quaternary), var(--quaternary)); }
+    }
+
+    &.btn-quinary{ @include button-colors(var(--white), var(--white), var(--quinary), var(--quinary-dark));
+        &.hollow { @include button-hollow(var(--quinary), var(--white), var(--quinary), var(--quinary)); }
+    }
+
+    &.btn-grey { @include button-colors(var(--black), var(--white), var(--white), var(--grey));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--grey), var(--white)); }
+    }
+
+    &.btn-white { @include button-colors(var(--font-color), var(--white), var(--white), var(--primary));
+        &.hollow { @include button-hollow(var(--black), var(--white), var(--black), var(--black), var(--black)); }
+    }
+
+    &.btn-black { @include button-colors(var(--white), var(--white), var(--black), var(--dark-light));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--black), var(--black)); }
+    }
+
+    &.btn-success { @include button-colors(var(--white), var(--white), var(--success), var(--success-dark));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--success), var(--success-dark)); }
+    }
+
+    &.btn-warning { @include button-colors(var(--white), var(--white), var(--warning), var(--warning-dark));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--warning), var(--warning-dark)); }
+    }
+
+    &.btn-alert { @include button-colors(var(--white), var(--white), var(--alert), var(--alert-dark));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--alert), var(--alert-dark)); }
+    }
+
+    &.btn-round {
+        border-radius: 100px !important;
+    }
+
+    &.disabled {
+        opacity: 0.5 !important;
+        cursor: not-allowed !important;
+    }
+
+    &.btn--special {
+        text-align: left !important;
+    }
+
+    &.icon-only {
+        min-width: unset !important;
+    }
+}
+
+// Pre Setting Buttons
+.btn {
+    &-contact {
+        &::before {
+            content: "\f1d8" !important;
+        }
+    }
+
+    &-mail {
+        &::before {
+            content: "\6d" !important;
+        }
+    }
+
+    &-map {
+        &::before {
+            content: "\f3c5" !important;
+        }
+    }
+
+    &-back {
+        &::before {
+            content: "\f060" !important;
+        }
+    }
+}
+
+a.btn.btn-big.btn-special {
+    font: {
+        family: var(--font-family-alternative) !important;
+        size: rem-calc($font-size-large) !important;
+    }
+    line: {
+        height: rem-calc($line-height-large) !important;
+    }
+    padding: {
+        top: rem-calc(30) !important;
+        right: rem-calc(20) !important;
+        bottom: rem-calc(30) !important;
+        left: rem-calc(20) !important;
+    }
+    margin: {
+        right: 0 !important;
+        bottom: 0 !important;
+    }
+    text-transform: uppercase !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($font-size-smaller) !important;
+        }
+        line: {
+            height: rem-calc($line-height-small) !important;
+        }
+    }
+}
+
+a.scrollTo {
+    cursor: pointer;
+}
+
+
+// Back to top backtotop button
+a.backtotop {
+    &::before {
+        content: "\e82d";
+    }
+
+    &.hidden {
+        opacity: 0;
+    }
+}
+
+// Mobile Navigation Button
+.menu-button {
+    min-width: rem-calc(50);
+    min-height: rem-calc(50);
+    margin: {
+        bottom: 0;
+    }
+    position: relative;
+    z-index: 10;
+
+    @include MQ(medium) {
+        display: none;
+    }
+
+    .tx {
+        display: none;
+    }
+
+    .trigger-bar {
+        display: block;
+        background: {
+            color: var(--font-color);
+        }
+        height: 4px;
+        width: rem-calc(30);
+        margin: {
+            bottom: 0;
+        }
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) rotate(0deg);
+        @include transition(all $transition-default);
+
+    }
+
+    .bar {
+        &-1 {
+            top: calc(50% - 10px);
+        }
+
+        &-2 {
+            top: calc(50% - 2px);
+        }
+
+        &-3 {
+            top: calc(50% + 6px);
+        }
+    }
+
+    &.active-button {
+        .bar {
+            &-1 {
+                top: calc(50% - 2px);
+                transform: translateX(-50%) rotate(45deg);
+            }
+
+            &-2 {
+                opacity: 0;
+            }
+
+            &-3 {
+                top: calc(50% - 2px);
+                transform: translateX(-50%) rotate(-45deg);
+            }
+        }
+    }
+}
+
+// Buttons for changing Theme
+#theme-switch, .theme-switch {
+    display: inline-block;
+    color: var(--font-color);
+    font: {
+        size: 0;
+    }
+    line-height: 1;
+    width: auto;
+    height: auto;
+    margin: {
+        bottom: 0;
+    }
+    padding: {
+        right: rem-calc(20);
+        left: rem-calc(20);
+    }
+    position: relative;
+    z-index: 10;
+
+    &::before {
+        font: {
+            size: rem-calc(24);
+        }
+        position: unset;
+        transform: unset;
+    }
+
+    &:hover {
+        color: var(--primary);
+    }
+}
+
+// Button for changing theme
+#theme-switch, .theme-switch {
+    &::before {
+        [data-theme="light"] & {
+            content: "\e91c";
+        }
+
+        [data-theme="dark"] & {
+            content: "\e91b";
+        }
+    }
+}
+
+// Button for changing language
+#lang-switch, .lang-switch {
+    &::before {
+        content: "\e877";
+    }
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+
+        .languages {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

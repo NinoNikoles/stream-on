@@ -1,0 +1,95 @@
+.callout {
+    width: 100%;
+    position: relative;
+
+    &::before {
+        content: "";
+        width: rem-calc(50);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &::after {
+        content: "";
+        color: var(--white);
+        font: {
+            family: $icon-font;
+            size: rem-calc(24);
+        }
+        line-height: 1;
+        position: absolute;
+        top: 50%;
+        left: rem-calc(25);
+        transform: translate(-50%, -50%);
+    }
+
+    p {
+        color: var(--dark);
+        width: calc(100% - 50px);
+        margin: {
+            left: rem-calc(50);
+        }
+        padding: {
+            top: rem-calc(20);
+            right: rem-calc(20);
+            bottom: rem-calc(20);
+            left: rem-calc(20);
+        }
+    }
+
+    &.success {
+        &::before {
+            background: {
+                color: var(--success);
+            }
+        }
+
+        &::after {
+            content: "\e92a";
+        }
+
+        p {
+            background: {
+                color: var(--success-light);
+            }
+        }
+    }
+
+    &.alert {
+        &::before {
+            background: {
+                color: var(--alert);
+            }
+        }
+
+        &::after {
+            content: "x";
+        }
+
+        p {
+            background: {
+                color: var(--alert-light);
+            }
+        }
+    }
+
+    &.warning {
+        &::before {
+            background: {
+                color: var(--warning);
+            }
+        }
+
+        &::after {
+            content: "!";
+        }
+
+        p {
+            background: {
+                color: var(--warning-light);
+            }
+        }
+    }
+}

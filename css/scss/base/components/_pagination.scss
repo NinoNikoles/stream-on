@@ -1,0 +1,92 @@
+.pagination {
+    &-wrapper {
+        #sorting,
+        #pageSizes,
+        #currentSite {
+            .label {
+                margin: {
+                    bottom: 0;
+                }
+            }
+        }
+
+        .select-wrapper {
+            margin: {
+                bottom: rem-calc($space-base);
+            }
+            position: relative;
+
+            .dropdown-fake {
+                aspect-ratio: 1/1;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                pointer-events: none;
+
+                i {
+                    color: var(--font-color);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    @include transition(color $transition-default);
+
+                    &::before {
+                        content: "\e917";
+                        color: inherit;
+                    }
+                }
+            }
+        }
+
+        .site-wrapper {
+            display: flex;
+            flex-direction: row;
+
+            a {
+                &.btn {
+                    border: {
+                        radius: 0;
+                    }
+                    line: {
+                        height: 1;
+                    }
+                    width: rem-calc(41);
+                    margin: {
+                        right: rem-calc(8);
+                    }
+                    padding: 0;
+
+                    &.pag-first {
+                        &::after {
+                            display: inline !important;
+                            background: {
+                                color: transparent !important;
+                            }
+                            content: "\e918" !important;
+                            font: {
+                                family: $icon-font;
+                                size: inherit;
+                            }
+                        }
+                    }
+
+                    &.pag-last {
+                        &::after {
+                            display: inline !important;
+                            background: {
+                                color: transparent !important;
+                            }
+                            content: "\e919" !important;
+                            font: {
+                                family: $icon-font;
+                                size: inherit;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

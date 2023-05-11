@@ -1,0 +1,17 @@
+[data-theme="dark"] {
+    // -- Variables --
+    @import "../settings/dark-colors";
+    // -- Basics --
+    @import "dark/basics/layout";
+
+    // -- Elements --
+    @import "dark/elements/buttons";
+    //@import "dark/elements/social";
+
+    // -- Components --
+    @import "dark/components/parallax";
+    //@import "dark/components/header";
+    //@import "dark/components/card";
+    //@import "dark/components/posts";
+}
+

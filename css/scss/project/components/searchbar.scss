@@ -1,0 +1,41 @@
+#searchbar {
+    position: relative;
+    z-index: 1;
+
+    label {
+        position: relative;
+
+        &::after {
+            content: "\e90d";
+            font: {
+                family: $icon-font;
+                size: rem-calc(30);
+            }
+            line-height: 1;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        input {
+            padding: {
+                right: rem-calc(46);
+            }
+        }
+    }
+
+    > div {
+        background: {
+            color: var(--body-bg);
+        }
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        max-height: rem-calc(300);
+        overflow: scroll;
+
+        &.hidden {
+            display: none;
+        }
+    }
+}

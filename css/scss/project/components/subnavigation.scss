@@ -1,0 +1,18 @@
+nav.header-menu-main {
+    .menu {
+        .menu-item {
+            .sub-menu {
+                .submenu--header {
+                    a:not(.backbutton) {
+                        color: var(--font-color-invert);
+                    }
+                }
+            }
+        }
+    }
+
+    .subbutton,
+    .backbutton {
+        color: var(--font-color-invert);
+    }
+}

@@ -1,0 +1,143 @@
+// Color, Color on Hover, Background, Background on Hover, (Border, Border on Hover)
+@mixin button() {
+    // Standard Settings
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: unset;
+    font: {
+        family: var(--font-family);
+        size: rem-calc($font-size-small);
+        weight: $button-font-weight;
+    }
+    line: {
+        height: $button-line-height;
+    }
+    text: {
+        align: center;
+        transform: $button-text-transform;
+    }
+    border: {
+        radius: rem-calc($button-border-radius);
+        style: $button-border-style;
+        width: rem-calc($button-border-width);
+    }
+    padding: {
+        top: rem-calc($button-padding-top * 0.5);
+        right: rem-calc($button-padding-right * 0.7);
+        bottom: rem-calc($button-padding-bottom * 0.5);
+        left: rem-calc($button-padding-left * 0.7);
+    }
+    margin: {
+        bottom: rem-calc($space-base);
+    }
+    max-width: 100%;
+    min-width: 100%;
+    position: relative;
+    outline: none;
+    opacity: 1;
+    cursor: pointer;
+    vertical-align: middle;
+    @include transitions(all $transition-default);
+
+    @include MQ(xxsmall) {
+        display: inline-flex;
+        min-width: rem-calc($button-min-width);
+        max-width: none;
+    }
+
+    @include MQ(medium) {
+        font: {
+            size: rem-calc($button-font-size);
+        }
+        padding: {
+            top: rem-calc($button-padding-top);
+            right: rem-calc($button-padding-right);
+            bottom: rem-calc($button-padding-bottom);
+            left: rem-calc($button-padding-left);
+        }
+    }
+
+    /////////////////////////////////////////////
+    // Standard settings for button with icon //
+    ////////////////////////////////////////////
+    &.icon-right,
+    &.icon-left,
+    &.icon-only {
+        &::before {
+            display: inline-block;
+            color: inherit;
+            font: {
+                family: $icon-font;
+                size: inherit;
+                weight: inherit;
+            }
+            line-height: inherit;
+            position: unset;
+        }
+    }
+
+    &.icon-left { &::before { margin-right: rem-calc($space-base); } }
+
+    &.icon-right { flex-direction: row-reverse; &::before { margin-left: rem-calc($space-base); } }
+
+    &.icon-only {
+        max-width: unset;
+        min-width: unset;
+
+        &::before {
+            position: unset;//
+        }
+    }
+
+    //////////////////
+    // Button Sizes //
+    //////////////////
+    &.btn-big {  @include button-size(big); }
+    &.btn-small {  @include button-size(small); }
+}
+
+@mixin button-colors($color: $white, $colorHover: $white, $bg: $black, $bgHover: $dark-light, $borderColor: transparent, $borderHover: transparent) {
+    // Standard Settings
+    background: {
+        color: $bg;
+    }
+    color: $color;
+    border-color: $borderColor;
+
+    > a {
+        color: $color;
+    }
+
+    /////////////////////////////////////////////
+    // Standard settings for button with icon //
+    ////////////////////////////////////////////
+    &.icon-right,
+    &.icon-left,
+    &.icon-only {
+        &::before {
+            color: inherit;
+        }
+    }
+
+    ///////////////////
+    // Hover Effects //
+    ///////////////////
+    @include button-animation($button-animation, $colorHover, $bg, $bgHover, $borderHover);
+}
+
+// Color, Color on Hover, Background on Hover, Border, Border on Hover
+@mixin button-hollow($color: $black, $colorHover: $white, $bgHover: $black, $borderColor: $black, $borderHover: $borderColor) {
+    $bg: transparent;
+    background-color: transparent;
+    border-color: $borderColor;
+    color: $color;
+
+    > a {
+        color: $color;
+    }
+
+    // Hover effects
+    @include button-animation($button-animation, $colorHover, $bg, $bgHover, $borderHover);
+}

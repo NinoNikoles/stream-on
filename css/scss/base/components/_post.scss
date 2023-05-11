@@ -1,0 +1,55 @@
+.wp-block-latest-posts {
+    margin: {
+        bottom: 0;
+        left: 0;
+    }
+
+    li {
+        display: flex;
+        background: {
+            color: var(--grey-light);
+        }
+        @include transition(background-color $transition-default);
+
+        a {
+            margin: {
+                bottom: 0;
+            }
+        }
+
+        > div {
+            display: flex;
+            width: 25%;
+            max-width: rem-calc(200);
+
+            img {
+                aspect-ratio: 1 / 1;
+                object: {
+                    fit: cover;
+                    position: center;
+                }
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        > a {
+            padding: {
+                top: rem-calc(10);
+                right: rem-calc(20);
+                bottom: rem-calc(10);
+                left: rem-calc(20);
+            }
+            width: 75%;
+
+            * {
+                color: var(--font-color);
+            }
+
+            > strong {
+                @extend .h2;
+
+            }
+        }
+    }
+}

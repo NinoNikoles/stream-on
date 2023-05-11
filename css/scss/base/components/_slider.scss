@@ -1,0 +1,94 @@
+.owl {
+    &-carousel {
+        a {
+            margin: {
+                bottom: 0;
+            }
+        }
+    }
+
+    //-- Nav --
+    &-prev,
+    &-next {
+        @extend .btn;
+        @extend .btn-primary;
+
+        border: none !important;
+        width: rem-calc(40);
+        height: rem-calc(40);
+        margin: 0 !important;
+        padding: 0 !important;
+        position: relative;
+
+        &::before {
+            content: '';
+            font-family: $icon-font;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        span {
+            display: none;
+        }
+    }
+
+    &-prev {
+        &::before {
+            content: "\e915";
+        }
+    }
+
+    &-next {
+        &::before {
+            content: "\e917";
+        }
+    }
+
+    //-- Dots --
+    &-dots {
+        text: {
+            align: center;
+        }
+        margin: {
+            bottom: rem-calc($space-base);
+        }
+
+        .owl-dot {
+            background: none;
+            border: none;
+            width: rem-calc(20);
+            height: rem-calc(20);
+            margin: {
+                right: rem-calc(5);
+                left: rem-calc(5);
+            }
+            padding: 0;
+
+            span {
+                background: {
+                    color: var(--grey);
+                }
+                border: {
+                    radius: rem-calc(300);
+                }
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+                margin: {
+                    bottom: 0;
+                }
+                @include transition(background-color $transition-default);
+            }
+
+            &.active {
+                span {
+                    background: {
+                        color: var(--primary);
+                    }
+                } 
+            }
+        }
+    }
+}

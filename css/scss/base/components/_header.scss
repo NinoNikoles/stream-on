@@ -1,0 +1,53 @@
+header,#header,.header {
+    position: relative;
+    top: 0;
+    width: 100%;
+    background: {
+        color: var(--header-bg);
+    }
+    //position: relative;
+    z-index: 1;
+    @include transition(background-color $transition-default);
+
+    &.fixed-header {
+        position: fixed;
+    }
+
+    .header--content--nav {
+        display: flex;
+        flex: {
+            direction: row;
+        }
+        align-items: center;
+
+        .navWrap {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 50%;
+            min-height: var(--mnavheight);
+
+            @include MQ(medium) {
+                width: 75%;
+            }
+
+            &.right {
+                justify-content: right;
+            }
+        }
+
+        .header--logo {
+            width: 50%;
+
+            a, span {
+                margin: {
+                    bottom: 0;
+                }
+            }
+
+            @include MQ(medium) {
+                width: 25%;
+            }
+        }
+    }
+}

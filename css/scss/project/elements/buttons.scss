@@ -1,0 +1,10 @@
+a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
+    line: {
+        height: 1 !important;
+    }
+    min-height: rem-calc(50) !important;
+
+    @include MQ(xsmall) {
+        min-width: rem-calc(200) !important;
+    }
+}

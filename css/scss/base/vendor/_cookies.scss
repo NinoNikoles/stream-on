@@ -1,0 +1,136 @@
+html.show-cookies{
+
+	.cookieWrap{
+	@include translate(0%,0%);
+
+		.cookieshow{
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+	.cookieWrap.hide{
+	@include translate(0%,100%);
+	}
+
+	.cookieWrap.hide:hover{
+	@include translate(0%,0%);
+	}
+}
+
+body.transition{
+	.cookieWrap{
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+
+.cookieWrap{
+	background: var(--primary);
+	border: none;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 99999;
+	//overflow:hidden;
+	@include translate(0%, 100%);
+	@include transition(all 0.3s ease-in-out 0s);
+
+	@include MQ(small) {
+		border: none;
+	}
+
+	p > a {
+		color: var(--white);
+		font-weight: 600;
+		text-decoration: underline;	
+		@include transition(all 0.3s ease-in-out 0s);
+
+		&:hover{
+			opacity: 0.7;
+		}
+	}
+
+	.cookiePolicy{
+		width: 100%;
+	    position: relative;
+		margin: 0 auto;
+		z-index: 1;
+		text-align: center;
+
+		.cookieshow{
+			width: 60px;
+			height: 60px;
+			background: var(--primary-dark);
+			position: absolute;
+			top: -60px;
+			left: 0px;
+			opacity: 0;
+			visibility: hidden;
+			@include transition(all 0.3s ease-in-out 0s);
+
+			svg{
+				height: 100%;
+
+				path{
+					fill: #fff
+				}
+			}
+		}
+
+		.cookieHeadline{
+			display:inline-block;
+			font-weight: 600;
+			padding-right: 5px;
+			text-transform: uppercase;
+			color: #fff;
+			font-size: 14px;
+			right: 0;
+		}
+
+		p{
+			color: #fff;
+			font-size: 14px;
+			padding: 20px 10px 5px;
+			line-height: 1.5;
+			margin-bottom: 0;
+			font-weight: 300;
+			display: block;
+		}
+	}
+
+	div.buttons{
+		padding-top: 5px;
+		padding-bottom: 5px;
+
+		a{
+			font-size: 14px;
+			background: var(--primary-dark);
+			color: #fff;
+			padding: 0 15px;
+			display: inline-block;
+			font-weight: 600;
+			line-height: 40px;
+			height: 40px;
+			margin: 10px 5px;
+			@include transition(0.3s ease-in-out 0s);
+
+			@include MQ(small) {
+			margin: 5px;
+			width: 100%;
+			width: calc(100% - 10px);
+			box-sizing: border-box;
+			}
+
+			@include MQ(xxsmall) {
+				font-size: 12px
+			}
+
+			&:hover{
+				background: var(--white);
+				color: var(--primary-dark);
+			}
+		}
+	}
+}

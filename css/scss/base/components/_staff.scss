@@ -1,0 +1,134 @@
+.staff {
+    &--wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        @for $i from 1 through $grid-columns {
+            &.staff-#{$i} {
+                .staff {
+                    &--item {
+                        @extend .grid;
+                        width: 100%;
+                        min-width: 100%;
+
+                        @include MQ(xxxsmall) {
+                            width: 50%;
+                            min-width: 50%;
+                        }
+
+                        @include MQ(xsmall) {
+                            width: 25%;
+                            min-width: 25%;
+                        }
+
+                        @include MQ(medium) {
+                            width: 100% / $i;
+                            min-width: 100% / $i;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &--item {
+        display: flex !important;
+        align-items: stretch;
+        margin: {
+            bottom: rem-calc($space-base);
+        }
+        padding: {
+            right: rem-calc($grid-padding);
+            left: rem-calc($grid-padding);
+        }
+
+        &--wrapp {
+            width: 100%;
+        }
+
+        &--contact {
+            text-align: right;
+
+            a, span {
+                width: rem-calc(40);
+                height: rem-calc(40);
+                margin: {
+                    bottom: 0;
+                }
+            }
+            a {
+                @include transition(background-color $transition-default);
+
+                $color-list: (
+                    'primary': 'primary',
+                    'secondary': 'secondary',
+                    'tertiary': 'tertiary',
+                    'quaternary': 'quaternary',
+                    'quinary': 'quinary',
+                    'grey': 'grey',
+                    'success': 'success',
+                    'warning': 'warning',
+                    'alert': 'alert'
+                );
+
+                @each $color, $val in $color-list {
+                    .bg-#{$color} & {
+                        background: {
+                            color: var(--#{$val}-light);
+                        }
+
+                        &:hover {
+                            background:{
+                                color: var(--#{$val}-dark);
+                            }
+                        }
+                    }
+
+                    .bg-#{$color}-light &,
+                    .bg-#{$color}-dark & {
+                        background: {
+                            color: var(--#{$val});
+                        }
+                    }
+
+                    .bg-#{$color}-light & {
+                        &:hover {
+                            background:{
+                                color: var(--#{$val}-dark);
+                            }
+                        }
+                    }
+
+                    .bg-#{$color}-dark & {
+                        &:hover {
+                            background:{
+                                color: var(--#{$val}-light);
+                            }
+                        }
+                    }
+                }
+
+                span {
+                    position: relative;
+
+                    &::before {
+                        margin: {
+                            right: 0;
+                        }
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        @include transform(translate(-50%,-50%));
+                    }
+                }
+            }
+        }
+    }
+
+    &--title {
+        margin: {
+            bottom: 0;
+        }
+    }
+}

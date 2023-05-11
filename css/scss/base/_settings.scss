@@ -1,0 +1,232 @@
+//-- Default colors --
+$color-palette: (
+    primary: (
+        base: #3da1bf,
+        dark: #51D6FF
+    ),
+    secondary: (
+        base: #29bf68,
+        dark: #37FF8B
+    ),
+    tertiary: (
+        base: #bf4347,
+        dark: #FF595E
+    ),
+    quaternary: (
+        base: #683b5e,
+        dark: #8A4F7D
+    ),
+    quinary: (
+        base: #ff6666,
+        dark: #FFCA3A
+    ),
+    senary: (
+        base: #FFFF00,
+        dark: #999900
+    ),
+    white: (
+        base: #ffffff,
+        01:   #F5F5F5,
+        02:   #DEDEDE
+    ),
+    black: (
+        base: #000000,
+        dark: #000000
+    ),
+    grey: (
+        base: #eeeeee,        
+        dark: #eeeeee     
+    ),
+    dark: (
+        base: #121212,
+        dark: #121212
+    ),
+    success: (
+        base: #3adb76,
+        dark: #3adb76
+    ),
+    warning: (
+        base: #ffae00,
+        dark: #ffae00
+    ),
+    alert: (
+        base: #cc4b37,
+        dark: #cc4b37
+    ),
+    offwhite: (
+        base: #fff8f0,
+        dark: #fff8f0
+    )
+) !default;
+
+$dark-materials: (
+    dp0:    map-get(map-get($color-palette, dark), base),
+    dp1:    #1e1e1e,
+    dp2:    #222222,
+    dp3:    #242424,
+    dp4:    #262626,
+    dp6:    #2c2c2c,
+    dp8:    #2e2e2e,
+    dp12:   #323232,
+    dp16:   #353535,
+    dp24:   #373737,
+) !default;
+
+//-- Typography --
+$typo: (
+    color:                          map-get(map-get($color-palette, dark), base),
+    color-headline:                 map-get(map-get($color-palette, dark), base),
+    color-invert:                   map-get(map-get($color-palette, white), base),
+    font-family:  					('Roboto', 'Open Sans', 'Neue Helvetica', Helvetica, sans-serif),
+    font-family-alternative:		('Roboto', 'Open Sans', Helvetica, sans-serif),
+    font-size-base:                 16,
+    font-weight:                    normal,
+    icon:                           'Default',
+    line-height-base:               1.8,
+    line-height-headline:           1.4,
+    letterspacing:                  .0em
+) !default;
+
+//-- Font sizes --
+$font-sizes: (
+    small: (
+        paragraph:  map-get($typo, font-size-base),
+        h1:         24,
+        h2:         20,
+        h3:         19,
+        h4:         18,
+        h5:         17,
+        h6:         16,
+    ),
+    medium: (
+        paragraph:  map-get($typo, font-size-base),
+        h1:         48,
+        h2:         40,
+        h3:         31,
+        h4:         25,
+        h5:         20,
+        h6:         16,
+    )
+) !default;
+
+//-- Grid --
+$grid: (
+    columns:        12,
+    max-width:      1400,
+    padding:        16,
+) !default;
+
+//-- Breakpoints
+$breakpoints: (
+    xxxsmall:   320px,
+    xxsmall:    640px,
+    xsmall:     720px,
+    small:      1024px,
+    medium:     1080px,
+    large:      1280px,
+    xlarge:     1440px,
+    xxlarge:    1600px,
+    xxxlarge:   1920px,
+) !default;
+
+//-- Space --
+$space: (
+    no:     0,
+    base:   16,
+    xxs:    8,
+    xs:     24,
+    s:      48,
+    m:      64,
+    l:      80,
+    xl:     96,
+    xxl:    112
+) !default;
+
+//-- Global --
+$global: (
+    border-color:           map-get(map-get($color-palette, grey), base),
+    border-color-hover:     map-get(map-get($color-palette, dark), base),
+    border-radius:          0,
+    border-style:           solid,
+    border-width:           2,
+    margin:                 16,
+    padding:                16,
+    rounded:                50
+) !default;
+
+//-- Buttons --
+$button: (
+    animation:          'default',
+    border-radius:      map-get($global, border-radius),
+    border-style:       map-get($global, border-style),
+    border-width:       map-get($global, border-width),
+    font-family:        map-get($typo, font-family),
+    font-size:          map-get($typo, font-size-base),
+    font-weight:        500,
+    line-height:        #{floor(map-get($typo, font-size-base) * map-get($typo, line-height-base))/16}rem,
+    text-transform:     unset,
+    min-width:          0,
+    padding-top:        14,
+    padding-right:      22,
+    padding-bottom:     14,
+    padding-left:       22,
+) !default;
+
+$button-size: (
+    small:  0.75,
+    normal: 1,
+    big:    1.25,
+    right:  map-get($button, padding-right),
+    left:   map-get($button, padding-left)
+);
+
+//-- Form
+$input: (
+    background:             transparent,
+    border-color:           map-get($global, border-color),
+    border-color-focus:     map-get($global, border-color-hover),
+    border-radius:          map-get($global, border-radius),
+    border-style:           map-get($global, border-style),
+    border-width:           map-get($global, border-width),
+    color:                  map-get($typo, color),
+    font-family:            map-get($typo, font-family),
+    font-size:              map-get($typo, font-size-base),
+    font-weight:            700,
+    label-color:            map-get($typo, color),
+    line-height:            1,
+    place-holder-color:     map-get(map-get($color-palette, grey), base),
+    space-horizontal:       8,
+    space-vertical:         8
+) !default;
+
+//-- Table --
+$table: (
+    background:          map-get(map-get($color-palette, grey), base),
+    border-color:        map-get($global, border-color),
+    border-radius:       map-get($global, border-radius),
+    border-style:        map-get($global, border-style),
+    border-width:        map-get($global, border-width),
+    font-size:           map-get(map-get($font-sizes, medium), paragraph),
+    font-size-small:     map-get(map-get($font-sizes, small), paragraph),
+    line-height:         map-get($typo, line-height-base),
+    space-horizontal:    10,
+    space-vertical:      8
+) !default;
+
+//-- Aspect ratio --
+$aspect-ratio: (
+    original:   unset,
+    widescreen: 16 / 9,
+    classic:    4 / 3,
+    square:     1 / 1,
+    panorama:   5 / 1,
+    teaser:     3 / 1,
+    portrait:   4 / 5,
+    vertical:   9 / 16,
+    poster:     2 / 3,
+) !default;
+
+//-- Transitions --
+$transitions: (
+    default: 0.3s ease
+) !default;

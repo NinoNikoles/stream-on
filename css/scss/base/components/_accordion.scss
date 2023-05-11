@@ -1,0 +1,113 @@
+.accordion {
+    list-style-type: none;
+    margin: {
+        left: 0;
+    }
+
+    &-item {
+        &.is-active {
+            .accordion {
+                &-title {
+                    background: {
+                        color: var(--border-color);
+                    }
+                    color: var(--dark);
+
+                    &::before {
+                        content: "-";
+                    }
+                }
+
+                &-content {
+                    padding: {
+                        top: rem-calc(15);
+                        bottom: rem-calc(15);
+                    }
+                }
+            }
+        }
+    }
+
+    &-title {
+        display: block;
+        border: {
+            color: var(--border-color);
+            radius: 0;
+            style: $border-style;
+            width: rem-calc($border-width);
+            bottom-width: 0;
+        }
+        color: var(--font-color);
+        padding: {
+            top: rem-calc(20);
+            right: rem-calc(15);
+            bottom: rem-calc(20);
+            left: rem-calc(20);
+        }
+        margin: {
+            bottom: 0;
+        }
+        position: relative;
+
+        @include transitions(background-color $transition-default, border-color $transition-default, color $transition-default);
+
+        &:hover {
+            background: {
+                color: var(--border-color);
+            }
+            color: var(--dark);
+        }
+
+        &::before {
+            content: "+";
+            font: {
+                family: $icon-font;
+            }
+            position: absolute;
+            top: 50%;
+            right: rem-calc(15);
+            transform: translateY(-50%);
+        }
+    }
+
+    &-content {
+        display: none;
+        border: {
+            color: var(--border-color);
+            radius: rem-calc($border-radius);
+            style: $border-style;
+            width: rem-calc($border-width);
+
+            bottom: 0;
+        }
+        padding: {
+            right: rem-calc(15);
+            left: rem-calc(15);
+        }
+
+        > *:last-child {
+            margin: {
+                bottom: 0;
+            }
+        }
+    }
+}
+
+:last-child {
+    &:not(.is-active) {
+        > .accordion-title {
+            border: {
+                bottom-width: rem-calc($border-width);
+            }
+        }
+    }
+
+    > .accordion-content {
+        &:last-child {
+            border: {
+                top: 0;
+                bottom: rem-calc($border-width) $border-style var(--border-color);
+            }
+        }
+    }
+}

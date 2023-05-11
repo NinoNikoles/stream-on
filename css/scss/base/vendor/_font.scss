@@ -1,0 +1,40 @@
+//-- Roboto --
+@include font-face('Roboto', css/fonts/roboto/Roboto-Thin, 100, normal, eot ttf woff svg);
+@include font-face('Roboto', css/fonts/roboto/Roboto-ThinItalic, 100, italic, eot ttf woff svg);
+
+@include font-face('Roboto', css/fonts/roboto/Roboto-Light, 300, normal, eot ttf woff svg);
+@include font-face('Roboto', css/fonts/roboto/Roboto-LightItalic, 300, italic, eot ttf woff svg);
+
+@include font-face('Roboto', css/fonts/roboto/Roboto-Regular, 400, normal, eot ttf woff svg);
+@include font-face('Roboto', css/fonts/roboto/Roboto-Italic, 400, italic, eot ttf woff svg);
+
+@include font-face('Roboto', css/fonts/roboto/Roboto-Medium, 500, normal, eot ttf woff svg);
+@include font-face('Roboto', css/fonts/roboto/Roboto-MediumItalic, 500, italic, eot ttf woff svg);
+
+@include font-face('Roboto', css/fonts/roboto/Roboto-Bold, 700, normal, eot ttf woff svg);
+@include font-face('Roboto', css/fonts/roboto/Roboto-BoldItalic, 700, italic, eot ttf woff svg);
+
+@include font-face('Roboto', css/fonts/roboto/Roboto-Black, 900, normal, eot ttf woff svg);
+@include font-face('Roboto', css/fonts/roboto/Roboto-BlackItalic, 900, italic, eot ttf woff svg);
+
+//-- Open Sans --
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-Light, 300, normal, eot ttf woff svg);
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-LightItalic, 300, italic, eot ttf woff svg);
+
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-Regular, 400, normal, eot ttf woff svg);
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-Italic, 400, italic, eot ttf woff svg);
+
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-Medium, 500, normal, eot ttf woff svg);
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-MediumItalic, 500, italic, eot ttf woff svg);
+
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-SemiBold, 600, normal, eot ttf woff svg);
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-SemiBoldItalic, 600, italic, eot ttf woff svg);
+
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-Bold, 700, normal, eot ttf woff svg);
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-BoldItalic, 700, italic, eot ttf woff svg);
+
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-ExtraBold, 800, normal, eot ttf woff svg);
+@include font-face('Open Sans', css/fonts/open-sans/OpenSans-ExtraBoldItalic, 800, italic, eot ttf woff svg);
+
+//-- Default (Icon-Font) --
+@include font-face('Default', css/fonts/default/default, 400, normal, eot ttf woff svg);

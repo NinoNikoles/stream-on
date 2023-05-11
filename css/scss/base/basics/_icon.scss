@@ -1,0 +1,188 @@
+// @include font-face(default, css/fonts/default, 700, normal, eot ttf woff svg);
+
+i {
+    font-family: $icon-font;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 20px;
+
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    -o-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon::before{
+    content: '';
+    font-family: $icon-font;
+    text: {
+        transform: none;
+    }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    -o-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-left,
+.icon-right {
+    &::before {
+        display: inline-block;
+        content: "";
+        font: {
+            family: $icon-font;
+            size: inherit;
+        }
+        text: {
+            transform: none;
+        }
+        margin: {
+            right: 10px;
+        }
+    }
+}
+
+.icon-right {
+    &::before {
+        margin: {
+            right: 0;
+            left: 10px;
+        }
+    }
+}
+
+a.icon-left:hover,
+a.icon-right:hover {
+    &::before{
+        color: inherit;
+    }
+
+    &::after{
+        color: inherit;
+    }
+}
+
+// Normal Icons
+.icon {
+    &-add { &::before { content: "+"; } }
+    &-add-user { &::before { content: "\e934"; } }
+    &-check { &::before { content: "\c"; } }
+    &-chevron-down { &::before { content: "\e917"; transform: translate(-50%, -50%) !important; rotate: 90deg !important; } }
+    &-chevron-left { &::before { content: "\e918"; } }
+    &-chevron-up { &::before { content: "\e91a"; } }
+    &-chevron-right { &::before { content: "\e919"; } }
+    &-calender { &::before { content: "\e910"; } }
+    &-close { &::before { content: "x"; } }
+    &-error { &::before { content: "!"; } }
+    &-globe { &::before { content: "g"; } }
+    &-help { &::before { content: "?"; } }
+    &-home { &::before { content: "h"; } }
+    &-info { &::before { content: "i"; } }
+    &-location { &::before { content: "\e91d"; } }
+    &-mail { &::before { content: "m"; } }
+    &-moon { &::before { content: "\e91b"; } }
+    &-pause { &::before { content: "\e901"; } }
+    &-pen { &::before { content: "e"; } }
+    &-phone { &::before { content: "p"; } }
+    &-play { &::before { content: "\e902"; } }
+    &-remove { &::before { content: "-"; } }
+    &-repeat { &::before { content: "\e903"; } }
+    &-repeat-one { &::before { content: "\e904"; } }
+    &-replay { &::before { content: "\e905"; } }
+    &-shuffle { &::before { content: "\e906"; } }
+    &-send { &::before { content: "s"; } }
+    &-skip-next { &::before { content: "\e907"; } }
+    &-skip-previous { &::before { content: "\e908"; } }
+    &-spotify { &::before { content: "\f1bc"; } }
+    &-stop { &::before { content: "\e908"; } }
+    &-sun { &::before { content: "\e91c"; } }
+    &-trash { &::before { content: "\e900"; } }
+    &-volume-down { &::before { content: "\e909"; } }
+    &-volume-mute { &::before { content: "\e90a"; } }
+    &-volume-off { &::before { content: "\e90b"; } }
+    &-volume-up { &::before { content: "\e90c"; } }
+}
+
+// Brand Icons
+.icon {
+    &-discord { &::before { content: "\e937"; } }
+    &-epicgames { &::before { content: "\e938"; } }
+    &-github { &::before { content: "\e939"; } }
+    &-gmail { &::before { content: "\e93a"; } }
+    &-google { &::before { content: "\e93b"; } }
+    &-instagram { &::before { content: "\e93c"; } }
+    &-netflix { &::before { content: "\e93d"; } }
+    &-switch { &::before { content: "\e93e"; } }
+    &-nvidia { &::before { content: "\e93f"; } }
+    &-oculus { &::before { content: "\e940"; } }
+    &-paypal { &::before { content: "\e941"; } }
+    &-playstation { &::before { content: "\e942"; } }
+    &-reddit { &::before { content: "\e943"; } }
+    &-snapchat { &::before { content: "\e944"; } }
+    &-soundcloud { &::before { content: "\e945"; } }
+    &-spotify { &::before { content: "\e946"; } }
+    &-steam { &::before { content: "\e947"; } }
+    &-tiktok { &::before { content: "\e948"; } }
+    &-tumblr { &::before { content: "\e949"; } }
+    &-twitch { &::before { content: "\e94a"; } }
+    &-twitter { &::before { content: "\e94b"; } }
+    &-windows { &::before { content: "\e94c"; } }
+    &-wordpress { &::before { content: "\e94d"; } }
+    &-xbox { &::before { content: "\e94e"; } }
+    &-youtube { &::before { content: "\e94f"; } }
+}
+
+a {
+    &[href^="tel:"]{
+        &:before {
+            content: "\50" !important;
+        }
+    }
+
+    &[href^="mailto:"] {
+        &:before {
+            content: "\4d" !important;
+        }
+    }
+
+    &:hover {
+        color: var(--primary-dark);
+
+        &::after {
+            background-color: var(--primary-dark);
+        }
+    }
+}
+
+.icon-send {
+    &:before {
+        content: "\53" !important;
+        top: 32px;
+        left: 28px;
+    }
+}

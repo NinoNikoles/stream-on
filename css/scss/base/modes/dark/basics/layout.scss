@@ -1,0 +1,9 @@
+@each $key, $val in $dark-materials {
+    @include bg-variant(".#{$key}", $val);
+
+    .#{$key} {
+        * {
+            color: var(--white);
+        }
+    }
+}

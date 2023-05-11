@@ -1,0 +1,9 @@
+#wrapper {
+    .wp-block-latest-posts__list {
+        li {
+            .wp-block-latest-posts__post-title {
+                color: var(--dark);
+            }
+        }
+    }
+}

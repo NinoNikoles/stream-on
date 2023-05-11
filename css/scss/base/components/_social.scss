@@ -1,0 +1,32 @@
+.social {
+    &--list {
+        &--footer {
+            margin: {
+                bottom: 0;
+            }
+        }
+
+        &--item {
+            display: inline-block;
+            font: {
+                size: 0;
+            }
+            line: {
+                height: 1;
+            }
+            
+            a {
+                font: {
+                    size: rem-calc(24);
+                }
+                width: rem-calc(24);
+                height: rem-calc(24);
+                margin: {
+                    right: rem-calc(10);
+                    bottom: 0;
+                }
+                position: relative;
+            }
+        }
+    }
+}

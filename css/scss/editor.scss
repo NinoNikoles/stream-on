@@ -1,0 +1,120 @@
+//-- Custom Variables --
+@import "project/settings/variables";
+@import "project/settings/colors";
+
+// -- Settings --
+@import 'base/settings';
+
+@import 'base/util/util';
+@import "base/settings/variables";
+@import "base/settings/colors";
+
+//-- Normalize --
+@import "base/vendor/vendor";
+
+.edit-post-visual-editor {
+    @import "base/main.scss";
+    @import "project/main.scss";
+
+    [data-type="feedback/wrapper"] {
+        &::before {
+            font-size: rem-calc($font-size-small);
+            line-height: $line-height-small;
+        }
+    }
+
+    .block-editor-block-list__block {
+        .block-list-appender {
+            position: unset;
+        }
+    }
+
+    .components-popover {
+        span {
+            margin-bottom: 0;
+        }
+        .components-form-toggle {
+            line-height: 1;//
+        }
+
+        .components-toggle-control {
+            margin-bottom: 0;
+        }
+    }
+
+    .acf-link {
+        .link-wrap {
+            > * {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .acf-tab-group {
+        li {
+            a {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .acf-icon {
+        &::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .dashicon {
+        font-family: dashicons !important;
+    }
+
+    textarea {
+        border-color: #000000;
+        box-shadow: none !important;
+        height: unset;
+        min-height: unset;
+        outline: unset;
+    }
+
+    select {
+        z-index: 1;
+    }
+
+    .acf-tab-group {
+        li {
+            margin-right: 0;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    input[type=checkbox]:checked:before {
+        background-color: #ffffff;
+        margin: 0;
+    }
+}
+
+//-- CSS Variables --
+@import "css-variables";
+
+//-- Backend --
+.theme-browser {
+    .theme {
+        .theme-name {
+            height: unset;
+        }
+
+        &.active {
+            .theme-name {
+                span {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
