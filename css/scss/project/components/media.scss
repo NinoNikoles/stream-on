@@ -22,3 +22,40 @@
         }
     }
 }
+
+.poster-select {
+    position: relative;
+    margin-bottom: 8px;
+
+    input {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &::before {
+            display: none;
+        }
+
+        &::after {
+            border: 2px solid transparent;
+            border-radius: 0;
+            width: calc(100% + 8px);
+            height: calc(100% + 8px);
+            position: absolute;
+            top: -4px;
+            left: -4px;
+        }
+
+        &:checked {
+            &::after {
+                border-color: var(--primary);
+            }
+        }
+    }
+
+    figure, img {
+        pointer-events: none;
+    }
+}

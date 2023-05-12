@@ -9,14 +9,13 @@ $result = $conn->query($sql);
 if(isset($_POST['generate-genres'])) {
     $genres = $tmdb->getGenres();
     foreach ($genres as $genre) {
-        $createGenre = 'INSERT INTO genres (genre_id, genre_name) VALUES ("'.$genre->getID().'", "'.$genre->getName().'")';
+        $createGenre = 'INSERT INTO genres (genre_id) VALUES ("'.$genre->getID().'")';
         $insertResult = $conn->query($createGenre);
         if (!$insertResult) {
 
-            set_callout('success','genres created alert');
+            set_callout('alert','genres created alert');
             header('Location: /genres');
             exit();
-            echo 'Datensatz erfolgreich hinzugefügt.';
         }
     }
 
@@ -64,14 +63,20 @@ if(isset($_POST['generate-genres'])) {
                     </thead>
                     <?php
 
-                        $sql = "SELECT id, genre_id, genre_name FROM genres";
+                        $sql = "SELECT id, genre_id FROM genres ORDER BY id";
                         $results = $conn->query($sql);
                         while($row = $results->fetch_assoc()) {
-                            echo '<tr>';
-                                echo '<td>'.$row['id'].'</td>';
-                                echo '<td>'.$row['genre_id'].'</td>';
-                                echo '<td>'.$row['genre_name'].'</td>';
-                            echo '</tr>';
+                            $genres = $tmdb->getGenres();
+                            foreach ($genres as $genre) {
+                                if ($genre->getID() == $row['genre_id']) {
+                                    $genreName = $genre->getName();
+                                    echo '<tr>';
+                                        echo '<td>'.$row['id'].'</td>';
+                                        echo '<td>'.$row['genre_id'].'</td>';
+                                        echo '<td>'.$genreName.'</td>';
+                                    echo '</tr>';
+                                }
+                            }
                         }
 
                     ?>

@@ -37,7 +37,7 @@
 
             <div class="row">
                 <?php 
-                    $sql = "SELECT * FROM movies ORDER BY movie_name";
+                    $sql = "SELECT * FROM movies ORDER BY movie_title";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
@@ -46,10 +46,7 @@
                                     echo '<figure class="poster">';
                                         echo '<img src="'.$tmdb->getImageURL().$row['movie_poster'].'" alt="">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.$row['movie_name'].'</span>';
-                                    if (isset($row['tagline'])) {
-                                        echo '<span class="title">'.$row['tagline'].'</span>';
-                                    }
+                                    echo '<span class="title">'.$row['movie_title'].'</span>';
                                 echo '</a>';
                             echo '</div>';
                         }

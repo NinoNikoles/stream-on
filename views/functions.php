@@ -73,29 +73,28 @@ function get_backend_menu() {
 	return include(ROOT_PATH.'/views/includes/backend-menu.php');
 }
 
+function get_apikey_db() {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $sql = "SELECT setting_option FROM settings WHERE setting_name='apikey'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            return $row['setting_option'];
+        }
+    }
+}
+
 function insert_movie($conn, $tmdb, $movieID) {
 	if(isset($_POST['add-movie'])) {
         $id = mysqli_real_escape_string($conn, $movieID);
         $movie = $tmdb->getMovie($id);
-
-        $title = mysqli_real_escape_string($conn, $movie->getTitle());
+        $title =  mysqli_real_escape_string($conn, $movie->getTitle());
         $backdrop = mysqli_real_escape_string($conn, $movie->getBackdrop());
-        $poster = mysqli_real_escape_string($conn, $movie->getPoster());       
-        $tagline =  mysqli_real_escape_string($conn, $movie->getTagline());
-        $overview =  mysqli_real_escape_string($conn, $movie->getOverview());
-        $genres = [];
-        $results = $movie->getGenres();
-        foreach ($results as $genre) {
-            $genres[] = $genre->getName();
-        }
-        $genres =  mysqli_real_escape_string($conn, implode(', ', $genres));
-        $rating =  mysqli_real_escape_string($conn, $movie->getVoteAverage());
-        $runtime = $movie->getRuntime();
-        $release =  mysqli_real_escape_string($conn, $movie->getReleaseDate());
-        $collection = $movie->getCollection();
+        $poster = mysqli_real_escape_string($conn, $movie->getPoster());;
 
-        $sql = 'INSERT INTO movies (movie_tmdbID, movie_name, movie_tagline, movie_description, movie_genres, movie_poster, movie_thumbnail, movie_collection, movie_length, movie_release, movie_rating)
-                VALUES ("'.$id.'", "'.$title.'", "'.$tagline.'", "'.$overview.'", "'.$genres.'", "'.$poster.'", "'.$backdrop.'", "'.$collection.'", "'.$runtime.'", "'.$release.'", "'.$rating.'")';
+        $sql = 'INSERT INTO movies (movie_tmdbID, movie_title, movie_poster, movie_thumbnail)
+                VALUES ("'.$id.'", "'.$title.'", "'.$poster.'", "'.$backdrop.'")';
         if (!($conn->query($sql) === TRUE)) {
             set_callout('alert','addmoviealert');
             header('Location: /movies');

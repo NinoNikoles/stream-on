@@ -62,7 +62,9 @@ class ApiBaseObject
         $posters = $this->getImages();
         $posters = $posters['posters'];
         foreach ( $posters as $poster ) {
-            array_push($images, $poster['file_path']);
+            if(!in_array($poster['file_path'], $images)) {
+                array_push($images, $poster['file_path']);
+            }
         }
        
         return $images;
@@ -90,7 +92,9 @@ class ApiBaseObject
         $backdrops = $this->getImages();
         $backdrops = $backdrops['backdrops'];
         foreach ( $backdrops as $backdrop ) {
-            array_push($images, $backdrop['file_path']);
+            if(!in_array($backdrop['file_path'], $images)) {
+                array_push($images, $backdrop['file_path']);
+            }
         }
        
         return $images;

@@ -57,7 +57,6 @@ if (!($conn->query($create_table_user) === TRUE)) {
 $create_table_genres = 'CREATE TABLE IF NOT EXISTS genres (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     genre_id INT UNSIGNED UNIQUE,
-    genre_name varchar(255) UNIQUE,
     created TIMESTAMP
 )';
 if (!($conn->query($create_table_genres) === TRUE)) {
@@ -68,17 +67,9 @@ if (!($conn->query($create_table_genres) === TRUE)) {
 $create_table_movies = 'CREATE TABLE IF NOT EXISTS movies (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     movie_tmdbID INT NOT NULL,
-    movie_name varchar(255),
-    movie_tagline varchar(255),
-    movie_description text,
-    movie_length varchar(255),
-    movie_release varchar(255),
-    movie_genres varchar(255),
+    movie_title varchar(255),
     movie_poster varchar(255),
     movie_thumbnail varchar(255),
-    movie_collection varchar(255),
-    movie_trailer varchar(255),
-    movie_rating varchar(255),
     created TIMESTAMP,
     UNIQUE (movie_tmdbID)
 )';
