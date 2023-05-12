@@ -38,9 +38,42 @@
                         }
 
                         $genres = implode(", ", $genres);
-                        var_dump($movie);
 
                         $sql = 'UPDATE movies SET movie_description="'.$overview.'", movie_tagline="'.$tagline.'", movie_genres="'.$genres.'" WHERE movie_tmdbID="'.$id.'"';
+                        if (!($conn->query($sql) === TRUE)) {
+                            header("Refresh:0");
+                        } else {
+                            echo '<div>';
+                                echo '<div class="col12">';
+                                    echo '<p class="text-success">Film hinzugefügt!</p>';
+                                echo '</div>';
+                            echo '</div>'; 
+                        }
+                    }
+
+                    if(isset($_POST['change-poster'])) {
+                        $id = $_POST['id'];
+
+                        $poster = mysqli_real_escape_string($conn, $_POST['poster']);
+
+                        $sql = 'UPDATE movies SET movie_poster="'.$poster.'" WHERE movie_tmdbID="'.$id.'"';
+                        if (!($conn->query($sql) === TRUE)) {
+                            header("Refresh:0");
+                        } else {
+                            echo '<div>';
+                                echo '<div class="col12">';
+                                    echo '<p class="text-success">Film hinzugefügt!</p>';
+                                echo '</div>';
+                            echo '</div>'; 
+                        }
+                    }
+
+                    if(isset($_POST['change-backdrop'])) {
+                        $id = $_POST['id'];
+
+                        $backdrop = mysqli_real_escape_string($conn, $_POST['backdrop']);
+
+                        $sql = 'UPDATE movies SET movie_thumbnail="'.$backdrop.'" WHERE movie_tmdbID="'.$id.'"';
                         if (!($conn->query($sql) === TRUE)) {
                             header("Refresh:0");
                         } else {
@@ -59,13 +92,29 @@
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             
-                            $currentMovieID = $row['movie_tmdbID'];
-                            $currentMovieCollection = $row['movie_collection'];
-                            $runtime = $row['movie_length'];
+                            $id = $_GET['id'];
+                            $movie = $tmdb->getMovie($id);
+                    
+                            $title = $movie->getTitle();
+                            $backdrop = $row['movie_thumbnail'];
+                            $poster = $row['movie_poster'];       
+                            $tagline =  $movie->getTagline();
+                            if(!($tagline === '')) {
+                                $tagline = ': '.$tagline;
+                            }
+                            $overview =  $movie->getOverview();
+                            $genres = [];
+                            $results = $movie->getGenres();
+                            foreach ($results as $genre) {
+                                $genres[] = $genre->getName();
+                            }
+                            $genres =  implode(', ', $genres);
+                            $rating =  $movie->getVoteAverage();
+                            $runtime = $movie->getRuntime();
+                            $release = $movie->getReleaseDate();
 
                             $hours = floor($runtime / 60);
                             $restMinutes = $runtime % 60;
-
                             
                             if (!($hours == 1)) {
                                 $minuteText = lang_snippet('Minutes');
@@ -85,58 +134,92 @@
                                 $finalRuntime = $restMinutes .' '.$minuteText;
                             }
 
-                            echo '<form>';
-                                echo '<div class="row">';
-                                echo '<div class="col2 column"><p>';
-                                    echo '<label for="movie-id">ID';
-                                        echo '<input type="number" name="movie-id" value="'.$row['movie_tmdbID'].'" disabled>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '<div class="col5 column"><p>';
-                                    echo '<label for="movie-title">Title';
-                                        echo '<input type="text" name="movie-title" value="'.$row['movie_name'].'" disabled>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '<div class="col5 column"><p>';
-                                    echo '<label for="movie-title">Tagline';
-                                        echo '<input type="text" name="movie-tagline" value="'.$row['movie_tagline'].'" disabled>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '<div class="col12 column"><p>';
-                                    echo '<label for="movie-description">Description';
-                                        echo '<textarea name="movie-description" disabled>';
-                                            echo $row['movie_description'];
-                                        echo '</textarea>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '<div class="col6 column"><p>';
-                                    echo '<label for="movie-genres">Genres';
-                                        echo '<input type="text" name="movie-genres" value="'.$row['movie_genres'].'" disabled>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '<div class="col3 column"><p>';
-                                    echo '<label for="movie-genres">Release';
-                                        echo '<input type="text" name="movie-genres" value="'.$row['movie_release'].'" disabled>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '<div class="col3 column"><p>';
-                                    echo '<label for="movie-genres">Length';
-                                        echo '<input type="text" name="movie-genres" value="'.$finalRuntime.'" disabled>';
-                                    echo '</label>';
-                                echo '</p></div>';
-
-                                echo '</div>';
-                            echo '</form>';
+                            echo '<div class="col7 marg-right-col1">';
+                                echo '<p>'.$title.$tagline.'</p>';
+                                echo '<p>'.$overview.'</p>';
+                                echo '<p>'.$overview.'</p>';
+                                echo '<p>'.$genres.'</p>';
+                                echo '<p>'.$release.'</p>';
+                                echo '<p>'.$finalRuntime.'</p>';
+                            echo '</div>';
                         }
                     }
 
                 ?>
+                <div class="col4">
+                    <div class="col12 marg-bottom-s">
+                        <a href="#movie-poster" data-fancybox data-src="#movie-poster">
+                            <figure class="poster">
+                                <img src="<?php echo $tmdb->getImageURL().$poster;?>">
+                            </figure>
+                        </a>
+                           
+                        <div id="movie-poster" style="display:none;">
+                            <p>Möchtest du hinzufügen?</p>
+                            <form method="post" action="/movies/edit-movie/?id=<?php echo $id;?>">
+                                <div class="row">
+                                <?php
+                                    $allTMDB = new TMDB($cnf);
+                                    $allTMDB->setLang('en');
+                                    $movie = $allTMDB->getMovie($id);
+                                    $moviePosters = $movie->getPosters();
+                                    foreach ($moviePosters as $moviePoster) {
+                                        $i = 1;
+                                        echo '<div class="col3 column">';
+                                            echo '<div class="poster-select">';
+                                                echo '<input type="radio" id="poster-'.$i.'" name="poster" value="'.$moviePoster.'">';
+                                                echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
+                                                echo '<figure class="poster">';
+                                                    echo '<img src="'.$tmdb->getImageURL().$moviePoster.'">';
+                                                echo '</figure>';
+                                            echo '</div>';
+                                        echo '</div>';
+                                    }
+                                ?>
+                                </div>
+                                <p class="text-right">
+                                    <button type="submit" class="btn btn-success" name="change-poster">Hinzufügen</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col12">
+                        <a href="#movie-backdrop" data-fancybox data-src="#movie-backdrop">
+                            <figure class="original">
+                                <img src="<?php echo $tmdb->getImageURL().$backdrop;?>">
+                            </figure>
+                        </a>
+
+                        <div id="movie-backdrop" style="display:none;">
+                            <p>Möchtest du hinzufügen?</p>
+                            <form method="post" action="/movies/edit-movie/?id=<?php echo $id;?>">
+                            <div class="row">
+                                <?php
+                                    $allTMDB = new TMDB($cnf);
+                                    $allTMDB->setLang('');
+                                    $movie = $allTMDB->getMovie($id);
+                                    $movieBackdrops = $movie->getBackdrops();
+                                    foreach ($movieBackdrops as $movieBackdrop) {
+                                        $i = 1;
+                                        echo '<div class="col3 column">';
+                                            echo '<div class="poster-select">';
+                                                echo '<input type="radio" id="backdrop-'.$i.'" name="backdrop" value="'.$movieBackdrop.'">';
+                                                echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
+                                                echo '<figure class="original">';
+                                                    echo '<img src="'.$tmdb->getImageURL().$movieBackdrop.'">';
+                                                echo '</figure>';
+                                            echo '</div>';
+                                        echo '</div>';
+                                    }
+                                ?>
+                                </div>
+                                <p class="text-right">';
+                                    <button type="submit" class="btn btn-success" name="change-backdrop">Hinzufügen</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col12">
                 <?php
