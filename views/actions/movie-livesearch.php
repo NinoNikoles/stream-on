@@ -17,11 +17,11 @@
                 $title = $movie->getTitle();
                 $poster = $movie->getPoster();
 
-                echo '<a href="#movie-'.$id.'" class="display-flex" data-fancybox data-src="#movie-'.$id.'">';
-                    echo '<figure class="poster" style="width=20%;max-width:100px;">';
+                echo '<a href="#movie-'.$id.'" class="display-flex flex-row marg-no" data-fancybox data-src="#movie-'.$id.'">';
+                    echo '<figure class="poster" style="width:20%;max-width:100px;">';
                         echo '<img src="'.$tmdb->getImageURL().$poster.'">';
                     echo '</figure>';
-                    echo '<span class="pad-xs">'.$title.'</span>';
+                    echo '<span class="pad-xs" style="width:80%;">'.$title.'</span>';
                 echo '</a>';
 
                 // Add Movie popup verification

@@ -59,3 +59,20 @@
         pointer-events: none;
     }
 }
+
+.tag {
+    background: {
+        color: var(--grey);
+    }
+    color: var(--font-color-invert);
+    margin: {
+        right: 8px;
+    }
+    padding: {
+        top: 2px;
+        right: 8px;
+        bottom: 2px;
+        left: 8px;
+    }
+    @include transition(background-color $transition-default, color $transition-default);
+}

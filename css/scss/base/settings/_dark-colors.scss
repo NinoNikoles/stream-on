@@ -24,7 +24,7 @@ $dark-senary-light: lighten($dark-senary, 20%) !default;
 $dark-senary-dark: darken($dark-senary, 20%) !default;
 
 $dark-grey: color-dark(grey) !default;
-$dark-grey-light: lighten($dark-grey, 35%) !default;
+$dark-grey-light: lighten($dark-grey, 0%) !default;
 $dark-grey-dark: darken($dark-grey, 10%) !default;
 
 $dark-success: color-dark(success) !default;
