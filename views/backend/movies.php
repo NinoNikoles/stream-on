@@ -37,16 +37,15 @@
 
             <div class="row">
                 <?php 
-                    $sql = "SELECT * FROM movies ORDER BY movie_title";
-                    $result = $conn->query($sql);
+                    $result = selectAllMoviesByTitle('ASC');
                     if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
+                        while ($movie = $result->fetch_assoc()) {
                             echo '<div class="col3 column">';
-                                echo '<a href="/movies/edit-movie/?id='.$row['movie_tmdbID'].'" class="media-card">';
+                                echo '<a href="/movies/edit-movie/?id='.$movie['movie_tmdbID'].'" title="'.$movie['movie_title'].'" class="media-card">';
                                     echo '<figure class="poster">';
-                                        echo '<img src="'.$tmdb->getImageURL().$row['movie_poster'].'" alt="">';
+                                        echo '<img src="'.$tmdb->getImageURL().$movie['movie_poster'].'" alt="">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.$row['movie_title'].'</span>';
+                                    echo '<span class="title">'.truncate($movie['movie_title'],20).'</span>';
                                 echo '</a>';
                             echo '</div>';
                         }

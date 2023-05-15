@@ -85,6 +85,18 @@ function get_apikey_db() {
     }
 }
 
+function truncate($string,$length=100,$append=" ...") {
+    $string = trim($string);
+
+    if(strlen($string) > $length) {
+      $string = wordwrap($string, $length);
+      $string = explode("\n", $string, 2);
+      $string = $string[0] . $append;
+    }
+  
+    return $string;
+}
+
 function insert_movie($conn, $tmdb, $movieID) {
 	if(isset($_POST['add-movie'])) {
         $id = mysqli_real_escape_string($conn, $movieID);
@@ -105,4 +117,81 @@ function insert_movie($conn, $tmdb, $movieID) {
             exit();
         }
     }
+}
+
+function selectMovieByID($movieID) {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $sql = "SELECT * FROM movies WHERE movie_tmdbID='".$movieID."'";
+    $result = $conn->query($sql);
+
+    return $result;
+}
+
+function selectAllMoviesByTitle($order = ''){
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $sql = "SELECT * FROM movies ORDER BY movie_title $order";
+    $result = $conn->query($sql);
+
+    return $result;
+}
+
+function updateMoviePoster($movieID, $poster) {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $posterPATH = mysqli_real_escape_string($conn, $poster);
+
+    $sql = 'UPDATE movies SET movie_poster="'.$posterPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','update poster alert');
+        header('Refresh:0');
+        exit();
+    } else {
+        set_callout('success','update poster success');
+        header('Refresh:0');
+        exit();
+    }
+}
+
+function updateMovieBackdrop($movieID, $backdrop) {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $backdropPATH = mysqli_real_escape_string($conn, $backdrop);
+
+    $sql = 'UPDATE movies SET movie_thumbnail="'.$backdropPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','update backdrop alert');
+        header('Refresh:0');
+        exit();
+    } else {
+        set_callout('success','update backdrop success');
+        header('Refresh:0');
+        exit();
+    }
+}
+
+function runtimeToString($runtime) {
+    $hours = floor($runtime / 60);
+    $restMinutes = $runtime % 60;
+    
+    if (!($hours == 1)) {
+        $minuteText = lang_snippet('Minutes');
+    } else {
+        $minuteText = lang_snippet('Minute');
+    }
+
+    if ($hours > 0 ) {
+        if (!($hours > 1)) {
+            $hourText = lang_snippet('Hour');
+        } else {
+            $hourText = lang_snippet('Hours');
+        }
+
+        $finalRuntime = $hours.' '.$hourText.' '. $restMinutes . ' '.$minuteText;
+    } else {
+        $finalRuntime = $restMinutes .' '.$minuteText;
+    }
+
+    return $finalRuntime;
 }

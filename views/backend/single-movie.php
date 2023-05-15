@@ -19,79 +19,20 @@
         
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
-                <h1>Einstellungen</h1>
-            </div>
-
-            <div class="col12">
                 <?php
-                    // Get Movie infos
-                    if(isset($_POST['get-movie-infos'])) {
-                        $id = mysqli_real_escape_string($conn, $_POST['id']);
-
-                        $movie = $tmdb->getMovie($id);
-                        $overview = $movie->getOverview();
-                        $tagline = $movie->getTagline();
-                        $genres = [];
-                        $results = $movie->getGenres();
-                        foreach ($results as $genre) {
-                            $genres[] = $genre->getName();
-                        }
-
-                        $genres = implode(", ", $genres);
-
-                        $sql = 'UPDATE movies SET movie_description="'.$overview.'", movie_tagline="'.$tagline.'", movie_genres="'.$genres.'" WHERE movie_tmdbID="'.$id.'"';
-                        if (!($conn->query($sql) === TRUE)) {
-                            header("Refresh:0");
-                        } else {
-                            echo '<div>';
-                                echo '<div class="col12">';
-                                    echo '<p class="text-success">Film hinzugefügt!</p>';
-                                echo '</div>';
-                            echo '</div>'; 
-                        }
-                    }
-
                     if(isset($_POST['change-poster'])) {
-                        $id = $_POST['id'];
-
-                        $poster = mysqli_real_escape_string($conn, $_POST['poster']);
-
-                        $sql = 'UPDATE movies SET movie_poster="'.$poster.'" WHERE movie_tmdbID="'.$id.'"';
-                        if (!($conn->query($sql) === TRUE)) {
-                            header("Refresh:0");
-                        } else {
-                            echo '<div>';
-                                echo '<div class="col12">';
-                                    echo '<p class="text-success">Film hinzugefügt!</p>';
-                                echo '</div>';
-                            echo '</div>'; 
-                        }
+                        updateMoviePoster($_POST['id'], $_POST['poster']);
                     }
 
                     if(isset($_POST['change-backdrop'])) {
-                        $id = $_POST['id'];
-
-                        $backdrop = mysqli_real_escape_string($conn, $_POST['backdrop']);
-
-                        $sql = 'UPDATE movies SET movie_thumbnail="'.$backdrop.'" WHERE movie_tmdbID="'.$id.'"';
-                        if (!($conn->query($sql) === TRUE)) {
-                            header("Refresh:0");
-                        } else {
-                            echo '<div>';
-                                echo '<div class="col12">';
-                                    echo '<p class="text-success">Film hinzugefügt!</p>';
-                                echo '</div>';
-                            echo '</div>'; 
-                        }
+                        updateMovieBackdrop($_POST['id'], $_POST['backdrop']);
                     }
                 ?>
 
                 <?php
-                    $sql = "SELECT * FROM movies WHERE movie_tmdbID='".$_GET['id']."'";
-                    $result = $conn->query($sql);
+                    $result = selectMovieByID($_GET['id']);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            
                             $id = $_GET['id'];
                             $movie = $tmdb->getMovie($id);
                     
@@ -100,47 +41,22 @@
                             $poster = $row['movie_poster'];       
                             $tagline =  $movie->getTagline();
                             if(!($tagline === '')) {
-                                $tagline = ': '.$tagline;
-                            }
-                            $overview =  $movie->getOverview();
-                            $genres = [];
-                            $results = $movie->getGenres();
-                            foreach ($results as $genre) {
-                                $genres[] = $genre->getName();
-                            }
-                            $genres =  implode(', ', $genres);
-                            $rating =  $movie->getVoteAverage();
-                            $runtime = $movie->getRuntime();
-                            $release = $movie->getReleaseDate();
-
-                            $hours = floor($runtime / 60);
-                            $restMinutes = $runtime % 60;
-                            
-                            if (!($hours == 1)) {
-                                $minuteText = lang_snippet('Minutes');
-                            } else {
-                                $minuteText = lang_snippet('Minute');
-                            }
-
-                            if ($hours > 0 ) {
-                                if (!($hours > 1)) {
-                                    $hourText = lang_snippet('Hour');
-                                } else {
-                                    $hourText = lang_snippet('Hours');
-                                }
-
-                                $finalRuntime = $hours.' '.$hourText.' '. $restMinutes . ' '.$minuteText;
-                            } else {
-                                $finalRuntime = $restMinutes .' '.$minuteText;
+                                $tagline = '<div class="col12"><p>'.$tagline.'</p></div>';
                             }
 
                             echo '<div class="col7 marg-right-col1">';
-                                echo '<p>'.$title.$tagline.'</p>';
-                                echo '<p>'.$overview.'</p>';
-                                echo '<p>'.$overview.'</p>';
-                                echo '<p>'.$genres.'</p>';
-                                echo '<p>'.$release.'</p>';
-                                echo '<p>'.$finalRuntime.'</p>';
+                                echo '<div class="col12"><h1>'.$title.'</h1></div>';
+                                echo $tagline;
+                                echo '<div class="col12"><p>'.$movie->getOverview().'</p></div>';
+                                echo '<div class="col3"><p>Bewertung: '.$movie->getVoteAverage().'/10</p></div>';
+                                echo '<div class="col5"><p>Erscheinungsdatum: '.$movie->getReleaseDate().'</p></div>';
+                                echo '<div class="col4"><p>Dauer: '.runtimeToString($movie->getRuntime()).'</p></div>';
+                                echo '<div class="col12"><p><span>Genre:</span><br>';
+                                $genres = $movie->getGenres();
+                                foreach ($genres as $genre) {
+                                    echo '<span class="tag">'.$genre->getName().'</span>';
+                                }
+                                echo '</p></div>';
                             echo '</div>';
                         }
                     }

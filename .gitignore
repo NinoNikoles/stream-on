@@ -1,2 +1,5 @@
 package-lock.json
 node_modules/
+build/style.min.css
+build/editor.min.css
+build/editor.min.css
