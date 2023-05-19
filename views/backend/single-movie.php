@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="col12">
-                        <?php output_movie($_GET['id']); ?>
+                        <?php output_movie($_GET['id'], false); ?>
                     </div>
 
 
@@ -99,7 +99,7 @@
                                 <div class="row">
                                 <?php
                                     $allTMDB = new TMDB($cnf);
-                                    $allTMDB->setLang('en');
+                                    $allTMDB->setLang();
                                     $movie = $allTMDB->getMovie($id);
                                     $moviePosters = $movie->getPosters();
                                     foreach ($moviePosters as $moviePoster) {
@@ -152,7 +152,7 @@
                                     }
                                 ?>
                                 </div>
-                                <p class="text-right">';
+                                <p class="text-right">
                                     <button type="submit" class="btn btn-success" name="change-backdrop">Hinzufügen</button>
                                 </p>
                             </form>
