@@ -21,6 +21,7 @@ if(!isset($_COOKIE['session_id']) || !isset($_SESSION['logged_in']) || $_SESSION
     // The output -> Index
     get('/', 'views/index.php');
 
+
     get('/register', 'views/register.php');
     post('/register', 'views/register.php');
 
@@ -50,6 +51,9 @@ if(!isset($_COOKIE['session_id']) || !isset($_SESSION['logged_in']) || $_SESSION
         get('/movies/movie-search', 'views/actions/movie-livesearch.php');
         post('/movies/movie-search', 'views/actions/movie-livesearch.php');
 
+        get('/file-api', 'views/actions/file-api.php');
+        post('/file-api', 'views/actions/file-api.php');
+
         get('/movies/edit-movie/$id', 'views/backend/single-movie.php');
         post('/movies/edit-movie/$id', 'views/backend/single-movie.php');
 
@@ -64,6 +68,9 @@ if(!isset($_COOKIE['session_id']) || !isset($_SESSION['logged_in']) || $_SESSION
 
     get('/user-img-upload', 'views/actions/user-image-upload.php');
     post('/user-img-upload', 'views/actions/user-image-upload.php');
+
+    get('/watch/$id', 'views/templates/watch');
+    post('/watch/$id', 'views/templates/watch');
 
     // Dynamic GET. Example with 2 variables
     // The $name will be available in full_name.php

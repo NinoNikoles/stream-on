@@ -1,6 +1,6 @@
 <header id="header" class="bar-active-root bar-active fixed-header overlay" lang="de-DE">
 	
-	<div class="innerWrap header--content">
+	<div class="row header--content">
 		<div class="col12 column header--content--nav">
 
 			<!-- Logo -->

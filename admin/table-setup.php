@@ -70,6 +70,7 @@ $create_table_movies = 'CREATE TABLE IF NOT EXISTS movies (
     movie_title varchar(255),
     movie_poster varchar(255),
     movie_thumbnail varchar(255),
+    movie_file_path varchar(255),
     created TIMESTAMP,
     UNIQUE (movie_tmdbID)
 )';

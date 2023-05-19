@@ -41,12 +41,14 @@
 @import "components/social";
 @import "components/subnavigation";
 @import "components/vtlist";
+@import "components/videoplayer";
 
 //-- Plugins --
 @import "plugins/cookie.scss";
 @import "plugins/fancybox4.scss";
 @import "plugins/leaflet.scss";
 @import "plugins/swiper-bundle.min.scss";
+@import "plugins/jstree.scss";
 
 //-- Print CSS --
 //@import "vendor/print";

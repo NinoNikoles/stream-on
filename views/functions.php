@@ -137,6 +137,44 @@ function selectAllMoviesByTitle($order = ''){
     return $result;
 }
 
+function updateMovieFilePath($moviePath, $movieID) {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    var_dump($moviePath);
+    $sql = 'UPDATE movies SET movie_file_path="'.$moviePath.'" WHERE movie_tmdbID="'.$movieID.'"';
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','update poster alert');
+        header('Refresh:0');
+        exit();
+    } else {
+        set_callout('success','update poster success');
+        header('Refresh:0');
+        exit();
+    }
+}
+
+function output_movie($movieID, $fullscreen) {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='".$movieID."'";
+    $filePath = $conn->query($sql)->fetch_assoc()['movie_file_path'];
+
+    if ( $filePath !== "" ) {
+        if($fullscreen === true) {
+            echo '<figure>';
+                echo '<video id="player-'.$movieID.'" class="video-js" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                    echo '<source src="'.$filePath.'" type="video/mp4" />';
+                echo '</video>';
+            echo '</figure>';
+        } else {
+            echo '<figure>';
+                echo '<video id="player-'.$movieID.'" class="video-js" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                    echo '<source src="'.$filePath.'" type="video/mp4" />';
+                echo '</video>';
+            echo '</figure>';
+        }
+    }
+}
+
 function updateMoviePoster($movieID, $poster) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 

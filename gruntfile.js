@@ -13,6 +13,7 @@ module.exports = function(grunt) {
             '<%= config.root %>js/plugins/videojs.js',
             '<%= config.root %>js/plugins/scrolltrigger.js',
             '<%= config.root %>js/plugins/swiper-bundle.min.js',
+            '<%= config.root %>js/plugins/jstree.min.js',
             '<%= config.root %>js/basics/menu.js',
             '<%= config.root %>js/basics/movie.js',
             '<%= config.root %>js/basics/custom.js',

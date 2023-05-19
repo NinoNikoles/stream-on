@@ -44,8 +44,8 @@ figure,
     overflow: hidden;
 
     > div {
-        width: unset;
-        height: unset;
+        width: unset !important;
+        height: unset !important;
     }
 
     img {

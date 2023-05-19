@@ -60,10 +60,11 @@ $(document).ready(function() {
             self.initPictures();
             //self.accordion();
             //self.tabs();
-            //self.modal();
             self.initSlider();
             self.customPagination();
             self.initScrolltrigger();
+            self.jstree();
+            //self.videoTriggerFullscreen();
         },
 
         bindHandlers: function () {
@@ -310,103 +311,7 @@ $(document).ready(function() {
                     $tabPanel.addClass(self.activeClass);
                 }
             })
-        },
-
-        modal: function () {
-            console.log('Modal loaded');
-
-            var self = this;
-            $modal = $('#modal');
-            $modalOverlay = $('#modal-overlay');
-            $modalCloseButton = $('.modal-close');
-            $modalButton = $('[data-open]');
-
-            $modalButton.on('click', function (e) {
-                e.preventDefault();
-
-                if ( $modalOverlay.attr('aria-hidden') === 'false' ) return false;
-
-                //-- Lock Screen on current position
-                self.lockScrollPosition();
-
-                var $self = $(this),
-                    modalID = $self.attr('data-open'),
-                    $modalContent = $('#'+modalID).clone();
-
-                $modal.append($modalContent);
-                $modalOverlay.attr('aria-hidden', 'false').attr('style', 'display:block;opacity:0').animate({
-                    opacity: 1
-                }, 250).promise().done(function () {
-                    $modalOverlay.attr('style', 'display:block;');
-                    $modal.addClass(self.activeClass);
-                });
-            })
-
-            function closeModal() {
-                $modalOverlay.attr('aria-hidden', 'true').attr('style', 'display:block;opacity:1').animate({
-                    opacity: 0
-                }, 250).promise().done(function () {
-                    $modalOverlay.attr('style', 'display:none;');
-                    $modal.removeClass(self.activeClass);
-                    $modal.find('.modal-content').remove();
-                    self.unlockScrollPosition();
-                });
-
-
-            }
-
-            $modalCloseButton.on('click', function (e) {
-                e.preventDefault();
-                closeModal();
-            })
-
-            $modalOverlay.on('click', function (e) {
-                e.preventDefault();
-                if(e.target !== e.currentTarget) return;
-                closeModal();
-            })
-        },*/
-
-        /*copyFunction: function () {
-            function copyUrl(TextToCopy) {
-                var TempText = document.createElement("input");
-                TempText.value = TextToCopy;
-                document.body.appendChild(TempText);
-                TempText.select();
-
-                document.execCommand("copy");
-                document.body.removeChild(TempText);
-            }
-
-            $('.copy').on('click', function () {
-                $this = $(this);
-                copyUrl($this.data('copy'));
-                $this.addClass('success');
-
-                setTimeout(function () {
-                    $this.removeClass('success');
-                }, 2000);
-            });
-        },
-
-        loop: function () {
-            $loopContainer = $('.loop-container');
-
-            $loopContainer.each(function () {
-                var self = this;
-                length = $(this).children('.loop-item').length;
-                $(this).children('.loop-item').first().addClass('active');
-
-                setInterval(function () {
-                    $active = $(self).children('.loop-item.active');
-                    $active.removeClass('active').next().addClass('active');
-
-                    if ( !$active.next().length) {
-                        $(self).children('.loop-item').first().addClass('active');
-                    }
-                }, 10000);
-            });
-        },*/
+        }*/
 
         initSlider: function () {
             sliderNumber = 1;
@@ -534,6 +439,76 @@ $(document).ready(function() {
 				getValues();
 			});
 		},
+
+        jstree: function() {
+            $.ajax({
+                url: '/file-api', // Hier den Pfad zur API auf deinem Server einfügen
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                // Die Antwort enthält die Daten für den jsTree
+                    $('#file-tree').jstree({
+                        'core': {
+                            "animation" : 0,
+                            "check_callback" : true,
+                            "themes" : { "stripes" : true },
+                            'data': response,
+                        },
+                        "types" : {
+                            "#" : {
+                                "max_children" : 1,
+                                "max_depth" : 4,
+                                "valid_children" : ["root"]
+                            },
+                            "root" : {
+                                "icon" : "/static/3.3.15/assets/images/tree_icon.png",
+                                "valid_children" : ["default"]
+                            },
+                            "default" : {
+                                "valid_children" : ["default","file"]
+                            },
+                            "file" : {
+                                "icon" : "glyphicon glyphicon-file",
+                                "valid_children" : ['.scss','.js']
+                            }
+                        },
+                        "plugins" : [
+                            "contextmenu", "dnd", "search",
+                            "state", "types", "wholerow"
+                        ]
+                    }).on('select_node.jstree', function(e, data) {
+                        var path = $('#file-tree').jstree('get_path', data.node, '/');
+                        $('#inputMoviePath').attr('value', '/media/'+path);
+                        
+                    });
+                },
+                error: function(xhr, status, error) {
+                  // Fehlerbehandlung, wenn die Anfrage fehlschlägt
+                  console.error(error);
+                }
+              });
+        },
+
+        videoTriggerFullscreen: function() {
+            $videoJS = $('div.video-js');
+            $video = $('div.video-js video');
+            var fullscreen = $videoJS.attr('data-set');
+            console.log(fullscreen);
+
+            if (fullscreen == 'fullscreen') {
+                console.log('true');
+                var id = $video.attr('id');
+                var src = $video.attr('src');
+                var myPlayer = videojs(id);
+
+                myPlayer.src({type: "video/mp4", src: src});
+                myPlayer.ready(function() {
+                    myPlayer.isFullscreen(true);
+                });
+            }
+
+            
+        }
     }
 
     page.init();

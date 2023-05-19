@@ -20,6 +20,10 @@
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <?php
+                    if(isset($_POST['moviePath'])) {
+                        updateMovieFilePath($_POST['moviePath'], $_POST['id']);
+                    }
+
                     if(isset($_POST['change-poster'])) {
                         updateMoviePoster($_POST['id'], $_POST['poster']);
                     }
@@ -63,6 +67,25 @@
 
                 ?>
                 <div class="col4">
+                    <div class="col12">
+                        <?php
+                            echo '<a href="#file-list-popup" class="btn" data-fancybox data-src="#file-list-popup">Add movie</a>';
+                                
+                            echo '<div id="file-list-popup" style="display:none;">';
+                                echo '<div id="file-tree"></div>';
+                                echo '<form method="post" action="/movies/edit-movie/?id='.$_GET['id'].'">';
+                                    echo '<input type="text" name="moviePath" id="inputMoviePath" value="" style="display:none;">';
+                                    echo '<input type="text" name="id" value="'.$_GET['id'].'" style="display:none;">';
+                                echo '<button class="btn" type="submit">Speichern</button>';
+                            echo '</div>';
+                        ?>
+                    </div>
+
+                    <div class="col12">
+                        <?php output_movie($_GET['id']); ?>
+                    </div>
+
+
                     <div class="col12 marg-bottom-s">
                         <a href="#movie-poster" data-fancybox data-src="#movie-poster">
                             <figure class="poster">
