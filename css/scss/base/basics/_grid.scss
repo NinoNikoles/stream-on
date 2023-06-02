@@ -80,12 +80,12 @@ main .main {
     }
     width: unset !important;
     min-width: 100%;
+}
 
-    > .column {
-        padding: {
-            right: rem-calc($grid-padding);
-            left: rem-calc($grid-padding);
-        }
+.column {
+    padding: {
+        right: rem-calc($grid-padding);
+        left: rem-calc($grid-padding);
     }
 }
 

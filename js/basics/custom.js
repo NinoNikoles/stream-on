@@ -320,60 +320,68 @@ $(document).ready(function() {
                 var $el = $(this);
                 const sliderClass = 'swiper-' + sliderNumber;
                 const slider = '.swiper-' + sliderNumber;
-                const itemsDesktop = parseInt($el.attr('data-items-desktop'));
-                const itemsTablet = parseInt($el.attr('data-items-tablet'));
-                const itemsMobile = parseInt($el.attr('data-items-mobile'));
-                var loop = $el.attr('data-loop');
-                const autoplayDelay = parseInt($el.attr('data-autoplay-delay'));
-                const dots = $el.attr('data-dots');
-                const nav = $el.attr('data-nav');
-                const slideSpace = parseInt($el.attr('data-space'));
-                const scrollbar = $el.attr('data-scrollbar');
-                var effect = $el.attr('data-effect');
-                
-
-                if(loop === "true") { loop = true; } else { loop = false; }
-                if(dots === "true") { dotnav = {el: slider + ' .swiper-pagination',clickable: false} } else { dotnav = {} }
-                if(nav === "true") { slidernav = {nextEl: slider + ' .swiper-button-next',prevEl: slider + ' .swiper-button-prev'} } else { slidernav = {} }
-                if(scrollbar === "true") { sliderscrollbar = {el: slider + ' .swiper-scrollbar',draggable: true} } else { sliderscrollbar = {} }
-
-                if (itemsDesktop >= 2) {
-                    if(!(effect == "coverflow")) { effect = ""; };
-                } else if (itemsTablet >= 2) {
-                    if(!(effect == "coverflow")) { effect = ""; };
-                } else if (itemsMobile >= 2) {
-                    if(!(effect == "coverflow")) { effect = ""; };
-                }
 
                 $el.addClass(sliderClass);
-                $el.swiper = new Swiper(slider, {
+                var slidesPerViewMobile = 4;
+                var slidesPerViewTablet = 6;
+                var slidesPerViewDesktop = 8;
+                var tabletBP = 1080;
+                var desktopBP = 1400;
+
+                function swiperLoopCheck(swiper) {
+                    bp = window.innerWidth;
+
+                    if ( bp >= desktopBP ) {
+                        if ( $(slider + ' .swiper-slide').length > slidesPerViewDesktop ) {
+                            swiper.loop = true;
+                        } else {
+                            swiper.loop = false;
+                        }
+                    } else if ( bp >= tabletBP ) {
+                        if ( $(slider + ' .swiper-slide').length > slidesPerViewTablet ) {
+                            swiper.loop = true;
+                        } else {
+                            swiper.loop = false;
+                        }
+                    } else {
+                        if ( $(slider + ' .swiper-slide').length > slidesPerViewMobile ) {
+                            swiper.loop = true;
+                        } else {
+                            swiper.loop = false;
+                        }
+                    }
+
+                    swiper.update();
+                }
+
+
+                const swiper = new Swiper(slider, {
                     // Optional parameters
                     loop: true,
                     //effect: effect,
-                    slidesPerView: 5,//itemsMobile,
+                    slidesPerView: slidesPerViewMobile,//itemsMobile,
                     spaceBetween: 16,
-                    /*autoplay: {
-                        delay: autoplayDelay,
-                        pauseOnMouseEnter: true,
-                        disableOnInteraction: false,
-                    },*/ 
+                    allowTouchMove: false,
                     breakpoints: {
                         // when window width is >= 320px
                         1080: {
-                            slidesPerView: 5//itemsTablet,
+                            slidesPerView: slidesPerViewTablet//itemsTablet,
                         },
                         1400: {
-                            slidesPerView: 10//itemsDesktop,
+                            slidesPerView: slidesPerViewDesktop//itemsDesktop,
                         }
                     },
-                    // Pagination
-                    //pagination: dotnav,
                     
                     // Navigation arrows
-                    navigation: true,
-                
-                    // Scrollbar
-                    //scrollbar: sliderscrollbar,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+
+                swiper.on('resize', function() {
+                    var self = this;
+                    swiperLoopCheck(self);
                 });
 
                 $el.find('[data-fancybox="gallery"]').each(function() {

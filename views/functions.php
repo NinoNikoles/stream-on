@@ -103,29 +103,81 @@ function insert_movie($conn, $tmdb, $movieID) {
         $movie = $tmdb->getMovie($id);
         $title =  mysqli_real_escape_string($conn, $movie->getTitle());
         $backdrop = mysqli_real_escape_string($conn, $movie->getBackdrop());
-        $poster = mysqli_real_escape_string($conn, $movie->getPoster());;
+        $poster = mysqli_real_escape_string($conn, $movie->getPoster());
 
-        $sql = 'INSERT INTO movies (movie_tmdbID, movie_title, movie_poster, movie_thumbnail)
-                VALUES ("'.$id.'", "'.$title.'", "'.$poster.'", "'.$backdrop.'")';
+        $genres = $movie->getGenres();
+
+        $movieGenres = [];
+
+        foreach($genres as $genre) {
+            $movieGenres[] = $genre->getId();
+        }
+
+        $genres = json_encode($movieGenres);
+
+        $sql = 'INSERT INTO movies (movie_tmdbID, movie_title, movie_poster, movie_thumbnail, movie_genres)
+                VALUES ("'.$id.'", "'.$title.'", "'.$poster.'", "'.$backdrop.'", "'.$genres.'")';
         if (!($conn->query($sql) === TRUE)) {
             set_callout('alert','addmoviealert');
             header('Location: /movies');
             exit();
         } else {
             set_callout('success','addmoviesuccess');
-            header('Location: /movies');
+            header('Location: /movies/edit-movie/?id='.$id);
             exit();
         }
     }
 }
 
-function selectMovieByID($movieID) {
+function selectMovieByID($tmdb, $movieID) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     $sql = "SELECT * FROM movies WHERE movie_tmdbID='".$movieID."'";
     $result = $conn->query($sql);
 
-    return $result;
+    $data = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $id = $_GET['id'];
+            $movie = $tmdb->getMovie($id);
+    
+            $title = $movie->getTitle();
+            $backdrop = $row['movie_thumbnail'];
+            $poster = $row['movie_poster'];       
+            $tagline =  $movie->getTagline();
+
+            $data['id'] = $id;
+            $data['title'] = $title;
+            $data['backdrop'] = $backdrop;
+            $data['poster'] = $poster;
+            $data['tagline'] = $tagline;
+            $data['overview'] = $movie->getOverview();
+            $data['voteAverage'] = $movie->getVoteAverage();
+            $data['release'] = $movie->getReleaseDate();
+            $data['runtime'] = runtimeToString($movie->getRuntime());
+            $genres = $movie->getGenres();
+            $data['genres'] = [];
+            foreach ($genres as $genre) {
+                $genreID = $genre->getId();
+                $genreName = $genre->getName();
+
+                $array = array(
+                    'id' => $genreID,
+                    'name' => $genreName,
+                );
+
+                $data['genres'][] = $array;
+            }
+            /*if ( array_key_exists($movie->getCollection())) {
+                $data['collection'] = $movie->getCollection();
+            } else {
+                $data['collection'] = NULL;
+            }*/
+        }
+    }
+
+    return $data;
 }
 
 function selectAllMoviesByTitle($order = ''){
@@ -135,6 +187,17 @@ function selectAllMoviesByTitle($order = ''){
     $result = $conn->query($sql);
 
     return $result;
+}
+
+function getMovieByID($id){
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $sql = "SELECT * FROM movies WHERE movie_tmdbID='".$id."'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        return true;
+    }
 }
 
 function updateMovieFilePath($moviePath, $movieID) {

@@ -1,5 +1,10 @@
 .media {
     &-card {
+        display: flex;
+        flex-direction: column;
+        margin: {
+            bottom: 0;
+        }
         position: relative;
 
         &:hover {
@@ -12,6 +17,9 @@
             display: block;
             background: {
                 color: var(--grey-light);
+            }
+            margin: {
+                bottom: 0;
             }
             padding: {
                 top: rem-calc(10);
@@ -75,4 +83,19 @@
         left: 8px;
     }
     @include transition(background-color $transition-default, color $transition-default);
+}
+
+.card-slider {
+    .swiper-slide {
+        height: auto;
+        //flex-grow: 1;
+
+        .media-card {
+            height: 100%;
+
+            .title {
+                flex-grow: 1;
+            }
+        }
+    }
 }

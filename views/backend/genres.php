@@ -9,7 +9,7 @@ $result = $conn->query($sql);
 if(isset($_POST['generate-genres'])) {
     $genres = $tmdb->getGenres();
     foreach ($genres as $genre) {
-        $createGenre = 'INSERT INTO genres (genre_id) VALUES ("'.$genre->getID().'")';
+        $createGenre = 'INSERT INTO genres (genre_id, genre_name) VALUES ("'.$genre->getID().'", "'.$genre->getName().'")';
         $insertResult = $conn->query($createGenre);
         if (!$insertResult) {
 
