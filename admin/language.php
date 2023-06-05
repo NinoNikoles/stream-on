@@ -19,11 +19,11 @@ class langSnippets {
             'Remove' => 'Remove',
             'Home' => 'Home',
             'Delete' => 'Delete',
-            'Add user' => 'Add User',
+            'Add_user' => 'Add User',
             'Username' => 'Username',
             'Role' => 'Role',
             'ID' => 'ID',
-            'TMDB ID' => 'TMDB ID',
+            'TMDB_ID' => 'TMDB ID',
             'Name' => 'Name',
             'Hour' => 'Hour',
             'Hours' => 'Hours',
@@ -32,38 +32,38 @@ class langSnippets {
 
             // -- Messages --
             // Success
-            'editusersuccess' => 'User edited successfully!',
-            'addusersuccess' => 'User added successfully!',
-            'deleteusersuccess' => 'User deleted successfully!',
+            'edit_user_success' => 'User edited successfully!',
+            'add_user_success' => 'User added successfully!',
+            'delete_user_success' => 'User deleted successfully!',
 
-            'editmoviesuccess' => 'Movie edited successfully!',
-            'addmoviesuccess' => 'Movie added successfully!',
-            'deletemoviesuccess' => 'Movie deleted successfully!',
+            'edit_movie_success' => 'Movie edited successfully!',
+            'add_movie_success' => 'Movie added successfully!',
+            'delete_movie_success' => 'Movie deleted successfully!',
 
-            'genres created success' => 'Genres created successfully!',            
+            'genres_created_success' => 'Genres created successfully!',            
 
-            'logout message' => 'Successfully logged out!',
-            'user img upload success' => 'Img successfully uploaded!',
+            'logout_message' => 'Successfully logged out!',
+            'user_img_upload_success' => 'Image successfully uploaded!',
 
             // Alert
-            'edituseralert' => 'User could not be edited!',
-            'adduseralert' => 'User could not be added!',
-            'deleteuseralert' => 'User could not be deleted!',
+            'edit_user_alert' => 'User could not be edited!',
+            'add_user_alert' => 'User could not be added!',
+            'delete_user_alert' => 'User could not be deleted!',
 
-            'editmoviealert' => 'Movie could not be edited!',
-            'addmoviealert' => 'Movie could not be added!',
-            'deletemoviealert' => 'Movie could not be deleted!',
+            'edit_movie_alert' => 'Movie could not be edited!',
+            'add_movie_alert' => 'Movie could not be added!',
+            'delete_movie_alert' => 'Movie could not be deleted!',
 
-            'genres created alert' => 'Genres could not be created!',            
+            'genres_created_alert' => 'Genres could not be created!',            
 
-            'user img upload alert' => 'Img could not be uploaded!',
+            'user_img_upload_alert' => 'Img could not be uploaded!',
 
             // Warnings
-            'No movies found' => 'Es konnten keine Filme gefunden werden!',
-            'No movies available' => 'No movies available!',
+            'no_movies_found' => 'No movies found!',
+            'no_movies_available' => 'No movies available!',
 
-            'user img upload wrong file' => 'Das hochgeladene File muss ein Bild sein (JPG, JPEG, PNG, GIF, SVG)!',
-            'user img upload no file' => 'Es wurde kein Bild ausgewählt!',
+            'user_img_upload_wrong_file' => 'The uploaded file must be an image (JPG, JPEG, PNG, GIF, SVG)!',
+            'user_img_upload_no_file' => 'No image selected!',
         ],
         'de-DE' => [
             //Menü
@@ -82,11 +82,11 @@ class langSnippets {
             'Home' => 'Home',
             'Remove' => 'Entfernen',
             'Delete' => 'Löschen',
-            'Add user' => 'Benutzer hinzufügen',
+            'Add_user' => 'Benutzer hinzufügen',
             'Username' => 'Benutzername',
             'Role' => 'Rolle',
             'ID' => 'ID',
-            'TMDB ID' => 'TMDB ID',
+            'TMDB_ID' => 'TMDB ID',
             'Name' => 'Name',
             'Hour' => 'Stunde',
             'Hours' => 'Stunden',
@@ -95,28 +95,38 @@ class langSnippets {
 
             // -- Messages --
             // Success
-            'editusersuccess' => 'Der Benutzer wurde erfolgreich bearbeitet!',
-            'addusersuccess' => 'Der Benutzer wurde erfolgreich hinzugefügt!',
-            'deleteusersuccess' => 'Der Benutzer wurde erfolgreich gelöscht!',
+            'edit_user_success' => 'Der Benutzer wurde erfolgreich bearbeitet!',
+            'add_user_success' => 'Der Benutzer wurde erfolgreich hinzugefügt!',
+            'delete_user_success' => 'Der Benutzer wurde erfolgreich gelöscht!',
 
-            'editmoviesuccess' => 'Der Film wurde erfolgreich bearbeitet!',
-            'addmoviesuccess' => 'Der Film wurde erfolgreich hinzugefügt!',
-            'deletemoviesuccess' => 'Der Film wurde erfolgreich gelöscht!',
+            'edit_movie_success' => 'Der Film wurde erfolgreich bearbeitet!',
+            'add_movie_success' => 'Der Film wurde erfolgreich hinzugefügt!',
+            'delete_movie_success' => 'Der Film wurde erfolgreich gelöscht!',
 
-            'logout message' => 'Du hast dich erfolgreich abgemeldet!',
+            'genres_created_success' => 'Genre wurden erfolgreich geladen!',            
+
+            'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
+            'user_img_upload_success' => 'Bild erfolgreich hochgeladen',
 
             // Alert
-            'edituseralert' => 'Der Benutzer konnte nicht bearbeitet werden!',
+            'edit_user_alert' => 'Der Benutzer konnte nicht bearbeitet werden!',
             'adduseralert' => 'Der Benutzer konnte nicht hinzugefügt werden!',
             'deleteuseralert' => 'Der Benutzer konnte nicht gelöscht werden!',
 
-            'editmoviealert' => 'Der Film konnte nicht bearbeitet werden!',
-            'addmoviealert' => 'Der Film konnte nicht hinzugefügt werden!',
-            'deletemoviealert' => 'Der Film konnte nicht gelöscht werden!',
+            'edit_movie_alert' => 'Der Film konnte nicht bearbeitet werden!',
+            'add_movie_alert' => 'Der Film konnte nicht hinzugefügt werden!',
+            'delete_movie_alert' => 'Der Film konnte nicht gelöscht werden!',
+
+            'genres_created_alert' => 'Genre konntent nicht geladen werden!',            
+
+            'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
 
             // Warnings
-            'No movies found' => 'Es konnten eine Filme gefunden werden!',
-            'No movies available' => 'Keine Filme verfügbar!',
+            'no_movies_found' => 'Es konnten eine Filme gefunden werden!',
+            'no_movies_available' => 'Keine Filme verfügbar!',
+
+            'user_img_upload_wrong_file' => 'Das hochgeladene File muss ein Bild sein (JPG, JPEG, PNG, GIF, SVG)!',
+            'user_img_upload_no_file' => 'Es wurde kein Bild ausgewählt!',
         ]
     ];
 
