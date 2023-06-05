@@ -5,10 +5,9 @@
     $conn = $mysqli;
             
     // Add Movie
-    if (isset($_POST['id'])) {
-        insert_movie($conn, $tmdb, $_POST['id']);
+    if (isset($_POST['id']) && isset($_POST['add-movie'])) {
+        insert_movie($_POST['id']);
     }
-    
 ?>
 
 <div class="col12">
@@ -37,15 +36,16 @@
 
             <div class="row">
                 <?php 
-                    $result = selectAllMoviesByTitle('ASC');
-                    if ($result->num_rows > 0) {
-                        while ($movie = $result->fetch_assoc()) {
+                    $movies = selectAllMoviesByTitle('ASC');
+                    var_dump($movies);
+                    if ( $movies > 0 ) {
+                        foreach ( $movies as $movie ) {
                             echo '<div class="col3 column">';
-                                echo '<a href="/movies/edit-movie/?id='.$movie['movie_tmdbID'].'" title="'.$movie['movie_title'].'" class="media-card">';
+                                echo '<a href="/movies/edit-movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
-                                        echo '<img src="'.$tmdb->getImageURL().$movie['movie_poster'].'" alt="">';
+                                        echo '<img src="'.$tmdb->getImageURL().$movie['poster'].'" alt="">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.truncate($movie['movie_title'],20).'</span>';
+                                    echo '<span class="title">'.truncate($movie['title'],20).'</span>';
                                 echo '</a>';
                             echo '</div>';
                         }
