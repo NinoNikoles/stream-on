@@ -385,6 +385,8 @@ function runtimeToString($runtime) {
     return $finalRuntime;
 }
 
+//------------------------------------------------
+//------------------------------------------------
 //-- For Index (Home) Page -----------------------
 function mainPageListMovies() {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -474,4 +476,6 @@ function goTrhoughMovies($db_genre) {
 
     return $movieRow;
 }
+//------------------------------------------------
+//------------------------------------------------
 //------------------------------------------------
