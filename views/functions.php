@@ -1,6 +1,7 @@
 <?php
 require_once ROOT_PATH.'/admin/language.php';
 
+//-- Returns TMDB Class --
 function setupTMDB() {
     include ROOT_PATH.'/tmdb/configuration/default.php';
     require_once ROOT_PATH.'/tmdb/tmdb-api.php';
@@ -77,6 +78,7 @@ function callout() {
     }
 }
 
+//-- Loads the backend menu --
 function get_backend_menu() {
 	return include(ROOT_PATH.'/views/includes/backend-menu.php');
 }
@@ -93,6 +95,7 @@ function get_apikey_db() {
     }
 }
 
+//-- String trimmer
 function truncate($string,$length=100,$append=" ...") {
     $string = trim($string);
 
@@ -105,6 +108,7 @@ function truncate($string,$length=100,$append=" ...") {
     return $string;
 }
 
+//-- Saves movie with informations in database -- 
 function insert_movie($movieID) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $tmdb = setupTMDB();
@@ -165,7 +169,7 @@ function insert_movie($movieID) {
     }
 }
 
-// Returns all information of a movie from local database
+//-- Returns all information of a movie from local database --
 function selectMovieByID($movieID) {
     $tmdb = setupTMDB();
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -218,7 +222,7 @@ function selectMovieByID($movieID) {
     return $data;
 }
 
-// Returns all local database movies ordered by A-Z or Z-A
+//-- Returns all local database movies ordered by A-Z or Z-A --
 function selectAllMoviesByTitle($order = ''){
     $tmdb = setupTMDB();
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -265,7 +269,7 @@ function selectAllMoviesByTitle($order = ''){
     return $data;
 }
 
-// Checks if the movie is already in local database so it wont show up in movie collections
+//-- Checks if the movie is already in local database so it wont show up in movie collections --
 function movie_is_in_collection($id){
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -277,7 +281,7 @@ function movie_is_in_collection($id){
     }
 }
 
-// Updates the filepath of movie sources
+//-- Updates the filepath of movie sources --
 function updateMovieFilePath($moviePath, $movieID) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $sql = 'UPDATE movies SET movie_file_path="'.$moviePath.'" WHERE movie_tmdbID="'.$movieID.'"';
@@ -293,7 +297,7 @@ function updateMovieFilePath($moviePath, $movieID) {
     }
 }
 
-// Outputs a html player with selected movie as source
+//-- Outputs a html player with selected movie as source --
 function moviePlayer($movieID, $fullscreen) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -317,7 +321,7 @@ function moviePlayer($movieID, $fullscreen) {
     }
 }
 
-// Updates the previewd poster image of movies
+//-- Updates the previewd poster image of movies --
 function updateMoviePoster($movieID, $poster) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -335,7 +339,7 @@ function updateMoviePoster($movieID, $poster) {
     }
 }
 
-// Updates the previewd backdrop image of movies
+//-- Updates the previewd backdrop image of movies --
 function updateMovieBackdrop($movieID, $backdrop) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -353,13 +357,13 @@ function updateMovieBackdrop($movieID, $backdrop) {
     }
 }
 
-// Outputs the release date as DD.MM.YYYY
+//-- Outputs the release date as DD.MM.YYYY --
 function outputDate($date) {
     $formattedDate = date("d.m.Y", strtotime($date));
     return $formattedDate;
 }
 
-// Outputs Runtime as HH hours MM minuts
+//-- Outputs Runtime as HH hours MM minuts --
 function runtimeToString($runtime) {
     $hours = floor($runtime / 60);
     $restMinutes = $runtime % 60;
