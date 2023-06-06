@@ -84,6 +84,7 @@
 
                             if ( $filepath != '') {
                                 videoPlayer($_GET['id']);
+                                echo '<div class="marg-bottom-s"></div>';
                             }
                         ?>
                     </div>
