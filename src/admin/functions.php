@@ -223,6 +223,17 @@ function selectMovieByID($movieID) {
     return $data;
 }
 
+//-- Check if movie is in local database --
+function movieInLocalDB($movieID) {
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    $sql = "SELECT movie_tmdbID FROM movies WHERE movie_tmdbID='".$movieID."'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        return true;
+    }
+}
+
 //-- Returns all local database movies ordered by A-Z or Z-A --
 function selectAllMoviesByTitle($order = ''){
     $tmdb = setupTMDB();
