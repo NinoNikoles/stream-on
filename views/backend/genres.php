@@ -31,7 +31,7 @@ if(isset($_POST['generate-genres'])) {
 
     <div class="innerWrap">
         
-        <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
+        <div class="col8 marg-top-xxl marg-bottom-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <h1><?php echo lang_snippet('genres'); ?></h1>
             </div>
