@@ -18,13 +18,13 @@
         
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
-                <h1><?php echo lang_snippet('Movies'); ?></h1>
+                <h1><?php echo lang_snippet('movies'); ?></h1>
             </div>
 
             <div class="col12 marg-bottom-m">
                 <div id="searchbar">
                     <label for="movie-name">Film Name*
-                        <input type="text" id="movie-search" name="movie-name" placeholder="Film Name" value="" required>
+                        <input type="text" id="movie-search" name="movie-name" placeholder="<?php echo lang_snippet('movie_title'); ?>" value="" required>
                     </label>
                     <div id="movieSearchResults" class="hidden"></div>      
                 </div>
@@ -52,7 +52,7 @@
                     } else {
                         echo '<div class="col12 column">';
                             echo '<div class="callout warning">';
-                                echo '<p>'.lang_snippet('No movies available').'</p>';
+                                echo '<p>'.lang_snippet('no_movies_available').'</p>';
                             echo '</div>';
                         echo '</div>';
                     }

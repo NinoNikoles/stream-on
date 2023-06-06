@@ -54,22 +54,22 @@
                     $sql = 'UPDATE users SET user_img="'.$neuerName.'" WHERE id="'.$_POST['id'].'"';
                     if ($conn->query($sql) === TRUE) {
                         echo "Record updated successfully";
-                        set_callout('success','user img upload success');
+                        set_callout('success','user_img_upload_success');
                         header('Location: /user/?id='.$_POST['id']);
                         exit();
                     } else {
-                        set_callout('alert','user img upload alert');
+                        set_callout('alert','user_img_upload_alert');
                         header('Location: /user/?id='.$_POST['id']);
                         exit();
                     }
                 } else {
                     echo 'Das hochgeladene File muss ein Bild sein (JPG, JPEG, PNG, GIF).';
-                    set_callout('warning','user img upload wrong file');
+                    set_callout('warning','user_img_upload_wrong_file');
                     header('Location: /user/?id='.$_POST['id']);
                     exit();
                 }
             } else {
-                set_callout('warning','user img upload no file');
+                set_callout('warning','user_img_upload_no_file');
                 header('Location: /user/?id='.$_POST['id']);
                 exit();
             }

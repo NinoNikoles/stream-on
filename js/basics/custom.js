@@ -456,38 +456,37 @@ $(document).ready(function() {
                 success: function(response) {
                 // Die Antwort enthält die Daten für den jsTree
                     $('#file-tree').jstree({
-                        'core': {
+                        "core": {
                             "animation" : 0,
                             "check_callback" : true,
                             "themes" : { "stripes" : true },
                             'data': response,
+                            "multiple": false,
                         },
-                        "types" : {
-                            "#" : {
-                                "max_children" : 1,
-                                "max_depth" : 4,
-                                "valid_children" : ["root"]
-                            },
-                            "root" : {
-                                "icon" : "/static/3.3.15/assets/images/tree_icon.png",
-                                "valid_children" : ["default"]
-                            },
-                            "default" : {
-                                "valid_children" : ["default","file"]
-                            },
-                            "file" : {
-                                "icon" : "glyphicon glyphicon-file",
-                                "valid_children" : ['.scss','.js']
+                        "checkbox": {
+                            "three_state": false
+                        },
+                        "types": {
+                            "video": {
+                                "icon": 'jstree-file'
                             }
                         },
-                        "plugins" : [
+                        "plugins": [
                             "contextmenu", "dnd", "search",
                             "state", "types", "wholerow"
-                        ]
-                    }).on('select_node.jstree', function(e, data) {
-                        var path = $('#file-tree').jstree('get_path', data.node, '/');
-                        $('#inputMoviePath').attr('value', '/media/'+path);
-                        
+                        ],
+                    })
+
+                    $('#file-tree').on('select_node.jstree', function(e, data) {
+                        var node = data.instance.get_node(data.selected[0]);
+                        if (node.text.endsWith('.mp4')) {
+                            var path = $('#file-tree').jstree('get_path', data.node, '/');
+                            $('#inputMoviePath').attr('value', '/media/'+path);
+                            $('#inputMovieSubmit').css('display', 'inline-flex');
+                        } else {
+                            data.instance.deselect_node(data.selected[0]);
+                            $('#inputMovieSubmit').css('display', 'none');
+                        }                      
                     });
                 },
                 error: function(xhr, status, error) {

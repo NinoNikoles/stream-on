@@ -8,7 +8,7 @@
         die('Error creating table: ' . $conn->error);
     }
 
-    set_callout('success','logout message');
+    set_callout('success','logout_message');
 
     setcookie('PHPSESSID', '', time() - 3600, "/");
     setcookie('session_id', '', time() - 3600, "/");

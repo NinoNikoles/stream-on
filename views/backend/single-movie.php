@@ -14,6 +14,7 @@
         $tagline = $movie['tagline'];
         $genres = $movie['genres'];
         $currentMovieCollection = $movie['collection'];
+        $filepath = $movie['file_path'];
     }
 ?>
 
@@ -55,10 +56,10 @@
                             echo '<div class="col12"><p>'.$tagline.'</p></div>';
                         }
                         echo '<div class="col12"><p>'.$movie['overview'].'</p></div>';
-                        echo '<div class="col3"><p><strong>Bewertung:</strong><br>'.$movie['voteAverage'].'/10</p></div>';
-                        echo '<div class="col5"><p><strong>Erscheinungsdatum:</strong><br>'.outputDate($movie['release']).'</p></div>';
-                        echo '<div class="col4"><p><strong>Dauer:</strong><br>'.runtimeToString($movie['runtime']).'</p></div>';
-                        echo '<div class="col12"><p><span><strong>Genre:</strong></span><br>';                    
+                        echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$movie['voteAverage'].'/10</p></div>';
+                        echo '<div class="col5"><p><strong>'.lang_snippet('release_date').':</strong><br>'.outputDate($movie['release']).'</p></div>';
+                        echo '<div class="col4"><p><strong>'.lang_snippet('runtime').':</strong><br>'.runtimeToString($movie['runtime']).'</p></div>';
+                        echo '<div class="col12"><p><span><strong>'.lang_snippet('genres').':</strong></span><br>';                    
                         
                         foreach ($genres as $genre) {
                             echo '<span class="tag">'.$genre['name'].'</span>';
@@ -77,9 +78,13 @@
                                 echo '<form method="post" action="/movies/edit-movie/?id='.$_GET['id'].'">';
                                     echo '<input type="text" name="moviePath" id="inputMoviePath" value="" style="display:none;">';
                                     echo '<input type="text" name="id" value="'.$_GET['id'].'" style="display:none;">';
-                                    echo '<button class="btn" type="submit">Speichern</button>';
+                                    echo '<button class="btn" id="inputMovieSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>';
                                 echo '</form>';
                             echo '</div>';
+
+                            if ( $filepath != '') {
+                                moviePlayer($_GET['id']);
+                            }
                         ?>
                     </div>
 
@@ -91,7 +96,7 @@
                         </a>
                            
                         <div id="movie-poster" style="display:none;">
-                            <p>Möchtest du hinzufügen?</p>
+                            <p><?php echo lang_snippet('select_new_poster');?>:</p>
                             <form method="post" action="/movies/edit-movie/?id=<?php echo $id; ?>">
                                 <div class="row">
                                     <?php
@@ -115,7 +120,7 @@
                                     </div>
                                 
                                 <p class="text-right">
-                                    <button type="submit" class="btn btn-success" name="change-poster">Hinzufügen</button>
+                                    <button type="submit" class="btn btn-success" name="change-poster"><?php echo lang_snippet('save'); ?></button>
                                 </p>
                             </form>
                         </div>
@@ -129,7 +134,7 @@
                         </a>
 
                         <div id="movie-backdrop" style="display:none;">
-                            <p>Möchtest du hinzufügen?</p>
+                            <p><?php echo lang_snippet('select_new_thumbnail');?>:</p>
                             <form method="post" action="/movies/edit-movie/?id=<?php echo $id; ?>">
                             <div class="row">
                                 <?php
@@ -152,7 +157,7 @@
                                 ?>
                                 </div>
                                 <p class="text-right">
-                                    <button type="submit" class="btn btn-success" name="change-backdrop">Hinzufügen</button>
+                                    <button type="submit" class="btn btn-success" name="change-backdrop"><?php echo lang_snippet('save'); ?></button>
                                 </p>
                             </form>
                         </div>
@@ -180,11 +185,11 @@
                                 echo '</a>';
 
                                 echo '<div id="add-movie-'.$movieID.'" style="display:none;">';
-                                    echo '<p>Möchtest du hinzufügen?</p>';
+                                    echo '<p>'.lang_snippet('add_movie').'</p>';
                                     echo '<form method="post" action="/movies/edit-movie/?id='.$movieID.'">';
                                     echo '<input type="number" name="id" value="'.$movieID.'" style="display:none;">';
                                         echo '<p class="text-right">';
-                                            echo '<button type="submit" class="btn btn-success" name="add-movie">Hinzufügen</button>';
+                                            echo '<button type="submit" class="btn btn-success" name="add-movie">'.lang_snippet('add').'</button>';
                                         echo '</p>';
                                     echo '</form>';
                                 echo '</div>';

@@ -21,7 +21,7 @@
         if (!($conn->query($sql) === TRUE)) {
             echo '<div class="innerWrap">';
                 echo '<div class="col4 marg-left-col4">';
-                    echo '<p class="text-alert">Speichern fehlgeschlagen!.';
+                    echo '<p class="text-alert">'.lang_snippet('failed_to_save').'</p>';
                 echo '</div>';
             echo '</div>';
         }
@@ -40,25 +40,25 @@
         
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
-                <h1><?php echo lang_snippet('Settings'); ?></h1>
+                <h1><?php echo lang_snippet('settings'); ?></h1>
             </div>
             <form method="post" action="settings" class="row">
                 <div class="col12 column">
                     <p>
-                        <label for="apikey">API Key*
-                            <input type="text" name="apikey" placeholder="API Key" value="<?php echo $apikey; ?>"required>
+                        <label for="apikey"><?php echo lang_snippet('api_key'); ?>*
+                            <input type="text" name="apikey" placeholder="<?php echo lang_snippet('api_key'); ?>" value="<?php echo $apikey; ?>"required>
                         </label>
                     </p>
                 </div>
                 <div class="col12 column">
                     <p>
-                        <label for="language">Sprache/n*
+                        <label for="language"><?php echo lang_snippet('language'); ?>
                             <input type="text" name="language" placeholder="Example: 'en,de'" value="<?php echo $apiLang; ?>" required>
                         </label>
                     </p>
                 </div>
                 <div class="col12 column text-right">
-                    <button class="btn btn-primary" type="submit" name="save-settings"><?php echo lang_snippet('Save'); ?></button>
+                    <button class="btn btn-primary" type="submit" name="save-settings"><?php echo lang_snippet('save'); ?></button>
                 </div>
             </form>
         </div>

@@ -3,32 +3,46 @@
 class langSnippets {
     public $langs = [
         'en-US' => [
-            //Menü
-            'Settings' => 'Settings',
-            'Movies' => 'Movies',
-            'Users' => 'Users',
-            'Shows' => 'TV Shows',
-            'Genres' => 'Genres',
-            'Logout' => 'Logout',
+            // Menü
+            'settings' => 'Settings',
+            'movies' => 'Movies',
+            'users' => 'Users',
+            'shows' => 'TV Shows',
+            'genres' => 'Genres',
+            'logout' => 'Logout',
 
             // Universal
-            'Cancel' => 'Cancel',
-            'Save' => 'Save',
-            'Add' => 'Add',
-            'Edit' => 'Edit',
-            'Remove' => 'Remove',
-            'Home' => 'Home',
-            'Delete' => 'Delete',
-            'Add_user' => 'Add User',
-            'Username' => 'Username',
-            'Role' => 'Role',
-            'ID' => 'ID',
-            'TMDB_ID' => 'TMDB ID',
-            'Name' => 'Name',
-            'Hour' => 'Hour',
-            'Hours' => 'Hours',
-            'Minute' => 'Minute',
-            'Minutes' => 'Minutes',
+            'cancel' => 'Cancel',
+            'save' => 'Save',
+            'add' => 'Add',
+            'edit' => 'Edit',
+            'remove' => 'Remove',
+            'home' => 'Home',
+            'delete' => 'Delete',
+            'add_user' => 'Add User',
+            'username' => 'Username',
+            'role' => 'Role',
+            'id' => 'ID',
+            'tmdb_id' => 'TMDB ID',
+            'name' => 'Name',
+            'hour' => 'Hour',
+            'hours' => 'Hours',
+            'minute' => 'Minute',
+            'minutes' => 'Minutes',
+			'api_key' => 'API Key',
+			'language' => 'Language',
+			
+			'load_genres' => 'Load genres',
+			'movie_title' => 'Movie title',
+			
+			// Movie
+			'rating' => 'Rating',
+			'runtime' => 'Runtime',
+			'release_date' => 'Release date',
+			
+			'select_new_poster' => 'Select a new poster',
+			'select_new_thumbnail' => 'Select a new thumbnail',
+			'add_movie' => 'Would you like to add the movie?',
 
             // -- Messages --
             // Success
@@ -41,11 +55,15 @@ class langSnippets {
             'delete_movie_success' => 'Movie deleted successfully!',
 
             'genres_created_success' => 'Genres created successfully!',            
+            'update_poster_success' => 'Poster updated successfully!',            
+            'update_thumbnail_success' => 'Thumbnail updated successfully!',         
+            'update_file_path_success' => 'File path updated successfully!',         
 
             'logout_message' => 'Successfully logged out!',
             'user_img_upload_success' => 'Image successfully uploaded!',
 
             // Alert
+			'failed_to_save' => 'Save failed!',
             'edit_user_alert' => 'User could not be edited!',
             'add_user_alert' => 'User could not be added!',
             'delete_user_alert' => 'User could not be deleted!',
@@ -54,7 +72,10 @@ class langSnippets {
             'add_movie_alert' => 'Movie could not be added!',
             'delete_movie_alert' => 'Movie could not be deleted!',
 
-            'genres_created_alert' => 'Genres could not be created!',            
+            'genres_created_alert' => 'Genres could not be created!', 
+            'update_poster_alert' => 'Poster could not be updated!',            
+            'update_thumbnail_alert' => 'Thumbnail could not be updated!',         
+            'update_file_path_alert' => 'File path could not be updated!',  			
 
             'user_img_upload_alert' => 'Img could not be uploaded!',
 
@@ -66,32 +87,46 @@ class langSnippets {
             'user_img_upload_no_file' => 'No image selected!',
         ],
         'de-DE' => [
-            //Menü
-            'Settings' => 'Einstellungen',
-            'Movies' => 'Filme',
-            'Users' => 'Benutzer',
-            'Shows' => 'Serien',
-            'Genres' => 'Genres',
-            'Logout' => 'Ausloggen',
+            // Menü
+            'settings' => 'Einstellungen',
+            'movies' => 'Filme',
+            'users' => 'Benutzer',
+            'shows' => 'Serien',
+            'genres' => 'Genres',
+            'logout' => 'Ausloggen',
 
             // Universell
-            'Cancel' => 'Abbrechen',
-            'Save' => 'Speichern',
-            'Add' => 'Hinzufügen',
-            'Edit' => 'Bearbeiten',
-            'Home' => 'Home',
-            'Remove' => 'Entfernen',
-            'Delete' => 'Löschen',
-            'Add_user' => 'Benutzer hinzufügen',
-            'Username' => 'Benutzername',
-            'Role' => 'Rolle',
-            'ID' => 'ID',
-            'TMDB_ID' => 'TMDB ID',
-            'Name' => 'Name',
-            'Hour' => 'Stunde',
-            'Hours' => 'Stunden',
-            'Minute' => 'Minute',
-            'Minutes' => 'Minuten',
+            'cancel' => 'Abbrechen',
+            'save' => 'Speichern',
+            'add' => 'Hinzufügen',
+            'edit' => 'Bearbeiten',
+            'home' => 'Home',
+            'remove' => 'Entfernen',
+            'delete' => 'Löschen',
+            'add_user' => 'Benutzer hinzufügen',
+            'username' => 'Benutzername',
+            'role' => 'Rolle',
+            'id' => 'ID',
+            'tmdb_id' => 'TMDB ID',
+            'name' => 'Name',
+            'hour' => 'Stunde',
+            'hours' => 'Stunden',
+            'minute' => 'Minute',
+            'minutes' => 'Minuten',
+			'api_key' => 'API Key',
+			'language' => 'Sprache',
+			
+			'load_genres' => 'Genres laden',
+			'movie_title' => 'Movie Title',
+			
+			// Movie
+			'rating' => 'Bewertung',
+			'runtime' => 'Dauer',
+			'release_date' => 'Erscheinungsdatum',
+			
+			'select_new_poster' => 'Wähle ein neues Poster',
+			'select_new_thumbnail' => 'Wähle ein neues Thumbnail',
+			'add_movie' => 'Möchtest du den Film hinzufügen?',
 
             // -- Messages --
             // Success
@@ -103,21 +138,28 @@ class langSnippets {
             'add_movie_success' => 'Der Film wurde erfolgreich hinzugefügt!',
             'delete_movie_success' => 'Der Film wurde erfolgreich gelöscht!',
 
-            'genres_created_success' => 'Genre wurden erfolgreich geladen!',            
+            'genres_created_success' => 'Genre wurden erfolgreich geladen!',
+            'update_poster_success' => 'Poster wurde erfolgreich aktualisiert!',            
+            'update_thumbnail_success' => 'Thumbnail wurde erfolgreich aktualisiert!',         
+            'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',    			
 
             'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
             'user_img_upload_success' => 'Bild erfolgreich hochgeladen',
 
             // Alert
+			'failed_to_save' => 'Speichern fehlgeschlagen!',
             'edit_user_alert' => 'Der Benutzer konnte nicht bearbeitet werden!',
-            'adduseralert' => 'Der Benutzer konnte nicht hinzugefügt werden!',
-            'deleteuseralert' => 'Der Benutzer konnte nicht gelöscht werden!',
+            'add_user_alert' => 'Der Benutzer konnte nicht hinzugefügt werden!',
+            'delete_user_alert' => 'Der Benutzer konnte nicht gelöscht werden!',
 
             'edit_movie_alert' => 'Der Film konnte nicht bearbeitet werden!',
             'add_movie_alert' => 'Der Film konnte nicht hinzugefügt werden!',
             'delete_movie_alert' => 'Der Film konnte nicht gelöscht werden!',
 
-            'genres_created_alert' => 'Genre konntent nicht geladen werden!',            
+            'genres_created_alert' => 'Genre konntent nicht geladen werden!',
+            'update_poster_alert' => 'Poster konntent nicht aktualisiert werden!',            
+            'update_thumbnail_alert' => 'Thumbnail konntent nicht aktualisiert werden!',         
+            'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!',  			
 
             'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
 

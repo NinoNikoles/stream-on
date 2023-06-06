@@ -13,13 +13,13 @@ if(isset($_POST['generate-genres'])) {
         $insertResult = $conn->query($createGenre);
         if (!$insertResult) {
 
-            set_callout('alert','genres created alert');
+            set_callout('alert','genres_created_alert');
             header('Location: /genres');
             exit();
         }
     }
 
-    set_callout('success','genres created success');
+    set_callout('success','genres_created_success');
     header('Location: /genres');
     exit();
 }
@@ -33,7 +33,7 @@ if(isset($_POST['generate-genres'])) {
         
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
-                <h1><?php echo lang_snippet('Genres'); ?></h1>
+                <h1><?php echo lang_snippet('genres'); ?></h1>
             </div>
         
             <?php 
@@ -45,7 +45,7 @@ if(isset($_POST['generate-genres'])) {
                     if ($numRows == 0) {
                         echo '<div class="col12 marg-bottom-m">';
                             echo '<form method="post" action="/genres">';
-                                echo '<button type="submit" name="generate-genres">Genres erstellen</button>';
+                                echo '<button type="submit" name="generate-genres">'.lang_snippet('genres').'</button>';
                             echo '</form>';
                         echo '</div>';
                     }
@@ -57,9 +57,9 @@ if(isset($_POST['generate-genres'])) {
 
                 <table>
                     <thead>
-                        <th><?php echo lang_snippet('ID'); ?></th>
-                        <th><?php echo lang_snippet('TMDB ID'); ?></th>
-                        <th><?php echo lang_snippet('Name'); ?></th>
+                        <th><?php echo lang_snippet('id'); ?></th>
+                        <th><?php echo lang_snippet('tmdb_id'); ?></th>
+                        <th><?php echo lang_snippet('name'); ?></th>
                     </thead>
                     <?php
 

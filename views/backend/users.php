@@ -11,11 +11,11 @@
         
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
             <div class="col12">
-                <h1><?php echo lang_snippet('Users'); ?></h1>
+                <h1><?php echo lang_snippet('users'); ?></h1>
             </div>
 
             <div class="col12 text-right">
-                <button data-src="#add-user" class="btn btn-secondary icon-left icon-add-user" data-fancybox><?php echo lang_snippet('Add user'); ?></button>
+                <button data-src="#add-user" class="btn btn-secondary icon-left icon-add-user" data-fancybox><?php echo lang_snippet('add_user'); ?></button>
             </div>
 
             <div class="col12">
@@ -27,11 +27,11 @@
                         $userID = mysqli_real_escape_string($conn, $_POST['userID']);
                         $sql = 'DELETE FROM users WHERE id="'.$userID.'"';
                         if (!($conn->query($sql) === TRUE)) {
-                            set_callout('alert','deleteuseralert');
+                            set_callout('alert','delete_user_alert');
                             header('Location: /users');
                             exit();
                         } else {
-                            set_callout('success','deleteusersuccess');
+                            set_callout('success','delete_user_success');
                             header('Location: /users');
                             exit();
                         }
@@ -50,11 +50,11 @@
                         
                         $sql = "INSERT INTO users (username, role, password) VALUES ('$username', '$role', '$hashed_password')";
                         if (!($conn->query($sql) === TRUE)) {
-                            set_callout('alert','adduseralert');
+                            set_callout('alert','add_user_alert');
                             header('Location: /users');
                             exit();
                         } else {
-                            set_callout('success','addusersuccess');
+                            set_callout('success','add_user_success');
                             header('Location: /users');
                             exit();
                         }
@@ -74,11 +74,11 @@
 
                         $sql = 'UPDATE users SET username="'.$username.'", password="'.$hashed_password.'", role="'.$role.'" WHERE id="'.$userID.'"';
                         if (!($conn->query($sql) === TRUE)) {
-                            set_callout('alert','deleteuseralert');
+                            set_callout('alert','delete_user_alert');
                             header('Location: /users');
                             exit();
                         } else {
-                            set_callout('success','editusersuccess');
+                            set_callout('success','edit_user_success');
                             header('Location: /users');
                             exit();
                         }
@@ -91,10 +91,10 @@
 
             <table>
                 <thead>
-                    <th><?php echo lang_snippet('Username'); ?></th>
-                    <th><?php echo lang_snippet('Role'); ?></th>
-                    <th><?php echo lang_snippet('Edit'); ?></th>
-                    <th><?php echo lang_snippet('Delete'); ?></th>
+                    <th><?php echo lang_snippet('username'); ?></th>
+                    <th><?php echo lang_snippet('role'); ?></th>
+                    <th><?php echo lang_snippet('edit'); ?></th>
+                    <th><?php echo lang_snippet('delete'); ?></th>
                 </thead>
                 <?php
 
@@ -153,7 +153,7 @@
                         echo '<form method="post" action="users">';
                             echo '<p class="text-right marg-no">';
                                 echo '<input type="number" name="userID" value="'.$row['id'].'" style="display:none;" required>';
-                                echo '<button class="btn btn-alert" type="submit" name="delete-user">Löschen</button>';
+                                echo '<button class="btn btn-alert" type="submit" name="delete-user">'.lang_snippet('delete').'</button>';
                             echo '</p>';
                         echo '</form>';
                     echo '</div>';

@@ -159,11 +159,11 @@ function insert_movie($movieID) {
             "'.$genres.'"
         )';
     if (!($conn->query($sql) === TRUE)) {
-        set_callout('alert','addmoviealert');
+        set_callout('alert','add_movie_alert');
         header('Location: /movies');
         exit();
     } else {
-        set_callout('success','addmoviesuccess');
+        set_callout('success','add_movie_success');
         header('Location: /movies/edit-movie/?id='.$id);
         exit();
     }
@@ -214,6 +214,7 @@ function selectMovieByID($movieID) {
 
                 $data['genres'][] = $array;
             }
+            $data['file_path'] = $row['movie_file_path'];
         }
     } else {
         $data = 0;
@@ -287,18 +288,18 @@ function updateMovieFilePath($moviePath, $movieID) {
     $sql = 'UPDATE movies SET movie_file_path="'.$moviePath.'" WHERE movie_tmdbID="'.$movieID.'"';
 
     if (!($conn->query($sql) === TRUE)) {
-        set_callout('alert','update poster alert');
+        set_callout('alert','update_file_apth_alert');
         header('Refresh:0');
         exit();
     } else {
-        set_callout('success','update poster success');
+        set_callout('success','update_file_path_success');
         header('Refresh:0');
         exit();
     }
 }
 
 //-- Outputs a html player with selected movie as source --
-function moviePlayer($movieID, $fullscreen) {
+function moviePlayer($movieID, $fullscreen = false) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='".$movieID."'";
@@ -329,11 +330,11 @@ function updateMoviePoster($movieID, $poster) {
 
     $sql = 'UPDATE movies SET movie_poster="'.$posterPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
     if (!($conn->query($sql) === TRUE)) {
-        set_callout('alert','update poster alert');
+        set_callout('alert','update_poster_alert');
         header('Refresh:0');
         exit();
     } else {
-        set_callout('success','update poster success');
+        set_callout('success','update_poster_success');
         header('Refresh:0');
         exit();
     }
@@ -347,11 +348,11 @@ function updateMovieBackdrop($movieID, $backdrop) {
 
     $sql = 'UPDATE movies SET movie_thumbnail="'.$backdropPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
     if (!($conn->query($sql) === TRUE)) {
-        set_callout('alert','update backdrop alert');
+        set_callout('alert','update_backdrop_alert');
         header('Refresh:0');
         exit();
     } else {
-        set_callout('success','update backdrop success');
+        set_callout('success','update_backdrop_success');
         header('Refresh:0');
         exit();
     }
@@ -369,16 +370,16 @@ function runtimeToString($runtime) {
     $restMinutes = $runtime % 60;
     
     if (!($hours == 1)) {
-        $minuteText = lang_snippet('Minutes');
+        $minuteText = lang_snippet('minutes');
     } else {
-        $minuteText = lang_snippet('Minute');
+        $minuteText = lang_snippet('minute');
     }
 
     if ($hours > 0 ) {
         if (!($hours > 1)) {
-            $hourText = lang_snippet('Hour');
+            $hourText = lang_snippet('hour');
         } else {
-            $hourText = lang_snippet('Hours');
+            $hourText = lang_snippet('hours');
         }
 
         $finalRuntime = $hours.' '.$hourText.' '. $restMinutes . ' '.$minuteText;

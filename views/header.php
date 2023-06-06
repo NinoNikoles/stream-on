@@ -22,11 +22,11 @@
                             $result = $conn->query($sql);
                             $role = $result->fetch_assoc();
                             if ($role['role'] > 0) {
-                                echo '<li class="menu-item"><a href="/settings" title="'.lang_snippet('Settings').'">'.lang_snippet('Settings').'</a></li>';
+                                echo '<li class="menu-item"><a href="/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
                             }
                         ?>
                         
-                        <li class="menu-item mobile-only"><a href="/logout" title="<?php echo lang_snippet('Logout'); ?>"><?php echo lang_snippet('Logout'); ?></a></li>
+                        <li class="menu-item mobile-only"><a href="/logout" title="<?php echo lang_snippet('logout'); ?>"><?php echo lang_snippet('logout'); ?></a></li>
                     </ul>
                 </nav>
                 
