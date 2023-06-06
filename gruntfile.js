@@ -28,9 +28,9 @@ module.exports = function(grunt) {
                     outputStyle: 'compressed'
                 },
                 files: {
-                    '<%= config.root %>build/style.min.css' : '<%= config.root %>css/scss/style.scss',
-                    '<%= config.root %>build/font.min.css' : '<%= config.root %>css/scss/font.scss',
-                    '<%= config.root %>build/editor.min.css' : '<%= config.root %>css/scss/editor.scss',
+                    '<%= config.root %>views/build/style.min.css' : '<%= config.root %>css/scss/style.scss',
+                    '<%= config.root %>views/build/font.min.css' : '<%= config.root %>css/scss/font.scss',
+                    '<%= config.root %>views/build/editor.min.css' : '<%= config.root %>css/scss/editor.scss',
                 }
             }
         },
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         concat: {
             dist: {
                 src: [ '<%= jsResources %>' ],
-                dest: '<%= config.root %>build/combined.min.js',
+                dest: '<%= config.root %>views/build/combined.min.js',
                 options: {
                     separator: ';'
                 }
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: {
-                    '<%= config.root %>build/combined.min.js': [ '<%= config.root %>build/combined.min.js' ]
+                    '<%= config.root %>views/build/combined.min.js': [ '<%= config.root %>views/build/combined.min.js' ]
                 }
             }
         },
@@ -67,13 +67,13 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '<%= config.root %>',
                         src: ['css/images/**'],
-                        dest: '<%= config.root %>build/'
+                        dest: '<%= config.root %>views/build/'
                     },
                     {
                         expand: true,
                         cwd: '<%= config.root %>',
                         src: ['css/fonts/**'],
-                        dest: '<%= config.root %>build/'
+                        dest: '<%= config.root %>views/build/'
                     }
                 ]
             }

@@ -42,6 +42,7 @@ class langSnippets {
 			
 			'select_new_poster' => 'Select a new poster',
 			'select_new_thumbnail' => 'Select a new thumbnail',
+            'select_movie_file' => 'Select a movie file',
 			'add_movie' => 'Would you like to add the movie?',
 
             // -- Messages --
@@ -126,6 +127,7 @@ class langSnippets {
 			
 			'select_new_poster' => 'Wähle ein neues Poster',
 			'select_new_thumbnail' => 'Wähle ein neues Thumbnail',
+            'select_movie_file' => 'Wähle eine Video Datei aus',
 			'add_movie' => 'Möchtest du den Film hinzufügen?',
 
             // -- Messages --
@@ -175,10 +177,14 @@ class langSnippets {
     public function get_lang($langSnippet) {
         $lang = get_browser_language();
 
-        if (array_key_exists($langSnippet, $this->langs[$lang])) {
+        if (isset($this->langs[$lang]) && array_key_exists($langSnippet, $this->langs[$lang])) {
             return $this->langs[$lang][$langSnippet];
         } else {
-            return $this->langs['en-US'][$langSnippet];
+            if (isset($this->langs['en-US'][$langSnippet]) && array_key_exists($langSnippet, $this->langs['en-US'][$langSnippet])) {
+                return $this->langs['en-US'][$langSnippet];
+            } else {
+                return '';
+            }
         }        
     }
 }

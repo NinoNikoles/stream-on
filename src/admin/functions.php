@@ -1,10 +1,10 @@
 <?php
-require_once ROOT_PATH.'/admin/language.php';
+require_once ROOT_PATH.'/src/admin/language.php';
 
 //-- Returns TMDB Class --
 function setupTMDB() {
-    include ROOT_PATH.'/tmdb/configuration/default.php';
-    require_once ROOT_PATH.'/tmdb/tmdb-api.php';
+    include ROOT_PATH.'/src/tmdb/configuration/default.php';
+    require_once ROOT_PATH.'/src/tmdb/tmdb-api.php';
     $tmdb = new TMDB($cnf);
 
     return $tmdb;
@@ -43,12 +43,12 @@ function setTheme() {
 	$expireDate = time() + (86400 * 365);
 
 	if( empty( $theme ) ) {
-		setcookie($themeCookie, 'light', $expireDate, '/');
-		$theme = 'data-theme="light"';
-	} else if ( $theme === 'light' ) {
-		setcookie($themeCookie, 'light', $expireDate, '/');
-		$theme = 'data-theme="light"';
-	} else if ( $theme !== 'light' ) {
+		setcookie($themeCookie, 'dark', $expireDate, '/');
+		$theme = 'data-theme="dark"';
+	} else if ( $theme === 'dark' ) {
+		setcookie($themeCookie, 'dark', $expireDate, '/');
+		$theme = 'data-theme="dark"';
+	} else if ( $theme !== 'dark' ) {
 		setcookie($themeCookie, $theme, $expireDate, '/');
 		$theme = 'data-theme="'.$theme.'"';
 	}
@@ -299,7 +299,7 @@ function updateMovieFilePath($moviePath, $movieID) {
 }
 
 //-- Outputs a html player with selected movie as source --
-function moviePlayer($movieID, $fullscreen = false) {
+function videoPlayer($movieID, $fullscreen = false) {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
     $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='".$movieID."'";
@@ -313,7 +313,7 @@ function moviePlayer($movieID, $fullscreen = false) {
                 echo '</video>';
             echo '</figure>';
         } else {
-            echo '<figure>';
+            echo '<figure class="widescreen">';
                 echo '<video id="player-'.$movieID.'" class="video-js" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
                     echo '<source src="'.$filePath.'" type="video/mp4" />';
                 echo '</video>';

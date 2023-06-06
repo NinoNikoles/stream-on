@@ -39,7 +39,7 @@
                         while($row = $result->fetch_assoc()) {
                             
                             if ($row['user_img'] === NULL || $row['user_img'] === '') {
-                                $userProfileImg = '/build/css/images/placeholder.webp';
+                                $userProfileImg = '/views/build/css/images/placeholder.webp';
                             } else {
                                 $userProfileImg = '/uploads/'.$row['user_img'];
                             }

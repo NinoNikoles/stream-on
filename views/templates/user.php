@@ -12,7 +12,7 @@
                 header('Location: /404');
             }
             if ($row['user_img'] === NULL || $row['user_img'] === '') {
-                $currentUserIMG = '/build/css/images/placeholder.webp';
+                $currentUserIMG = '/views/build/css/images/placeholder.webp';
             } else {
                 $currentUserIMG = '/uploads/' . $row['user_img'];
             }

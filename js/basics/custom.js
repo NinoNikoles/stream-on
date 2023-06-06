@@ -49,7 +49,6 @@ $(document).ready(function() {
 
         init: function () {
             var self = this;
-            console.log('JS Loaded');
 
             // self.initApp();
             self.bindHandlers();
@@ -322,9 +321,9 @@ $(document).ready(function() {
                 const slider = '.swiper-' + sliderNumber;
 
                 $el.addClass(sliderClass);
-                var slidesPerViewMobile = 4;
-                var slidesPerViewTablet = 6;
-                var slidesPerViewDesktop = 8;
+                var slidesPerViewMobile = 3;
+                var slidesPerViewTablet = 5;
+                var slidesPerViewDesktop = 10;
                 var tabletBP = 1080;
                 var desktopBP = 1400;
 
@@ -394,7 +393,6 @@ $(document).ready(function() {
         },
 
         customPagination: function(){
-            console.log('fucck you');
 			$sortField = $('#sortField'); // Select: Sortierung
 			$sizeField = $('#sizeField'); // Select: Anzahl Pro seite
 			$btnPrev = $('.pag-prev'); // Btn vorherige Seite
@@ -411,7 +409,6 @@ $(document).ready(function() {
 
             sortOptions.each(function() {
                 if($currentSort == $(this).val()) {
-                    console.log('passt');
                     $(this).prop('selected', true);
                 }
             })
@@ -422,8 +419,6 @@ $(document).ready(function() {
                 }
             })
 
-
-			
 			// Parameter und URL Weiterleitung
 			function getValues () {
 				$sortVal = $sortField.find(':selected').val();

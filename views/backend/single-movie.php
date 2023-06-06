@@ -71,7 +71,7 @@
                 <div class="col4">
                     <div class="col12">
                         <?php
-                            echo '<a href="#file-list-popup" class="btn" data-fancybox data-src="#file-list-popup">Select movie file</a>';
+                            echo '<a href="#file-list-popup" class="btn" data-fancybox data-src="#file-list-popup">'.lang_snippet('select_movie_file').'</a>';
                                 
                             echo '<div id="file-list-popup" style="display:none;">';
                                 echo '<div id="file-tree"></div>';
@@ -83,7 +83,7 @@
                             echo '</div>';
 
                             if ( $filepath != '') {
-                                moviePlayer($_GET['id']);
+                                videoPlayer($_GET['id']);
                             }
                         ?>
                     </div>

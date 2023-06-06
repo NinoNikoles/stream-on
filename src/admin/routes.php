@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT_PATH.'/admin/router.php';
+require_once ROOT_PATH.'/src/admin/router.php';
 
 // ##################################################
 // ##################################################
