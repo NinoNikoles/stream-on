@@ -129,6 +129,7 @@ $(document).ready(function() {
 				}
 			});
 			trigger.add('[data-trigger]');
+			trigger.add('.genre-slider');
 		},
 
         initPictures: function () {
@@ -321,7 +322,7 @@ $(document).ready(function() {
                 const slider = '.swiper-' + sliderNumber;
 
                 $el.addClass(sliderClass);
-                var slidesPerViewMobile = 3;
+                var slidesPerViewMobile = 2;
                 var slidesPerViewTablet = 5;
                 var slidesPerViewDesktop = 10;
                 var tabletBP = 1080;
@@ -359,7 +360,7 @@ $(document).ready(function() {
                     loop: true,
                     //effect: effect,
                     slidesPerView: slidesPerViewMobile,//itemsMobile,
-                    spaceBetween: 16,
+                    spaceBetween: 8,
                     allowTouchMove: false,
                     breakpoints: {
                         // when window width is >= 320px

@@ -99,3 +99,12 @@
         }
     }
 }
+
+.genre-slider {
+    opacity: 0;
+    @include transition(opacity 1s ease-in 0.75s);
+
+    &.visible {
+        opacity: 1;
+    }
+}
