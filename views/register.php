@@ -1,5 +1,4 @@
 <?php
-    include(ROOT_PATH.'/views/head.php');
 
 $conn = $mysqli;
 // Benutzerregistrierung
@@ -10,8 +9,7 @@ if(isset($_POST['register'])) {
     
     $sql = "INSERT INTO user (username, password) VALUES ('$username', '$hashed_password')";
     mysqli_query($conn, $sql);
-    header('Location: /login');
-    exit();
+    page_redirect("/login");
 }
 ?>
 

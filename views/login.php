@@ -1,10 +1,7 @@
 <?php 
-    include(ROOT_PATH.'/views/head.php');
-
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
     // Benutzeranmeldung
     if(isset($_POST['login'])) {
+        $conn = dbConnect();
         $username = mysqli_real_escape_string($conn, $_POST['username']);
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         
@@ -15,15 +12,10 @@
         if(password_verify($password, $row['password'])) {
             session_start();
             $_SESSION['username'] = $row['username'];
+            $_SESSION['role'] = $row['role'];
             $_SESSION['logged_in'] = true;
-            setcookie('session_id', session_id(), time() + (86400 * 9999), "/");
-            setcookie('PHPSESSID', session_id(), time() + (86400 * 9999), "/");
-            $sql = 'UPDATE users SET session="'.session_id().'" WHERE username="'.$username.'"';
-            if (!($conn->query($sql) === TRUE)) {
-                die('Error creating table: ' . $conn->error);
-            }
-            header('Location: /');
-            exit();
+
+            page_redirect('/');
         } else {
             echo '<div class="innerWrap">';
                 echo '<div class="col4 marg-left-col4">';
@@ -32,6 +24,9 @@
             echo '</div>';
         }
     }
+
+    require_once ROOT_PATH.'/views/head.php';
+    $conn = dbConnect();
 ?>
 
 <div class="innerWrap">
@@ -40,11 +35,11 @@
         <form method="post" action="">
             <p>
                 <label for="username">Benutzername
-                <input type="text" name="username" placeholder="Benutzername" required></label>
+                <input type="text" name="username" id="username" placeholder="Benutzername" required></label>
             </p>
             <p>
                 <label for="password">Passwort
-                <input type="password" name="password" placeholder="Passwort" required></label>
+                <input type="password" name="password" id="password" placeholder="Passwort" required></label>
             </p>
             <div class="text-right">
                 <button class="btn btn-primary" type="submit" name="login">Anmelden</button>

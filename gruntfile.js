@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
-    grunt.registerTask('default',[ 'concat', 'sass:dist', 'copy:main', 'watch']);
+    grunt.registerTask('default',[ 'concat', 'uglify', 'sass:dist', 'copy:main', 'watch']);
 
 
     grunt.loadNpmTasks('grunt-sass');

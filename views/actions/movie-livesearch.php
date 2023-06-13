@@ -1,6 +1,6 @@
 <?php
     //include(ROOT_PATH.'/config.php');
-    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    $conn = dbConnect();
     include(ROOT_PATH.'/src/tmdb/configuration/default.php');
     include(ROOT_PATH.'/src/tmdb/tmdb-api.php');
     

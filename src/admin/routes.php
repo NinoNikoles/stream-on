@@ -1,19 +1,13 @@
 <?php
-
-require_once ROOT_PATH.'/src/admin/router.php';
-
 // ##################################################
 // ##################################################
 // ##################################################
 
 
 // Überprüfen, ob der Benutzer eingeloggt ist
-if(!isset($_COOKIE['session_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     get('/', 'views/login.php');
     post('/', 'views/login.php');
-
-    header('Location: /');
-    exit();
 
 } else {
     // Static GET
@@ -31,11 +25,7 @@ if(!isset($_COOKIE['session_id']) || !isset($_SESSION['logged_in']) || $_SESSION
     post('/logout', 'logout.php');
 
     // Admin Check
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    $sql = "SELECT role FROM users WHERE session='".$_COOKIE['session_id']."'";
-    $result = $conn->query($sql);
-    $role = $result->fetch_assoc();
-    if ($role['role'] > 0) {
+    if ($_SESSION['role'] == '1') {
         get('/settings', 'views/backend/settings.php');
         post('/settings', 'views/backend/settings.php');
 

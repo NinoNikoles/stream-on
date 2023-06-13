@@ -1,6 +1,6 @@
 <?php 
-    include(ROOT_PATH.'/views/head.php');
-    include(ROOT_PATH.'/views/header.php');
+include(ROOT_PATH.'/views/header.php');
+$conn = dbConnect();
 ?>
 
 <div class="col12">
@@ -19,21 +19,17 @@
             </div>
 
             <div class="col12">
-                <?php
-                    $conn = $mysqli;
-                    
+                <?php                    
                     // Benutzer gelöscht
                     if(isset($_POST['delete-user'])) {
                         $userID = mysqli_real_escape_string($conn, $_POST['userID']);
                         $sql = 'DELETE FROM users WHERE id="'.$userID.'"';
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','delete_user_alert');
-                            header('Location: /users');
-                            exit();
+                            page_redirect("/users");
                         } else {
                             set_callout('success','delete_user_success');
-                            header('Location: /users');
-                            exit();
+                            page_redirect("/users");
                         }
                     }
 
@@ -51,12 +47,10 @@
                         $sql = "INSERT INTO users (username, role, password) VALUES ('$username', '$role', '$hashed_password')";
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','add_user_alert');
-                            header('Location: /users');
-                            exit();
+                            page_redirect("/users");
                         } else {
                             set_callout('success','add_user_success');
-                            header('Location: /users');
-                            exit();
+                            page_redirect("users");
                         }
                     }
 
@@ -75,12 +69,10 @@
                         $sql = 'UPDATE users SET username="'.$username.'", password="'.$hashed_password.'", role="'.$role.'" WHERE id="'.$userID.'"';
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','delete_user_alert');
-                            header('Location: /users');
-                            exit();
+                            page_redirect("/users");
                         } else {
                             set_callout('success','edit_user_success');
-                            header('Location: /users');
-                            exit();
+                            page_redirect("/users");
                         }
                     }
 

@@ -1,21 +1,22 @@
-<?php 
-    include(ROOT_PATH.'/views/head.php');
-    include(ROOT_PATH.'/views/header.php');
+<?php
+include(ROOT_PATH.'/views/header.php');
+$conn = dbConnect();
+$tmdb = setupTMDB();
+$cnf = tmdbConfig();
 
-    $movie = selectMovieByID($_GET['id']);
-    if ( $movie == 0 ) {
-        header('Location: /movies');
-        exit();
-    } else {
-        $id = $movie['id'];            
-        $title = $movie['title'];
-        $backdrop = $movie['backdrop'];
-        $poster = $movie['poster'];       
-        $tagline = $movie['tagline'];
-        $genres = $movie['genres'];
-        $currentMovieCollection = $movie['collection'];
-        $filepath = $movie['file_path'];
-    }
+$movie = selectMovieByID($_GET['id']);
+if ( $movie == 0 ) {
+    page_redirect("/movies");
+} else {
+    $id = $movie['id'];            
+    $title = $movie['title'];
+    $backdrop = $movie['backdrop'];
+    $poster = $movie['poster'];       
+    $tagline = $movie['tagline'];
+    $genres = $movie['genres'];
+    $currentMovieCollection = $movie['collection'];
+    $filepath = $movie['file_path'];
+}
 ?>
 
 <div class="col12">
@@ -44,7 +45,7 @@
 
                     // Add Movie from collection
                     if (isset($_POST['add-movie'])) {
-                        insert_movie($_POST['id']);
+                        insertMovie($_POST['id']);
                     }                    
 
                     callout();
@@ -52,7 +53,6 @@
                     echo '<div class="col7 marg-right-col1">';
                         echo '<div class="col12"><h1>'.$title.'</h1></div>';
                         if(($tagline > 1)) {
-                            var_dump($tagline);
                             echo '<div class="col12"><p>'.$tagline.'</p></div>';
                         }
                         echo '<div class="col12"><p>'.$movie['overview'].'</p></div>';
@@ -176,7 +176,7 @@
                     foreach ($movies as $movie) {
                         $movieID = $movie->getID();
 
-                        if ( movie_is_in_collection($movieID) !== true ) {
+                        if ( movieIsInCollection($movieID) !== true ) {
                             echo '<div class="col3 column">';
                                 echo '<a href="#add-movie-'.$movieID.'" class="media-card" data-fancybox data-src="#add-movie-'.$movieID.'">';
                                     echo '<figure class="poster">';

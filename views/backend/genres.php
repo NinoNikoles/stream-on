@@ -1,8 +1,7 @@
 <?php
-    include(ROOT_PATH.'/views/head.php');
-    include(ROOT_PATH.'/views/header.php');
-
-$conn = $mysqli;
+include(ROOT_PATH.'/views/header.php');
+$conn = dbConnect();
+$tmdb = setupTMDB();
 $sql = 'SELECT COUNT(*) as num_rows FROM genres';
 $result = $conn->query($sql);
 
@@ -14,14 +13,12 @@ if(isset($_POST['generate-genres'])) {
         if (!$insertResult) {
 
             set_callout('alert','genres_created_alert');
-            header('Location: /genres');
-            exit();
+            page_redirect("/genres");
         }
     }
 
     set_callout('success','genres_created_success');
-    header('Location: /genres');
-    exit();
+    page_redirect("/genres");
 }
 ?>
 

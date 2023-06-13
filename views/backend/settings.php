@@ -2,7 +2,8 @@
     include(ROOT_PATH.'/views/head.php');
     include(ROOT_PATH.'/views/header.php');
 
-    $conn = $mysqli;
+    $conn = dbConnect();
+    $cnf = tmdbConfig();
 
     $apikey = $cnf['apikey'];
     $apiLang = $cnf['lang'];

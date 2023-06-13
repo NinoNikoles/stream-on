@@ -1,13 +1,12 @@
-<?php 
-    include(ROOT_PATH.'/views/head.php');
-    include(ROOT_PATH.'/views/header.php');
-
-    $conn = $mysqli;
+<?php
+include(ROOT_PATH.'/views/header.php');
+$conn = dbConnect();
+$tmdb = setupTMDB();
             
-    // Add Movie
-    if (isset($_POST['id']) && isset($_POST['add-movie'])) {
-        insert_movie($_POST['id']);
-    }
+// Add Movie
+if ( isset($_POST['add-movie']) ) {
+    insertMovie($_POST['id']);
+}
 ?>
 
 <div class="col12">
@@ -37,7 +36,6 @@
             <div class="row">
                 <?php 
                     $movies = selectAllMoviesByTitle('ASC');
-                    var_dump($movies);
                     if ( $movies > 0 ) {
                         foreach ( $movies as $movie ) {
                             echo '<div class="col3 column">';

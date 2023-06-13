@@ -9,7 +9,7 @@
     // output data of each row
         while($row = $result->fetch_assoc()) {
             if ($_GET['id'] !== $row['id']) {
-                header('Location: /404');
+                page_redirect("/404");
             }
             if ($row['user_img'] === NULL || $row['user_img'] === '') {
                 $currentUserIMG = '/views/build/css/images/placeholder.webp';
@@ -20,7 +20,7 @@
             $currentUsername = $row['username'];
         }
     } else {
-        header('Location: /404');
+        page_redirect("/404");
     }
 
     $conn = $mysqli;
@@ -55,23 +55,19 @@
                     if ($conn->query($sql) === TRUE) {
                         echo "Record updated successfully";
                         set_callout('success','user_img_upload_success');
-                        header('Location: /user/?id='.$_POST['id']);
-                        exit();
+                        page_redirect("/user/?id=".$_POST['id']);
                     } else {
                         set_callout('alert','user_img_upload_alert');
-                        header('Location: /user/?id='.$_POST['id']);
-                        exit();
+                        page_redirect("/user/?id=".$_POST['id']);
                     }
                 } else {
                     echo 'Das hochgeladene File muss ein Bild sein (JPG, JPEG, PNG, GIF).';
                     set_callout('warning','user_img_upload_wrong_file');
-                    header('Location: /user/?id='.$_POST['id']);
-                    exit();
+                    page_redirect("/user/?id=".$_POST['id']);
                 }
             } else {
                 set_callout('warning','user_img_upload_no_file');
-                header('Location: /user/?id='.$_POST['id']);
-                exit();
+                page_redirect("/user/?id=".$_POST['id']);
             }
         }
 ?>
