@@ -67,12 +67,18 @@ $conn = dbConnect();
                         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
                         $sql = 'UPDATE users SET username="'.$username.'", password="'.$hashed_password.'", role="'.$role.'" WHERE id="'.$userID.'"';
+
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','delete_user_alert');
                             page_redirect("/users");
                         } else {
                             set_callout('success','edit_user_success');
-                            page_redirect("/users");
+                            session_start();
+                            $_SESSION['username'] = $username;
+                            $_SESSION['role'] = $role;
+                            $_SESSION['logged_in'] = true;
+                
+                            page_redirect('/users');
                         }
                     }
 
