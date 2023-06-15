@@ -57,14 +57,14 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
                 if ( $db_genre['genre_id'] == $genre ) {
                     $movieRow = $movieRow . '
                     <div class="swiper-slide">
-                        <a href="#info-popup-'.$movieID.'" title="'.$movieTitle.'" class="widescreen-media-card" data-fancybox data-src="#info-popup-'.$movieID.'">
+                        <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="widescreen-media-card" data-modal data-src="#content-'.$movieID.'">
                             <figure class="widescreen">
                                 <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
                             </figure>
                             <span class="title">'.truncate($movieTitle,20).'</span>
                         </a>
 
-                        <div class="info-popup" id="info-popup-'.$movieID.'" style="display:none;">
+                        <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                             <div class="row">
                                 <div class="col8">
                                     <p class="h4">'.$movieTitle.'</p>

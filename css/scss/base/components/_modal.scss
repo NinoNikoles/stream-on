@@ -1,61 +1,87 @@
 .modal {
-    display: block;
-    background: {
-        color: var(--white);
-    }
+    display: none;
     width: 100%;
     height: 100%;
-    padding: {
-        top: rem-calc(15);
-        right: rem-calc(15);
-        bottom: rem-calc(15);
-        left: rem-calc(15);
-    }
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: fixed;
+    top: 0;
+    left: 100%;
+    z-index: 200;
+    pointer-events: none;
+    @include transition(left $transition-default);
 
-    @include MQ(xsmall) {
-        width: 75%;
-        height: auto;
+    @include MQ(S) {
+        left: 0;
     }
 
-    @include MQ(medium) {
-        width: 40%;
-    }
+    &.active {
+        display: block;
+        pointer-events: all;
+        left: 0;
 
-    &.small {
-        @include MQ(medium) {
-            width: 30%;
+        .modal-overlay {
+            opacity: 1;
         }
     }
-    &.large {
-        @include MQ(medium) {
-            width: 50%;
+
+    &-wrap {
+        display: block;
+        background: {
+            color: var(--white);
         }
-    }
-    &.full {
         width: 100%;
         height: 100%;
+        padding: {
+            top: rem-calc(15);
+            right: rem-calc(15);
+            bottom: rem-calc(15);
+            left: rem-calc(15);
+        }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
+        @include MQ(xsmall) {
+            width: 75%;
+            height: auto;
+        }
+    
+        @include MQ(medium) {
+            width: 40%;
+        }
+    
+        &.small {
+            @include MQ(medium) {
+                width: 30%;
+            }
+        }
+        &.large {
+            @include MQ(medium) {
+                width: 50%;
+            }
+        }
+        &.full {
+            width: 100%;
+            height: 100%;
+        }
+
+        > * {
+            display: block !important;
+        }
     }
 
     &-overlay {
-        display: none;
+        display: block;
         background: {
             color: rgba(0,0,0,0.75);
         }
         width: 100%;
         height: 100%;
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         opacity: 0;
-        z-index: 10;
-
-        &[aria-hidden="false"] {
-            opacity: 1;
-        }
+        @include transition(opacity $transition-default);
     }
 
     &-close {
@@ -66,7 +92,7 @@
         right: 0;
 
         &::before {
-            content: '\f00d';
+            content: 'x';
             font: {
                 family: var(--icon-font);
                 size: rem-calc(15);
@@ -88,4 +114,8 @@
     .modal-content {
         display: block;
     }
+}
+
+body.active-modal {
+    overflow: hidden;
 }
