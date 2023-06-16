@@ -55,6 +55,7 @@ $sql = 'CREATE TABLE IF NOT EXISTS genres (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     genre_id INT UNSIGNED UNIQUE,
     genre_name VARCHAR(255) NOT NULL,
+    genre_movies TEXT NOT NULL,
     created TIMESTAMP
 )';
 if (!($conn->query($sql) === TRUE)) {
@@ -68,14 +69,14 @@ $sql = 'CREATE TABLE IF NOT EXISTS movies (
     movie_title VARCHAR(255) NOT NULL,
     movie_tagline VARCHAR(255) NOT NULL,
     movie_overview TEXT NOT NULL,
-    movie_poster VARCHAR(255) NOT NULL,
-    movie_thumbnail VARCHAR(255) NOT NULL,
+    movie_poster TEXT NOT NULL,
+    movie_thumbnail TEXT NOT NULL,
     movie_rating INT NOT NULL,
     movie_release DATE NOT NULL,
     movie_runtime INT NOT NULL,
     movie_collection INT NOT NULL,
     movie_genres VARCHAR(255) NOT NULL,
-    movie_file_path VARCHAR(255) NOT NULL,
+    movie_file_path TEXT NOT NULL,
     created TIMESTAMP,
     UNIQUE (movie_tmdbID)
 )';

@@ -8,7 +8,7 @@
     box-shadow: unset;
     font: {
         family: var(--font-family);
-        size: rem-calc($font-size-small);
+        size: rem-calc($button-font-size*0.9);
         weight: $button-font-weight;
     }
     line: {

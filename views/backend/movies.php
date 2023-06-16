@@ -39,7 +39,7 @@ if ( isset($_POST['add-movie']) ) {
                     if ( $movies > 0 ) {
                         foreach ( $movies as $movie ) {
                             echo '<div class="col3 column">';
-                                echo '<a href="/movies/edit-movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
+                                echo '<a href="/movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
                                         echo '<img src="'.$tmdb->getImageURL().$movie['poster'].'" alt="">';
                                     echo '</figure>';

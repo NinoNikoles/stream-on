@@ -1,0 +1,78 @@
+#user-menu-btn {
+    background: {
+        color: transparent;
+    }
+    border: none;
+    max-width: rem-calc(50);
+    margin: 0;
+    padding: rem-calc(5);
+    position: relative;
+    outline: none;
+    @include transitions(background-color $transition-default, padding $transition-default);
+
+    &:hover,
+    &.active {
+        background: {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        cursor: pointer;
+    }
+
+    &.active {
+        padding: rem-calc(10);
+
+        figure {
+            width: rem-calc(30);
+        }
+
+        .user-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+    }
+
+    figure {
+        width: rem-calc(40);
+        @include transition(width $transition-default);
+    }
+}
+
+.user-menu {
+    background: {
+        color: var(--header-bg);
+    }
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    @include transition(opacity $transition-default);
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+
+        li {
+            a {
+                display: block;
+                color: var(--font-color);
+                margin: 0;
+                padding: {
+                    top: rem-calc(5);
+                    right: rem-calc(10);
+                    bottom: rem-calc(5);
+                    left: rem-calc(10);
+                }
+
+                &:hover {
+                    background: {
+                        color: rgba(255, 255, 255, 0.2);
+                    }
+                }
+            }
+        }
+    }
+}

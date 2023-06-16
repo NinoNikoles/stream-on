@@ -219,7 +219,22 @@ function insertMovie($movieID) {
 
     $movieGenres = [];
     foreach($genres as $genre) {
-        $movieGenres[] = $genre->getId();
+        $genreID = $genre->getId();
+        $movieGenres[] = $genreID;
+
+        $sql = 'SELECT genre_movies from genres WHERE genre_id="'.$genreID.'"';
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                
+                $dbGenres = json_decode($row['genre_movies']);
+            }
+        }
+        $dbGenres[] = intval($id);
+
+        $sql  = 'UPDATE genres SET genre_movies="'.json_encode($dbGenres).'" WHERE genre_id="'.$genreID.'"';
+        $conn->query($sql);
     }
 
     $genres = json_encode($movieGenres);
@@ -254,7 +269,7 @@ function insertMovie($movieID) {
         page_redirect("/movies");
     } else {
         set_callout('success','add_movie_success');
-        page_redirect("/movies/edit-movie/?id=$id");
+        page_redirect("/movie/?id=$id");
     }
 }
 
@@ -389,10 +404,10 @@ function updateMovieFilePath($moviePath, $movieID) {
 
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_file_apth_alert');
-        page_refresh();
+        page_redirect('/movie/?id='.$movieID);
     } else {
         set_callout('success','update_file_path_success');
-        page_refresh();
+        page_redirect('/movie/?id='.$movieID);
     }
 }
 
@@ -428,10 +443,10 @@ function updateMoviePoster($movieID, $poster) {
     $sql = 'UPDATE movies SET movie_poster="'.$posterPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_poster_alert');
-        page_refresh();
+        page_redirect('/movie/?id='.$movieID);
     } else {
         set_callout('success','update_poster_success');
-        page_refresh();
+        page_redirect('/movie/?id='.$movieID);
     }
 }
 
@@ -444,10 +459,10 @@ function updateMovieBackdrop($movieID, $backdrop) {
     $sql = 'UPDATE movies SET movie_thumbnail="'.$backdropPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_backdrop_alert');
-        page_refresh();
+        page_redirect('/movie/?id='.$movieID);
     } else {
         set_callout('success','update_backdrop_success');
-        page_refresh();
+        page_redirect('/movie/?id='.$movieID);
     }
 }
 
@@ -481,4 +496,65 @@ function runtimeToString($runtime) {
     }
 
     return $finalRuntime;
+}
+
+//------------------------------------------------------------------------------------
+
+function getDBGenreNameByID($id) {
+    $conn = dbConnect();
+    $sql = "SELECT * FROM genres WHERE genre_id='".$id."'";
+    $results = $conn->query($sql);
+    if ($results->num_rows > 0) {
+        while ($genre = $results->fetch_assoc()) {
+            if ( isset($genre['genre_name']) ) {
+                return $genre['genre_name'];
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------------
+
+//-- User functions --
+function getUserID() {
+    return $_SESSION['userID'];
+}
+
+function userCheck() {
+    $conn = dbConnect();
+    $sql = 'SELECT id, username, user_img FROM users WHERE id="'.$_SESSION['userID'].'"';
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+      
+    // output data of each row
+        while($row = $result->fetch_assoc()) {
+            if ( $_GET['id'] !== intval($_SESSION['userID']) || $_GET['id'] !== $row['id'] || $row['username'] != $_SESSION['username'] ) {
+                //page_redirect("/404");
+            }
+        }
+    } else {
+        //page_redirect("/404");
+    }
+}
+
+function userProfileImg() {
+    $conn = dbConnect();
+    $sql = 'SELECT user_img FROM users WHERE id="'.$_SESSION['userID'].'"';
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+     
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            
+            if ($row['user_img'] === NULL || $row['user_img'] === '') {
+                $userProfileImg = '/views/build/css/images/placeholder.webp';
+            } else {
+                $userProfileImg = '/uploads/'.$row['user_img'];
+            }
+        }
+    } else {
+        $userProfileImg = '/views/build/css/images/placeholder.webp';
+    }
+
+    return $userProfileImg;
 }

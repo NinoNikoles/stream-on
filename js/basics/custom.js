@@ -64,6 +64,7 @@ $(document).ready(function() {
             self.customPagination();
             self.initScrolltrigger();
             self.jstree();
+            self.userMenuBtn();
             //self.videoTriggerFullscreen();
         },
 
@@ -208,31 +209,31 @@ $(document).ready(function() {
         modal: function() {
             var self = this;
 
-            self.$body.append('<div class="modal" id="modal"><div class="modal-overlay"></div><div class="modal-wrap"></div><a href="#" class="modal-close"></a></div>');
+            self.$body.append('<div class="modal" id="modal"><div class="modal-overlay"></div><div class="modal-wrap large"><div class="modal-inner-wrap"></div><a href="#" class="modal-close"></a></div></div>');
             $modal = $('#modal');
             $modalWrap = $('#modal .modal-wrap');
+            $modalInnerWrap = $('#modal .modal-inner-wrap');
             $modalOverlay = $('#modal .modal-overlay');
             $modalCloseBtn = $('#modal .modal-close');
 
             $('[data-modal]').on('click', function(e) {
                 e.preventDefault();
                 var self = this,
-                    $self = $(self);
-                    $src = $($self.attr('data-src'));
-
-                $src.clone().appendTo('.modal-wrap');
+                    $this = $(self);
+                    $src = $($this.attr('data-src'));
+                $modalInnerWrap.empty();
+                $src.clone().appendTo('.modal-inner-wrap');
                 $('body').addClass('active-modal');
                 $modal.addClass('active');
             });
 
             $modalOverlay.on('click', function() {
-                $modalWrap.empty();
                 $modal.removeClass('active');
                 $('body').removeClass('active-modal');
             });
 
-            $modalCloseBtn.on('click', function() {
-                $modalWrap.empty();
+            $modalCloseBtn.on('click', function(e) {
+                e.preventDefault();
                 $modal.removeClass('active');
                 $('body').removeClass('active-modal');
             });
@@ -254,14 +255,14 @@ $(document).ready(function() {
             $accordionTitle.on('click', function (e) {
                 e.preventDefault();
 
-                var $self = $(this),
-                    $accordionItem = $self.parent(),
+                var $this = $(this),
+                    $accordionItem = $this.parent(),
                     $accordion = $accordionItem.parent(),
                     $accordionContent = $accordionItem.children('.accordion-content');
 
                 //-- Prevent animation bugging
-                if ( $self.hasClass('animating') ) return false;
-                $self.addClass('animating');
+                if ( $this.hasClass('animating') ) return false;
+                $this.addClass('animating');
 
                 //-- Check for animation speed
                 if ( !parseInt($accordion.attr('data-speed')) ) {
@@ -288,7 +289,7 @@ $(document).ready(function() {
                         paddingBottom: contentPadding,
                     }, openSpeed).promise().done(function () {
                         //-- Triggers when animation is done
-                        $self.removeClass('animating');
+                        $this.removeClass('animating');
                         $accordionContent.attr('style', 'display:block;');
                     });
 
@@ -310,7 +311,7 @@ $(document).ready(function() {
                     }, openSpeed).promise().done(function () {
                         //-- Triggers when animation is done
                         $accordionItem.removeClass(self.activeClass);
-                        $self.removeClass('animating');
+                        $this.removeClass('animating');
                         $accordionContent.attr('style', 'display:none;');
                     });
                 }
@@ -326,9 +327,9 @@ $(document).ready(function() {
             $tabTitleLink.on('click', function (e) {
                 e.preventDefault();
 
-                var $self = $(this),
-                    panelID = $self.attr('href'),
-                    $tabTitle = $self.parent(),
+                var $this = $(this),
+                    panelID = $this.attr('href'),
+                    $tabTitle = $this.parent(),
                     $tab = $tabTitle.parent(),
                     tabID = $tab.attr('id');
 
@@ -336,7 +337,7 @@ $(document).ready(function() {
                     //-- Tabs --
                     $tab.children('.tabs-title').removeClass(self.activeClass).children('a').attr('aria-selected', 'false');
                     $tabTitle.addClass(self.activeClass);
-                    $self.attr('aria-selected', 'true');
+                    $this.attr('aria-selected', 'true');
 
                     //-- Content --
                     var $tabsContent = $('[data-tabs-content="' + tabID + '"]'),
@@ -357,8 +358,8 @@ $(document).ready(function() {
 
                 $el.addClass(sliderClass);
                 var slidesPerViewMobile = 2;
-                var slidesPerViewTablet = 5;
-                var slidesPerViewDesktop = 10;
+                var slidesPerViewTablet = 6;
+                var slidesPerViewDesktop = 8;
                 var tabletBP = 1080;
                 var desktopBP = 1400;
 
@@ -395,7 +396,7 @@ $(document).ready(function() {
                     //effect: effect,
                     slidesPerView: slidesPerViewMobile,//itemsMobile,
                     spaceBetween: 8,
-                    allowTouchMove: false,
+                    allowTouchMove: true,
                     breakpoints: {
                         // when window width is >= 320px
                         1080: {
@@ -419,8 +420,8 @@ $(document).ready(function() {
                 });
 
                 $el.find('[data-fancybox="gallery"]').each(function() {
-                    var $self = $(this);
-                    $self.attr('data-fancybox', sliderClass);
+                    var $this = $(this);
+                    $this.attr('data-fancybox', sliderClass);
                 })
                 
                 sliderNumber++;
@@ -545,6 +546,29 @@ $(document).ready(function() {
                     myPlayer.isFullscreen(true);
                 });
             }
+        },
+
+        userMenuBtn: function() {
+            $menuBtn = $('#user-menu-btn');
+
+            $menuBtn.on('click', function(e) {
+                var $this = $(this);
+
+                if ( $this.hasClass('active') && ! $(e.target).is('.user-menu') ) {
+                    $this.removeClass('active');
+                } else {
+                    $this.addClass('active');
+                }
+            });
+
+            $menuBtn.on('blur', function() {
+                console.log('change');
+                var $this = $(this);
+
+                if ( !$this.is(':hover') && $this.hasClass('active') ) {
+                    $this.removeClass('active');
+                }
+            });
         }
     }
 

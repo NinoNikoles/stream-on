@@ -44,8 +44,8 @@ if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         get('/file-api', 'views/actions/file-api.php');
         post('/file-api', 'views/actions/file-api.php');
 
-        get('/movies/edit-movie/$id', 'views/backend/single-movie.php');
-        post('/movies/edit-movie/$id', 'views/backend/single-movie.php');
+        get('/movie/$id', 'views/backend/single-movie.php');
+        post('/movie/$id', 'views/backend/single-movie.php');
 
         get('/genres', 'views/backend/genres.php');
         post('/genres', 'views/backend/genres.php');

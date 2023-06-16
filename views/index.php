@@ -38,56 +38,68 @@ if ($results->num_rows > 0) {
 }
 
 function goTrhoughMovies($db_genre, $conn, $tmdb) {
-    $movieSQL = "SELECT * FROM movies";
-    $resultsMovies = $conn->query($movieSQL);
-    $movieRow = '';
+    if ( $db_genre['genre_movies'] !== '' ) {
+        $genreMovies = json_decode($db_genre['genre_movies']);
+        $movieRow = '';
 
-    if ($resultsMovies->num_rows > 0) {
-        while ($movie = $resultsMovies->fetch_assoc() ) {
+        foreach ( $genreMovies as $genreMovieID ) {
+            $movieSQL = "SELECT * FROM movies WHERE movie_tmdbID='".$genreMovieID."'";
+            $movie = $conn->query($movieSQL)->fetch_assoc();
+
             $movieID = $movie['movie_tmdbID'];
             $movieTitle = $movie['movie_title'];
             $movieOverview = $movie['movie_overview'];
             $movieRating = $movie['movie_rating'];
             $movieRuntime = $movie['movie_runtime'];
+            $movieRelease = new DateTime($movie['movie_release']);
+            $releaseYear = $movieRelease->format('Y');
             $moviePoster = $movie['movie_poster'];
             $movieBackdrop = $movie['movie_thumbnail'];
             $genres = json_decode($movie['movie_genres']);
-
+            $genreHTML = '';
             foreach ( $genres as $genre ) {
-                if ( $db_genre['genre_id'] == $genre ) {
-                    $movieRow = $movieRow . '
-                    <div class="swiper-slide">
-                        <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="widescreen-media-card" data-modal data-src="#content-'.$movieID.'">
-                            <figure class="widescreen">
-                                <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
-                            </figure>
-                            <span class="title">'.truncate($movieTitle,20).'</span>
-                        </a>
-
-                        <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
-                            <div class="row">
-                                <div class="col8">
-                                    <p class="h4">'.$movieTitle.'</p>
-                                    <p>'.$movieOverview.'</p>
-                                    <div class="col6">
-                                        <span><strong>Bewertung:</strong><br>'.$movieRating.'/10</span>
-                                    </div>
-                                    <div class="col6">
-                                        <span><strong>Dauer:</strong><br>'.runtimeToString($movieRuntime).'</span>
-                                    </div>
-                                </div>
-                                <div class="col4">
-                                    <figure class="poster">
-                                        <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>'; 
-                }
+                $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
             }
+
+            $movieRow = $movieRow . '
+            <div class="swiper-slide">
+                <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="widescreen-media-card" data-modal data-src="#content-'.$movieID.'">
+                    <figure class="widescreen">
+                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
+                    </figure>
+                    <span class="title">'.truncate($movieTitle,20).'</span>
+                </a>
+
+                <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
+                    <div class="col12 marg-bottom-xs mobile-only">
+                        <figure class="widescreen">
+                            <img src="'.$tmdb->getImageURL().$movieBackdrop.'">
+                        </figure>
+                    </div>
+                    <div class="innerWrap">
+                        <div class="col7 marg-right-col1">
+                            <p class="h2">'.$movieTitle.'</p>
+                            <p class="small">
+                                <span class="tag">'.$releaseYear.'</span>
+                                <span class="tag">'.$movieRating.'/10</span>
+                                <span class="tag">'.runtimeToString($movieRuntime).'</span>
+                            </p>
+                            <a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>
+                            <p class="small">'.$movieOverview.'</p>
+                            <p class="small">'.$genreHTML.'</p>
+                        </div>
+                        <div class="col4 desktop-only">
+                            <figure class="poster">
+                                <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>';
         }
-    }
+    } else {
+        $movieRow = '';
+    } 
 
     return $movieRow;
 }

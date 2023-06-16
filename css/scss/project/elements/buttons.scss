@@ -7,4 +7,10 @@ a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
     @include MQ(xsmall) {
         min-width: rem-calc(200) !important;
     }
+
+    &::before {
+        font: {
+            size: rem-calc(26) !important;
+        }
+    }
 }

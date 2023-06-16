@@ -1,53 +1,76 @@
 .modal {
-    display: none;
+    display: block;
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0;
     left: 100%;
-    z-index: 200;
+    z-index: -200;
     pointer-events: none;
-    @include transition(left $transition-default);
+    @include transitions(left $transition-default, z-index 0s ease 0.3s);
 
-    @include MQ(S) {
+    @include MQ(xsmall) {
         left: 0;
+        z-index: -200;
     }
 
     &.active {
-        display: block;
         pointer-events: all;
         left: 0;
+        z-index: 200;
+        @include transitions(left $transition-default, z-index 0s ease 0s);
 
         .modal-overlay {
+            opacity: 1;
+        }
+
+        .modal-wrap {
             opacity: 1;
         }
     }
 
     &-wrap {
-        display: block;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
         background: {
-            color: var(--white);
+            color: var(--header-bg);
         }
         width: 100%;
         height: 100%;
-        padding: {
-            top: rem-calc(15);
-            right: rem-calc(15);
-            bottom: rem-calc(15);
-            left: rem-calc(15);
-        }
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        position: relative;
+        /*padding: {
+            right: rem-calc($grid-padding);
+            left: rem-calc($grid-padding);
+        }*/
+        z-index: 1;
     
         @include MQ(xsmall) {
             width: 75%;
             height: auto;
+            max-height: 80%;    
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            @include transition(opacity $transition-default);
         }
     
         @include MQ(medium) {
             width: 40%;
+        }
+
+        ::-webkit-scrollbar {
+            width: 2px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+        
+            &:hover {
+                background: var(--primary-dark);//
+            }
         }
     
         &.small {
@@ -55,18 +78,39 @@
                 width: 30%;
             }
         }
-        &.large {
+        &.medium {
             @include MQ(medium) {
                 width: 50%;
+            }
+        }
+        &.large {
+            @include MQ(medium) {
+                width: 75%;
             }
         }
         &.full {
             width: 100%;
             height: 100%;
+            max-height: 100%;
+        }
+    }
+
+    &-inner-wrap {
+        position: relative;
+        overflow-x: hidden;
+
+        @include MQ(xsmall) {
+            padding: {
+                top: rem-calc($grid-padding*2);
+                right: rem-calc($grid-padding);
+                bottom: rem-calc($grid-padding*2);
+                left: rem-calc($grid-padding);
+            }
         }
 
         > * {
             display: block !important;
+            font-size: 0;
         }
     }
 
@@ -85,25 +129,47 @@
     }
 
     &-close {
-        width: rem-calc(15);
-        height: rem-calc(15);
-        position: absolute;
-        top: 0;
-        right: 0;
+        background: {
+            color: var(--header-bg);
+        }
+        color: var(--font-color);
+        line: {
+            height: 1;
+        }
+        margin: 0;
+        padding: {
+            top: rem-calc($grid-padding/2 + 5);
+            right: rem-calc($grid-padding);
+            bottom: rem-calc($grid-padding/2 + 5);
+            left: rem-calc($grid-padding);
+        }
+        z-index: 1;
 
         &::before {
-            content: 'x';
+            content: '<';
             font: {
                 family: var(--icon-font);
-                size: rem-calc(15);
+                size: rem-calc(24);
             }
             line: {
                 height: 1;
             }
+        }
+
+        @include MQ(xsmall) {
+            width: rem-calc(15);
+            height: rem-calc(15);
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            right: 0;
+
+            &::before {
+                content: 'x';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
         }
     }
 

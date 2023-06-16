@@ -2,28 +2,9 @@
     include(ROOT_PATH.'/views/head.php');
     include(ROOT_PATH.'/views/header.php');
 
-    $sql = 'SELECT id, username, user_img FROM users WHERE session="'.$_COOKIE['session_id'].'"';
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-      
-    // output data of each row
-        while($row = $result->fetch_assoc()) {
-            if ($_GET['id'] !== $row['id']) {
-                page_redirect("/404");
-            }
-            if ($row['user_img'] === NULL || $row['user_img'] === '') {
-                $currentUserIMG = '/views/build/css/images/placeholder.webp';
-            } else {
-                $currentUserIMG = '/uploads/' . $row['user_img'];
-            }
-            
-            $currentUsername = $row['username'];
-        }
-    } else {
-        page_redirect("/404");
-    }
+    userCheck();
 
-    $conn = $mysqli;
+    $conn = dbConnect();
 
         // Überprüfen, ob das Formular abgeschickt wurde
         if(isset($_POST['submit'])) {
@@ -78,9 +59,9 @@
         <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
 
             <div class="col4 marg-left-col4 marg-right-col4">
-                <h1 class="text-center"><?php echo $currentUsername; ?></h1>
+                <h1 class="text-center"><?php echo $_SESSION['username']; ?></h1>
                 <figure class="square">
-                    <img src="<?php echo $currentUserIMG; ?>">
+                    <img src="<?php echo userProfileImg(); ?>">
                 </figure>
 
 

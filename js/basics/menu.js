@@ -124,23 +124,22 @@ extraMenuCtrl = {
 
 		//self.subMenu.reset();
 	},
-
-		subMenu : {
-			 // Submenu methods
-			show : function ($link, ul) {
-				// Show submenu
-				if(ul.hasClass('sub-active')) $link.off('mouseenter mouseleave');
-				ul.toggleClass('sub-active');
-				$body.toggleClass('active-submenu');
-			},
-			reset : function () {
-				// Reset submenu
-				var self = this;
-				$body.removeClass('active-submenu');
-				setTimeout( function(){
-					$('.sub-active').removeClass('sub-active');					
-					$('.subbutton.active').removeClass('active');
-				}, 300);
-			}
+	subMenu : {
+			// Submenu methods
+		show : function ($link, ul) {
+			// Show submenu
+			if(ul.hasClass('sub-active')) $link.off('mouseenter mouseleave');
+			ul.toggleClass('sub-active');
+			$body.toggleClass('active-submenu');
+		},
+		reset : function () {
+			// Reset submenu
+			var self = this;
+			$body.removeClass('active-submenu');
+			setTimeout( function(){
+				$('.sub-active').removeClass('sub-active');					
+				$('.subbutton.active').removeClass('active');
+			}, 300);
 		}
+	}
 }

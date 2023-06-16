@@ -31,6 +31,7 @@ class langSnippets {
             'minutes' => 'Minutes',
 			'api_key' => 'API Key',
 			'language' => 'Language',
+            'profile' => 'Profile',
 			
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -116,6 +117,7 @@ class langSnippets {
             'minutes' => 'Minuten',
 			'api_key' => 'API Key',
 			'language' => 'Sprache',
+            'profile' => 'Profil',
 			
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',

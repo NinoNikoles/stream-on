@@ -1,16 +1,17 @@
-<?php 
+<?php
+    $conn = dbConnect();
+
     // Benutzeranmeldung
     if(isset($_POST['login'])) {
-        $conn = dbConnect();
         $username = mysqli_real_escape_string($conn, $_POST['username']);
         $password = mysqli_real_escape_string($conn, $_POST['password']);
-        
+
         $sql = "SELECT * FROM users WHERE username='$username'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
-        
+
         if(password_verify($password, $row['password'])) {
-            session_start();
+            $_SESSION['userID'] = $row['id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['logged_in'] = true;
@@ -26,7 +27,6 @@
     }
 
     require_once ROOT_PATH.'/views/head.php';
-    $conn = dbConnect();
 ?>
 
 <div class="innerWrap">

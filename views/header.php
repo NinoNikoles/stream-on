@@ -30,41 +30,28 @@ $conn = dbConnect();
 				<!-- Navigation -->
 				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
                     <ul class="menu">
-                        <?php echo adminMenu();?>
                         
-                        <li class="menu-item mobile-only"><a href="/logout" title="<?php echo lang_snippet('logout'); ?>"><?php echo lang_snippet('logout'); ?></a></li>
                     </ul>
                 </nav>
-                
-                <?php 
-                    $sql = 'SELECT id, user_img FROM users WHERE username="'.$_SESSION['username'].'"';
-                    $result = $conn->query($sql);
-                    if ($result->num_rows > 0) {
-                     
-                        // output data of each row
-                        while($row = $result->fetch_assoc()) {
-                            
-                            if ($row['user_img'] === NULL || $row['user_img'] === '') {
-                                $userProfileImg = '/views/build/css/images/placeholder.webp';
-                            } else {
-                                $userProfileImg = '/uploads/'.$row['user_img'];
-                            }
 
-                            $currentUserID = $row['id'];
-                        }
-                    } else {
-                        page_redirect("/logout");
-                    }
-                ?>
                 <!-- Profil -->
-                <a href="/user/?id=<?php echo $currentUserID; ?>" id="user-profile">
+                <button href="#" id="user-menu-btn">
                     <figure class="square">
-                        <img src="<?php echo $userProfileImg; ?>">
+                        <img src="<?php echo userProfileImg(); ?>">
                     </figure>
-                </a>
+
+                    <menu class="user-menu">
+                        <ul>
+                            <?php echo adminMenu();?>
+                            
+                            <li class="menu-item"><a href="/user/?id=<?php echo getUserID(); ?>" title="<?php echo lang_snippet('profile'); ?>"><?php echo lang_snippet('profile'); ?></a></li>
+                            <li class="menu-item"><a href="/logout" title="<?php echo lang_snippet('logout'); ?>"><?php echo lang_snippet('logout'); ?></a></li>
+                        </ul>
+                    </menu>
+                </button>
 
                 <!-- Theme Switch button -->
-                <a href="#" id="theme-switch" class="icon"></a>
+                <!--<a href="#" id="theme-switch" class="icon"></a>-->
 
                 <!-- Mobile Menu Button -->
                 <a href="#" class="nav-trigger menu-button" title="Menü öffnen">
