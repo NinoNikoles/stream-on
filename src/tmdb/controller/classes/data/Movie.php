@@ -32,7 +32,7 @@ class Movie extends ApiBaseObject{
 	 * 	@return string
 	 */
 	public function getTagline() {
-		if( isset($this->_data['belongs_to_collection']) && in_array($this->_data['tagline'], $this)) {
+		if( isset($this->_data['belongs_to_collection'])) {
 			$tagline = $this->_data['tagline'];
 		} else {
 			$tagline = '';
@@ -128,7 +128,7 @@ class Movie extends ApiBaseObject{
 	public function getCollection() {
 		$collection = '';
 
-		if( isset($this->_data['belongs_to_collection']) && in_array($this->_data['belongs_to_collection']['id'], $this)) {
+		if( isset($this->_data['belongs_to_collection'])) {
 			$collection = $this->_data['belongs_to_collection']['id'];
 		}
 
