@@ -1,16 +1,11 @@
 .sidebar {
     background: {
-        color: var(--grey-light);
+        color: var(--white-10);
     }
     @include transitions(background-color $transition-default, border-color $transition-default);
 
     @include MQ(medium) {
-        border: {
-            right-color: var(grey);
-            right-style: solid;
-            right-width: 2px;
-        }
-        height: calc(100vh - 60.8px);
+        height: calc(100vh - 50px);
         position: fixed;
         z-index: 1;
     }
@@ -36,9 +31,9 @@
 
                 &:hover {
                     background: {
-                        color: var(--primary);
+                        color: var(--white-20);
                     }
-                    color: var(--font-color-invert);
+                    //color: var(--font-color-invert);
                 }
             }
         }

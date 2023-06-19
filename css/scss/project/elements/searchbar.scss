@@ -1,0 +1,132 @@
+.search-bar {
+    margin: {
+        right: rem-calc(8);
+    }
+    padding: {
+        top: rem-calc(5);
+        bottom: rem-calc(5);
+    }
+    width: 100%;
+    position: relative;
+
+    &-fix {
+        background: {
+            color: var(--header-bg);
+        }
+        width: 100vw;
+        height: rem-calc(50);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        @include MQ(small) {
+            display: none;
+        }
+    }
+
+    form {
+        height: rem-calc(40);
+        position: relative;
+
+        input {
+            background: {
+                color: var(--header-bg);
+            }
+            width: 100%;
+            height: rem-calc(50);
+            max-width: unset;
+            position: fixed;
+            top: rem-calc(50);
+            left: 0;
+            z-index: -2;
+            @include transitions(border $transition-default, padding $transition-default 0.3s, width $transition-default 0.3s, top $transition-default);
+
+            @include MQ(small) {
+                background: {
+                    color: transparent;
+                }
+                padding: {
+                    right: rem-calc(48);
+                }
+                height: rem-calc(40);
+                position: absolute;
+                top: 0;
+                right: 0;
+                left: unset;
+                z-index: 0;
+            }
+
+            @include maxMQ(small) {
+                border: {
+                    color: transparent !important;
+                }
+            }
+        }
+
+        .search-btn {
+            background: {
+                color: transparent;
+            }
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: rem-calc(40);
+            height: rem-calc(40);
+            min-width: unset !important;
+            min-height: unset !important;
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            &:hover {
+                background: {
+                    color: transparent;
+                }
+
+                &::before {
+                    color: var(--font-color);
+                    opacity: 0.7;
+                    @include transition(opacity $transition-default);
+                }
+            }
+
+            &::before {
+                content: "\e90d";
+                color: var(--font-color);
+                font: {
+                    family: $icon-font;
+                }
+                @include transition(opacity $transition-default);
+            }
+        }
+    }
+
+    &:not(.active-search) {
+        form {
+            input {
+                top: 0;
+                border: {
+                    color: transparent;
+                }
+                
+                
+                @include transitions(border $transition-default 0.3s, padding $transition-default, width $transition-default, top $transition-default);
+
+                @include MQ(small) {
+                    width: 0;
+                    padding: {
+                        right: rem-calc(28);
+                    }
+                }
+            }
+        }
+    }
+
+    #movieLivesearchResults {
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+}

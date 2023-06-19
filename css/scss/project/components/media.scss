@@ -92,10 +92,19 @@
 
         .media-card {
             height: 100%;
+            margin: {
+                bottom: 0;
+            }
 
             .title {
                 flex-grow: 1;
             }
+        }
+
+        .widescreen-media-card {
+            margin: {
+                bottom: 0;
+            }  
         }
     }
 }
