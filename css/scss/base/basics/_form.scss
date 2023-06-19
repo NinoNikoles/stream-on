@@ -424,3 +424,8 @@ span.wpcf7-list-item {
         height: $line-height-small;
     }
 }
+
+.checkbox-label {
+    display: flex;
+    flex-direction: column;
+}
