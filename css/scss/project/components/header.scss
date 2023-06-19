@@ -1,5 +1,24 @@
 #header {
+    padding: {
+        right: rem-calc($grid-padding - 5);
+        left: rem-calc($grid-padding);
+    }
+
     .logo {
         height: rem-calc(50);
+    }
+
+    @include MQ(small) {
+        background: {
+            color: transparent;
+        }
+    }
+
+    &.fluid {
+        @include MQ(small) {
+            background: {
+                color: var(--header-bg);
+            }
+        } 
     }
 }
