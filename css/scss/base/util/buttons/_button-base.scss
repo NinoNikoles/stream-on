@@ -83,11 +83,12 @@
     &.icon-right { flex-direction: row-reverse; &::before { margin-left: rem-calc($space-base); } }
 
     &.icon-only {
+        aspect-ratio: 1/1;
         max-width: unset;
         min-width: unset;
 
         &::before {
-            position: unset;//
+            position: absolute;
         }
     }
 
