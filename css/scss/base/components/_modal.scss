@@ -146,9 +146,9 @@
         z-index: 1;
 
         &::before {
-            content: '<';
+            content: "\e91e";
             font: {
-                family: var(--icon-font);
+                family: $icon-font;
                 size: rem-calc(24);
             }
             line: {
@@ -184,4 +184,12 @@
 
 body.active-modal {
     overflow: hidden;
+}
+
+.fancybox__container {
+    .fancybox__content {
+        background: {
+            color: var(--body-bg);
+        }
+    }
 }
