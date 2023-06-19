@@ -6,7 +6,7 @@ $cnf = tmdbConfig();
 
 $movie = selectMovieByID($_GET['id']);
 if ( $movie == 0 ) {
-    page_redirect("/movies");
+    page_redirect("/admin/movies");
 } else {
     $id = $movie['id'];            
     $title = $movie['title'];
@@ -75,7 +75,7 @@ if ( $movie == 0 ) {
                                 
                             echo '<div id="file-list-popup" style="display:none;">';
                                 echo '<div id="file-tree"></div>';
-                                echo '<form method="post" action="/movie/?id='.$_GET['id'].'">';
+                                echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
                                     echo '<input type="text" name="moviePath" id="inputMoviePath" value="" style="display:none;">';
                                     echo '<input type="text" name="id" value="'.$_GET['id'].'" style="display:none;">';
                                     echo '<button class="btn" id="inputMovieSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>';
@@ -98,7 +98,7 @@ if ( $movie == 0 ) {
                            
                         <div id="movie-poster" style="display:none;">
                             <p><?php echo lang_snippet('select_new_poster');?>:</p>
-                            <form method="post" action="/movie/?id=<?php echo $id; ?>">
+                            <form method="post" action="/admin/movie/?id=<?php echo $id; ?>">
                                 <div class="row">
                                     <?php
                                         $newTMDB = new TMDB($cnf);
@@ -136,7 +136,7 @@ if ( $movie == 0 ) {
 
                         <div id="movie-backdrop" style="display:none;">
                             <p><?php echo lang_snippet('select_new_thumbnail');?>:</p>
-                            <form method="post" action="/movie/?id=<?php echo $id; ?>">
+                            <form method="post" action="/admin/movie/?id=<?php echo $id; ?>">
                             <div class="row">
                                 <?php
                                     $newTMDB = new TMDB($cnf);
@@ -187,7 +187,7 @@ if ( $movie == 0 ) {
 
                                 echo '<div id="add-movie-'.$movieID.'" style="display:none;">';
                                     echo '<p>'.lang_snippet('add_movie').'</p>';
-                                    echo '<form method="post" action="/movies/edit-movie/?id='.$movieID.'">';
+                                    echo '<form method="post" action="/admin/movies/edit-movie/?id='.$movieID.'">';
                                     echo '<input type="number" name="id" value="'.$movieID.'" style="display:none;">';
                                         echo '<p class="text-right">';
                                             echo '<button type="submit" class="btn btn-success" name="add-movie">'.lang_snippet('add').'</button>';

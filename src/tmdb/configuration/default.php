@@ -8,6 +8,12 @@ $result = $conn->query($sql);
 $apikey = $result->fetch_assoc();
 $apikey = $apikey['setting_option'];
 
+// GET Site title
+$sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
+$result = $conn->query($sql);
+$site_title = $result->fetch_assoc();
+$site_title = $site_title['setting_option'];
+
 // Get API Language
 $sql = "SELECT setting_option FROM settings WHERE setting_name='apilang'";
 $result = $conn->query($sql);
@@ -19,6 +25,7 @@ $apiLang = $apiLang['setting_option'];
 
 // Global Configuration
 $cnf['apikey'] = $apikey;
+$cnf['site_title'] = $site_title;
 $cnf['lang'] = $apiLang;
 $cnf['timezone'] = 'Europe/Berlin';
 $cnf['adult'] = true;

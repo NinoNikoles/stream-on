@@ -23,7 +23,7 @@ if ( isset($_POST['add-movie']) ) {
             <div class="col12 marg-bottom-m">
                 <div id="searchbar">
                     <label for="movie-name">Film Name*
-                        <input type="text" id="movie-search" name="movie-name" placeholder="<?php echo lang_snippet('movie_title'); ?>" value="" required>
+                        <input type="text" id="movie-api-search" name="movie-name" placeholder="<?php echo lang_snippet('movie_title'); ?>" value="" required>
                     </label>
                     <div id="movieSearchResults" class="hidden"></div>      
                 </div>
@@ -39,7 +39,7 @@ if ( isset($_POST['add-movie']) ) {
                     if ( $movies > 0 ) {
                         foreach ( $movies as $movie ) {
                             echo '<div class="col3 column">';
-                                echo '<a href="/movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
+                                echo '<a href="/admin/movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
                                         echo '<img src="'.$tmdb->getImageURL().$movie['poster'].'" alt="">';
                                     echo '</figure>';

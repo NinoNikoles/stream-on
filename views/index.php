@@ -8,15 +8,16 @@ $results = $conn->query($sql);
 
 if ($results->num_rows > 0) {
     $sliderNumber = 1;
-    while ($rowGenres = $results->fetch_assoc()) {
-        $movieRow = goTrhoughMovies($rowGenres, $conn, $tmdb);
+
+    while ($genre = $results->fetch_assoc()) {
+        $movieRow = goTrhoughMovies($genre['id'], $conn, $tmdb);
         if ( $movieRow != '' ) {
             $genre_slider = 'genre-slider-'.$sliderNumber;
 
             echo '<div class="row genre-slider '.$genre_slider.'">';
-                echo '<div class="col12 column marg-bottom-l">';
+                echo '<div class="col12 column marg-top-l">';
                     echo '<div class="column">';
-                        echo '<h3>'.$rowGenres['genre_name'].'</h3>';
+                        echo '<h3>'.$genre['genre_name'].'</h3>';
                     echo '</div>';
 
                     echo '<div class="column">'; 
@@ -34,18 +35,22 @@ if ($results->num_rows > 0) {
         }
     }
 } else {
-    echo '<p>Keine Genres vorhanden!</p>';
+    echo '<div class="innerWrap marg-top-l">';
+        echo '<div class="col12">';
+            echo '<p>Keine Genres vorhanden!</p>';
+        echo '</div>';
+    echo '</div>';
 }
 
 function goTrhoughMovies($db_genre, $conn, $tmdb) {
-    if ( $db_genre['genre_movies'] !== '' ) {
-        $genreMovies = json_decode($db_genre['genre_movies']);
-        $movieRow = '';
+    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.id = movie_genre.movie_id WHERE movie_genre.genre_id = $db_genre";
+    $result = $conn->query($query);
+    $movieRow = '';
 
-        foreach ( $genreMovies as $genreMovieID ) {
-            $movieSQL = "SELECT * FROM movies WHERE movie_tmdbID='".$genreMovieID."'";
-            $movie = $conn->query($movieSQL)->fetch_assoc();
-
+    if ($result->num_rows > 0) {
+        // Es gibt mindestens einen Film des Genres
+    
+        while ($movie = $result->fetch_assoc()) {
             $movieID = $movie['movie_tmdbID'];
             $movieTitle = $movie['movie_title'];
             $movieOverview = $movie['movie_overview'];
@@ -67,7 +72,6 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
                     <figure class="widescreen">
                         <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
                     </figure>
-                    <span class="title">'.truncate($movieTitle,20).'</span>
                 </a>
 
                 <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
@@ -99,7 +103,7 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
         }
     } else {
         $movieRow = '';
-    } 
+    }
 
     return $movieRow;
 }

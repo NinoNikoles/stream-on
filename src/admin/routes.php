@@ -5,93 +5,126 @@
 
 
 // Überprüfen, ob der Benutzer eingeloggt ist
-if(!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    get('/', 'views/login.php');
-    post('/', 'views/login.php');
+if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
+    get('/login', 'views/login.php');
+    post('/login', 'views/login.php');
 
 } else {
-    // Static GET
-    // In the URL -> http://localhost
-    // The output -> Index
-    get('/', 'views/index.php');
-
-
-    get('/register', 'views/register.php');
-    post('/register', 'views/register.php');
-
-    post('/login', 'login.php');
-
-    get('/logout', 'views/logout.php');
-    post('/logout', 'logout.php');
-
-    // Admin Check
-    if ($_SESSION['role'] == '1') {
-        get('/settings', 'views/backend/settings.php');
-        post('/settings', 'views/backend/settings.php');
-
-        get('/users', 'views/backend/users.php');
-        post('/users', 'views/backend/users.php');
-
-        get('/movies', 'views/backend/movies.php');
-        post('/movies', 'views/backend/movies.php');
-
-        get('/movies/add-movie', 'views/backend/add-movie.php');
-        post('/movies/add-movie', 'views/backend/add-movie.php');
-
-        get('/movies/movie-search', 'views/actions/movie-livesearch.php');
-        post('/movies/movie-search', 'views/actions/movie-livesearch.php');
-
-        get('/file-api', 'views/actions/file-api.php');
-        post('/file-api', 'views/actions/file-api.php');
-
-        get('/movie/$id', 'views/backend/single-movie.php');
-        post('/movie/$id', 'views/backend/single-movie.php');
-
-        get('/genres', 'views/backend/genres.php');
-        post('/genres', 'views/backend/genres.php');
+    if ( isset($_SESSION['username']) ) {
+        $userCheck = checkIfUserExists($_SESSION['username']);
+    } else {
+        $userCheck = false;
     }
+    
+    if ( $userCheck !== true ) {
+        set_callout('success','logout_message');
 
-    // Dynamic GET. Example with 1 variable
-    // The $id will be available in user.php
-    get('/user/$id', 'views/templates/user');
-    post('/user/$id', 'views/templates/user');
+        session_unset();
+        session_destroy();
+        session_write_close();
+    } else {
+        // Static GET
+        // In the URL -> http://localhost
+        // The output -> Index
+        get('/', 'views/index.php');
 
-    get('/user-img-upload', 'views/actions/user-image-upload.php');
-    post('/user-img-upload', 'views/actions/user-image-upload.php');
 
-    get('/watch/$id', 'views/templates/watch');
-    post('/watch/$id', 'views/templates/watch');
+        get('/register', 'views/register.php');
+        post('/register', 'views/register.php');
 
-    // Dynamic GET. Example with 2 variables
-    // The $name will be available in full_name.php
-    // The $last_name will be available in full_name.php
-    // In the browser point to: localhost/user/X/Y
-    get('/user/$name/$last_name', 'views/full_name.php');
+        get('/logout', 'views/logout.php');
+        post('/logout', 'views/logout.php');
 
-    // Dynamic GET. Example with 2 variables with static
-    // In the URL -> http://localhost/product/shoes/color/blue
-    // The $type will be available in product.php
-    // The $color will be available in product.php
-    get('/product/$type/color/$color', 'product.php');
+        // Admin Check
+        if ($_SESSION['role'] == '1') {
+            get('/admin/settings', 'views/backend/settings.php');
+            post('/admin/settings', 'views/backend/settings.php');
 
-    // A route with a callback
-    get('/callback', function(){
-        echo 'Callback executed';
-    });
+            get('/admin/users', 'views/backend/users.php');
+            post('/admin/users', 'views/backend/users.php');
 
-    // A route with a callback passing a variable
-    // To run this route, in the browser type:
-    // http://localhost/user/A
-    get('/callback/$name', function($name){
-        echo "Callback executed. The name is $name";
-    });
+            get('/admin/movies', 'views/backend/movies.php');
+            post('/admin/movies', 'views/backend/movies.php');
 
-    // A route with a callback passing 2 variables
-    // To run this route, in the browser type:
-    // http://localhost/callback/A/B
-    get('/callback/$name/$last_name', function($name, $last_name){
-        echo "Callback executed. The full name is $name $last_name";
-    });
+            get('/admin/movies/add-movie', 'views/backend/add-movie.php');
+            post('/admin/movies/add-movie', 'views/backend/add-movie.php');
+
+            get('/admin/movies/movie-api-search', 'views/actions/movie-api-search.php');
+            post('/admin/movies/movie-api-search', 'views/actions/movie-api-search.php');
+
+            get('/admin/file-api', 'views/actions/file-api.php');
+            post('/admin/file-api', 'views/actions/file-api.php');
+
+            get('/admin/movie/$id', 'views/backend/single-movie.php');
+            post('/admin/movie/$id', 'views/backend/single-movie.php');
+
+            get('/admin/genres', 'views/backend/genres.php');
+            post('/admin/genres', 'views/backend/genres.php');
+        }
+
+        // Dynamic GET. Example with 1 variable
+        // The $id will be available in user.php
+        get('/user/$id', 'views/templates/user');
+        post('/user/$id', 'views/templates/user');
+
+        get('/user-img-upload', 'views/actions/user-image-upload.php');
+        post('/user-img-upload', 'views/actions/user-image-upload.php');
+
+        // Movie Page
+        get('/movies', 'views/movies');
+        post('/movies', 'views/movies');
+
+        // Mediaplayer page
+        get('/watch/$id', 'views/templates/watch');
+        post('/watch/$id', 'views/templates/watch');
+
+        // Search page
+        get('/search', 'views/search.php');
+        post('/search', 'views/search.php');
+
+        // Ajax searchbar
+        get('/searchbar', 'views/actions/searchbar.php');
+        post('/searchbar', 'views/actions/searchbar.php');
+
+        // Ajax DB media search
+        get('/live-search', 'views/actions/livesearch.php');
+        post('/live-search', 'views/actions/livesearch.php');
+
+        // Ajax movie scroll load
+        get('/movie-scroll-load', 'views/actions/movie-scroll-load.php');
+        post('/movie-scroll-load', 'views/actions/movie-scroll-load.php');
+
+        // Dynamic GET. Example with 2 variables
+        // The $name will be available in full_name.php
+        // The $last_name will be available in full_name.php
+        // In the browser point to: localhost/user/X/Y
+        get('/user/$name/$last_name', 'views/full_name.php');
+
+        // Dynamic GET. Example with 2 variables with static
+        // In the URL -> http://localhost/product/shoes/color/blue
+        // The $type will be available in product.php
+        // The $color will be available in product.php
+        get('/product/$type/color/$color', 'product.php');
+
+        // A route with a callback
+        get('/callback', function(){
+            echo 'Callback executed';
+        });
+
+        // A route with a callback passing a variable
+        // To run this route, in the browser type:
+        // http://localhost/user/A
+        get('/callback/$name', function($name){
+            echo "Callback executed. The name is $name";
+        });
+
+        // A route with a callback passing 2 variables
+        // To run this route, in the browser type:
+        // http://localhost/callback/A/B
+        get('/callback/$name/$last_name', function($name, $last_name){
+            echo "Callback executed. The full name is $name $last_name";
+        });
+    }
 }
 
 // ##################################################

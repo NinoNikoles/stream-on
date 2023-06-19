@@ -38,10 +38,6 @@
                     echo '</div>';
                 }
             }
-        } else {
-            echo '<p>'.lang_snippet('no_movies_found').'</p>';
         }
-    } else {
-        echo '<p>'.lang_snippet('no_movies_found').'</p>';
     }
 ?>

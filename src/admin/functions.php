@@ -31,6 +31,28 @@ function tmdbConfig() {
     return $cnf;
 }
 
+function checkIfUserExists($username) {
+    $conn = dbConnect();
+    $result = $conn->query("SELECT username FROM users WHERE username='".$_SESSION['username']."'");
+    if ($result->num_rows > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getSiteTitle() {
+    $conn = dbConnect();
+
+    $sql = "SELECT * FROM settings WHERE setting_name='site_title'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            return $row['setting_option'];
+        }
+    }
+}
+
 //-- Set Browserlanguage --
 function get_browser_language( $available = [], $default = 'en' ) {
 	if ( isset( $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ] ) ) {
@@ -165,7 +187,7 @@ function callout() {
                             
 function adminMenu() {
     if ($_SESSION['role'] == '1') {
-        return '<li class="menu-item"><a href="/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
+        return '<li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
     }
 }
 
@@ -204,6 +226,8 @@ function insertMovie($movieID) {
     $conn = dbConnect();
     $tmdb = setupTMDB();
 
+    $conn->begin_transaction();
+
     $id = mysqli_real_escape_string($conn, $movieID);
     $movie = $tmdb->getMovie($id);
     $title =  mysqli_real_escape_string($conn, $movie->getTitle());
@@ -217,29 +241,17 @@ function insertMovie($movieID) {
     $collection = mysqli_real_escape_string($conn, $movie->getCollection());
     $genres = $movie->getGenres();
 
-    $movieGenres = [];
-    foreach($genres as $genre) {
-        $genreID = $genre->getId();
-        $movieGenres[] = $genreID;
+    $data = [];
 
-        $sql = 'SELECT genre_movies from genres WHERE genre_id="'.$genreID.'"';
-        $result = $conn->query($sql);
-        
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                
-                $dbGenres = json_decode($row['genre_movies']);
-            }
-        }
-        $dbGenres[] = intval($id);
-
-        $sql  = 'UPDATE genres SET genre_movies="'.json_encode($dbGenres).'" WHERE genre_id="'.$genreID.'"';
-        $conn->query($sql);
+    foreach ( $genres as $genre ) {
+        $data[] = $genre->getID();
     }
 
-    $genres = json_encode($movieGenres);
+    $genresString = json_encode($data);
 
-    $sql = 'INSERT INTO movies (
+    try {
+        // Füge den neuen Film in die "movies"-Tabelle ein
+        $movieQuery = 'INSERT INTO movies (
                 movie_tmdbID,
                 movie_title,
                 movie_tagline,
@@ -262,15 +274,43 @@ function insertMovie($movieID) {
                 "'.$release.'",
                 "'.$runtime.'",
                 "'.$collection.'",
-                "'.$genres.'"
+                "'.$genresString.'"
             )';
-    if (!($conn->query($sql) === TRUE)) {
+    
+        $conn->query($movieQuery);
+    
+        // Holen Sie sich die automatisch generierte ID des neuen Films
+        $movieId = $conn->insert_id;
+
+        foreach($genres as $genre) {
+            $genreID = $genre->getId();
+    
+            $sql = 'SELECT * from genres WHERE genre_id="'.$genreID.'"';
+            $result = $conn->query($sql);
+            
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $dbGenreID = intval($row['id']);
+                }
+            }
+    
+            // Füge die Genre-Verbindung in die "movie_genre"-Tabelle ein
+            $genreQuery = "INSERT INTO movie_genre (movie_id, genre_id) VALUES ($movieId, $dbGenreID)";
+            $conn->query($genreQuery);
+        }
+    
+        // Commit der Transaktion
+        $conn->commit();
+    
+        echo "Der Film wurde erfolgreich hinzugefügt.";
+    } catch (Exception $e) {
+        // Bei einem Fehler Rollback der Transaktion
         set_callout('alert','add_movie_alert');
-        page_redirect("/movies");
-    } else {
-        set_callout('success','add_movie_success');
-        page_redirect("/movie/?id=$id");
+        page_redirect("/admin/movies");
     }
+
+    set_callout('success','add_movie_success');
+    page_redirect("/admin/movie/?id=$id");
 }
 
 //-- Returns all information of a movie from local database --
@@ -343,7 +383,12 @@ function selectAllMoviesByTitle($order = ''){
     $tmdb = setupTMDB();
     $conn = dbConnect();
 
-    $sql = "SELECT * FROM movies ORDER BY movie_title $order";
+    if ( $order != '' ) {
+        $sql = "SELECT * FROM movies ORDER BY movie_title $order";
+    } else {
+        $sql = "SELECT * FROM movies";
+    }
+    
     $result = $conn->query($sql);
 
     $data = [];
@@ -385,6 +430,55 @@ function selectAllMoviesByTitle($order = ''){
     return $data;
 }
 
+//-- Returns all local database movies ordered by A-Z or Z-A --
+function selectMovieByTitle($title){
+    $tmdb = setupTMDB();
+    $conn = dbConnect();
+    if ( $title !== '' ) {
+        $sql = "SELECT * FROM movies WHERE movie_title LIKE '%$title%'";
+        $result = $conn->query($sql);
+
+        $data = [];
+        $i = 0;
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+
+                $data[$i]['id'] = $row['movie_tmdbID'];
+                $data[$i]['title'] = $row['movie_title'];            
+                $data[$i]['tagline'] = $row['movie_tagline'];
+                $data[$i]['overview'] = $row['movie_overview'];
+                $data[$i]['poster'] = $row['movie_poster'];
+                $data[$i]['backdrop'] = $row['movie_thumbnail'];
+                $data[$i]['voteAverage'] = $row['movie_rating'];
+                $data[$i]['release'] = $row['movie_release'];
+                $data[$i]['runtime'] = $row['movie_runtime'];
+                $data[$i]['collection'] = $row['movie_collection'];
+                $data[$i]['genres'] = [];
+                
+                $movie = $tmdb->getMovie($data[$i]['id']);
+                $genres = $movie->getGenres();
+                foreach ($genres as $genre) {
+                    $genreID = $genre->getId();
+                    $genreName = $genre->getName();
+
+                    $array = array(
+                        'id' => $genreID,
+                        'name' => $genreName,
+                    );
+
+                    $data[$i]['genres'][] = $array;
+                }
+
+                $i++;
+            }
+        }
+        return $data;
+    } else {
+        return $data = '';
+    }
+}
+
 //-- Checks if the movie is already in local database so it wont show up in movie collections --
 function movieIsInCollection($id){
     $conn = dbConnect();
@@ -404,10 +498,10 @@ function updateMovieFilePath($moviePath, $movieID) {
 
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_file_apth_alert');
-        page_redirect('/movie/?id='.$movieID);
+        page_redirect('/admin/movie/?id='.$movieID);
     } else {
         set_callout('success','update_file_path_success');
-        page_redirect('/movie/?id='.$movieID);
+        page_redirect('/admin/movie/?id='.$movieID);
     }
 }
 
@@ -443,10 +537,10 @@ function updateMoviePoster($movieID, $poster) {
     $sql = 'UPDATE movies SET movie_poster="'.$posterPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_poster_alert');
-        page_redirect('/movie/?id='.$movieID);
+        page_redirect('/admin/movie/?id='.$movieID);
     } else {
         set_callout('success','update_poster_success');
-        page_redirect('/movie/?id='.$movieID);
+        page_redirect('/admin/movie/?id='.$movieID);
     }
 }
 
@@ -459,10 +553,10 @@ function updateMovieBackdrop($movieID, $backdrop) {
     $sql = 'UPDATE movies SET movie_thumbnail="'.$backdropPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_backdrop_alert');
-        page_redirect('/movie/?id='.$movieID);
+        page_redirect('/admin/movie/?id='.$movieID);
     } else {
         set_callout('success','update_backdrop_success');
-        page_redirect('/movie/?id='.$movieID);
+        page_redirect('/admin/movie/?id='.$movieID);
     }
 }
 
@@ -557,4 +651,51 @@ function userProfileImg() {
     }
 
     return $userProfileImg;
+}
+
+//-----------------------------------------
+function scrollLoader($media, $count) {
+    $conn = dbConnect();
+    $tmdb = setupTMDB();
+
+    $sql = "SELECT * FROM $media ORDER BY movie_title ASC LIMIT 20 OFFSET $count";
+    $results = $conn->query($sql);
+
+    $data = [];
+    $i = 0;
+
+    if ($results->num_rows > 0) {
+        while ($row = $results->fetch_assoc()) {
+
+            $data[$i]['id'] = $row['movie_tmdbID'];
+            $data[$i]['title'] = $row['movie_title'];            
+            $data[$i]['tagline'] = $row['movie_tagline'];
+            $data[$i]['overview'] = $row['movie_overview'];
+            $data[$i]['poster'] = $row['movie_poster'];
+            $data[$i]['backdrop'] = $row['movie_thumbnail'];
+            $data[$i]['voteAverage'] = $row['movie_rating'];
+            $data[$i]['release'] = $row['movie_release'];
+            $data[$i]['runtime'] = $row['movie_runtime'];
+            $data[$i]['collection'] = $row['movie_collection'];
+            $data[$i]['genres'] = [];
+            
+            $movie = $tmdb->getMovie($data[$i]['id']);
+            $genres = $movie->getGenres();
+            foreach ($genres as $genre) {
+                $genreID = $genre->getId();
+                $genreName = $genre->getName();
+
+                $array = array(
+                    'id' => $genreID,
+                    'name' => $genreName,
+                );
+
+                $data[$i]['genres'][] = $array;
+            }
+
+            $i++;
+        }
+    }
+
+    return $data;
 }

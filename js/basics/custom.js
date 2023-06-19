@@ -15,6 +15,7 @@ debounceScroll = function(e){
 	clearTimeout(resizeTimerScroll);
 	resizeTimerScroll = setTimeout(function() {
 		checkPosition();
+		page.infinitLoad();
 	}, 10);
 };
 
@@ -65,6 +66,7 @@ $(document).ready(function() {
             self.initScrolltrigger();
             self.jstree();
             self.userMenuBtn();
+            self.infinitLoad();
             //self.videoTriggerFullscreen();
         },
 
@@ -132,6 +134,7 @@ $(document).ready(function() {
 			});
 			trigger.add('[data-trigger]');
 			trigger.add('.genre-slider');
+            trigger.add('.load-count');
 		},
 
         initPictures: function () {
@@ -569,6 +572,28 @@ $(document).ready(function() {
                     $this.removeClass('active');
                 }
             });
+        },
+
+        infinitLoad: function() {
+            $loadCount = $('.load-count');
+            $resultList = $('#movie-list');
+
+            if ( $loadCount.hasClass('visible') ) {
+                var loadCount = parseInt($loadCount.text());
+                $loadCount.remove();
+
+                $.ajax({
+                    url: '/movie-scroll-load',
+                    type: 'post',
+                    data: { count: loadCount },
+                    success: function(response) {
+                        $resultList.html(response);
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
+                    }
+                });
+            }
         }
     }
 

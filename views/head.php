@@ -7,6 +7,6 @@
     <link rel="icon" href="">
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <title>Vite App</title>
+    <title><?php echo getSiteTitle();?></title>
 </head>
 <body>

@@ -1,5 +1,6 @@
 <?php
     $conn = dbConnect();
+    //715a116161a63d95a6f2d7199c7051be
 
     // Benutzeranmeldung
     if(isset($_POST['login'])) {
@@ -8,19 +9,27 @@
 
         $sql = "SELECT * FROM users WHERE username='$username'";
         $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
+        if ( $result->num_rows > 0 ) {
+            $row = mysqli_fetch_assoc($result);
 
-        if(password_verify($password, $row['password'])) {
-            $_SESSION['userID'] = $row['id'];
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['role'] = $row['role'];
-            $_SESSION['logged_in'] = true;
-
-            page_redirect('/');
+            if(password_verify($password, $row['password'])) {
+                $_SESSION['userID'] = $row['id'];
+                $_SESSION['username'] = $row['username'];
+                $_SESSION['role'] = $row['role'];
+                $_SESSION['logged_in'] = true;
+    
+                page_redirect('/');
+            } else {
+                echo '<div class="innerWrap">';
+                    echo '<div class="col4 marg-left-col4">';
+                        echo '<p class="text-alert">Benutzername oder Passwort falsch.';
+                    echo '</div>';
+                echo '</div>';
+            }
         } else {
             echo '<div class="innerWrap">';
                 echo '<div class="col4 marg-left-col4">';
-                    echo '<p class="text-alert">Benutzername oder Passwort falsch.';
+                    echo '<p class="text-alert">Benutzername exisitert nicht.';
                 echo '</div>';
             echo '</div>';
         }

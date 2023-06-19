@@ -13,12 +13,12 @@ if(isset($_POST['generate-genres'])) {
         if (!$insertResult) {
 
             set_callout('alert','genres_created_alert');
-            page_redirect("/genres");
+            page_redirect("/admin/genres");
         }
     }
 
     set_callout('success','genres_created_success');
-    page_redirect("/genres");
+    page_redirect("/admin/genres");
 }
 ?>
 
@@ -41,7 +41,7 @@ if(isset($_POST['generate-genres'])) {
                     // Überprüfen, ob die Tabelle leer ist
                     if ($numRows == 0) {
                         echo '<div class="col12 marg-bottom-m">';
-                            echo '<form method="post" action="/genres">';
+                            echo '<form method="post" action="/admin/genres">';
                                 echo '<button type="submit" name="generate-genres">'.lang_snippet('genres').'</button>';
                             echo '</form>';
                         echo '</div>';

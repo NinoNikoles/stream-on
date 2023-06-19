@@ -10,7 +10,7 @@ $conn = dbConnect();
     <link rel="icon" href="">
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <title>Vite App</title>
+    <title><?php echo getSiteTitle();?></title>
 </head>
 <body>
 <header id="header" class="bar-active-root bar-active fixed-header overlay" lang="de-DE">
@@ -20,7 +20,7 @@ $conn = dbConnect();
 			<!-- Logo -->
 			<div class="header--logo">
 				<a class="logo--small" title="Zur Startseite" href="/">
-                    <span class="bold">Framework</span>
+                    <span class="bold"><?php echo getSiteTitle();?></span>
                 </a>
             </div>
 
@@ -33,6 +33,15 @@ $conn = dbConnect();
                         
                     </ul>
                 </nav>
+
+                <div class="search-bar">
+                    <form method="post" action="/search">
+                        <div class="search-bar-fix"></div>
+                        <input type="text" id="movie-live-search" name="search" placeholder="Suchen">
+                        <button type="submit" class="search-btn"></button>
+                    </form>
+                    <div id="movieLivesearchResults"></div>
+                </div>
 
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">

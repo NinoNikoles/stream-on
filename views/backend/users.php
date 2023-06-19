@@ -26,10 +26,10 @@ $conn = dbConnect();
                         $sql = 'DELETE FROM users WHERE id="'.$userID.'"';
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','delete_user_alert');
-                            page_redirect("/users");
+                            page_redirect("/admin/users");
                         } else {
                             set_callout('success','delete_user_success');
-                            page_redirect("/users");
+                            page_redirect("/admin/users");
                         }
                     }
 
@@ -47,10 +47,10 @@ $conn = dbConnect();
                         $sql = "INSERT INTO users (username, role, password) VALUES ('$username', '$role', '$hashed_password')";
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','add_user_alert');
-                            page_redirect("/users");
+                            page_redirect("/admin/users");
                         } else {
                             set_callout('success','add_user_success');
-                            page_redirect("users");
+                            page_redirect("/adminusers");
                         }
                     }
 
@@ -70,7 +70,7 @@ $conn = dbConnect();
 
                         if (!($conn->query($sql) === TRUE)) {
                             set_callout('alert','delete_user_alert');
-                            page_redirect("/users");
+                            page_redirect("/admin/users");
                         } else {
                             set_callout('success','edit_user_success');
                             session_start();
@@ -78,7 +78,7 @@ $conn = dbConnect();
                             $_SESSION['role'] = $role;
                             $_SESSION['logged_in'] = true;
                 
-                            page_redirect('/users');
+                            page_redirect('/admin/users');
                         }
                     }
 
@@ -133,7 +133,7 @@ $conn = dbConnect();
                                 }
                             echo '</p>';
                             echo '<p>';
-                                echo '<lable for="role">Admin <input type="checkbox" name="role" value="1" '.$checked.'></lable>';
+                                echo '<lable for="role" class="checkbox-label">Admin <input type="checkbox" name="role" value="1" '.$checked.'></lable>';
                             echo '</p>';
                             echo '<p>';
                                 echo '<lable for="password">Passwort <input type="password" name="password" required></lable>';
@@ -166,7 +166,7 @@ $conn = dbConnect();
                         <input type="text" name="username" placeholder="Benutzername" required></label>
                     </p>
                     <p>
-                        <lable for="role">Admin <input type="checkbox" name="role"></lable>
+                        <lable for="role" class="checkbox-label">Admin <input type="checkbox" name="role"></lable>
                     </p>
                     <p>
                         <label for="password">Passwort
