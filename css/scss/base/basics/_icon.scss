@@ -91,6 +91,7 @@ a.icon-right:hover {
 .icon {
     &-add { &::before { content: "+"; } }
     &-add-user { &::before { content: "\e934"; } }
+    &-arrow-back { &::before { content: "\e91e"; } }
     &-check { &::before { content: "\c"; } }
     &-chevron-down { &::before { content: "\e917"; transform: translate(-50%, -50%) !important; rotate: 90deg !important; } }
     &-chevron-left { &::before { content: "\e918"; } }
@@ -116,6 +117,7 @@ a.icon-right:hover {
     &-replay { &::before { content: "\e905"; } }
     &-shuffle { &::before { content: "\e906"; } }
     &-send { &::before { content: "s"; } }
+    &-search { &::before { content: "\e90d"; } }
     &-skip-next { &::before { content: "\e907"; } }
     &-skip-previous { &::before { content: "\e908"; } }
     &-spotify { &::before { content: "\f1bc"; } }
