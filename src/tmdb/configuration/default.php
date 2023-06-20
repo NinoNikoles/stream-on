@@ -28,7 +28,7 @@ $cnf['apikey'] = $apikey;
 $cnf['site_title'] = $site_title;
 $cnf['lang'] = $apiLang;
 $cnf['timezone'] = 'Europe/Berlin';
-$cnf['adult'] = true;
+$cnf['adult'] = false;
 $cnf['debug'] = false;
 
 // Data Return Configuration - Manipulate if you want to tune your results
