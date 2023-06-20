@@ -398,7 +398,7 @@ $(document).ready(function() {
                     loop: true,
                     //effect: effect,
                     slidesPerView: slidesPerViewMobile,//itemsMobile,
-                    spaceBetween: 8,
+                    spaceBetween: 16,
                     allowTouchMove: true,
                     breakpoints: {
                         // when window width is >= 320px
@@ -485,7 +485,7 @@ $(document).ready(function() {
         jstree: function() {
             if ( $('#file-tree').length > 0 ) {
                 $.ajax({
-                    url: '/file-api', // Hier den Pfad zur API auf deinem Server einfügen
+                    url: '/admin/file-api', // Hier den Pfad zur API auf deinem Server einfügen
                     type: 'get',
                     dataType: 'json',
                     success: function(response) {
