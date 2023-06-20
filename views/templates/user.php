@@ -54,10 +54,10 @@
 ?>
 
 <div class="col12">
-    <div class="innerWrap">
-        
-        <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
+    <div class="innerWrap marg-top-l">
+        <?php callout(); ?>
 
+        <div class="col8 marg-left-col2 marg-right-col4">
             <div class="col4 marg-left-col4 marg-right-col4">
                 <h1 class="text-center"><?php echo $_SESSION['username']; ?></h1>
                 <figure class="square">
@@ -65,7 +65,7 @@
                 </figure>
 
 
-                <?php callout(); ?>
+                
 
 
                 <form action="/user/?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">

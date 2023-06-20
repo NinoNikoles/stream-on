@@ -46,11 +46,20 @@ if ( $movie == 0 ) {
                     // Add Movie from collection
                     if (isset($_POST['add-movie'])) {
                         insertMovie($_POST['id']);
-                    }                    
+                    }
+                    var_dump($_POST);
+                    // Add Movie from collection
+                    if (isset($_POST['delete-movie'])) {
+                        deleteMovie($_POST['id']);
+                    }    
 
                     callout();
 
                     echo '<div class="col7 marg-right-col1">';
+                        echo '<form method="post" action="/admin/movie/?id='.$id.'">';
+                            echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
+                            echo '<button type="submit" name="delete-movie">Löschen</button>';
+                        echo '</form>';
                         echo '<div class="col12"><h1>'.$title.'</h1></div>';
                         if(($tagline > 1)) {
                             echo '<div class="col12"><p>'.$tagline.'</p></div>';
@@ -78,7 +87,7 @@ if ( $movie == 0 ) {
                                 echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
                                     echo '<input type="text" name="moviePath" id="inputMoviePath" value="" style="display:none;">';
                                     echo '<input type="text" name="id" value="'.$_GET['id'].'" style="display:none;">';
-                                    echo '<button class="btn" id="inputMovieSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>';
+                                    echo '<button class="btn marg-top-m marg-bottom-no" id="inputMovieSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>';
                                 echo '</form>';
                             echo '</div>';
 

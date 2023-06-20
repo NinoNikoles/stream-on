@@ -56,8 +56,8 @@
             <form method="post" action="/admin/settings" class="row">
                  <div class="col12 column">
                     <p>
-                        <label for="site_title"><?php echo lang_snippet('api_key'); ?>*
-                            <input type="text" name="site_title" id="site_title" placeholder="<?php echo lang_snippet('api_key'); ?>" value="<?php echo $siteTitle; ?>"required>
+                        <label for="site_title"><?php echo lang_snippet('page_title'); ?>*
+                            <input type="text" name="site_title" id="site_title" placeholder="<?php echo lang_snippet('page_title'); ?>" value="<?php echo $siteTitle; ?>"required>
                         </label>
                     </p>
                 </div>
