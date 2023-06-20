@@ -175,7 +175,7 @@ function callout() {
             $type = $_SESSION['callout_type'];
             $message = lang_snippet($_SESSION['callout_message']);
     
-            echo '<div class="callout '.$type.'">';
+            echo '<div class="callout '.$type.' mag-bottom-l">';
                 echo '<p>'.$message.'</p>';
             echo '</div>';
     
@@ -305,12 +305,55 @@ function insertMovie($movieID) {
         echo "Der Film wurde erfolgreich hinzugefügt.";
     } catch (Exception $e) {
         // Bei einem Fehler Rollback der Transaktion
+        $conn->rollback();
         set_callout('alert','add_movie_alert');
         page_redirect("/admin/movies");
     }
 
     set_callout('success','add_movie_success');
     page_redirect("/admin/movie/?id=$id");
+}
+
+// Delete Movie
+function deleteMovie($movieID) {
+    $conn = dbConnect();
+    $sql = "SELECT id FROM movies WHERE movie_tmdbID = $movieID";
+    $data = $conn->query($sql)->fetch_assoc();
+    $id = $data['id'];
+
+    $conn->begin_transaction();
+
+    try {
+        $genreDeleteQuery = "DELETE FROM movie_genre WHERE movie_id = $id";
+        $conn->query($genreDeleteQuery);
+
+        // Lösche den Film aus der movies-Tabelle
+        $filmDeleteQuery = "DELETE FROM movies WHERE id = $id";
+        $conn->query($filmDeleteQuery);
+
+        // Überprüfe, ob die Löschvorgänge erfolgreich waren
+        if ($conn->affected_rows > 0) {
+            // Die Löschungen waren erfolgreich
+            // Commit der Transaktion
+            $conn->commit();
+            $conn->close();
+            set_callout('success','delete_movie_success');
+            page_redirect("/admin/movies");
+        } else {
+            // Keine entsprechenden Einträge gefunden oder Löschungen fehlgeschlagen
+            // Rollback der Transaktion
+            $conn->rollback();
+            $conn->close();
+            set_callout('alert','delete_movie_alert');
+            page_redirect('/admin/movie/?id='.$movieID);
+        }
+    } catch (Exception $e) {
+        // Bei einem Fehler Rollback der Transaktion
+        $conn->rollback();
+        $conn->close();
+        set_callout('alert','delete_movie_alert');
+        page_redirect('/admin/movie/?id='.$movieID);
+    }
 }
 
 //-- Returns all information of a movie from local database --
