@@ -68,7 +68,7 @@ $(document).ready(function() {
                             console.log('Fehler: ' + error);
                         }
                     });
-                }, 50);
+                }, 500);
             });
             
             self.$liveSearch.on('input', function() {
@@ -118,13 +118,12 @@ $(document).ready(function() {
             });
 
             self.$searchBtn.on('click', function(e) {
-                if ( self.$liveSearch.val().length > 0 ) {
-   
-                } else {
+                if ( !(self.$liveSearch.val().length > 0) ) {
                     e.preventDefault();
                     if ( !$('.search-bar').hasClass('active-search') ) {
                         $('.search-bar').addClass('active-search');
                     } else {
+                        self.$liveSearch.val('');
                         $('.search-bar').removeClass('active-search');
                     }
                 }
