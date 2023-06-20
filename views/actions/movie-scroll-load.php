@@ -22,13 +22,26 @@ if ( $movies > 0 ) {
             $genreHTML = $genreHTML . '<span class="tag">'.$genre['name'].'</span>';
         }
 
-        echo '<div class="col2">';
-            echo '<a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="media-card" data-modal data-src="#content-'.$movieID.'">';
-                echo '<figure class="poster">';
-                    echo '<img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">';
-                echo '</figure>';
-                echo '<span class="title">'.truncate($movieTitle,20).'</span>';
-            echo '</a>';
+        echo '<div class="col-6 grid-padding">';
+            echo '<div class="col-2-medium grid-padding media-card widescreen-media-card desktop-only">
+                    <figure class="widescreen">
+                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
+                    </figure>
+                    <div class="link-wrapper">
+                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
+                        <a href="#modal-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                    </div>
+                </div>
+
+                <div class="col-6 grid-padding media-card mobile-only">
+                    <figure class="poster">
+                        <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
+                    </figure>
+                    <div class="link-wrapper">
+                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
+                        <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                    </div>
+                </div>';
 
             echo '<div class="info-popup" id="content-'.$movieID.'" style="display:none;">';
                 echo '<div class="col12 marg-bottom-xs mobile-only">';

@@ -68,11 +68,25 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
 
             $movieRow = $movieRow . '
             <div class="swiper-slide">
-                <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="widescreen-media-card" data-modal data-src="#content-'.$movieID.'">
+                <div class="media-card widescreen-media-card desktop-only">
                     <figure class="widescreen">
                         <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
                     </figure>
-                </a>
+                    <div class="link-wrapper">
+                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
+                        <a href="#modal-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                    </div>
+                </div>
+
+                <div class="media-card mobile-only">
+                    <figure class="poster">
+                        <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
+                    </figure>
+                    <div class="link-wrapper">
+                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
+                        <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                    </div>
+                </div>
 
                 <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                     <div class="col12 marg-bottom-xs mobile-only">
