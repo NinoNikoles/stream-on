@@ -26,14 +26,8 @@ $conn = dbConnect();
 
 			<!-- Hauptnavigation -->
 			<div class="navWrap">
-				
-				<!-- Navigation -->
-				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
-                    <ul class="menu">
-                        
-                    </ul>
-                </nav>
 
+                <!-- Suche -->
                 <div class="search-bar">
                     <form method="post" action="/search">
                         <div class="search-bar-fix"></div>
@@ -42,6 +36,13 @@ $conn = dbConnect();
                     </form>
                     <div id="movieLivesearchResults"></div>
                 </div>
+
+				<!-- Navigation -->
+				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
+                    <ul class="menu">
+                        <li class="menu-item"><a href="/movies" title="<?php echo lang_snippet('movies'); ?>"><?php echo lang_snippet('movies'); ?></a></li>
+                    </ul>
+                </nav>
 
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">
