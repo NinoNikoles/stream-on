@@ -14,9 +14,16 @@ nav.header-menu-main {
 
     .overlay & {
         width: 100%;
+
+        @include MQ(medium) {
+            width: auto;
+        }
     }
 
     @include MQ(medium) {
+        background: {
+            color: transparent;
+        }
         width: max-content;
         height: auto !important;
         padding: {

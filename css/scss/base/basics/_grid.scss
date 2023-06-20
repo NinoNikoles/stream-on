@@ -140,13 +140,38 @@ main .main {
 
 @each $key, $val in $breakpoints {
     @for $i from 1 through $grid-columns {
-        .col#{$i}-#{$key} {
+        .col-#{$i}-#{$key} {
             @extend .grid;
             @include MQ($key) {
                 width: gridWidth($i, $grid-columns);
                 min-width: gridWidth($i, $grid-columns);
             }
         }
+    }
+}
+
+@each $key, $val in $breakpoints {
+    @for $i from 1 through $grid-columns {
+        .col-#{$i} {
+            @extend .grid;
+            width: gridWidth($i, $grid-columns);
+            min-width: gridWidth($i, $grid-columns);
+        }
+    }
+}
+
+.grid-row {
+    @extend .row;
+    margin: {
+        right: rem-calc(-($grid-padding/2));
+        left: rem-calc(-($grid-padding/2));
+    }
+}
+
+.grid-padding {
+    padding: {
+        right: rem-calc($grid-padding / 2);
+        left: rem-calc($grid-padding / 2);
     }
 }
 
@@ -176,15 +201,15 @@ main .main {
 }
 
 .pad {
-    &-top-no { padding-top: 0; }
-    &-right-no { padding-right: 0; }
-    &-bottom-no { padding-bottom: 0; }
-    &-left-no { padding-left: 0; }
+    &-top-no { padding-top: 0 !important; }
+    &-right-no { padding-right: 0 !important; }
+    &-bottom-no { padding-bottom: 0 !important; }
+    &-left-no { padding-left: 0 !important; }
 }
 
 .marg {
-    &-top-no { margin-top: 0; }
-    &-right-no { margin-right: 0; }
-    &-bottom-no { margin-bottom: 0; }
-    &-left-no { margin-left: 0; }
+    &-top-no { margin-top: 0 !important; }
+    &-right-no { margin-right: 0 !important; }
+    &-bottom-no { margin-bottom: 0 !important; }
+    &-left-no { margin-left: 0 !important; }
 }

@@ -2,6 +2,7 @@ body {
     background: {
         color: var(--body-bg);
     }
+    overflow-x: hidden;
 }
 
 .main {
@@ -32,83 +33,83 @@ body {
 
 .desktop-only {
     @include maxMQ(medium) {
-        display: none;
+        display: none !important;
     }
 }
 
 .mobile-only {
     @include MQ(medium) {
-        display: none;
+        display: none !important;
     }
 }
 
 .xxxsmall-only {
     @include MQ(xxsmall) {
-        display: none;
+        display: none !important;
     } 
 }
 
 .xxsmall-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(xxsmall, xsmall) {
-        display: block;
+        display: block  !important;
     }
 }
 
 .xsmall-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(xsmall, small) {
-        display: block;
+        display: block !important;
     }
 }
 
 .small-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(small, medium) {
-        display: block;
+        display: block !important;
     }
 }
 
 .medium-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(medium, large) {
-        display: block;
+        display: block !important;
     }
 }
 
 .large-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(large, xlarge) {
-        display: block;
+        display: block !important;
     }
 }
 
 .xlarge-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(xlarge, xxlarge) {
-        display: block;
+        display: block !important;
     }
 }
 
 .xxlarge-only {
-    display: none;
+    display: none !important;
 
     @include betweenMQ(xxlarge, xxxlarge) {
-        display: block;
+        display: block !important;
     }
 }
 
 .xxxlarge-only {
-    display: none;
+    display: none !important;
 
     @include MQ(xxxlarge) {
-        display: block;
+        display: block !important;
     }
 }
 

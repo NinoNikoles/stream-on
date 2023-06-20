@@ -1,0 +1,17 @@
+#file-tree {
+    overflow-x: hidden;
+
+    .jstree-wholerow-clicked {
+        background: {
+            color: var(--white-20);
+            image: none;
+        }
+    }
+
+    .jstree-wholerow-hovered {
+        background: {
+            color: var(--white-10);
+            image: none;
+        }
+    }
+}

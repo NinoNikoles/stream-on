@@ -20,7 +20,7 @@
         left: 0;
         z-index: -1;
 
-        @include MQ(small) {
+        @include MQ(medium) {
             display: none;
         }
     }
@@ -42,7 +42,7 @@
             z-index: -2;
             @include transitions(border $transition-default, padding $transition-default 0.3s, width $transition-default 0.3s, top $transition-default);
 
-            @include MQ(small) {
+            @include MQ(medium) {
                 background: {
                     color: transparent;
                 }
@@ -50,6 +50,7 @@
                     right: rem-calc(48);
                 }
                 height: rem-calc(40);
+                max-width: rem-calc(300);
                 position: absolute;
                 top: 0;
                 right: 0;
@@ -57,7 +58,7 @@
                 z-index: 0;
             }
 
-            @include maxMQ(small) {
+            @include maxMQ(medium) {
                 border: {
                     color: transparent !important;
                 }
@@ -113,7 +114,7 @@
                 
                 @include transitions(border $transition-default 0.3s, padding $transition-default, width $transition-default, top $transition-default);
 
-                @include MQ(small) {
+                @include MQ(medium) {
                     width: 0;
                     padding: {
                         right: rem-calc(28);
@@ -125,8 +126,44 @@
 
     #movieLivesearchResults {
         width: 100%;
-        position: absolute;
-        top: 100%;
+        max-height: rem-calc(200);
+        position: fixed;
+        top: 0;
         left: 0;
+        overflow-y: scroll;
+        @include transition(top $transition-default);
+
+        @include MQ(medium) {
+            position: absolute;
+        }
+
+        > a {
+            border: {
+                top: 1px solid var(--font-color);
+            }
+
+            @include MQ(medium) {
+                border: {
+                    top: none;
+                    bottom: 1px solid var(--font-color);
+                }
+            }
+        }
+    }
+
+    &.active-search {
+        #movieLivesearchResults {
+            background: {
+                color: var(--header-bg);
+            }
+            /*border: {
+                bottom: 1px solid var(--font-color);
+            }*/
+            top: rem-calc(100);
+
+            @include MQ(medium) {
+                top: calc(100% - 5px);
+            }
+        }
     }
 }

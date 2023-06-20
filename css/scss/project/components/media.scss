@@ -28,6 +28,83 @@
                 left: rem-calc($space-base);
             }
         }
+
+        .link-wrapper {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            @include transition(background-color $transition-default);
+
+            .play-trigger,
+            .info-trigger {
+                background: {
+                    color: transparent !important;
+                }
+                width: 100%;
+                height: 100%;
+                margin: {
+                    bottom: 0;
+                }
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                @include MQ(small) {
+                    opacity: 0;
+                    @include transition(opacity $transition-default);
+                }
+
+                &::after {
+                    content: "\e902";
+                    background: {
+                        color: transparent !important;
+                    }
+                    color: var(--white) !important;
+                    font: {
+                        family: $icon-font;
+                        size: rem-calc(50);
+                    }
+                    line-height: 1;
+                    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75),0px 0px 20px rgba(0, 0, 0, 1);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+
+            .info-trigger {
+                width: rem-calc(50);
+                height: rem-calc(50);
+                top: unset;
+                right: 0;
+                bottom: 0;
+                left: unset;
+                &::after {
+                    content: "\i";
+                    font: {
+                        size: rem-calc(25);
+                    }
+                }
+            }            
+        }
+
+        &:hover {
+            .link-wrapper {
+                background: {
+                    color: var(--black-25);
+                }
+
+                @include MQ(small) {
+                    .play-trigger,
+                    .info-trigger {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
     }
 }
 

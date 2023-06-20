@@ -10,6 +10,12 @@
     outline: none;
     @include transitions(background-color $transition-default, padding $transition-default);
 
+    @include MQ(medium) {
+        margin: {
+            left: rem-calc($grid-padding/2);
+        }
+    }
+
     &:hover,
     &.active {
         background: {
