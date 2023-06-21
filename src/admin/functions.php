@@ -33,7 +33,7 @@ function tmdbConfig() {
 
 function checkIfUserExists($username) {
     $conn = dbConnect();
-    $result = $conn->query("SELECT username FROM users WHERE username='".$_SESSION['username']."'");
+    $result = $conn->query("SELECT username FROM users WHERE username='$username'");
     if ($result->num_rows > 0) {
         return true;
     } else {
@@ -101,7 +101,7 @@ function setTheme() {
 
 function setFavicon($PATH) {
     $conn = dbConnect();
-    $sql = 'UPDATE settings SET movie_file_path="'.$PATH.'" WHERE setting_name="favicon_path"';
+    $sql = "UPDATE settings SET movie_file_path='$PATH' WHERE setting_name='favicon_path'";
 
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_file_apth_alert');
@@ -238,10 +238,11 @@ function insertMovie($movieID) {
     $rating = mysqli_real_escape_string($conn, $movie->getVoteAverage());
     $release = mysqli_real_escape_string($conn, $movie->getReleaseDate());
     $runtime = mysqli_real_escape_string($conn, $movie->getRuntime());
-    $collection = mysqli_real_escape_string($conn, $movie->getCollection());
+    $collection = intval(mysqli_real_escape_string($conn, $movie->getCollection()));
     $genres = $movie->getGenres();
 
     $data = [];
+    var_dump($data);
 
     foreach ( $genres as $genre ) {
         $data[] = $genre->getID();
@@ -301,8 +302,9 @@ function insertMovie($movieID) {
     
         // Commit der Transaktion
         $conn->commit();
-    
-        echo "Der Film wurde erfolgreich hinzugefügt.";
+        $conn->close();
+        set_callout('success','add_movie_success');
+        page_redirect("/admin/movie/?id=$id");
     } catch (Exception $e) {
         // Bei einem Fehler Rollback der Transaktion
         $conn->rollback();
@@ -310,8 +312,7 @@ function insertMovie($movieID) {
         page_redirect("/admin/movies");
     }
 
-    set_callout('success','add_movie_success');
-    page_redirect("/admin/movie/?id=$id");
+
 }
 
 // Delete Movie
@@ -361,7 +362,7 @@ function selectMovieByID($movieID) {
     $tmdb = setupTMDB();
     $conn = dbConnect();
 
-    $sql = "SELECT * FROM movies WHERE movie_tmdbID='".$movieID."'";
+    $sql = "SELECT * FROM movies WHERE movie_tmdbID='$movieID'";
     $result = $conn->query($sql);
 
     $data = [];
@@ -414,7 +415,7 @@ function selectMovieByID($movieID) {
 function movieInLocalDB($movieID) {
     $conn = dbConnect();
 
-    $sql = "SELECT movie_tmdbID FROM movies WHERE movie_tmdbID='".$movieID."'";
+    $sql = "SELECT movie_tmdbID FROM movies WHERE movie_tmdbID='$movieID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return true;
@@ -526,7 +527,7 @@ function selectMovieByTitle($title){
 function movieIsInCollection($id){
     $conn = dbConnect();
 
-    $sql = "SELECT * FROM movies WHERE movie_tmdbID='".$id."'";
+    $sql = "SELECT * FROM movies WHERE movie_tmdbID='$id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -537,7 +538,7 @@ function movieIsInCollection($id){
 //-- Updates the filepath of movie sources --
 function updateMovieFilePath($moviePath, $movieID) {
     $conn = dbConnect();
-    $sql = 'UPDATE movies SET movie_file_path="'.$moviePath.'" WHERE movie_tmdbID="'.$movieID.'"';
+    $sql = "UPDATE movies SET movie_file_path='$moviePath' WHERE movie_tmdbID='$movieID'";
 
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_file_apth_alert');
@@ -551,7 +552,7 @@ function updateMovieFilePath($moviePath, $movieID) {
 //-- Outputs a html player with selected movie as source --
 function videoPlayer($movieID, $fullscreen = false) {
     $conn = dbConnect();
-    $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='".$movieID."'";
+    $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
     $filePath = $conn->query($sql)->fetch_assoc()['movie_file_path'];
 
     if ( $filePath !== "" ) {
@@ -577,7 +578,7 @@ function updateMoviePoster($movieID, $poster) {
 
     $posterPATH = mysqli_real_escape_string($conn, $poster);
 
-    $sql = 'UPDATE movies SET movie_poster="'.$posterPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
+    $sql = "UPDATE movies SET movie_poster='$posterPATH' WHERE movie_tmdbID='$movieID'";
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_poster_alert');
         page_redirect('/admin/movie/?id='.$movieID);
@@ -593,7 +594,7 @@ function updateMovieBackdrop($movieID, $backdrop) {
 
     $backdropPATH = mysqli_real_escape_string($conn, $backdrop);
 
-    $sql = 'UPDATE movies SET movie_thumbnail="'.$backdropPATH.'" WHERE movie_tmdbID="'.$movieID.'"';
+    $sql = "UPDATE movies SET movie_thumbnail='$backdropPATH' WHERE movie_tmdbID='$movieID'";
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','update_backdrop_alert');
         page_redirect('/admin/movie/?id='.$movieID);
@@ -639,7 +640,7 @@ function runtimeToString($runtime) {
 
 function getDBGenreNameByID($id) {
     $conn = dbConnect();
-    $sql = "SELECT * FROM genres WHERE genre_id='".$id."'";
+    $sql = "SELECT * FROM genres WHERE genre_id='$id'";
     $results = $conn->query($sql);
     if ($results->num_rows > 0) {
         while ($genre = $results->fetch_assoc()) {
@@ -659,24 +660,26 @@ function getUserID() {
 
 function userCheck() {
     $conn = dbConnect();
-    $sql = 'SELECT id, username, user_img FROM users WHERE id="'.$_SESSION['userID'].'"';
+    $sessionUserID = $_SESSION['userID'];
+    $sql = "SELECT id, username, user_img FROM users WHERE id='$sessionUserID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
       
     // output data of each row
         while($row = $result->fetch_assoc()) {
             if ( $_GET['id'] !== intval($_SESSION['userID']) || $_GET['id'] !== $row['id'] || $row['username'] != $_SESSION['username'] ) {
-                //page_redirect("/404");
+                page_redirect("/login");
             }
         }
     } else {
-        //page_redirect("/404");
+        page_redirect("/login");
     }
 }
 
 function userProfileImg() {
     $conn = dbConnect();
-    $sql = 'SELECT user_img FROM users WHERE id="'.$_SESSION['userID'].'"';
+    $sessionUserID = $_SESSION['userID'];
+    $sql = "SELECT user_img FROM users WHERE id='$sessionUserID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
      
@@ -694,6 +697,67 @@ function userProfileImg() {
     }
 
     return $userProfileImg;
+}
+
+function registerUser($post) {
+    $conn = dbConnect();
+    $username = mysqli_real_escape_string($conn, $post['username']);
+    if (isset($post['role']) && $_POST['role'] === 'on') {
+        $role = mysqli_real_escape_string($conn, 1);
+    } else {
+        $role = mysqli_real_escape_string($conn, 0);;
+    }
+    $password = mysqli_real_escape_string($conn, $post['password']);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    
+    $sql = "INSERT INTO users (username, role, password) VALUES ('$username', '$role', '$hashed_password')";
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','add_user_alert');
+        page_redirect("/admin/users");
+    } else {
+        set_callout('success','add_user_success');
+        page_redirect("/admin/users");
+    }
+}
+
+function editUser($post) {
+    $conn = dbConnect();
+    $userID = mysqli_real_escape_string($conn, $post['userID']);
+    $username = mysqli_real_escape_string($conn, $post['username']);
+    if (isset($post['role'])) {
+        $role = mysqli_real_escape_string($conn, $post['role']);
+    } else {
+        $role = 0;
+    }
+    $password = mysqli_real_escape_string($conn, $post['password']);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "UPDATE users SET username='$username', password='$hashed_password', role='$role' WHERE id='$userID'";
+
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','delete_user_alert');
+        page_redirect("/admin/users");
+    } else {
+        set_callout('success','edit_user_success');
+        session_start();
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
+        $_SESSION['logged_in'] = true;
+
+        page_redirect('/admin/users');
+    }
+}
+
+function deleteUser($userID) {
+    $conn = dbConnect();
+    $sql = "DELETE FROM users WHERE id='$userID'";
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','delete_user_alert');
+        page_redirect("/admin/users");
+    } else {
+        set_callout('success','delete_user_success');
+        page_redirect("/admin/users");
+    }
 }
 
 //-----------------------------------------
