@@ -60,7 +60,7 @@ class langSnippets {
 
             'genres_created_success' => 'Genres created successfully!',            
             'update_poster_success' => 'Poster updated successfully!',            
-            'update_thumbnail_success' => 'Thumbnail updated successfully!',         
+            'update_backdrop_success' => 'Thumbnail updated successfully!',         
             'update_file_path_success' => 'File path updated successfully!',         
 
             'logout_message' => 'Successfully logged out!',
@@ -78,7 +78,7 @@ class langSnippets {
 
             'genres_created_alert' => 'Genres could not be created!', 
             'update_poster_alert' => 'Poster could not be updated!',            
-            'update_thumbnail_alert' => 'Thumbnail could not be updated!',         
+            'update_backdrop_alert' => 'Thumbnail could not be updated!',         
             'update_file_path_alert' => 'File path could not be updated!',  			
 
             'user_img_upload_alert' => 'Img could not be uploaded!',
@@ -148,7 +148,7 @@ class langSnippets {
 
             'genres_created_success' => 'Genre wurden erfolgreich geladen!',
             'update_poster_success' => 'Poster wurde erfolgreich aktualisiert!',            
-            'update_thumbnail_success' => 'Thumbnail wurde erfolgreich aktualisiert!',         
+            'update_backdrop_success' => 'Thumbnail wurde erfolgreich aktualisiert!',         
             'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',    			
 
             'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
@@ -166,7 +166,7 @@ class langSnippets {
 
             'genres_created_alert' => 'Genre konntent nicht geladen werden!',
             'update_poster_alert' => 'Poster konntent nicht aktualisiert werden!',            
-            'update_thumbnail_alert' => 'Thumbnail konntent nicht aktualisiert werden!',         
+            'update_backdrop_alert' => 'Thumbnail konntent nicht aktualisiert werden!',         
             'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!',  			
 
             'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
