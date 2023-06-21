@@ -1,16 +1,9 @@
 <?php
 require_once ROOT_PATH.'/src/admin/language.php';
 
-//-- Redirect --
-function page_redirect($location) {
-    echo '<script>window.location.href = "'.$location.'";</script>';
-    exit();
-}
-
-function page_refresh() {
-    echo '<script>window.location.reload();</script>';
-    exit();
-}
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Init --///////////
 
 //-- DB connection --
 function dbConnect() {
@@ -31,6 +24,21 @@ function tmdbConfig() {
     return $cnf;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Redirect --///////////
+
+//-- Redirect --
+function page_redirect($location) {
+    echo '<script>window.location.href = "'.$location.'";</script>';
+    exit();
+}
+
+function page_refresh() {
+    echo '<script>window.location.reload();</script>';
+    exit();
+}
+
 function checkIfUserExists($username) {
     $conn = dbConnect();
     $result = $conn->query("SELECT username FROM users WHERE username='$username'");
@@ -40,6 +48,11 @@ function checkIfUserExists($username) {
         return false;
     }
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Page infos --///////////
 
 function getSiteTitle() {
     $conn = dbConnect();
@@ -112,6 +125,18 @@ function setFavicon($PATH) {
     }
 };
 
+function get_apikey_db() {
+    $conn = dbConnect();
+
+    $sql = "SELECT setting_option FROM settings WHERE setting_name='apikey'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            return $row['setting_option'];
+        }
+    }
+}
+
 /*function faviconPath() {
     $bildName = $_FILES['user-img']['name'];
     $bildTmpName = $_FILES['user-img']['tmp_name'];
@@ -163,7 +188,10 @@ function setFavicon($PATH) {
     }
 };*/
 
-//-- Callout --
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Callout --///////////
+
 function set_callout($type, $message) {
     $_SESSION['callout_type'] = $type;
     $_SESSION['callout_message'] = $message;
@@ -184,7 +212,11 @@ function callout() {
         }
     }
 }
-                            
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Menu --///////////
+
 function adminMenu() {
     if ($_SESSION['role'] == '1') {
         return '<li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
@@ -196,19 +228,10 @@ function get_backend_menu() {
 	return include(ROOT_PATH.'/views/includes/backend-menu.php');
 }
 
-function get_apikey_db() {
-    $conn = dbConnect();
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Universal --///////////
 
-    $sql = "SELECT setting_option FROM settings WHERE setting_name='apikey'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            return $row['setting_option'];
-        }
-    }
-}
-
-//-- String trimmer
 function truncate($string,$length=100,$append=" ...") {
     $string = trim($string);
 
@@ -220,6 +243,9 @@ function truncate($string,$length=100,$append=" ...") {
   
     return $string;
 }
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Movie --///////////
 
 //-- Saves movie with informations in database -- 
 function insertMovie($movieID) {
@@ -549,29 +575,6 @@ function updateMovieFilePath($moviePath, $movieID) {
     }
 }
 
-//-- Outputs a html player with selected movie as source --
-function videoPlayer($movieID, $fullscreen = false) {
-    $conn = dbConnect();
-    $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
-    $filePath = $conn->query($sql)->fetch_assoc()['movie_file_path'];
-
-    if ( $filePath !== "" ) {
-        if($fullscreen === true) {
-            echo '<figure>';
-                echo '<video id="player-'.$movieID.'" class="video-js" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
-                    echo '<source src="'.$filePath.'" type="video/mp4" />';
-                echo '</video>';
-            echo '</figure>';
-        } else {
-            echo '<figure class="widescreen">';
-                echo '<video id="player-'.$movieID.'" class="video-js" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
-                    echo '<source src="'.$filePath.'" type="video/mp4" />';
-                echo '</video>';
-            echo '</figure>';
-        }
-    }
-}
-
 //-- Updates the previewd poster image of movies --
 function updateMoviePoster($movieID, $poster) {
     $conn = dbConnect();
@@ -603,6 +606,35 @@ function updateMovieBackdrop($movieID, $backdrop) {
         page_redirect('/admin/movie/?id='.$movieID);
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Video player --///////////
+function videoPlayer($movieID, $fullscreen = false) {
+    $conn = dbConnect();
+    $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
+    $filePath = $conn->query($sql)->fetch_assoc()['movie_file_path'];
+
+    if ( $filePath !== "" ) {
+        if($fullscreen === true) {
+            echo '<figure>';
+                echo '<video id="player-'.$movieID.'" class="video-js" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                    echo '<source src="'.$filePath.'" type="video/mp4" />';
+                echo '</video>';
+            echo '</figure>';
+        } else {
+            echo '<figure class="widescreen">';
+                echo '<video id="player-'.$movieID.'" class="video-js" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                    echo '<source src="'.$filePath.'" type="video/mp4" />';
+                echo '</video>';
+            echo '</figure>';
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Time & Date --///////////
 
 //-- Outputs the release date as DD.MM.YYYY --
 function outputDate($date) {
@@ -636,7 +668,9 @@ function runtimeToString($runtime) {
     return $finalRuntime;
 }
 
-//------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Genre --///////////
 
 function getDBGenreNameByID($id) {
     $conn = dbConnect();
@@ -651,9 +685,10 @@ function getDBGenreNameByID($id) {
     }
 }
 
-//------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- User --///////////
 
-//-- User functions --
 function getUserID() {
     return $_SESSION['userID'];
 }
@@ -760,7 +795,11 @@ function deleteUser($userID) {
     }
 }
 
-//-----------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- API --///////////
+
+
 function scrollLoader($media, $count) {
     $conn = dbConnect();
     $tmdb = setupTMDB();

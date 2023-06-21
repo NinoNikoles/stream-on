@@ -67,9 +67,7 @@
                     <span class="trigger-bar bar-2"></span>
                     <span class="trigger-bar bar-3"></span>
                 </a>
-			</div>				
-
-						
+			</div>		
 		</div>
 	</div>
 
