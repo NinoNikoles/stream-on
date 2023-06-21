@@ -186,7 +186,7 @@ class langSnippets {
         if (isset($this->langs[$lang]) && array_key_exists($langSnippet, $this->langs[$lang])) {
             return $this->langs[$lang][$langSnippet];
         } else {
-            if (isset($this->langs['en-US'][$langSnippet]) && array_key_exists($langSnippet, $this->langs['en-US'][$langSnippet])) {
+            if (isset($this->langs['en-US'][$langSnippet]) && array_key_exists($langSnippet, $this->langs['en-US'])) {
                 return $this->langs['en-US'][$langSnippet];
             } else {
                 return '';
