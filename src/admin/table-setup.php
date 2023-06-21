@@ -69,8 +69,8 @@ $sql = 'CREATE TABLE IF NOT EXISTS movies (
     movie_rating INT NOT NULL,
     movie_release DATE NOT NULL,
     movie_runtime INT NOT NULL,
-    movie_collection INT NOT NULL,
-    movie_file_path TEXT NOT NULL,
+    movie_collection INT NULL,
+    movie_file_path TEXT NULL,
     movie_genres VARCHAR(255),
     created TIMESTAMP,
     UNIQUE (movie_tmdbID)
