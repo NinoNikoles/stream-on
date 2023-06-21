@@ -22,64 +22,17 @@ $conn = dbConnect();
                 <?php                    
                     // Benutzer gelöscht
                     if(isset($_POST['delete-user'])) {
-                        $userID = mysqli_real_escape_string($conn, $_POST['userID']);
-                        $sql = 'DELETE FROM users WHERE id="'.$userID.'"';
-                        if (!($conn->query($sql) === TRUE)) {
-                            set_callout('alert','delete_user_alert');
-                            page_redirect("/admin/users");
-                        } else {
-                            set_callout('success','delete_user_success');
-                            page_redirect("/admin/users");
-                        }
+                        deleteUser($_POST['userID']);
                     }
 
                     // Benutzerregistrierung
                     if(isset($_POST['register'])) {
-                        $username = mysqli_real_escape_string($conn, $_POST['username']);
-                        if (isset($_POST['role']) && $_POST['role'] === 'on') {
-                            $role = mysqli_real_escape_string($conn, 1);
-                        } else {
-                            $role = mysqli_real_escape_string($conn, 0);;
-                        }
-                        $password = mysqli_real_escape_string($conn, $_POST['password']);
-                        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                        
-                        $sql = "INSERT INTO users (username, role, password) VALUES ('$username', '$role', '$hashed_password')";
-                        if (!($conn->query($sql) === TRUE)) {
-                            set_callout('alert','add_user_alert');
-                            page_redirect("/admin/users");
-                        } else {
-                            set_callout('success','add_user_success');
-                            page_redirect("/adminusers");
-                        }
+                        registerUser($_POST);
                     }
 
                     // Edit User
                     if(isset($_POST['edit-user'])) {
-                        $userID = mysqli_real_escape_string($conn, $_POST['userID']);
-                        $username = mysqli_real_escape_string($conn, $_POST['username']);
-                        if (isset($_POST['role'])) {
-                            $role = mysqli_real_escape_string($conn, $_POST['role']);
-                        } else {
-                            $role = 0;
-                        }
-                        $password = mysqli_real_escape_string($conn, $_POST['password']);
-                        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                        $sql = 'UPDATE users SET username="'.$username.'", password="'.$hashed_password.'", role="'.$role.'" WHERE id="'.$userID.'"';
-
-                        if (!($conn->query($sql) === TRUE)) {
-                            set_callout('alert','delete_user_alert');
-                            page_redirect("/admin/users");
-                        } else {
-                            set_callout('success','edit_user_success');
-                            session_start();
-                            $_SESSION['username'] = $username;
-                            $_SESSION['role'] = $role;
-                            $_SESSION['logged_in'] = true;
-                
-                            page_redirect('/admin/users');
-                        }
+                        editUser($_POST);
                     }
 
                     // Messages
@@ -123,7 +76,7 @@ $conn = dbConnect();
                     // Edit User Box
                     echo '<div id="edit-user-'.$row['id'].'" style="display:none;">';
                         echo '<p>Nutzer bearbeiten</p>';
-                        echo '<form method="post" action="users">';
+                        echo '<form method="post" action="/admin/users">';
                             echo '<p>';
                                 echo '<lable for="username">Benutzername <input type="text" name="username" value="'.$row['username'].'" required></lable>';
                                 if (!($row['role'] === NULL) && ($row['role'] > 0)) {
@@ -148,7 +101,7 @@ $conn = dbConnect();
                     // Delete User Box
                     echo '<div id="delete-user-'.$row['id'].'" style="display:none;">';
                         echo '<p>Möchtest du den Nutzer <strong>"'.$row['username'].'"</strong> wirklich löschen?</p>';
-                        echo '<form method="post" action="users">';
+                        echo '<form method="post" action="/admin/users">';
                             echo '<p class="text-right marg-no">';
                                 echo '<input type="number" name="userID" value="'.$row['id'].'" style="display:none;" required>';
                                 echo '<button class="btn btn-alert" type="submit" name="delete-user">'.lang_snippet('delete').'</button>';
