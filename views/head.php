@@ -1,6 +1,6 @@
 <?php $theme = setTheme(); ?>
 <!DOCTYPE html>
-<html lang="<?php echo get_browser_language(); ?>" <?php echo $theme;?> >
+<html lang="<?php echo get_browser_language(); ?>" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

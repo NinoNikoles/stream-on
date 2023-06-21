@@ -4,6 +4,14 @@ nav.header-menu-main {
             a {
                 &:not(.subbutton):not(.backbutton) {
                     color: var(--font-color);
+
+                    @include MQ(medium) {
+                        line-height: rem-calc(50);
+                        padding: {
+                            top: 0;
+                            bottom: 0;
+                        }
+                    }
                 }
             }
 
