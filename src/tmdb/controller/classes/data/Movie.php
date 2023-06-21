@@ -123,7 +123,7 @@ class Movie extends ApiBaseObject{
 		/**
 	 * 	Get the Movie's companies
 	 *
-	 * 	@return Company[]
+	 * 	@return string
 	 */
 	public function getCollection() {
 		$collection = '';
