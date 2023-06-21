@@ -1,4 +1,3 @@
-<?php $theme = setTheme(); ?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark">
 <head>

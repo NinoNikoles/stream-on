@@ -1,7 +1,4 @@
-<?php
-$theme = setTheme();
-$conn = dbConnect();
-?>
+<?php $conn = dbConnect(); ?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark" >
 <head>
