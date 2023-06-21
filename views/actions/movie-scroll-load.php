@@ -22,8 +22,8 @@ if ( $movies > 0 ) {
             $genreHTML = $genreHTML . '<span class="tag">'.$genre['name'].'</span>';
         }
 
-        echo '<div class="col-6 grid-padding">';
-            echo '<div class="col-2-medium grid-padding media-card widescreen-media-card desktop-only">
+        echo '<div class="col-6 col-2-medium grid-padding">';
+            echo '<div class="media-card widescreen-media-card desktop-only">
                     <figure class="widescreen">
                         <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
                     </figure>
