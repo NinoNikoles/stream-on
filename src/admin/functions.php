@@ -26,6 +26,17 @@ function tmdbConfig() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Querys --///////////
+
+function insert($table, $data, $values) {
+    $values = json_encode($values);
+    $replace = array('[', ']');
+    $values = str_replace($replace, '', $values);
+    echo "INSERT INTO $table ($data) VALUES ($values)";
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Redirect --///////////
 
 //-- Redirect --
@@ -243,6 +254,33 @@ function truncate($string,$length=100,$append=" ...") {
   
     return $string;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Settings --///////////
+
+function updateSettings($values) {
+    $conn = dbConnect();
+
+    $siteTitle = mysqli_real_escape_string($conn, $values['site_title']);
+    $apikey = mysqli_real_escape_string($conn, $values['apikey']);
+    $apiLang = mysqli_real_escape_string($conn, $values['language']);
+
+    $sql = "INSERT INTO settings(setting_name, setting_option) VALUES 
+    ('site_title', '$siteTitle'),
+    ('apikey', '$apikey'),
+    ('apilang', '$apiLang')
+    ON DUPLICATE KEY UPDATE setting_option = VALUES(setting_option)";
+
+    if (!($conn->query($sql) === TRUE)) {
+        set_callout('alert','settings_update_failed');
+        page_redirect('/admin/settings');
+    } else {
+        set_callout('success','settings_update_success');
+        page_redirect('/admin/settings');
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Movie --///////////
@@ -278,7 +316,7 @@ function insertMovie($movieID) {
 
     try {
         // Füge den neuen Film in die "movies"-Tabelle ein
-        $movieQuery = 'INSERT INTO movies (
+        $movieQuery = "INSERT INTO movies (
                 movie_tmdbID,
                 movie_title,
                 movie_tagline,
@@ -291,18 +329,18 @@ function insertMovie($movieID) {
                 movie_collection,
                 movie_genres
             ) VALUES (
-                "'.$id.'",
-                "'.$title.'",
-                "'.$tagline.'",
-                "'.$overview.'",
-                "'.$poster.'",
-                "'.$backdrop.'",
-                "'.$rating.'",
-                "'.$release.'",
-                "'.$runtime.'",
-                "'.$collection.'",
-                "'.$genresString.'"
-            )';
+                '.$id',
+                '$title',
+                '$tagline',
+                '$overview',
+                '$poster',
+                '$backdrop',
+                '$rating',
+                '$release',
+                '$runtime',
+                '$collection',
+                '$genresString'
+            )";
     
         $conn->query($movieQuery);
     
@@ -564,6 +602,8 @@ function movieIsInCollection($id){
 //-- Updates the filepath of movie sources --
 function updateMovieFilePath($moviePath, $movieID) {
     $conn = dbConnect();
+    $moviePath = mysqli_real_escape_string($conn, $moviePath);
+
     $sql = "UPDATE movies SET movie_file_path='$moviePath' WHERE movie_tmdbID='$movieID'";
 
     if (!($conn->query($sql) === TRUE)) {
@@ -578,7 +618,6 @@ function updateMovieFilePath($moviePath, $movieID) {
 //-- Updates the previewd poster image of movies --
 function updateMoviePoster($movieID, $poster) {
     $conn = dbConnect();
-
     $posterPATH = mysqli_real_escape_string($conn, $poster);
 
     $sql = "UPDATE movies SET movie_poster='$posterPATH' WHERE movie_tmdbID='$movieID'";
@@ -594,7 +633,6 @@ function updateMoviePoster($movieID, $poster) {
 //-- Updates the previewd backdrop image of movies --
 function updateMovieBackdrop($movieID, $backdrop) {
     $conn = dbConnect();
-
     $backdropPATH = mysqli_real_escape_string($conn, $backdrop);
 
     $sql = "UPDATE movies SET movie_thumbnail='$backdropPATH' WHERE movie_tmdbID='$movieID'";
@@ -671,6 +709,46 @@ function runtimeToString($runtime) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Genre --///////////
+
+function initGenres() {
+    $conn = dbConnect();
+    $tmdb = setupTMDB();
+
+    $genres = $tmdb->getGenres();
+    $data = [];
+    foreach ($genres as $genre) {
+        $data[] = '("'.mysqli_real_escape_string($conn, $genre->getID()).'", "'.mysqli_real_escape_string($conn, $genre->getName()).'")';
+    }
+
+    $dataSring = json_encode($data);
+    $dataSring = str_replace(array('[', ']', "[", "]"), '', $dataSring);
+    $dataSring = str_replace('"(', '(', $dataSring);
+    $dataSring = str_replace(')"', ')', $dataSring);
+    $dataSring = stripslashes($dataSring);
+
+    $sql = "INSERT INTO genres (genre_id, genre_name) VALUES $dataSring";
+    $result = $conn->query($sql);
+
+    if (!$result) {
+        set_callout('alert','genres_created_alert');
+        page_redirect("/admin/genres");
+    } else {
+        set_callout('success','genres_created_success');
+        page_redirect("/admin/genres");
+    }
+}
+
+function genreCheck() {
+    $conn = dbConnect();
+    $sql = "SELECT id FROM genres";
+    $results = $conn->query($sql);
+    
+    if ($results->num_rows > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function getDBGenreNameByID($id) {
     $conn = dbConnect();
@@ -802,7 +880,6 @@ function deleteUser($userID) {
 
 function scrollLoader($media, $count) {
     $conn = dbConnect();
-    $tmdb = setupTMDB();
 
     $sql = "SELECT * FROM $media ORDER BY movie_title ASC LIMIT 20 OFFSET $count";
     $results = $conn->query($sql);
@@ -823,21 +900,19 @@ function scrollLoader($media, $count) {
             $data[$i]['release'] = $row['movie_release'];
             $data[$i]['runtime'] = $row['movie_runtime'];
             $data[$i]['collection'] = $row['movie_collection'];
-            $data[$i]['genres'] = [];
-            
-            $movie = $tmdb->getMovie($data[$i]['id']);
-            $genres = $movie->getGenres();
-            foreach ($genres as $genre) {
-                $genreID = $genre->getId();
-                $genreName = $genre->getName();
+            $data[$i]['genres'] = $row['movie_genres'];
 
-                $array = array(
-                    'id' => $genreID,
-                    'name' => $genreName,
+            $genres = json_decode($data[$i]['genres']);
+
+            $dataGenres = [];
+            foreach ( $genres as $genre ) {
+                $dataGenres[] = array(
+                    'id' => $genre,
+                    'name' => getDBGenreNameByID($genre)
                 );
-
-                $data[$i]['genres'][] = $array;
             }
+
+            $data[$i]['genres'] = $dataGenres;
 
             $i++;
         }
