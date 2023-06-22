@@ -4,7 +4,7 @@ $tmdb = setupTMDB();
 
 $loadCount = $_POST['count'];
 $movies = scrollLoader('movies', $loadCount);
-
+var_dump($movies);
 if ( $movies > 0 ) {    
     foreach ( $movies as $movie ) {
         $movieID = $movie['id'];
@@ -29,17 +29,17 @@ if ( $movies > 0 ) {
                     </figure>
                     <div class="link-wrapper">
                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
-                        <a href="#modal-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                        <a href="#content-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
                     </div>
                 </div>
 
-                <div class="col-6 grid-padding media-card mobile-only">
+                <div class="media-card mobile-only">
                     <figure class="poster">
                         <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
                     </figure>
                     <div class="link-wrapper">
                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
-                        <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                        <a href="#content-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
                     </div>
                 </div>';
 

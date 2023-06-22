@@ -14,8 +14,8 @@ if ($results->num_rows > 0) {
         if ( $movieRow != '' ) {
             $genre_slider = 'genre-slider-'.$sliderNumber;
 
-            echo '<div class="row genre-slider '.$genre_slider.'">';
-                echo '<div class="col12 column marg-top-l">';
+            echo '<div class="genre-slider '.$genre_slider.'">';
+                echo '<div class="col12 marg-top-l">';
                     echo '<div class="column">';
                         echo '<h3>'.$genre['genre_name'].'</h3>';
                     echo '</div>';
@@ -74,7 +74,7 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
                     </figure>
                     <div class="link-wrapper">
                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
-                        <a href="#modal-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                        <a href="#content-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
                     </figure>
                     <div class="link-wrapper">
                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
-                        <a href="#modal-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                        <a href="#content-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
                     </div>
                 </div>
 
@@ -121,6 +121,7 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
 
     return $movieRow;
 }
+echo '<div class="marg-bottom-l"></div>';
 
 include(ROOT_PATH.'/views/footer.php');
 ?>
