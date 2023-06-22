@@ -86,6 +86,8 @@ if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSIO
         get('/searchbar', 'views/actions/searchbar.php');
         post('/searchbar', 'views/actions/searchbar.php');
 
+        post('/movie-watch-time', 'views/actions/movie-watched-time.php');
+
         // Ajax DB media search
         get('/live-search', 'views/actions/livesearch.php');
         post('/live-search', 'views/actions/livesearch.php');

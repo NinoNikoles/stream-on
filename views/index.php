@@ -5,6 +5,7 @@ $tmdb = setupTMDB();
 
 $sql = "SELECT * FROM genres ORDER BY genre_id ASC";
 $results = $conn->query($sql);
+var_dump($_SESSION);
 
 if ($results->num_rows > 0) {
     $sliderNumber = 1;
@@ -43,7 +44,7 @@ if ($results->num_rows > 0) {
 }
 
 function goTrhoughMovies($db_genre, $conn, $tmdb) {
-    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.id = movie_genre.movie_id WHERE movie_genre.genre_id = $db_genre";
+    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $db_genre";
     $result = $conn->query($query);
     $movieRow = '';
 

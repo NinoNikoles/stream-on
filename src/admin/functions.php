@@ -656,13 +656,13 @@ function videoPlayer($movieID, $fullscreen = false) {
     if ( $filePath !== "" ) {
         if($fullscreen === true) {
             echo '<figure>';
-                echo '<video id="player-'.$movieID.'" class="video-js" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
-                    echo '<source src="'.$filePath.'" type="video/mp4" />';
+                echo '<video id="player-'.$movieID.'" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                    echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
             echo '</figure>';
         } else {
             echo '<figure class="widescreen">';
-                echo '<video id="player-'.$movieID.'" class="video-js" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                echo '<video id="player-'.$movieID.'" class="video-js" data-id="'.$movieID.'" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
                     echo '<source src="'.$filePath.'" type="video/mp4" />';
                 echo '</video>';
             echo '</figure>';

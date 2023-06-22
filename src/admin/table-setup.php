@@ -4,9 +4,10 @@ $conn = dbConnect();
 
 //-- Settings Table --
 $sql = 'CREATE TABLE IF NOT EXISTS settings (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     setting_name varchar(255) UNIQUE,
-    setting_option varchar(255)
+    setting_option varchar(255),
+    PRIMARY KEY (id)
 )';
 if (!($conn->query($sql) === TRUE)) {
     die('Error creating table: ' . $conn->error);
@@ -23,14 +24,15 @@ if (!($conn->query($sql) === TRUE)) {
 
 //-- User Table --
 $sql = 'CREATE TABLE IF NOT EXISTS users (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     username varchar(255) UNIQUE,
     firstname varchar(255),
     lastname varchar(255),
     password varchar(255),
     user_img varchar(255),
     role BOOLEAN,
-    created TIMESTAMP
+    created TIMESTAMP,
+    PRIMARY KEY (id)
 )';
 if (!($conn->query($sql) === TRUE)) {
     die('Error creating table: ' . $conn->error);
@@ -48,10 +50,11 @@ if (!($conn->query($sql) === TRUE)) {
 
 //-- Genre Table --
 $sql = 'CREATE TABLE IF NOT EXISTS genres (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     genre_id INT UNSIGNED UNIQUE,
     genre_name VARCHAR(255) NOT NULL,
-    created TIMESTAMP
+    created TIMESTAMP,
+    PRIMARY KEY (id)
 )';
 if (!($conn->query($sql) === TRUE)) {
     die('Error creating showsGenre: ' . $conn->error);
@@ -59,8 +62,8 @@ if (!($conn->query($sql) === TRUE)) {
 
 //-- Movie Table --
 $sql = 'CREATE TABLE IF NOT EXISTS movies (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    movie_tmdbID INT NOT NULL,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    movie_tmdbID INT,
     movie_title VARCHAR(255) NOT NULL,
     movie_tagline VARCHAR(255) NOT NULL,
     movie_overview TEXT NOT NULL,
@@ -73,7 +76,8 @@ $sql = 'CREATE TABLE IF NOT EXISTS movies (
     movie_file_path TEXT NULL,
     movie_genres VARCHAR(255),
     created TIMESTAMP,
-    UNIQUE (movie_tmdbID)
+    UNIQUE(movie_tmdbID),
+    PRIMARY KEY (id)
 )';
 if (!($conn->query($sql) === TRUE)) {
     die('Error creating table: ' . $conn->error);
@@ -81,11 +85,26 @@ if (!($conn->query($sql) === TRUE)) {
 
 //-- Genre Movie Table -- 
 $sql = 'CREATE TABLE IF NOT EXISTS movie_genre (
-    movie_id INT UNSIGNED,
+    id INT NOT NULL AUTO_INCREMENT,
+    movie_id INT,
     genre_id INT UNSIGNED,
-    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID),
     FOREIGN KEY (genre_id) REFERENCES genres(id),
-    PRIMARY KEY (movie_id, genre_id)
+    PRIMARY KEY (id)
+)';
+if (!($conn->query($sql) === TRUE)) {
+    die('Error creating table: ' . $conn->error);
+}
+
+//-- Movie watch table -- 
+$sql = 'CREATE TABLE IF NOT EXISTS movie_watched (
+    user_id INT UNSIGNED,
+    movie_id INT,
+    watched_seconds DECIMAL(10,10),
+    last_watched TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID),
+    PRIMARY KEY (user_id, movie_id)
 )';
 if (!($conn->query($sql) === TRUE)) {
     die('Error creating table: ' . $conn->error);
