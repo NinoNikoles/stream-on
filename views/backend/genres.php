@@ -6,19 +6,7 @@ $sql = 'SELECT COUNT(*) as num_rows FROM genres';
 $result = $conn->query($sql);
 
 if(isset($_POST['generate-genres'])) {
-    $genres = $tmdb->getGenres();
-    foreach ($genres as $genre) {
-        $createGenre = 'INSERT INTO genres (genre_id, genre_name) VALUES ("'.$genre->getID().'", "'.$genre->getName().'")';
-        $insertResult = $conn->query($createGenre);
-        if (!$insertResult) {
-
-            set_callout('alert','genres_created_alert');
-            page_redirect("/admin/genres");
-        }
-    }
-
-    set_callout('success','genres_created_success');
-    page_redirect("/admin/genres");
+    initGenres();
 }
 ?>
 
@@ -28,7 +16,7 @@ if(isset($_POST['generate-genres'])) {
 
     <div class="innerWrap">
         
-        <div class="col8 marg-top-xxl marg-bottom-xxl marg-left-col2 marg-right-col4">
+        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <h1><?php echo lang_snippet('genres'); ?></h1>
             </div>

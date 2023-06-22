@@ -15,7 +15,7 @@ if ( isset($_POST['add-movie']) ) {
 
     <div class="innerWrap">
         
-        <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
+        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <h1><?php echo lang_snippet('movies'); ?></h1>
             </div>

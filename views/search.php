@@ -7,7 +7,7 @@ $sql = "SELECT * FROM genres ORDER BY genre_id ASC";
 $results = $conn->query($sql);
 ?>
 
-<div class="innerWrap marg-top-l" id="searchpage">
+<div class="innerWrap marg-top-l marg-bottom-l" id="searchpage">
     <div class="col12">
         <h2>Suchergebnisse für: <span class="h2 marg-no" id="search-value"><?php if (isset($_POST['search'])) { echo $_POST['search']; } ?></span></h1>
     </div>

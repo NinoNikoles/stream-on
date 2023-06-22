@@ -9,7 +9,7 @@ $conn = dbConnect();
 
     <div class="innerWrap">
         
-        <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
+        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <h1><?php echo lang_snippet('users'); ?></h1>
             </div>
