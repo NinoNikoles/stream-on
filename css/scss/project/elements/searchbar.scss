@@ -9,6 +9,10 @@
     width: 100%;
     position: relative;
 
+    @include MQ(medium) {
+        width: auto;
+    }
+
     &-fix {
         background: {
             color: var(--header-bg);
@@ -33,6 +37,10 @@
             background: {
                 color: var(--header-bg);
             }
+            padding: {
+                right: rem-calc($grid-padding);
+                left: rem-calc($grid-padding);
+            }
             width: 100%;
             height: rem-calc(50);
             max-width: unset;
@@ -48,10 +56,12 @@
                 }
                 padding: {
                     right: rem-calc(48);
+                    left: rem-calc($grid-padding/2);
                 }
+                width: rem-calc(300);
                 height: rem-calc(40);
                 max-width: rem-calc(300);
-                position: absolute;
+                position: relative;
                 top: 0;
                 right: 0;
                 left: unset;

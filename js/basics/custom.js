@@ -212,14 +212,17 @@ $(document).ready(function() {
         modal: function() {
             var self = this;
 
-            self.$body.append('<div class="modal" id="modal"><div class="modal-overlay"></div><div class="modal-wrap large"><div class="modal-inner-wrap"></div><a href="#" class="modal-close"></a></div></div>');
+            if ( !($('#modal').length > 0) ) {
+                self.$body.append('<div class="modal" id="modal"><div class="modal-overlay"></div><div class="modal-wrap large"><div class="modal-inner-wrap"></div><a href="#" class="modal-close"></a></div></div>');
+            }
+
             $modal = $('#modal');
             $modalWrap = $('#modal .modal-wrap');
             $modalInnerWrap = $('#modal .modal-inner-wrap');
             $modalOverlay = $('#modal .modal-overlay');
             $modalCloseBtn = $('#modal .modal-close');
 
-            $('[data-modal]').on('click', function(e) {
+            $(document).on('click', 'a[data-modal]', function(e) {
                 e.preventDefault();
                 var self = this,
                     $this = $(self);
@@ -575,6 +578,7 @@ $(document).ready(function() {
         },
 
         infinitLoad: function() {
+            var self = this;
             $loadCount = $('.load-count');
             $resultList = $('#movie-list');
 
@@ -588,6 +592,17 @@ $(document).ready(function() {
                     data: { count: loadCount },
                     success: function(response) {
                         $resultList.html(response);
+                        console.log($('[data-modal]'));
+                        $modal = $('#modal');
+                        $modalWrap = $('#modal .modal-wrap');
+                        $modalInnerWrap = $('#modal .modal-inner-wrap');
+                        $modalOverlay = $('#modal .modal-overlay');
+                        $modalCloseBtn = $('#modal .modal-close');
+            
+                        setTimeout(function() {
+                            self.modal();
+                        }, 50);
+
                     }, error: function(xhr, status, error) {
                         // Hier wird eine Fehlermeldung ausgegeben
                         console.log('Fehler: ' + error);

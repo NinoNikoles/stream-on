@@ -10,30 +10,7 @@
 
     // Benutzeranmeldung
     if(isset($_POST['save-settings'])) {
-        $siteTitle = mysqli_real_escape_string($conn, $_POST['site_title']);
-        $apikey = mysqli_real_escape_string($conn, $_POST['apikey']);
-        $apiLang = mysqli_real_escape_string($conn, $_POST['language']);
-
-        $sql = 'UPDATE settings SET setting_option="'.$siteTitle.'" WHERE setting_name="site_title"';
-        if (!($conn->query($sql) === TRUE)) {
-            die('Error creating table: ' . $conn->error);
-        }
-
-        $sql = 'UPDATE settings SET setting_option="'.$apikey.'" WHERE setting_name="apikey"';
-        if (!($conn->query($sql) === TRUE)) {
-            die('Error creating table: ' . $conn->error);
-        }
-
-        $sql = 'UPDATE settings SET setting_option="'.$apiLang.'" WHERE setting_name="apilang"';
-        if (!($conn->query($sql) === TRUE)) {
-            echo '<div class="innerWrap">';
-                echo '<div class="col4 marg-left-col4">';
-                    echo '<p class="text-alert">'.lang_snippet('failed_to_save').'</p>';
-                echo '</div>';
-            echo '</div>';
-        }
-
-        page_redirect('/admin/settings');
+        updateSettings($_POST);
     }
 
     $siteTitle = $siteTitle;
@@ -48,7 +25,7 @@
 
     <div class="innerWrap">
         
-        <div class="col8 marg-top-xxl marg-left-col2 marg-right-col4">
+        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <h1><?php echo lang_snippet('settings'); ?></h1>
             </div>

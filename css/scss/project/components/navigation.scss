@@ -5,6 +5,13 @@ nav.header-menu-main {
                 &:not(.subbutton):not(.backbutton) {
                     color: var(--font-color);
 
+                    &:hover {
+                        background: {
+                            color: var(--white-20);
+                        }
+                        
+                    }
+
                     @include MQ(medium) {
                         line-height: rem-calc(50);
                         padding: {
@@ -21,7 +28,7 @@ nav.header-menu-main {
             }
 
             > a:not(.subbutton):not(.backbutton):hover {
-                color: var(--font-color-invert);
+                color: var(--font-color);
             }
         }
     }
