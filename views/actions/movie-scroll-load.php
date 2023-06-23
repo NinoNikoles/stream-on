@@ -4,7 +4,7 @@ $tmdb = setupTMDB();
 
 $loadCount = $_POST['count'];
 $movies = scrollLoader('movies', $loadCount);
-var_dump($movies);
+
 if ( $movies > 0 ) {    
     foreach ( $movies as $movie ) {
         $movieID = $movie['id'];
@@ -22,7 +22,7 @@ if ( $movies > 0 ) {
             $genreHTML = $genreHTML . '<span class="tag">'.$genre['name'].'</span>';
         }
 
-        echo '<div class="col-6 col-2-medium grid-padding">';
+        echo '<div class="col-6 col-3-medium grid-padding">';
             echo '<div class="media-card widescreen-media-card desktop-only">
                     <figure class="widescreen">
                         <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
