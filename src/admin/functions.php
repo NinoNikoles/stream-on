@@ -306,7 +306,6 @@ function insertMovie($movieID) {
     $genres = $movie->getGenres();
 
     $data = [];
-    var_dump($data);
 
     foreach ( $genres as $genre ) {
         $data[] = $genre->getID();
@@ -329,7 +328,7 @@ function insertMovie($movieID) {
                 movie_collection,
                 movie_genres
             ) VALUES (
-                '.$id',
+                '$id',
                 '$title',
                 '$tagline',
                 '$overview',
@@ -340,27 +339,15 @@ function insertMovie($movieID) {
                 '$runtime',
                 '$collection',
                 '$genresString'
-            )";
-    
+        )";
+
         $conn->query($movieQuery);
-    
-        // Holen Sie sich die automatisch generierte ID des neuen Films
-        $movieId = $conn->insert_id;
 
         foreach($genres as $genre) {
             $genreID = $genre->getId();
     
-            $sql = 'SELECT * from genres WHERE genre_id="'.$genreID.'"';
-            $result = $conn->query($sql);
-            
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $dbGenreID = intval($row['id']);
-                }
-            }
-    
             // Füge die Genre-Verbindung in die "movie_genre"-Tabelle ein
-            $genreQuery = "INSERT INTO movie_genre (movie_id, genre_id) VALUES ($movieId, $dbGenreID)";
+            $genreQuery = "INSERT INTO movie_genre (movie_id, genre_id) VALUES ($id, $genreID)";
             $conn->query($genreQuery);
         }
     
@@ -650,19 +637,20 @@ function updateMovieBackdrop($movieID, $backdrop) {
 //////////-- Video player --///////////
 function videoPlayer($movieID, $fullscreen = false) {
     $conn = dbConnect();
-    $sql = "SELECT movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
+    $sql = "SELECT id, movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
     $filePath = $conn->query($sql)->fetch_assoc()['movie_file_path'];
+    $id = $conn->query($sql)->fetch_assoc()['id'];
 
     if ( $filePath !== "" ) {
         if($fullscreen === true) {
             echo '<figure>';
-                echo '<video id="player-'.$movieID.'" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-volume-panel="vertical">'; //'.$tmdb->getImageURL().$backdrop.' //
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
             echo '</figure>';
         } else {
             echo '<figure class="widescreen">';
-                echo '<video id="player-'.$movieID.'" class="video-js" data-id="'.$movieID.'" data-sound="true" data-fullscreen="true" controls preload="auto" data-setup="{}">'; //'.$tmdb->getImageURL().$backdrop.'
+                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-sound="true" data-fullscreen="true" controls preload="auto">'; //'.$tmdb->getImageURL().$backdrop.'
                     echo '<source src="'.$filePath.'" type="video/mp4" />';
                 echo '</video>';
             echo '</figure>';
@@ -919,4 +907,122 @@ function scrollLoader($media, $count) {
     }
 
     return $data;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+//////////-- Watch list --///////////
+
+function currentWatchlist() {
+    $conn = dbConnect();
+    $tmdb = setupTMDB();
+    $userID = $_SESSION['userID'];
+
+    $query = "SELECT * FROM movies INNER JOIN movie_watched ON movies.movie_tmdbID = movie_watched.movie_id WHERE movie_watched.user_id = $userID";
+    $results = $conn->query($query);
+    
+    if ( $results->num_rows > 0 ) {
+        echo '<div class="currentWatch-slider">';
+            echo '<div class="col12 marg-top-l">';
+                echo '<div class="column">';
+                    echo '<h3>'.lang_snippet('continue').'</h3>';
+                echo '</div>';
+
+                echo '<div class="column">'; 
+                    echo '<div class="swiper card-slider">';
+                        echo '<div class="swiper-wrapper">';
+                            
+                        while ( $movie = $results->fetch_assoc() ) {
+                            $movieID = $movie['movie_tmdbID'];
+                            $watched = intval($movie['watched']);
+
+                            if ( $watched !== 1 ) {                                
+                                $movieTitle = $movie['movie_title'];
+                                $movieOverview = $movie['movie_overview'];
+                                $movieRating = $movie['movie_rating'];
+                                $movieRuntime = $movie['movie_runtime'];
+                                $movieRelease = new DateTime($movie['movie_release']);
+                                $releaseYear = $movieRelease->format('Y');
+                                $moviePoster = $movie['movie_poster'];
+                                $movieBackdrop = $movie['movie_thumbnail'];
+                                $genres = json_decode($movie['movie_genres']);
+                                $genreHTML = '';
+                                foreach ( $genres as $genre ) {
+                                    $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
+                                }
+                                $watchedTime = floatval($movie['watched_seconds']);
+                                $totalDuration = floatval($movie['total_length']);
+                                $watchedInPercent = ($watchedTime/$totalDuration)*100;
+    
+                                echo    '<div class="swiper-slide">
+                                            <div class="desktop-only">
+                                                <div class="media-card widescreen-media-card">
+                                                    <figure class="widescreen">
+                                                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
+                                                    </figure>
+                                                    <div class="link-wrapper">
+                                                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
+                                                        <a href="#content-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="watched-bar">
+                                                        <progress max="100" value="'.$watchedInPercent.'"></progress>
+                                                    </div>
+                                                </div>
+                                            <div>
+
+                                            <div class="mobile-only">
+                                                <div class="media-card">
+                                                    <figure class="poster">
+                                                        <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
+                                                    </figure>
+                                                    <div class="link-wrapper">
+                                                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
+                                                        <a href="#content-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="watched-bar">
+                                                    <progress max="100" value="'.$watchedInPercent.'"></progress>
+                                                </div>
+                                            </div>
+            
+                                            <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
+                                                <div class="col12 marg-bottom-xs mobile-only">
+                                                    <figure class="widescreen">
+                                                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'">
+                                                    </figure>
+                                                </div>
+                                                <div class="innerWrap">
+                                                    <div class="col7 marg-right-col1">
+                                                        <p class="h2">'.$movieTitle.'</p>
+                                                        <p class="small">
+                                                            <span class="tag">'.$releaseYear.'</span>
+                                                            <span class="tag">'.$movieRating.'/10</span>
+                                                            <span class="tag">'.runtimeToString($movieRuntime).'</span>
+                                                        </p>
+                                                        <a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>
+                                                        <p class="small">'.$movieOverview.'</p>
+                                                        <p class="small">'.$genreHTML.'</p>
+                                                    </div>
+                                                    <div class="col4 desktop-only">
+                                                        <figure class="poster">
+                                                            <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
+                                                        </figure>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>';
+                            } else {
+                                $updateWatched = "UPDATE movie_watched SET watched='1' WHERE user_id='$userID' and movie_id='$movieID'";
+                                $conn->query($updateWatched);
+                            }
+                        }
+                        echo '</div>';
+                        echo '<div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>';
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
+    }
 }

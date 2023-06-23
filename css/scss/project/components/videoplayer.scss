@@ -1,0 +1,129 @@
+.video-js {
+    .vjs-big-play-button {
+        background: transparent !important;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        width: auto;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);        
+
+        .vjs-icon-placeholder {
+            line-height: 1 !important;
+            margin: 0;
+
+            &:before {
+                content: "\e902";
+                font: {
+                    family: $icon-font;
+                    size: rem-calc(80);
+                }
+                position: relative;
+                top: unset;
+                left: unset;
+            }
+        }
+    }
+
+    .vjs-icon-placeholder {
+        line-height: 1 !important;
+
+        &::before {
+            line-height: 1 !important;
+        }
+    }
+
+    .vjs-control-bar {
+        background: transparent !important;
+        height: rem-calc(60);
+    }
+
+    .vjs-play-control {
+        display: block;
+        width: rem-calc(60);
+        height: rem-calc(60);
+
+        .vjs-icon-placeholder {
+            display: block;
+            position: absolute;
+            height: auto;
+            width: auto;
+            margin: {
+                bottom: 0;
+            }
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            &::before {
+                display: block;
+                font: {
+                    family: $icon-font;
+                    size: rem-calc(40);
+                }
+                position: relative;
+                top: unset;
+                left: unset;
+            }
+        }
+    }
+
+    .vjs-play-control {
+        .vjs-icon-placeholder {
+            &::before {
+                content: "\e902";
+            }
+        }
+
+        &.vjs-playing {
+            .vjs-icon-placeholder {
+                &::before {
+                    content: "\e901";
+                }
+            }
+        }
+    }
+
+    .vjs-volume-panel,
+    .vjs-mute-control {
+        width: rem-calc(60);
+        height: rem-calc(60);
+
+    }
+
+    .vjs-mute-control {
+        .vjs-icon-placeholder {
+            &::before {
+                content: "\e90c";
+                font-family: $icon-font;
+            }
+        }
+
+        &.vjs-vol-0 {
+            .vjs-icon-placeholder {
+                &::before {
+                    content: "\e90b";
+                }
+            }
+        }
+
+        &.vjs-vol-1 {
+            .vjs-icon-placeholder {
+                &::before {
+                    content: "\e90a";
+                }
+            }
+        }
+
+        &.vjs-vol-2 {
+            .vjs-icon-placeholder {
+                &::before {
+                    content: "\e909";
+                }
+            }
+        }
+    }
+}
