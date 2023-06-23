@@ -34,9 +34,11 @@ class langSnippets {
             'page_title' => 'Page title',
             'profile' => 'Profile',
             'more_informations' => 'More infromations',
+            'list' => 'My List',
 			
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
+            'continue' => 'Continue',
 			
 			// Movie
 			'rating' => 'Rating',
@@ -122,9 +124,11 @@ class langSnippets {
             'page_title' => 'Seitenname',
             'profile' => 'Profil',
             'more_informations' => 'Mehr erfahren',
+            'list' => 'Meine Liste',
 			
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
+            'continue' => 'Fortsetzen',
 			
 			// Movie
 			'rating' => 'Bewertung',
