@@ -3,15 +3,20 @@
 $conn = dbConnect();
 $tmdb = setupTMDB();
 
+
+currentWatchlist();
+
+
 $sql = "SELECT * FROM genres ORDER BY genre_id ASC";
 $results = $conn->query($sql);
-var_dump($_SESSION);
 
 if ($results->num_rows > 0) {
     $sliderNumber = 1;
 
     while ($genre = $results->fetch_assoc()) {
-        $movieRow = goTrhoughMovies($genre['id'], $conn, $tmdb);
+        //var_dump($genre);
+        $movieRow = goTrhoughMovies($genre['genre_id'], $conn, $tmdb);
+        
         if ( $movieRow != '' ) {
             $genre_slider = 'genre-slider-'.$sliderNumber;
 
@@ -44,14 +49,18 @@ if ($results->num_rows > 0) {
 }
 
 function goTrhoughMovies($db_genre, $conn, $tmdb) {
-    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $db_genre";
+    $genreID = intval($db_genre);
+    
+    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $genreID";
     $result = $conn->query($query);
+    
     $movieRow = '';
 
     if ($result->num_rows > 0) {
         // Es gibt mindestens einen Film des Genres
     
         while ($movie = $result->fetch_assoc()) {
+            $id = $movie['id'];
             $movieID = $movie['movie_tmdbID'];
             $movieTitle = $movie['movie_title'];
             $movieOverview = $movie['movie_overview'];

@@ -140,22 +140,22 @@ main .main {
 
 @each $key, $val in $breakpoints {
     @for $i from 1 through $grid-columns {
-        .col-#{$i}-#{$key} {
+        .col-#{$i} {
             @extend .grid;
-            @include MQ($key) {
-                width: gridWidth($i, $grid-columns);
-                min-width: gridWidth($i, $grid-columns);
-            }
+            width: gridWidth($i, $grid-columns);
+            min-width: gridWidth($i, $grid-columns);
         }
     }
 }
 
 @each $key, $val in $breakpoints {
     @for $i from 1 through $grid-columns {
-        .col-#{$i} {
+        .col-#{$i}-#{$key} {
             @extend .grid;
-            width: gridWidth($i, $grid-columns);
-            min-width: gridWidth($i, $grid-columns);
+            @include MQ($key) {
+                width: gridWidth($i, $grid-columns);
+                min-width: gridWidth($i, $grid-columns);
+            }
         }
     }
 }
