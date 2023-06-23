@@ -38,6 +38,7 @@
 				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
                     <ul class="menu">
                         <li class="menu-item"><a href="/movies" title="<?php echo lang_snippet('movies'); ?>"><?php echo lang_snippet('movies'); ?></a></li>
+                        <li class="menu-item"><a href="/list" title="<?php echo lang_snippet('list'); ?>"><?php echo lang_snippet('list'); ?></a></li>
                     </ul>
                 </nav>
 
