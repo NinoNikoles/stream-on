@@ -7,7 +7,7 @@
     $movieID = intval($_POST['movieID']);
     $watchedTime = floatval($_POST['time']);
     $totalLength = floatval($_POST['totalLength']);
-    $watchedInPercent = ($watchedTime/$totalDuration)*100;
+    $watchedInPercent = ($watchedTime/$totalLength)*100;
 
     if ( $watchedInPercent === 100 ) {
         $sql = "INSERT INTO movie_watched(user_id, movie_id, watched_seconds, total_length, watched) VALUES
