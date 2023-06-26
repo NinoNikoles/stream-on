@@ -196,7 +196,7 @@ if ( $movie == 0 ) {
 
                                 echo '<div id="add-movie-'.$movieID.'" style="display:none;">';
                                     echo '<p>'.lang_snippet('add_movie').'</p>';
-                                    echo '<form method="post" action="/admin/movies/edit-movie/?id='.$movieID.'">';
+                                    echo '<form method="post" action="/admin/movie/?id='.$id.'">';
                                     echo '<input type="number" name="id" value="'.$movieID.'" style="display:none;">';
                                         echo '<p class="text-right">';
                                             echo '<button type="submit" class="btn btn-success" name="add-movie">'.lang_snippet('add').'</button>';
