@@ -539,13 +539,15 @@ $(document).ready(function() {
         },
 
         initPlayer: function() {
-            var player = videojs('player', {
-                controlBar: {
+	    if ( $('#player') > 0 ) {
+                var player = videojs('player', {
                     controlBar: {
-                        volumePanel: {inline: false}
-                    },
-                }
-            });
+                        controlBar: {
+                            volumePanel: {inline: false}
+                        },
+                    }
+                });
+	    }	    
         },
 
         userMenuBtn: function() {
