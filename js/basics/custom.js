@@ -539,7 +539,6 @@ $(document).ready(function() {
         },
 
         initPlayer: function() {
-            console.log('s');
             if ( $('#player').length > 0 ) {
                 var player = videojs('player', {
                     controlBar: {
@@ -557,11 +556,7 @@ $(document).ready(function() {
                 } else {
                     // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
                     video.addEventListener("loadedmetadata", function() {
-                        console.log(video.currentTime);
                         video.currentTime = sekunde;
-                        console.log(video.currentTime);
-                        console.log(sekunde);
-
                     });
                 }
             }	    
