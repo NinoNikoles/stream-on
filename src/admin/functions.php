@@ -642,6 +642,10 @@ function videoPlayer($movieID, $fullscreen = false) {
     $id = $conn->query($sql)->fetch_assoc()['id'];
 
     if ( $filePath !== "" ) {
+        $userID = $_SESSION['userID'];
+        $sqlTime = "SELECT watched_seconds FROM movie_watched WHERE user_id='$userID ' and movie_id='$movieID'";
+        $watchedTime = $conn->query($sqlTime)->fetch_assoc()['watched_seconds'];
+
         if($fullscreen === true) {
             echo '<figure>';
                 echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-volume-panel="vertical">'; //'.$tmdb->getImageURL().$backdrop.' //
@@ -655,6 +659,7 @@ function videoPlayer($movieID, $fullscreen = false) {
                 echo '</video>';
             echo '</figure>';
         }
+        echo '<span data-time="'.$watchedTime.'"></span>';
     }
 }
 
@@ -918,7 +923,7 @@ function currentWatchlist() {
     $tmdb = setupTMDB();
     $userID = $_SESSION['userID'];
 
-    $query = "SELECT * FROM movies INNER JOIN movie_watched ON movies.movie_tmdbID = movie_watched.movie_id WHERE movie_watched.user_id = $userID";
+    $query = "SELECT * FROM movies INNER JOIN movie_watched ON movies.movie_tmdbID = movie_watched.movie_id WHERE movie_watched.user_id = $userID and movie_watched.watched_seconds > 0";
     $results = $conn->query($query);
     
     if ( $results->num_rows > 0 ) {

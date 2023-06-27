@@ -539,7 +539,8 @@ $(document).ready(function() {
         },
 
         initPlayer: function() {
-	    if ( $('#player') > 0 ) {
+            console.log('s');
+            if ( $('#player').length > 0 ) {
                 var player = videojs('player', {
                     controlBar: {
                         controlBar: {
@@ -547,7 +548,23 @@ $(document).ready(function() {
                         },
                     }
                 });
-	    }	    
+
+                video = $('video')[0];
+                sekunde = $('span[data-time]').attr('data-time');
+
+                if (video.readyState >= 2) {
+                    video.currentTime = sekunde;
+                } else {
+                    // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
+                    video.addEventListener("loadedmetadata", function() {
+                        console.log(video.currentTime);
+                        video.currentTime = sekunde;
+                        console.log(video.currentTime);
+                        console.log(sekunde);
+
+                    });
+                }
+            }	    
         },
 
         userMenuBtn: function() {
@@ -617,6 +634,7 @@ $(document).ready(function() {
                     var interval = false;
 
                     $(video).on('play', function() {
+                        saveTime();
                         clearInterval(interval);
                         interval = setInterval(saveTime, 30000);
                     });
@@ -626,10 +644,19 @@ $(document).ready(function() {
                         saveTime();
                     });
 
+                    $(video).on('stop', function() {
+                        clearInterval(interval);
+                        saveTime();
+                    });
+
                     function saveTime() {
                         var currentSecond = video.currentTime;
                         var totalDuration = video.duration;
                         $resultList = $('#test');
+
+                        if ( currentSecond === totalDuration ) {
+                            currentSecond = 0;
+                        }
 
                         $.ajax({
                             url: '/movie-watch-time',
