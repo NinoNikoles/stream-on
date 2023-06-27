@@ -98,7 +98,7 @@ class langSnippets {
             'movies' => 'Filme',
             'users' => 'Benutzer',
             'shows' => 'Serien',
-            'genres' => 'Genres',
+            'genres' => 'Genre',
             'logout' => 'Ausloggen',
 
             // Universell
