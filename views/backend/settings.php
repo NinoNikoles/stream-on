@@ -29,6 +29,9 @@
             <div class="col12">
                 <h1><?php echo lang_snippet('settings'); ?></h1>
             </div>
+            <div class="col12">
+                <?php callout(); ?>
+            </div>
             <form method="post" action="/admin/settings" class="row">
                  <div class="col12 column">
                     <p>

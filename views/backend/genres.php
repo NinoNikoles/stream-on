@@ -30,7 +30,7 @@ if(isset($_POST['generate-genres'])) {
                     if ($numRows == 0) {
                         echo '<div class="col12 marg-bottom-m">';
                             echo '<form method="post" action="/admin/genres">';
-                                echo '<button type="submit" name="generate-genres">'.lang_snippet('genres').'</button>';
+                                echo '<button type="submit" name="generate-genres">'.lang_snippet('load_genres').'</button>';
                             echo '</form>';
                         echo '</div>';
                     }
