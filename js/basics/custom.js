@@ -135,6 +135,7 @@ $(document).ready(function() {
 				}
 			});
 			trigger.add('[data-trigger]');
+			trigger.add('.card-slider');
 			trigger.add('.genre-slider');
             trigger.add('.load-count');
             trigger.add('.currentWatch-slider');
@@ -540,13 +541,7 @@ $(document).ready(function() {
 
         initPlayer: function() {
             if ( $('#player').length > 0 ) {
-                var player = videojs('player', {
-                    controlBar: {
-                        controlBar: {
-                            volumePanel: {inline: false}
-                        },
-                    }
-                });
+                var player = videojs('player');
 
                 video = $('video')[0];
                 sekunde = $('span[data-time]').attr('data-time');
@@ -559,7 +554,7 @@ $(document).ready(function() {
                         video.currentTime = sekunde;
                     });
                 }
-            }	    
+            }
         },
 
         userMenuBtn: function() {

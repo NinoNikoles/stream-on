@@ -1,4 +1,28 @@
+#mainPlayer {
+    display: flex;
+    height: 100vh;
+}
+
 .video-js {
+    * {
+        outline: none !important;
+    }
+
+    .vjs-control-bar {
+        width: calc(100% - #{$grid-padding*2}px);
+        height: rem-calc(120)!important;
+        margin: 0 auto;
+        bottom: rem-calc($grid-padding);
+    }
+
+    .vjs-progress-control {
+        width: 100%;
+        height: rem-calc(60);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
     .vjs-big-play-button {
         background: transparent !important;
         border: 0;
@@ -45,6 +69,9 @@
         display: block;
         width: rem-calc(60);
         height: rem-calc(60);
+        position: absolute;
+        left: 0;
+        bottom: 0;
 
         .vjs-icon-placeholder {
             display: block;
@@ -94,6 +121,38 @@
 
     }
 
+    .vjs-volume-panel {
+        position: absolute !important;
+        left: 60px;
+        bottom: 0;
+
+        .vjs-mute-control {
+            .vjs-icon-placeholder {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+
+                &::before {
+                    line-height: 1;
+                    height: auto;
+                    width: auto;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+
+        .vjs-volume-control {
+            height: rem-calc(60);
+        }
+
+        .vjs-volume-bar {
+            margin: rem-calc(28) rem-calc(5);
+        }
+    }
+
     .vjs-mute-control {
         .vjs-icon-placeholder {
             &::before {
@@ -122,6 +181,45 @@
             .vjs-icon-placeholder {
                 &::before {
                     content: "\e909";
+                }
+            }
+        }
+    }
+
+    .vjs-fullscreen-control {
+        width: rem-calc(60) !important;
+        height: rem-calc(60) !important;
+        position: absolute !important;
+        right: 0;
+        bottom: 0;
+
+        .vjs-icon-placeholder {
+            width: rem-calc(60) !important;
+            height: rem-calc(60) !important;
+            margin: 0;
+
+            &::before {
+                content: "\e920";
+                font: {
+                    family: $icon-font;
+                    size: rem-calc(40);
+                }
+                line-height: 1;
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    &.vjs-fullscreen {
+        .vjs-fullscreen-control {    
+            .vjs-icon-placeholder {
+                &::before {
+                    content: "\e921";
                 }
             }
         }

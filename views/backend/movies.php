@@ -33,12 +33,12 @@ if ( isset($_POST['add-movie']) ) {
                 <?php callout(); ?>
             </div>
 
-            <div class="row">
+            <div class="grid-row">
                 <?php 
                     $movies = selectAllMoviesByTitle('ASC');
                     if ( $movies > 0 ) {
                         foreach ( $movies as $movie ) {
-                            echo '<div class="col3 column">';
+                            echo '<div class="col-6 col3-medium column">';
                                 echo '<a href="/admin/movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
                                         echo '<img src="'.$tmdb->getImageURL().$movie['poster'].'" alt="">';
