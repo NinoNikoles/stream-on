@@ -2,6 +2,7 @@
 include(ROOT_PATH.'/views/header.php');
 
 if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
+    destroySesssion();
     page_redirect("/login");
 } else {
     echo '<div class="innerWrap marg-top-l marg-bottom-l">';

@@ -14,7 +14,6 @@ if ($results->num_rows > 0) {
     $sliderNumber = 1;
 
     while ($genre = $results->fetch_assoc()) {
-        //var_dump($genre);
         $movieRow = goTrhoughMovies($genre['genre_id'], $conn, $tmdb);
         
         if ( $movieRow != '' ) {

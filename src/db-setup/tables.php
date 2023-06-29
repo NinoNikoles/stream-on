@@ -137,5 +137,3 @@ $sql = 'UPDATE settings SET setting_option="1" WHERE setting_name="one_time_setu
 if (!($conn->query($sql) === TRUE)) {
     die('Error creating table: ' . $conn->error);
 }
-
-page_redirect("/login");

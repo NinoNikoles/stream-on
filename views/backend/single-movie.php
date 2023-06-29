@@ -47,7 +47,7 @@ if ( $movie == 0 ) {
                     if (isset($_POST['add-movie'])) {
                         insertMovie($_POST['id']);
                     }
-                    var_dump($_POST);
+                    
                     // Add Movie from collection
                     if (isset($_POST['delete-movie'])) {
                         deleteMovie($_POST['id']);

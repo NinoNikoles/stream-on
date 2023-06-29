@@ -1,5 +1,5 @@
 <?php
-require_once ROOT_PATH.'/src/admin/language.php';
+require_once ROOT_PATH.'/src/language/language.php';
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -60,6 +60,13 @@ function checkIfUserExists($username) {
     }
 }
 
+function destroySesssion() {
+    set_callout('success','logout_message');
+
+    session_unset();
+    session_destroy();
+    session_write_close();
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -767,18 +774,18 @@ function getUserID() {
 function userCheck() {
     $conn = dbConnect();
     $sessionUserID = $_SESSION['userID'];
+
     $sql = "SELECT id, username, user_img FROM users WHERE id='$sessionUserID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-      
-    // output data of each row
+        // output data of each row
         while($row = $result->fetch_assoc()) {
-            if ( $_GET['id'] !== intval($_SESSION['userID']) || $_GET['id'] !== $row['id'] || $row['username'] != $_SESSION['username'] ) {
-                page_redirect("/login");
+            if ( $_GET['id'] !== $_SESSION['userID'] || $_GET['id'] !== $row['id'] || $row['username'] != $_SESSION['username'] ) {
+                page_redirect("/404");
             }
         }
     } else {
-        page_redirect("/login");
+        page_redirect("/404");
     }
 }
 

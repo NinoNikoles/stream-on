@@ -52,6 +52,7 @@ class langSnippets {
 
             // -- Messages --
             // Success
+            'settings_update_success' => 'Settings updated successfully!',
             'edit_user_success' => 'User edited successfully!',
             'add_user_success' => 'User added successfully!',
             'delete_user_success' => 'User deleted successfully!',
@@ -142,6 +143,7 @@ class langSnippets {
 
             // -- Messages --
             // Success
+            'settings_update_success' => 'Einstellungen wurden erfolgreich aktualisiert!',
             'edit_user_success' => 'Der Benutzer wurde erfolgreich bearbeitet!',
             'add_user_success' => 'Der Benutzer wurde erfolgreich hinzugefügt!',
             'delete_user_success' => 'Der Benutzer wurde erfolgreich gelöscht!',

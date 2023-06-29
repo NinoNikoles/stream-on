@@ -41,7 +41,7 @@
 <div class="innerWrap">
     <div class="col4 marg-left-col4 marg-top-xxl">
         <?php callout(); ?>
-        <form method="post" action="">
+        <form method="post" action="/login">
             <p>
                 <label for="username">Benutzername
                 <input type="text" name="username" id="username" placeholder="Benutzername" required></label>
