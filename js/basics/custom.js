@@ -546,14 +546,11 @@ $(document).ready(function() {
                 video = $('video')[0];
                 sekunde = $('span[data-time]').attr('data-time');
 
-                if (video.readyState >= 2) {
+                // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
+                video.addEventListener("loadedmetadata", function() {
                     video.currentTime = sekunde;
-                } else {
-                    // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
-                    video.addEventListener("loadedmetadata", function() {
-                        video.currentTime = sekunde;
-                    });
-                }
+                    $('#player-back-btn').appendTo(".video-js");
+                });
             }
         },
 

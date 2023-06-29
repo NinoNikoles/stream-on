@@ -1,6 +1,7 @@
 #mainPlayer {
     display: flex;
-    height: 100vh;
+    height: 100%;
+    overflow: hidden;
 }
 
 .video-js {
@@ -221,6 +222,50 @@
                 &::before {
                     content: "\e921";
                 }
+            }
+        }
+    }
+
+    #player-back-btn {
+        flex: none;
+        width: rem-calc(50);
+        height: rem-calc(50);
+        position: absolute;
+        top: rem-calc($grid-padding);
+        left: rem-calc($grid-padding);
+        visibility: hidden;
+        opacity: 0;
+        @include transition(opacity $transition-default);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &::before {
+            content: "\e91e";
+            display: block;
+            font: {
+                family: $icon-font;
+                size: rem-calc(40);
+            }
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &.vjs-has-started {
+        #player-back-btn {
+            visibility: visible;
+            opacity: 1;
+            flex: none;
+        }
+
+        &.vjs-user-inactive {
+            #player-back-btn {
+                visibility: hidden;
+                opacity: 0;
             }
         }
     }

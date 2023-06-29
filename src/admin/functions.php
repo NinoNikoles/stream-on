@@ -643,10 +643,13 @@ function updateMovieBackdrop($movieID, $backdrop) {
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Video player --///////////
 function videoPlayer($movieID, $fullscreen = false) {
+    $tmdb = setupTMDB();
     $conn = dbConnect();
-    $sql = "SELECT id, movie_file_path, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
+    $sql = "SELECT id, movie_file_path, movie_overview, movie_thumbnail FROM movies WHERE movie_tmdbID='$movieID'";
     $filePath = $conn->query($sql)->fetch_assoc()['movie_file_path'];
     $id = $conn->query($sql)->fetch_assoc()['id'];
+    $info = $conn->query($sql)->fetch_assoc()['movie_overview'];
+    $backdrop = $conn->query($sql)->fetch_assoc()['movie_thumbnail'];
 
     if ( $filePath !== "" ) {
         $userID = $_SESSION['userID'];
@@ -655,13 +658,15 @@ function videoPlayer($movieID, $fullscreen = false) {
 
         if($fullscreen === true) {
             echo '<figure>';
-                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" data-volume-panel="vertical">'; //'.$tmdb->getImageURL().$backdrop.' //
+                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" poster="'/*.$tmdb->getImageURL().$backdrop.*/.'">'; //'.$tmdb->getImageURL().$backdrop.' //
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
+                echo '<button id="player-back-btn" title="Back" onclick="history.back()"></button>';
             echo '</figure>';
+            //
         } else {
             echo '<figure class="widescreen">';
-                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-sound="true" data-fullscreen="true" controls preload="auto">'; //'.$tmdb->getImageURL().$backdrop.'
+                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-sound="true" data-fullscreen="true" controls preload="auto" poster="'.$tmdb->getImageURL().$backdrop.'">'; //'.$tmdb->getImageURL().$backdrop.'
                     echo '<source src="'.$filePath.'" type="video/mp4" />';
                 echo '</video>';
             echo '</figure>';
