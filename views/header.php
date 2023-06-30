@@ -1,4 +1,11 @@
-<?php $conn = dbConnect(); ?>
+<?php $conn = dbConnect(); 
+    if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
+        destroySesssion();
+        if ( !pageCheck("/login") ) {
+            page_redirect("/login");
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark" >
 <head>

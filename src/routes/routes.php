@@ -108,9 +108,3 @@ get('/callback/$name/$last_name', function($name, $last_name){
 // The 404.php which is inside the views folder will be called
 // The 404.php has access to $_GET and $_POST
 any('/404','views/404.php');
-
-
-if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
-    destroySesssion();
-    page_redirect("/login");
-}

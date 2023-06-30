@@ -7,7 +7,19 @@ require_once ROOT_PATH.'/src/language/language.php';
 
 //-- DB connection --
 function dbConnect() {
-    return new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    if ( file_exists( ROOT_PATH.'/config.php') ) {    
+        $servername = DB_HOST;
+        $username = DB_USER;
+        $password = DB_PASSWORD;
+        $dbname = DB_NAME;
+    } else {
+        $servername = "";
+        $username = "";
+        $password = "";
+        $dbname = "";
+    }
+    
+    return new mysqli($servername, $username, $password, $dbname);
 }
 
 //-- Returns TMDB Class --
