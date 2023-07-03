@@ -70,6 +70,7 @@ $(document).ready(function() {
             self.movieTimeSafe();
             self.initPlayer();
             self.myList();
+            self.lazyLoad();
             //self.videoTriggerFullscreen();
         },
 
@@ -631,6 +632,8 @@ $(document).ready(function() {
                                 $tempEl.html(list);
                                 $tempEl.appendTo('#movie-list');
                             }
+
+                            self.lazyLoad();
                         }, error: function(xhr, status, error) {
                             // Hier wird eine Fehlermeldung ausgegeben
                             console.log('Fehler: ' + error);
@@ -694,6 +697,7 @@ $(document).ready(function() {
         },
 
         movieTimeSafe: function() {
+            var self = this;
             if ( $('#mainPlayer').length > 0 ) {
                 $player = $('#mainPlayer');
                 video = $('video')[0];
@@ -737,12 +741,24 @@ $(document).ready(function() {
                             },
                             success: function(response) {
                                 $resultList.html(response);
+                                self.lazyLoad();
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
                                 console.log('Fehler: ' + error);
                             }
                         });
                     }
+                });
+            }
+        },
+
+        lazyLoad: function() {
+            var lazyImages = document.querySelectorAll(".lazy-load");
+
+            for (var i = 0; i < lazyImages.length; i++) {
+                lazyImages[i].src = lazyImages[i].getAttribute("data-src");
+                lazyImages[i].addEventListener("load", function() {
+                    this.style.visibility = "visible";
                 });
             }
         }

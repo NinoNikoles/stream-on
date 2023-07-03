@@ -1,0 +1,12 @@
+img {
+    background: {
+        img: url('/views/build/css/images/img_preview.webp');
+        position: center;
+        repeat: no-repeat;
+        size: cover;
+    }
+
+    &[lazy-load] {
+        visibility: hidden;
+    }
+}

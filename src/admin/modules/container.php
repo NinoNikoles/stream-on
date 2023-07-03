@@ -37,7 +37,7 @@ function movie_card($movie, $extraClasses = '') {
         <div class="'.$extraClasses.'">
             <div class="media-card widescreen-media-card desktop-only">
                 <figure class="widescreen">
-                    <img src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" loading="lazy">
+                    <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" class="lazy-load">
                 </figure>
                 <div class="link-wrapper">
                     <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -47,7 +47,7 @@ function movie_card($movie, $extraClasses = '') {
 
             <div class="media-card mobile-only">
                 <figure class="poster">
-                    <img src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" loading="lazy">
+                    <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" class="lazy-load">
                 </figure>
                 <div class="link-wrapper">
                     <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -58,7 +58,7 @@ function movie_card($movie, $extraClasses = '') {
             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                 <div class="col12 marg-bottom-xs mobile-only">
                     <figure class="widescreen">
-                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'" loading="lazy">
+                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" class="lazy-load">
                     </figure>
                 </div>
                 <div class="innerWrap">
@@ -76,7 +76,7 @@ function movie_card($movie, $extraClasses = '') {
                     </div>
                     <div class="col4 desktop-only">
                         <figure class="poster">
-                            <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="" loading="lazy">
+                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" class="lazy-load">
                         </figure>
                     </div>
                 </div>
@@ -142,7 +142,7 @@ function currentWatchlist() {
                                             <div class="desktop-only">
                                                 <div class="media-card widescreen-media-card">
                                                     <figure class="widescreen">
-                                                        <img src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" loading="lazy">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" loading="lazy">
                                                     </figure>
                                                     <div class="link-wrapper">
                                                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -158,7 +158,7 @@ function currentWatchlist() {
                                             <div class="mobile-only">
                                                 <div class="media-card">
                                                     <figure class="poster">
-                                                        <img src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" loading="lazy">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" loading="lazy">
                                                     </figure>
                                                     <div class="link-wrapper">
                                                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -173,7 +173,7 @@ function currentWatchlist() {
                                             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                                                 <div class="col12 marg-bottom-xs mobile-only">
                                                     <figure class="widescreen">
-                                                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'" loading="lazy">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" loading="lazy">
                                                     </figure>
                                                 </div>
                                                 <div class="innerWrap">
@@ -191,7 +191,7 @@ function currentWatchlist() {
                                                     </div>
                                                     <div class="col4 desktop-only">
                                                         <figure class="poster">
-                                                            <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="" loading="lazy">
+                                                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" loading="lazy">
                                                         </figure>
                                                     </div>
                                                 </div>

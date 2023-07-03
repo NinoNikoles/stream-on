@@ -21,7 +21,7 @@
                 if( $dbMovie !== true ) {
                     echo '<a href="#movie-'.$id.'" class="display-flex flex-row marg-no" data-fancybox data-src="#movie-'.$id.'">';
                         echo '<figure class="poster" style="width:20%;max-width:100px;">';
-                            echo '<img src="'.$tmdb->getImageURL('w100').$poster.'" loading="lazy">';
+                            echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w100').$poster.'" loading="lazy">';
                         echo '</figure>';
                         echo '<span class="pad-xs" style="width:80%;">'.$title.'</span>';
                     echo '</a>';
