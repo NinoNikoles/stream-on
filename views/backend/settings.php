@@ -45,13 +45,15 @@
                         <label for="apikey"><?php echo lang_snippet('api_key'); ?>*
                             <input type="text" name="apikey" id="apikey" placeholder="<?php echo lang_snippet('api_key'); ?>" value="<?php echo $apikey; ?>"required>
                         </label>
+                        <span class="smaller"><?php echo lang_snippet('apikey_info'); ?></span>
                     </p>
                 </div>
                 <div class="col12 column">
                     <p>
-                        <label for="language"><?php echo lang_snippet('language'); ?>
-                            <input type="text" name="language" id="language" placeholder="Example: 'en,de'" value="<?php echo $apiLang; ?>" required>
+                        <label for="language"><?php echo lang_snippet('language');?>*
+                            <input type="text" name="language" id="language" placeholder="Example: 'en-US'" maxlength="5" value="<?php echo $apiLang; ?>" required>
                         </label>
+                        <span class="smaller"><?php echo lang_snippet('lang_info'); ?></span>
                     </p>
                 </div>
                 <div class="col12 column text-right">

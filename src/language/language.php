@@ -40,6 +40,8 @@ class langSnippets {
 			'movie_title' => 'Movie title',
             'continue' => 'Continue',
             'my_list' => 'My list',
+            'apikey_info'=> 'You need an apikey to fetch fetch infos from the movie database. Klick <a href="https://developer.themoviedb.org/docs/faq" target="_blank" title="TMDB">here</a> to get your own key!',
+            'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY',
 			
 			// Movie
 			'rating' => 'Rating',
@@ -142,6 +144,9 @@ class langSnippets {
 			'select_new_thumbnail' => 'Wähle ein neues Thumbnail',
             'select_movie_file' => 'Wähle eine Video Datei aus',
 			'add_movie' => 'Möchtest du den Film hinzufügen?',
+
+            'apikey_info'=> 'Du brauchst einen eigenen API Key von TMDB um Inhalte laden zu können. Klicke <a href="https://developer.themoviedb.org/docs/faq" target="_blank" title="TMDB">hier</a> um einen Schlüssel zu bekommen!',
+            'lang_info' => 'Dies wird benötigt um alle Inhalte in der gewünschten Sprache zu laden. Format: language-COUNTRY',
 
             // -- Messages --
             // Success
