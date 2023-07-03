@@ -27,8 +27,8 @@ if ( $movies > 0 ) {
     echo json_encode($response);
 } else {
     $response = array(
-        'movieList' => 0,
-        'loadCount' => 0,
+        'movieList' => false,
+        'loadCount' => false,
     );
 
     echo json_encode($response);
