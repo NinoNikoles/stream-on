@@ -8,7 +8,10 @@ function configCheck() {
 
 function init() {
     if ( file_exists( ROOT_PATH.'/config.php') ) {
-        if ( !databaseExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+        if ( onetimesetup(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+            require_once ROOT_PATH.'/src/routes/routes.php';
+        }
+        else if ( !databaseExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
             get('/install', 'install.php');
             post('/install', 'install.php');
         
@@ -34,6 +37,19 @@ function init() {
             page_redirect("/install");
         }
     }
+}
+
+function onetimesetup($servername, $username, $password, $dbname) {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        return false;
+    }
+
+    $result = $conn->query("SELECT setting_option FROM settings WHERE setting_name='one_time_setup'");
+    $setupDone = $result->num_rows > 0;
+    
+    $conn->close();
+    return $setupDone;
 }
 
 // Überprüfen, ob die erforderlichen Tabellen existieren

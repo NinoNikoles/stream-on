@@ -14,6 +14,7 @@
     <link rel="icon" href="">
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
     <title><?php echo getSiteTitle();?></title>
 </head>
 <body>
@@ -45,7 +46,7 @@
 				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
                     <ul class="menu">
                         <li class="menu-item"><a href="/movies" title="<?php echo lang_snippet('movies'); ?>"><?php echo lang_snippet('movies'); ?></a></li>
-                        <li class="menu-item"><a href="/list" title="<?php echo lang_snippet('list'); ?>"><?php echo lang_snippet('list'); ?></a></li>
+                        <li class="menu-item"><a href="/my-list" title="<?php echo lang_snippet('list'); ?>"><?php echo lang_snippet('list'); ?></a></li>
                     </ul>
                 </nav>
 

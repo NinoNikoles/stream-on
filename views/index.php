@@ -50,7 +50,7 @@ if ($results->num_rows > 0) {
 function goTrhoughMovies($db_genre, $conn, $tmdb) {
     $genreID = intval($db_genre);
     
-    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $genreID";
+    $query = "SELECT * FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $genreID ORDER BY RAND() LIMIT 20";
     $result = $conn->query($query);
     
     $movieRow = '';
@@ -59,70 +59,7 @@ function goTrhoughMovies($db_genre, $conn, $tmdb) {
         // Es gibt mindestens einen Film des Genres
     
         while ($movie = $result->fetch_assoc()) {
-            $id = $movie['id'];
-            $movieID = $movie['movie_tmdbID'];
-            $movieTitle = $movie['movie_title'];
-            $movieOverview = $movie['movie_overview'];
-            $movieRating = $movie['movie_rating'];
-            $movieRuntime = $movie['movie_runtime'];
-            $movieRelease = new DateTime($movie['movie_release']);
-            $releaseYear = $movieRelease->format('Y');
-            $moviePoster = $movie['movie_poster'];
-            $movieBackdrop = $movie['movie_thumbnail'];
-            $genres = json_decode($movie['movie_genres']);
-            $genreHTML = '';
-            foreach ( $genres as $genre ) {
-                $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
-            }
-
-            $movieRow = $movieRow . '
-            <div class="swiper-slide">
-                <div class="media-card widescreen-media-card desktop-only">
-                    <figure class="widescreen">
-                        <img src="'.$tmdb->getImageURL().$movieBackdrop.'" alt="">
-                    </figure>
-                    <div class="link-wrapper">
-                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
-                        <a href="#content-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
-                    </div>
-                </div>
-
-                <div class="media-card mobile-only">
-                    <figure class="poster">
-                        <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
-                    </figure>
-                    <div class="link-wrapper">
-                        <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
-                        <a href="#content-'.$movieID.'" title="'.$movieTitle.'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
-                    </div>
-                </div>
-
-                <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
-                    <div class="col12 marg-bottom-xs mobile-only">
-                        <figure class="widescreen">
-                            <img src="'.$tmdb->getImageURL().$movieBackdrop.'">
-                        </figure>
-                    </div>
-                    <div class="innerWrap">
-                        <div class="col7 marg-right-col1">
-                            <p class="h2">'.$movieTitle.'</p>
-                            <p class="small">
-                                <span class="tag">'.$releaseYear.'</span>
-                                <span class="tag">'.$movieRating.'/10</span>
-                                <span class="tag">'.runtimeToString($movieRuntime).'</span>
-                            </p>
-                            <a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>
-                            <p class="small">'.$movieOverview.'</p>
-                            <p class="small">'.$genreHTML.'</p>
-                        </div>
-                        <div class="col4 desktop-only">
-                            <figure class="poster">
-                                <img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>';
+            $movieRow = $movieRow . movie_card($movie, 'swiper-slide');  
         }
     } else {
         $movieRow = '';

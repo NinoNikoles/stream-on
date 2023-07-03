@@ -39,6 +39,7 @@ class langSnippets {
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
             'continue' => 'Continue',
+            'my_list' => 'My list',
 			
 			// Movie
 			'rating' => 'Rating',
@@ -130,6 +131,7 @@ class langSnippets {
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
             'continue' => 'Fortsetzen',
+            'my_list' => 'Meine Liste',
 			
 			// Movie
 			'rating' => 'Bewertung',
