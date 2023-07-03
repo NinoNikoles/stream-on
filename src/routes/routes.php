@@ -31,6 +31,18 @@ post('/watch/$id', 'views/templates/watch');
 get('/search', 'views/search.php');
 post('/search', 'views/search.php');
 
+// Search page
+get('/my-list', 'views/my-list.php');
+post('/my-list', 'views/my-list.php');
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//-- AJAX STUFF --
+
+// Ajax add to my list
+get('/add-to-list', 'views/actions/add-to-list.php');
+post('/add-to-list', 'views/actions/add-to-list.php');
+
 // Ajax searchbar
 get('/searchbar', 'views/actions/searchbar.php');
 post('/searchbar', 'views/actions/searchbar.php');
@@ -45,6 +57,8 @@ post('/live-search', 'views/actions/livesearch.php');
 get('/movie-scroll-load', 'views/actions/movie-scroll-load.php');
 post('/movie-scroll-load', 'views/actions/movie-scroll-load.php');
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 // Admin Check
 if ($_SESSION['role'] == '1') {
     get('/admin/settings', 'views/backend/settings.php');
