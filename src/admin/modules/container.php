@@ -142,7 +142,7 @@ function currentWatchlist() {
                                             <div class="desktop-only">
                                                 <div class="media-card widescreen-media-card">
                                                     <figure class="widescreen">
-                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" loading="lazy">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" class="lazy-load">
                                                     </figure>
                                                     <div class="link-wrapper">
                                                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -158,7 +158,7 @@ function currentWatchlist() {
                                             <div class="mobile-only">
                                                 <div class="media-card">
                                                     <figure class="poster">
-                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" loading="lazy">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" class="lazy-load">
                                                     </figure>
                                                     <div class="link-wrapper">
                                                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -173,7 +173,7 @@ function currentWatchlist() {
                                             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                                                 <div class="col12 marg-bottom-xs mobile-only">
                                                     <figure class="widescreen">
-                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" loading="lazy">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" class="lazy-load">
                                                     </figure>
                                                 </div>
                                                 <div class="innerWrap">
@@ -191,7 +191,7 @@ function currentWatchlist() {
                                                     </div>
                                                     <div class="col4 desktop-only">
                                                         <figure class="poster">
-                                                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" loading="lazy">
+                                                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" class="lazy-load">
                                                         </figure>
                                                     </div>
                                                 </div>

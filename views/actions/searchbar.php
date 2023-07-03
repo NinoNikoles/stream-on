@@ -32,7 +32,7 @@
                 if( $dbMovie !== true ) {
                     echo '<a href="#movie-'.$movieID.'" class="display-flex flex-row marg-no" data-modal data-src="#content-'.$movieID.'">';
                         echo '<figure class="poster" style="width:20%;max-width:100px;">';
-                            echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$poster.'" loading="lazy">';
+                            echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$poster.'" class="lazy-load">';
                         echo '</figure>';
                         echo '<span class="pad-xs" style="width:80%;">'.$title.'</span>';
                     echo '</a>';
@@ -40,7 +40,7 @@
                     echo '<div class="info-popup" id="content-'.$movieID.'" style="display:none;">';
                         echo '<div class="col12 marg-bottom-xs mobile-only">';
                             echo '<figure class="widescreen">';
-                                echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$backdrop.'" loading="lazy">';
+                                echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$backdrop.'" class="lazy-load">';
                             echo '</figure>';
                         echo '</div>';
                         echo '<div class="innerWrap">';
@@ -57,7 +57,7 @@
                             echo '</div>';
                             echo '<div class="col4 desktop-only">';
                                 echo '<figure class="poster">';
-                                    echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" loading="lazy">';
+                                    echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" class="lazy-load">';
                                 echo '</figure>';
                             echo '</div>';
                         echo '</div>';

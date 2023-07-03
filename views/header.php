@@ -53,7 +53,7 @@
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">
                     <figure class="square">
-                        <img src="/views/build/css/images/img_preview.webp" data-src="<?php echo userProfileImg(); ?>" loading="lazy">
+                        <img src="/views/build/css/images/img_preview.webp" data-src="<?php echo userProfileImg(); ?>" class="lazy-load">
                     </figure>
 
                     <menu class="user-menu">

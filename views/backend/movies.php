@@ -41,7 +41,7 @@ if ( isset($_POST['add-movie']) ) {
                             echo '<div class="col-6 col3-medium column">';
                                 echo '<a href="/admin/movie/?id='.$movie['id'].'" title="'.$movie['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
-                                        echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movie['poster'].'" alt="" loading="lazy">';
+                                        echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movie['poster'].'" alt="" class="lazy-load">';
                                     echo '</figure>';
                                     echo '<span class="title">'.truncate($movie['title'],20).'</span>';
                                 echo '</a>';
