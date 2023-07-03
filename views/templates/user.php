@@ -61,7 +61,7 @@
             <div class="col4 marg-left-col4 marg-right-col4">
                 <h1 class="text-center"><?php echo $_SESSION['username']; ?></h1>
                 <figure class="square">
-                    <img src="<?php echo userProfileImg(); ?>">
+                    <img src="<?php echo userProfileImg(); ?>" loading="lazy">
                 </figure>
 
 

@@ -32,7 +32,7 @@
                 if( $dbMovie !== true ) {
                     echo '<a href="#movie-'.$movieID.'" class="display-flex flex-row marg-no" data-modal data-src="#content-'.$movieID.'">';
                         echo '<figure class="poster" style="width:20%;max-width:100px;">';
-                            echo '<img src="'.$tmdb->getImageURL().$poster.'">';
+                            echo '<img src="'.$tmdb->getImageURL('w400').$poster.'" loading="lazy">';
                         echo '</figure>';
                         echo '<span class="pad-xs" style="width:80%;">'.$title.'</span>';
                     echo '</a>';
@@ -40,7 +40,7 @@
                     echo '<div class="info-popup" id="content-'.$movieID.'" style="display:none;">';
                         echo '<div class="col12 marg-bottom-xs mobile-only">';
                             echo '<figure class="widescreen">';
-                                echo '<img src="'.$tmdb->getImageURL().$backdrop.'">';
+                                echo '<img src="'.$tmdb->getImageURL('w500').$backdrop.'" loading="lazy">';
                             echo '</figure>';
                         echo '</div>';
                         echo '<div class="innerWrap">';
@@ -57,7 +57,7 @@
                             echo '</div>';
                             echo '<div class="col4 desktop-only">';
                                 echo '<figure class="poster">';
-                                    echo '<img src="'.$tmdb->getImageURL().$moviePoster.'" alt="">';
+                                    echo '<img src="'.$tmdb->getImageURL().$moviePoster.'" alt="" loading="lazy">';
                                 echo '</figure>';
                             echo '</div>';
                         echo '</div>';

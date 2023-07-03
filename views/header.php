@@ -53,7 +53,7 @@
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">
                     <figure class="square">
-                        <img src="<?php echo userProfileImg(); ?>">
+                        <img src="<?php echo userProfileImg(); ?>" loading="lazy">
                     </figure>
 
                     <menu class="user-menu">
