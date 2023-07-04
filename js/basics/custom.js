@@ -15,7 +15,7 @@ debounceScroll = function(e){
 	clearTimeout(resizeTimerScroll);
 	resizeTimerScroll = setTimeout(function() {
 		checkPosition();
-		//page.lazyLoad();
+		page.lazyLoad();
 	}, 10);
 };
 
@@ -70,7 +70,7 @@ $(document).ready(function() {
             self.movieTimeSafe();
             self.initPlayer();
             self.myList();
-            //self.lazyLoad();
+            self.lazyLoad();
             //self.videoTriggerFullscreen();
         },
 
@@ -602,8 +602,7 @@ $(document).ready(function() {
                         isLoading = true; // Setze das Flag, um anzuzeigen, dass eine AJAX-Anfrage ausgeführt wird
                         $('#loading-message').css('display','block');
 
-                        clearTimeout(addTimer);
-                        addTimer = setTimeout(function() {
+                        setTimeout(function() {
                             $('#loading-message').css('display','none');
 
                             var endIndex = Math.min(startIndex + itemsPerPage, movieList.length); // Endindex für die Ausgabe
@@ -618,6 +617,7 @@ $(document).ready(function() {
                             if (startIndex === movieList.length) {
                                 secureEnd = true;
                             }
+                            self.lazyLoad();
 
                             isLoading = false; // Setze das Flag zurück, um anzuzeigen, dass die AJAX-Anfrage abgeschlossen ist
                         }, 1000);                      
