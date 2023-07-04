@@ -229,8 +229,8 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     $sql = 'CREATE TABLE IF NOT EXISTS movies (
         id INT NOT NULL AUTO_INCREMENT,
         movie_tmdbID INT,
-        movie_title VARCHAR(255) NOT NULL,
-        movie_tagline VARCHAR(255) NOT NULL,
+        movie_title TEXT NOT NULL,
+        movie_tagline TEXT NOT NULL,
         movie_overview TEXT NOT NULL,
         movie_poster TEXT NOT NULL,
         movie_thumbnail TEXT NOT NULL,

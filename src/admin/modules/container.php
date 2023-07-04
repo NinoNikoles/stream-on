@@ -37,7 +37,7 @@ function movie_card($movie, $extraClasses = '') {
         <div class="'.$extraClasses.'">
             <div class="media-card widescreen-media-card desktop-only">
                 <figure class="widescreen">
-                    <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" class="lazy-load">
+                    <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" class="lazy-load" importance="low">
                 </figure>
                 <div class="link-wrapper">
                     <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -47,7 +47,7 @@ function movie_card($movie, $extraClasses = '') {
 
             <div class="media-card mobile-only">
                 <figure class="poster">
-                    <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" class="lazy-load">
+                    <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" class="lazy-load" importance="low">
                 </figure>
                 <div class="link-wrapper">
                     <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -58,7 +58,7 @@ function movie_card($movie, $extraClasses = '') {
             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                 <div class="col12 marg-bottom-xs mobile-only">
                     <figure class="widescreen">
-                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" class="lazy-load">
+                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" class="lazy-load" importance="low">
                     </figure>
                 </div>
                 <div class="innerWrap">
@@ -75,7 +75,7 @@ function movie_card($movie, $extraClasses = '') {
                     </div>
                     <div class="col4 desktop-only">
                         <figure class="poster">
-                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" class="lazy-load">
+                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" class="lazy-load" importance="low">
                         </figure>
                     </div>
                 </div>
@@ -117,11 +117,11 @@ function currentWatchlist() {
                                 $releaseYear = $movieRelease->format('Y');
                                 $moviePoster = $movie['movie_poster'];
                                 $movieBackdrop = $movie['movie_thumbnail'];
-                                $genres = json_decode($movie['movie_genres']);
+                                /* $genres = json_decode($movie['movie_genres']);
                                 $genreHTML = '';
                                 foreach ( $genres as $genre ) {
                                     $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
-                                }
+                                }*/
                                 $watchedTime = floatval($movie['watched_seconds']);
                                 $totalDuration = floatval($movie['total_length']);
                                 $watchedInPercent = ($watchedTime/$totalDuration)*100;
@@ -142,7 +142,7 @@ function currentWatchlist() {
                                             <div class="desktop-only">
                                                 <div class="media-card widescreen-media-card">
                                                     <figure class="widescreen">
-                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" class="lazy-load">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" alt="" class="lazy-load" importance="low">
                                                     </figure>
                                                     <div class="link-wrapper">
                                                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -158,7 +158,7 @@ function currentWatchlist() {
                                             <div class="mobile-only">
                                                 <div class="media-card">
                                                     <figure class="poster">
-                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" class="lazy-load">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" class="lazy-load" importance="low">
                                                     </figure>
                                                     <div class="link-wrapper">
                                                         <a href="/watch/?id='.$movieID.'" title="'.$movieTitle.'" class="play-trigger"></a>
@@ -173,7 +173,7 @@ function currentWatchlist() {
                                             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                                                 <div class="col12 marg-bottom-xs mobile-only">
                                                     <figure class="widescreen">
-                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" class="lazy-load">
+                                                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" class="lazy-load" importance="low">
                                                     </figure>
                                                 </div>
                                                 <div class="innerWrap">
@@ -187,11 +187,10 @@ function currentWatchlist() {
                                                         <a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>
                                                         '.$listButtons.'
                                                         <p class="small">'.$movieOverview.'</p>
-                                                        <p class="small">'.$genreHTML.'</p>
                                                     </div>
                                                     <div class="col4 desktop-only">
                                                         <figure class="poster">
-                                                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" class="lazy-load">
+                                                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" class="lazy-load" importance="low">
                                                         </figure>
                                                     </div>
                                                 </div>
@@ -233,7 +232,7 @@ function myList() {
 
 function genreSlider() {
     $conn = dbConnect();
-    $tmdb = setupTMDB();
+    $tmdb = setupTMDB(); // 28, 12, 16, 80, 18, 878, 53
 
     $sql = "SELECT DISTINCT g.genre_id, g.genre_name FROM genres g WHERE g.genre_id IN (SELECT DISTINCT mg.genre_id FROM movie_genre mg)";//"SELECT genre_id, genre_name FROM genres ORDER BY genre_id ASC";
     $results = $conn->query($sql);

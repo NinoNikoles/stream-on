@@ -626,10 +626,10 @@ $(document).ready(function() {
 
                 // Überprüfe, ob der Benutzer das Ende der Seite erreicht hat
                 $(window).scroll(function() {
-                    var wheight = $(window).height();
-                    var dheight = $(document).height();
+                    var wheight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+                    var dheight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight);
 
-                    if ($(window).scrollTop() + wheight >= dheight) {
+                    if (window.scrollY + wheight >= dheight) {
                         displayNextMovies();
                     }
                 });
