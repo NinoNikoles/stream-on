@@ -13,15 +13,15 @@ function movie_card($movie, $extraClasses = '') {
     $releaseYear = $movieRelease->format('Y');
     $moviePoster = $movie['movie_poster'];
     $movieBackdrop = $movie['movie_thumbnail'];
-    $genres = json_decode($movie['movie_genres']);
+    /*$genres = json_decode($movie['movie_genres']);
     $genreHTML = '';
     foreach ( $genres as $genre ) {
         $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
-    }
+    }*/
 
     $userID = intval($_SESSION['userID']);
 
-    $watchListCheckSQL = "SELECT * FROM watchlist WHERE user_id=$userID and movie_id=$movieID";
+    $watchListCheckSQL = "SELECT id FROM watchlist WHERE user_id=$userID and movie_id=$movieID";
 
     if ( $conn->query($watchListCheckSQL)->num_rows > 0 ) {
         $listButtons = '
@@ -58,7 +58,7 @@ function movie_card($movie, $extraClasses = '') {
             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                 <div class="col12 marg-bottom-xs mobile-only">
                     <figure class="widescreen">
-                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" class="lazy-load">
+                        <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w400').$movieBackdrop.'" class="lazy-load">
                     </figure>
                 </div>
                 <div class="innerWrap">
@@ -72,11 +72,10 @@ function movie_card($movie, $extraClasses = '') {
                         <a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>
                         '.$listButtons.'
                         <p class="small">'.$movieOverview.'</p>
-                        <p class="small">'.$genreHTML.'</p>
                     </div>
                     <div class="col4 desktop-only">
                         <figure class="poster">
-                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" alt="" class="lazy-load">
+                            <img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL('w500').$moviePoster.'" alt="" class="lazy-load">
                         </figure>
                     </div>
                 </div>
@@ -236,7 +235,7 @@ function genreSlider() {
     $conn = dbConnect();
     $tmdb = setupTMDB();
 
-    $sql = "SELECT genre_id, genre_name FROM genres ORDER BY genre_id ASC";
+    $sql = "SELECT DISTINCT g.genre_id, g.genre_name FROM genres g WHERE g.genre_id IN (SELECT DISTINCT mg.genre_id FROM movie_genre mg)";//"SELECT genre_id, genre_name FROM genres ORDER BY genre_id ASC";
     $results = $conn->query($sql);
 
     if ($results->num_rows > 0) {
@@ -276,29 +275,31 @@ function genreSlider() {
         echo '</div>';
     }
 
-    function goTrhoughMovies($db_genre, $conn, $tmdb) {
-        $genreID = intval($db_genre);
-        
-        $query = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_genres FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $genreID ORDER BY RAND() LIMIT 20";
-        $result = $conn->query($query);
-        
-        $movieRow = '';
-
-        if ($result->num_rows > 0) {
-            // Es gibt mindestens einen Film des Genres
-        
-            while ($movie = $result->fetch_assoc()) {
-                $movieRow = $movieRow . movie_card($movie, 'swiper-slide');  
-            }
-        } else {
-            $movieRow = '';
-        }
-
-        return $movieRow;
-    }
+    
 
     echo '<div class="marg-bottom-l"></div>';
 
     $conn->close();
+}
+
+function goTrhoughMovies($db_genre, $conn) {
+    $genreID = intval($db_genre);
+    
+    $query = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_genres FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $genreID ORDER BY RAND() LIMIT 20";
+    $result = $conn->query($query);
+    
+    $movieRow = '';
+
+    if ($result->num_rows > 0) {
+        // Es gibt mindestens einen Film des Genres
+    
+        while ($movie = $result->fetch_assoc()) {
+            $movieRow = $movieRow . movie_card($movie, 'swiper-slide');  
+        }
+    } else {
+        $movieRow = '';
+    }
+
+    return $movieRow;
 }
 ?>
