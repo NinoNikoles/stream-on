@@ -1,35 +1,23 @@
 <?php
+//header('Content-Type: application/json');
 $conn = dbConnect();
 $tmdb = setupTMDB();
 
-if ( $_POST['count'] === '' ) {   
-    $loadCount = 0;
-} else {
-    $loadCount = $_POST['count'];
-}
+$query = "SELECT * FROM movies ORDER BY movie_title ASC";
+$result = $conn->query($query);
 
-$movies = scrollLoader('movies', $loadCount);
+$movieRow = [];
 
-$movieList = '';
+if ($result->num_rows > 0) {
+    // Es gibt mindestens einen Film des Genres
 
-if ( $movies > 0 ) {    
-    foreach ( $movies as $movie ) {
-        $movieList = $movieList . movie_card($movie, 'col-6 col-3-medium grid-padding');
+    while ($movie = $result->fetch_assoc()) {
+        $movieRow[] = movie_card($movie);  
     }
-
-    $loadCount = count($movies);
-
-    $response = array(
-        'movieList' => $movieList,
-        'loadCount' => $loadCount,
-    );
-
-    echo json_encode($response);
 } else {
-    $response = array(
-        'movieList' => false,
-        'loadCount' => false,
-    );
-
-    echo json_encode($response);
+    $movieRow = '';
 }
+
+$jsonResponse = json_encode($movieRow); // Hier wird der JSON-Response generiert
+$jsonResponse = str_replace(array("\r", "\n"), '', $jsonResponse);
+echo $jsonResponse;

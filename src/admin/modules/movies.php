@@ -206,17 +206,17 @@ function selectAllMoviesByTitle($order = ''){
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
 
-            $data[$i]['id'] = $row['movie_tmdbID'];
-            $data[$i]['title'] = $row['movie_title'];            
-            $data[$i]['tagline'] = $row['movie_tagline'];
-            $data[$i]['overview'] = $row['movie_overview'];
-            $data[$i]['poster'] = $row['movie_poster'];
-            $data[$i]['backdrop'] = $row['movie_thumbnail'];
-            $data[$i]['voteAverage'] = $row['movie_rating'];
-            $data[$i]['release'] = $row['movie_release'];
-            $data[$i]['runtime'] = $row['movie_runtime'];
-            $data[$i]['collection'] = $row['movie_collection'];
-            $data[$i]['genres'] = [];
+            $data[$i]['movie_tmdbID'] = $row['movie_tmdbID'];
+            $data[$i]['movie_title'] = $row['movie_title'];            
+            $data[$i]['movie_tagline'] = $row['movie_tagline'];
+            $data[$i]['movie_overview'] = $row['movie_overview'];
+            $data[$i]['movie_poster'] = $row['movie_poster'];
+            $data[$i]['movie_thumbnail'] = $row['movie_thumbnail'];
+            $data[$i]['movie_rating'] = $row['movie_rating'];
+            $data[$i]['movie_release'] = $row['movie_release'];
+            $data[$i]['movie_runtime'] = $row['movie_runtime'];
+            $data[$i]['movie_collection'] = $row['movie_collection'];
+            $data[$i]['movie_genres'] = [];
             
             $movie = $tmdb->getMovie($data[$i]['id']);
             $genres = $movie->getGenres();
@@ -229,7 +229,7 @@ function selectAllMoviesByTitle($order = ''){
                     'name' => $genreName,
                 );
 
-                $data[$i]['genres'][] = $array;
+                $data[$i]['movie_genres'][] = $array;
             }
 
             $i++;
