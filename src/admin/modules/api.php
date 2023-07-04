@@ -4,7 +4,7 @@ function scrollLoader($media, $count) {
 
     $count = intval($count);
 
-    $sql = "SELECT * FROM $media ORDER BY movie_title ASC LIMIT 20 OFFSET $count";
+    $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_genres FROM $media ORDER BY movie_title ASC LIMIT 20 OFFSET $count";
     $results = $conn->query($sql);
 
     $data = [];
@@ -41,6 +41,7 @@ function scrollLoader($media, $count) {
         }
     }
 
+    $conn->close();
     return $data;
 }
 ?>

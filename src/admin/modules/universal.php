@@ -64,8 +64,10 @@ function checkIfUserExists($username) {
     $conn = dbConnect();
     $result = $conn->query("SELECT username FROM users WHERE username='$username'");
     if ($result->num_rows > 0) {
+        $conn->close();
         return true;
     } else {
+        $conn->close();
         return false;
     }
 }
@@ -85,10 +87,11 @@ function destroySesssion() {
 function getSiteTitle() {
     $conn = dbConnect();
 
-    $sql = "SELECT * FROM settings WHERE setting_name='site_title'";
+    $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $conn->close();
             return $row['setting_option'];
         }
     }
@@ -145,9 +148,11 @@ function setFavicon($PATH) {
     $sql = "UPDATE settings SET movie_file_path='$PATH' WHERE setting_name='favicon_path'";
 
     if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
         set_callout('alert','update_file_apth_alert');
         page_refresh();
     } else {
+        $conn->close();
         set_callout('success','update_file_path_success');
         page_refresh();
     }
@@ -160,6 +165,7 @@ function get_apikey_db() {
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $conn->close();
             return $row['setting_option'];
         }
     }
@@ -295,9 +301,11 @@ function updateSettings($values) {
     ON DUPLICATE KEY UPDATE setting_option = VALUES(setting_option)";
 
     if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
         set_callout('alert','settings_update_failed');
         page_redirect('/admin/settings');
     } else {
+        $conn->close();
         set_callout('success','settings_update_success');
         page_redirect('/admin/settings');
     }
@@ -318,7 +326,7 @@ function runtimeToString($runtime) {
     $hours = floor($runtime / 60);
     $restMinutes = $runtime % 60;
     
-    if (!($hours == 1)) {
+    if (!($restMinutes == 1)) {
         $minuteText = lang_snippet('minutes');
     } else {
         $minuteText = lang_snippet('minute');

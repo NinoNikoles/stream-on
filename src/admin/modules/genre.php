@@ -19,9 +19,11 @@ function initGenres() {
     $result = $conn->query($sql);
 
     if (!$result) {
+        $conn->close();
         set_callout('alert','genres_created_alert');
         page_redirect("/admin/genres");
     } else {
+        $conn->close();
         set_callout('success','genres_created_success');
         page_redirect("/admin/genres");
     }
@@ -33,19 +35,22 @@ function genreCheck() {
     $results = $conn->query($sql);
     
     if ($results->num_rows > 0) {
+        $conn->close();
         return true;
     } else {
+        $conn->close();
         return false;
     }
 }
 
 function getDBGenreNameByID($id) {
     $conn = dbConnect();
-    $sql = "SELECT * FROM genres WHERE genre_id='$id'";
+    $sql = "SELECT genre_name FROM genres WHERE genre_id='$id'";
     $results = $conn->query($sql);
     if ($results->num_rows > 0) {
         while ($genre = $results->fetch_assoc()) {
             if ( isset($genre['genre_name']) ) {
+                $conn->close();
                 return $genre['genre_name'];
             }
         }

@@ -77,7 +77,7 @@ function insertMovie($movieID) {
         page_redirect("/admin/movies");
     }
 
-
+    $conn->close();
 }
 
 // Delete Movie
@@ -127,7 +127,7 @@ function selectMovieByID($movieID) {
     $tmdb = setupTMDB();
     $conn = dbConnect();
 
-    $sql = "SELECT * FROM movies WHERE movie_tmdbID='$movieID'";
+    $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, move_collection, movie_file_path, movie_genres FROM movies WHERE movie_tmdbID='$movieID'";
     $result = $conn->query($sql);
 
     $data = [];
@@ -173,6 +173,7 @@ function selectMovieByID($movieID) {
         $data = 0;
     }
 
+    $conn->close();
     return $data;
 }
 
@@ -183,6 +184,7 @@ function movieInLocalDB($movieID) {
     $sql = "SELECT movie_tmdbID FROM movies WHERE movie_tmdbID='$movieID'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
+        $conn->close();
         return true;
     }
 }
@@ -193,9 +195,9 @@ function selectAllMoviesByTitle($order = ''){
     $conn = dbConnect();
 
     if ( $order != '' ) {
-        $sql = "SELECT * FROM movies ORDER BY movie_title $order";
+        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection movie_genres FROM movies ORDER BY movie_title $order";
     } else {
-        $sql = "SELECT * FROM movies";
+        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection, movie_genres FROM movies";
     }
     
     $result = $conn->query($sql);
@@ -236,6 +238,7 @@ function selectAllMoviesByTitle($order = ''){
         }
     }
 
+    $conn->close();
     return $data;
 }
 
@@ -244,7 +247,7 @@ function selectMovieByTitle($title){
     $tmdb = setupTMDB();
     $conn = dbConnect();
     if ( $title !== '' ) {
-        $sql = "SELECT * FROM movies WHERE movie_title LIKE '%$title%'";
+        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection, movie_genres FROM movies WHERE movie_title LIKE '%$title%'";
         $result = $conn->query($sql);
 
         $data = [];
@@ -282,8 +285,11 @@ function selectMovieByTitle($title){
                 $i++;
             }
         }
+
+        $conn->close();
         return $data;
     } else {
+        $conn->close();
         return $data = '';
     }
 }
@@ -292,10 +298,11 @@ function selectMovieByTitle($title){
 function movieIsInCollection($id){
     $conn = dbConnect();
 
-    $sql = "SELECT * FROM movies WHERE movie_tmdbID='$id'";
+    $sql = "SELECT id FROM movies WHERE movie_tmdbID='$id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        $conn->close();
         return true;
     }
 }
@@ -308,9 +315,11 @@ function updateMovieFilePath($moviePath, $movieID) {
     $sql = "UPDATE movies SET movie_file_path='$moviePath' WHERE movie_tmdbID='$movieID'";
 
     if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
         set_callout('alert','update_file_apth_alert');
         page_redirect('/admin/movie/?id='.$movieID);
     } else {
+        $conn->close();
         set_callout('success','update_file_path_success');
         page_redirect('/admin/movie/?id='.$movieID);
     }
@@ -323,9 +332,11 @@ function updateMoviePoster($movieID, $poster) {
 
     $sql = "UPDATE movies SET movie_poster='$posterPATH' WHERE movie_tmdbID='$movieID'";
     if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
         set_callout('alert','update_poster_alert');
         page_redirect('/admin/movie/?id='.$movieID);
     } else {
+        $conn->close();
         set_callout('success','update_poster_success');
         page_redirect('/admin/movie/?id='.$movieID);
     }
@@ -338,9 +349,11 @@ function updateMovieBackdrop($movieID, $backdrop) {
 
     $sql = "UPDATE movies SET movie_thumbnail='$backdropPATH' WHERE movie_tmdbID='$movieID'";
     if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
         set_callout('alert','update_backdrop_alert');
         page_redirect('/admin/movie/?id='.$movieID);
     } else {
+        $conn->close();
         set_callout('success','update_backdrop_success');
         page_redirect('/admin/movie/?id='.$movieID);
     }

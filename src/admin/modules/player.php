@@ -35,5 +35,7 @@ function videoPlayer($movieID, $fullscreen = false) {
         }
         echo '<span data-time="'.$watchedTime.'"></span>';
     }
+
+    $conn->close();
 }
 ?>
