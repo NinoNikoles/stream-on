@@ -17,7 +17,7 @@ function movie_card($movie, $extraClasses = '') {
     $genreHTML = '';
     foreach ( $genres as $genre ) {
         $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
-    }*/
+    }*//*  */
 
     $userID = intval($_SESSION['userID']);
 
