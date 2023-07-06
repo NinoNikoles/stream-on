@@ -14,7 +14,6 @@
     <link rel="icon" href="">
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
     <title><?php echo getSiteTitle();?></title>
 </head>
 <body>
@@ -53,7 +52,7 @@
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">
                     <figure class="square">
-                        <img src="/views/build/css/images/img_preview.webp" data-src="<?php echo userProfileImg(); ?>" class="lazy-load">
+                        <img src="<?php echo userProfileImg(); ?>" loading="lazy">
                     </figure>
 
                     <menu class="user-menu">
