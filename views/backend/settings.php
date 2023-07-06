@@ -16,7 +16,6 @@
     $siteTitle = $siteTitle;
     $apikey = $apikey;
     $apiLang = $apiLang;
-
 ?>
 
 <div class="col12">

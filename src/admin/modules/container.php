@@ -43,6 +43,10 @@ function movie_card($movie, $extraClasses = '') {
         <a href="#" class="btn btn-white icon-left icon-remove mylist-btn remove-from-list hidden" data-movie-id="'.$movieID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
     }
 
+    if ( $_SESSION['role'] === "1" ) {
+        $editBtn = '<a href="/admin/movie/?id='.$movieID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
+    }
+
     $card = '
         <div class="'.$extraClasses.'">
             <div class="media-card">
@@ -56,6 +60,7 @@ function movie_card($movie, $extraClasses = '') {
                     <div class="link-wrapper">
                         <a href="/watch/?id='.$movieID.'" title="'.$title.'" class="play-trigger"></a>
                         <a href="#content-'.$movieID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$movieID.'"></a>
+                        '.$editBtn.'
                     </div>
                 </div>
                 '.$timebar.'

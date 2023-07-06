@@ -38,7 +38,8 @@
             @include transition(background-color $transition-default);
 
             .play-trigger,
-            .info-trigger {
+            .info-trigger,
+            .edit-trigger {
                 background: {
                     color: transparent !important;
                 }
@@ -88,7 +89,23 @@
                         size: rem-calc(30);
                     }
                 }
-            }            
+            }
+
+            .edit-trigger {
+                width: rem-calc(50);
+                height: rem-calc(50);
+                top: unset;
+                right: unset;
+                bottom: 0;
+                left: 0;
+                left: unset;
+                &::after {
+                    content: "\65";
+                    font: {
+                        size: rem-calc(30);
+                    }
+                }
+            }
         }
 
         &:hover {
