@@ -69,7 +69,7 @@ function movie_card($movie, $extraClasses = '') {
             <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
                 <div class="col12 marg-bottom-xs mobile-only">
                     <figure class="widescreen">
-                        <img src="'.loadImg('w400', $backdrop).'" loading="lazy" importance="low">
+                        <img src="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
                     </figure>
                 </div>
                 <div class="innerWrap">
