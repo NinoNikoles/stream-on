@@ -46,10 +46,9 @@ function onetimesetup($servername, $username, $password, $dbname) {
     }
 
     $result = $conn->query("SELECT setting_option FROM settings WHERE setting_name='one_time_setup'");
-    $setupDone = $result->num_rows > 0;
     
     $conn->close();
-    return $setupDone;
+    return $result;
 }
 
 // Überprüfen, ob die erforderlichen Tabellen existieren

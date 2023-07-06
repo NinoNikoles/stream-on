@@ -6,6 +6,6 @@
     <link rel="icon" href="">
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <title><?php echo getSiteTitle();?></title>
+    <title>Install</title>
 </head>
 <body>
