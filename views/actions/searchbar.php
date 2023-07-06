@@ -12,16 +12,16 @@
         
         if ($movies) {
             foreach ( $movies as $movie ) {    
-                $movieID = $movie['movie_tmdbID'];
-                $title = $movie['movie_title'];
-                $movieOverview = $movie['movie_overview'];
-                $movieRating = $movie['movie_rating'];
-                $movieRuntime = $movie['movie_runtime'];
-                $movieRelease = new DateTime($movie['movie_release']);
+                $movieID = $movie['tmdbID'];
+                $title = $movie['title'];
+                $movieOverview = $movie['overview'];
+                $movieRating = $movie['rating'];
+                $movieRuntime = $movie['runtime'];
+                $movieRelease = new DateTime($movie['release']);
                 $releaseYear = $movieRelease->format('Y');
-                $moviePoster = $movie['movie_poster'];
-                $backdrop = $movie['movie_thumbnail'];
-                $genres = json_decode($movie['movie_genres']);
+                $moviePoster = $movie['poster'];
+                $backdrop = $movie['backdrop'];
+                $genres = json_decode($movie['genres']);
                 $genreHTML = '';
                 foreach ( $genres as $genre ) {
                     $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
