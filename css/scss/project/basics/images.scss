@@ -1,10 +1,5 @@
 img {
-    &.lazy-load {
-        background: {
-            image: url('/views/build/css/images/img_preview.webp');
-            position: center;
-            repeat: no-repeat;
-            size: cover;
-        }
+    &[loading="lazy"] {
+        //visibility: hidden;
     }
 }

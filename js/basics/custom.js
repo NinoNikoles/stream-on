@@ -15,7 +15,6 @@ debounceScroll = function(e){
 	clearTimeout(resizeTimerScroll);
 	resizeTimerScroll = setTimeout(function() {
 		checkPosition();
-		page.lazyLoad();
 	}, 10);
 };
 
@@ -66,11 +65,10 @@ $(document).ready(function() {
             self.initScrolltrigger();
             self.jstree();
             self.userMenuBtn();
-            self.infinitLoad();
+            //self.infinitLoad();
             self.movieTimeSafe();
             self.initPlayer();
             self.myList();
-            self.lazyLoad();
             //self.videoTriggerFullscreen();
         },
 
@@ -141,7 +139,6 @@ $(document).ready(function() {
 			trigger.add('.genre-slider');
             trigger.add('#load-count');
             trigger.add('.currentWatch-slider');
-            trigger.add('.lazy-load');
 		},
 
         initPictures: function () {
@@ -617,7 +614,6 @@ $(document).ready(function() {
                             if (startIndex === movieList.length) {
                                 secureEnd = true;
                             }
-                            self.lazyLoad();
 
                             isLoading = false; // Setze das Flag zurück, um anzuzeigen, dass die AJAX-Anfrage abgeschlossen ist
                         }, 1000);                      
@@ -751,24 +747,12 @@ $(document).ready(function() {
                             },
                             success: function(response) {
                                 $resultList.html(response);
-                                self.lazyLoad();
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
                                 console.log('Fehler: ' + error);
                             }
                         });
                     }
-                });
-            }
-        },
-
-        lazyLoad: function() {
-            var lazyImages = document.querySelectorAll(".lazy-load");
-
-            for (var i=0; i<lazyImages.length; i++) {
-                lazyImages[i].src = lazyImages[i].getAttribute("data-src");
-                lazyImages[i].addEventListener("load", function() {
-                    this.style.visibility = "visible";
                 });
             }
         }
