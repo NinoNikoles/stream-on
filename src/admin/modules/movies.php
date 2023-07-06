@@ -190,107 +190,53 @@ function movieInLocalDB($movieID) {
 }
 
 //-- Returns all local database movies ordered by A-Z or Z-A --
-function selectAllMoviesByTitle($order = ''){
-    $tmdb = setupTMDB();
+function selectAllMoviesByTitle($order = '') {
     $conn = dbConnect();
-
+    
     if ( $order != '' ) {
-        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection movie_genres FROM movies ORDER BY movie_title $order";
+        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_genres FROM movies ORDER BY movie_title $order";
     } else {
-        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection, movie_genres FROM movies";
+        $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_genres FROM movies";
     }
     
-    $result = $conn->query($sql);
+    $results = $conn->query($sql);
 
-    $data = [];
-    $i = 0;
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-
-            $data[$i]['movie_tmdbID'] = $row['movie_tmdbID'];
-            $data[$i]['movie_title'] = $row['movie_title'];            
-            $data[$i]['movie_tagline'] = $row['movie_tagline'];
-            $data[$i]['movie_overview'] = $row['movie_overview'];
-            $data[$i]['movie_poster'] = $row['movie_poster'];
-            $data[$i]['movie_thumbnail'] = $row['movie_thumbnail'];
-            $data[$i]['movie_rating'] = $row['movie_rating'];
-            $data[$i]['movie_release'] = $row['movie_release'];
-            $data[$i]['movie_runtime'] = $row['movie_runtime'];
-            $data[$i]['movie_collection'] = $row['movie_collection'];
-            $data[$i]['movie_genres'] = [];
+    if ( $results->num_rows > 0 ) {
             
-            $movie = $tmdb->getMovie($data[$i]['id']);
-            $genres = $movie->getGenres();
-            foreach ($genres as $genre) {
-                $genreID = $genre->getId();
-                $genreName = $genre->getName();
-
-                $array = array(
-                    'id' => $genreID,
-                    'name' => $genreName,
-                );
-
-                $data[$i]['movie_genres'][] = $array;
-            }
-
-            $i++;
+        $movies = [];
+        while ($rows = $results->fetch_assoc() ) {
+            $movies[] = moviesDataconverter($rows);
         }
     }
 
     $conn->close();
-    return $data;
+    return $movies;
 }
 
 //-- Returns all local database movies ordered by A-Z or Z-A --
 function selectMovieByTitle($title){
-    $tmdb = setupTMDB();
     $conn = dbConnect();
+    $data = '';
+
     if ( $title !== '' ) {
         $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection, movie_genres FROM movies WHERE movie_title LIKE '%$title%'";
-        $result = $conn->query($sql);
+        $results = $conn->query($sql);
+        
+        if ( $results->num_rows > 0 ) {
 
-        $data = [];
-        $i = 0;
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-
-                $data[$i]['id'] = $row['movie_tmdbID'];
-                $data[$i]['title'] = $row['movie_title'];            
-                $data[$i]['tagline'] = $row['movie_tagline'];
-                $data[$i]['overview'] = $row['movie_overview'];
-                $data[$i]['poster'] = $row['movie_poster'];
-                $data[$i]['backdrop'] = $row['movie_thumbnail'];
-                $data[$i]['voteAverage'] = $row['movie_rating'];
-                $data[$i]['release'] = $row['movie_release'];
-                $data[$i]['runtime'] = $row['movie_runtime'];
-                $data[$i]['collection'] = $row['movie_collection'];
-                $data[$i]['genres'] = [];
-                
-                $movie = $tmdb->getMovie($data[$i]['id']);
-                $genres = $movie->getGenres();
-                foreach ($genres as $genre) {
-                    $genreID = $genre->getId();
-                    $genreName = $genre->getName();
-
-                    $array = array(
-                        'id' => $genreID,
-                        'name' => $genreName,
-                    );
-
-                    $data[$i]['genres'][] = $array;
-                }
-
-                $i++;
+            $movies = [];
+            while ($rows = $results->fetch_assoc() ) {
+                $movies[] = moviesDataconverter($rows);
             }
+        } else {
+            return $data;
         }
 
         $conn->close();
-        return $data;
+        return $movies;
     } else {
         $conn->close();
-        return $data = '';
+        return $data;
     }
 }
 
@@ -357,5 +303,21 @@ function updateMovieBackdrop($movieID, $backdrop) {
         set_callout('success','update_backdrop_success');
         page_redirect('/admin/movie/?id='.$movieID);
     }
+}
+
+//-- Movie data converter --
+function moviesDataconverter($row) {
+    $data['tmdbID'] = $row['movie_tmdbID'];
+    $data['title'] = $row['movie_title'];            
+    $data['tagline'] = $row['movie_tagline'];
+    $data['overview'] = $row['movie_overview'];
+    $data['poster'] = $row['movie_poster'];
+    $data['backdrop'] = $row['movie_thumbnail'];
+    $data['rating'] = $row['movie_rating'];
+    $data['release'] = $row['movie_release'];
+    $data['runtime'] = $row['movie_runtime'];
+    $data['genres'] = $row['movie_genres'];
+    
+    return $data;
 }
 ?>

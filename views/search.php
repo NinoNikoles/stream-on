@@ -1,10 +1,6 @@
 <?php include(ROOT_PATH.'/views/header.php');
 
 $conn = dbConnect();
-$tmdb = setupTMDB();
-
-$sql = "SELECT * FROM genres ORDER BY genre_id ASC";
-$results = $conn->query($sql);
 ?>
 
 <div class="innerWrap marg-top-l marg-bottom-l" id="searchpage">
@@ -17,7 +13,7 @@ $results = $conn->query($sql);
                 if ( isset($_POST['search']) && $_POST['search'] !== '' ) {
                     $movies = selectMovieByTitle($_POST['search']);
                     foreach ( $movies as $movie ) {    
-                        echo movie_card($movie, 'col-2-medium grid-padding');
+                        echo movie_card($movie, 'col-6 col-2-medium grid-padding');
                     }
                 }
             ?>

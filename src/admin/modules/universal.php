@@ -346,4 +346,17 @@ function runtimeToString($runtime) {
 
     return $finalRuntime;
 }
+
+//-- TMDB IMG Path --
+function loadImg($size, $img) {
+    return "http://image.tmdb.org/t/p/$size/$img";
+}
+
+function getWatchedTime($watchedTime, $totalDuration) {
+    $watchedTime = floatval($watchedTime);
+    $totalDuration = floatval($totalDuration);
+    $watchedInPercent = ($watchedTime/$totalDuration)*100;
+
+    return $watchedInPercent;
+}
 ?>
