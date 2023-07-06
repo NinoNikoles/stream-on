@@ -139,11 +139,9 @@ function myList() {
     $results = $conn->query($query);
     
     if ( $results->num_rows > 0 ) {    
-        $movies = $results->fetch_assoc();
-
-        foreach ( $movies as $movie ) {
-            $movie = moviesDataconverter($movie);
-            echo movie_card($movie, 'col-6 col-3-medium grid-padding');
+        while ($movies = $results->fetch_assoc()) {
+            $currMovie = moviesDataconverter($movies);
+            echo movie_card($currMovie, 'col-6 col-3-medium grid-padding');
         }
     }
 
