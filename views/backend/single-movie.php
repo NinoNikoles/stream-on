@@ -101,7 +101,7 @@ if ( $movie == 0 ) {
                     <div class="col12 marg-bottom-s">
                         <a href="#movie-poster" data-fancybox data-src="#movie-poster">
                             <figure class="poster">
-                                <img src="/views/build/css/images/img_preview.webp" data-src="<?php echo $tmdb->getImageURL().$poster; ?>" class="lazy-load">
+                                <img src="<?php echo loadImg('original', $poster); ?>" loading="lazy">
                             </figure>
                         </a>
                            
@@ -121,7 +121,7 @@ if ( $movie == 0 ) {
                                                     echo '<input type="radio" id="poster-'.$i.'" name="poster" value="'.$moviePoster.'">';
                                                     echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
                                                     echo '<figure class="poster">';
-                                                        echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$moviePoster.'" class="lazy-load">';
+                                                        echo '<img src="'.loadImg('original', $moviePoster).'" loading="lazy">';
                                                     echo '</figure>';
                                                 echo '</div>';
                                             echo '</div>';
@@ -139,7 +139,7 @@ if ( $movie == 0 ) {
                     <div class="col12">
                         <a href="#movie-backdrop" data-fancybox data-src="#movie-backdrop">
                             <figure class="original">
-                                <img src="/views/build/css/images/img_preview.webp" data-src="<?php echo $tmdb->getImageURL().$backdrop;?>" class="lazy-load">
+                                <img src="<?php echo loadImg('original', $backdrop);?>" loading="lazy">
                             </figure>
                         </a>
 
@@ -159,7 +159,7 @@ if ( $movie == 0 ) {
                                                 echo '<input type="radio" id="backdrop-'.$i.'" name="backdrop" value="'.$movieBackdrop.'">';
                                                 echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
                                                 echo '<figure class="original">';
-                                                    echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movieBackdrop.'" class="lazy-load">';
+                                                    echo '<img src="'.loadImg('original', $movieBackdrop).'" loading="lazy">';
                                                 echo '</figure>';
                                             echo '</div>';
                                         echo '</div>';
@@ -189,7 +189,7 @@ if ( $movie == 0 ) {
                             echo '<div class="col3 column">';
                                 echo '<a href="#add-movie-'.$movieID.'" class="media-card" data-fancybox data-src="#add-movie-'.$movieID.'">';
                                     echo '<figure class="poster">';
-                                        echo '<img src="/views/build/css/images/img_preview.webp" data-src="'.$tmdb->getImageURL().$movie->getPoster().'" alt="" class="lazy-load">';
+                                        echo '<img src="'.$tmdb->getImageURL().$movie->getPoster().'" alt="" loading="lazy">';
                                     echo '</figure>';
                                     echo '<span class="title">'.$movie->getTitle().'</span>';
                                 echo '</a>';
