@@ -1,7 +1,6 @@
 <?php
 include(ROOT_PATH.'/views/header.php');
 $conn = dbConnect();
-$tmdb = setupTMDB();
 $sql = 'SELECT COUNT(*) as num_rows FROM genres';
 $result = $conn->query($sql);
 
@@ -48,20 +47,14 @@ if(isset($_POST['generate-genres'])) {
                     </thead>
                     <?php
 
-                        $sql = "SELECT id, genre_id FROM genres ORDER BY id";
+                        $sql = "SELECT id, genre_id, genre_name FROM genres ORDER BY id";
                         $results = $conn->query($sql);
                         while($row = $results->fetch_assoc()) {
-                            $genres = $tmdb->getGenres();
-                            foreach ($genres as $genre) {
-                                if ($genre->getID() == $row['genre_id']) {
-                                    $genreName = $genre->getName();
-                                    echo '<tr>';
-                                        echo '<td>'.$row['id'].'</td>';
-                                        echo '<td>'.$row['genre_id'].'</td>';
-                                        echo '<td>'.$genreName.'</td>';
-                                    echo '</tr>';
-                                }
-                            }
+                            echo '<tr>';
+                                echo '<td>'.$row['id'].'</td>';
+                                echo '<td>'.$row['genre_id'].'</td>';
+                                echo '<td>'.$row['genre_name'].'</td>';
+                            echo '</tr>';
                         }
 
                     ?>
