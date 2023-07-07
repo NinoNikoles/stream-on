@@ -77,7 +77,7 @@ function movie_card($movie, $extraClasses = '') {
                         <p class="h2">'.$title.'</p>
                         <p class="small tag-list marg-bottom-base">
                             <span class="tag">'.$releaseYear.'</span>
-                            <span class="tag">'.$rating.'/10</span>
+                            <span class="tag">'.$rating.'/10 ★</span>
                             <span class="tag">'.runtimeToString($runtime).'</span>
                         </p>
                         <a href="/watch/?id='.$movieID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>

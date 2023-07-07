@@ -324,33 +324,36 @@ function outputDate($date) {
 //-- Outputs Runtime as HH hours MM minuts --
 function runtimeToString($runtime) {
     $hours = floor($runtime / 60);
-    $restMinutes = $runtime % 60;
+    $restMinutes = intval($runtime % 60);
     
-    if (!($restMinutes == 1)) {
+    if (!($restMinutes <= 1)) {
         $minuteText = lang_snippet('minutes');
+    } else if ( $restMinutes < 1 ) {
+        $restMinutes = '';
+        $minuteText = '';
     } else {
         $minuteText = lang_snippet('minute');
     }
 
     if ($hours > 0 ) {
-        if (!($hours > 1)) {
+        if ( $hours <= 1 ) {
             $hourText = lang_snippet('hour');
         } else {
             $hourText = lang_snippet('hours');
         }
 
-        $finalRuntime = $hours.' '.$hourText.' '. $restMinutes . ' '.$minuteText;
+        $finalRuntime = $hours.' '.$hourText.' '.$restMinutes. ' '.$minuteText;
     } else {
         $finalRuntime = $restMinutes .' '.$minuteText;
     }
-
+ 
     return $finalRuntime;
 }
 
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
-    //return "http://image.tmdb.org/t/p/$size$img";
-    return '';
+    return "http://image.tmdb.org/t/p/$size$img";
+    //return '';
 }
 
 function getWatchedTime($watchedTime, $totalDuration) {
