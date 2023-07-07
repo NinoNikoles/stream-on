@@ -41,7 +41,7 @@ if ( isset($_POST['add-movie']) ) {
                             echo '<div class="col-6 col-3-medium column">';
                                 echo '<a href="/admin/movie/?id='.$movie['tmdbID'].'" title="'.$movie['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
-                                        echo '<img src="'.loadImg('w400', $movie['poster']).'" alt="" loading="lazy">';
+                                        echo '<img src="'.loadImg('original', $movie['poster']).'" alt="" loading="lazy">';
                                     echo '</figure>';
                                     echo '<span class="title">'.truncate($movie['title'],20).'</span>';
                                 echo '</a>';

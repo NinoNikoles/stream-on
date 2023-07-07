@@ -52,10 +52,10 @@ function movie_card($movie, $extraClasses = '') {
             <div class="media-card">
                 <div class="media-card-wrapper">
                     <figure class="widescreen desktop-only">
-                        <img src="'.loadImg('w400', $backdrop).'" loading="lazy" importance="low">
+                        <img src="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
                     </figure>
                     <figure class="poster mobile-only">
-                        <img src="'.loadImg('w500', $poster).'" loading="lazy" importance="low">
+                        <img src="'.loadImg('original', $poster).'" loading="lazy" importance="low">
                     </figure>
                     <div class="link-wrapper">
                         <a href="/watch/?id='.$movieID.'" title="'.$title.'" class="play-trigger"></a>
@@ -87,7 +87,7 @@ function movie_card($movie, $extraClasses = '') {
                     </div>
                     <div class="col4 desktop-only">
                         <figure class="poster">
-                            <img src="'.loadImg('w500', $poster).'" alt="" loading="lazy" importance="low">
+                            <img src="'.loadImg('original', $poster).'" alt="" loading="lazy" importance="low">
                         </figure>
                     </div>
                 </div>
