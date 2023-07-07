@@ -1,32 +1,23 @@
 <?php
 
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+$conn = dbConnect();
 
-// Get API Key
-$sql = "SELECT setting_option FROM settings WHERE setting_name='apikey'";
+$sql = "SELECT setting_name, setting_option FROM settings";
 $result = $conn->query($sql);
-$apikey = $result->fetch_assoc();
-$apikey = $apikey['setting_option'];
 
-// GET Site title
-$sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
-$result = $conn->query($sql);
-$site_title = $result->fetch_assoc();
-$site_title = $site_title['setting_option'];
-
-// Get API Language
-$sql = "SELECT setting_option FROM settings WHERE setting_name='apilang'";
-$result = $conn->query($sql);
-$apiLang = $result->fetch_assoc();
-$apiLang = $apiLang['setting_option'];
 //------------------------------------------------------------------------------
 // Configuration to get all data
 //------------------------------------------------------------------------------
 
+$configData = [];
+while ( $row = $result->fetch_assoc() ) {
+    $configData[$row['setting_name']] = $row['setting_option'];
+}
+
 // Global Configuration
-$cnf['apikey'] = $apikey;
-$cnf['site_title'] = $site_title;
-$cnf['lang'] = $apiLang;
+$cnf['apikey'] = $configData['apikey'];
+$cnf['site_title'] = $configData['site_title'];
+$cnf['lang'] = $configData['apilang'];
 $cnf['timezone'] = 'Europe/Berlin';
 $cnf['adult'] = false;
 $cnf['debug'] = false;

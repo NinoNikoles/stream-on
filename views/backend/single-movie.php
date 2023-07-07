@@ -86,7 +86,7 @@ if ( $movie == 0 ) {
                                 echo '<div id="file-tree"></div>';
                                 echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
                                     echo '<input type="text" name="moviePath" id="inputMoviePath" value="" style="display:none;">';
-                                    echo '<input type="text" name="id" value="'.$_GET['id'].'" style="display:none;">';
+                                    echo '<input type="text" name="id" id="jstreeID" value="'.$_GET['id'].'" style="display:none;">';
                                     echo '<button class="btn marg-top-m marg-bottom-no" id="inputMovieSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>';
                                 echo '</form>';
                             echo '</div>';
@@ -114,8 +114,9 @@ if ( $movie == 0 ) {
                                         $newTMDB->setLang();
                                         $movie = $newTMDB->getMovie($id);
                                         $moviePosters = $movie->getPosters();
+                                        $i = 1;
                                         foreach ($moviePosters as $moviePoster) {
-                                            $i = 1;
+                                            
                                             echo '<div class="col3 column">';
                                                 echo '<div class="poster-select">';
                                                     echo '<input type="radio" id="poster-'.$i.'" name="poster" value="'.$moviePoster.'">';
@@ -125,6 +126,7 @@ if ( $movie == 0 ) {
                                                     echo '</figure>';
                                                 echo '</div>';
                                             echo '</div>';
+                                            $i++;
                                         }
                                     ?>
                                     </div>
@@ -152,8 +154,9 @@ if ( $movie == 0 ) {
                                     $newTMDB->setLang('');
                                     $movie = $newTMDB->getMovie($id);
                                     $movieBackdrops = $movie->getBackdrops();
+                                    $i = 1;
+
                                     foreach ($movieBackdrops as $movieBackdrop) {
-                                        $i = 1;
                                         echo '<div class="col3 column">';
                                             echo '<div class="poster-select">';
                                                 echo '<input type="radio" id="backdrop-'.$i.'" name="backdrop" value="'.$movieBackdrop.'">';
@@ -163,6 +166,7 @@ if ( $movie == 0 ) {
                                                 echo '</figure>';
                                             echo '</div>';
                                         echo '</div>';
+                                        $i++;
                                     }
                                 ?>
                                 </div>

@@ -78,7 +78,7 @@ $conn = dbConnect();
                         echo '<p>Nutzer bearbeiten</p>';
                         echo '<form method="post" action="/admin/users">';
                             echo '<p>';
-                                echo '<lable for="username">Benutzername <input type="text" name="username" value="'.$row['username'].'" required></lable>';
+                                echo '<lable for="username-'.$row['id'].'">Benutzername <input type="text" id="username-'.$row['id'].'" name="username" value="'.$row['username'].'" required></lable>';
                                 if (!($row['role'] === NULL) && ($row['role'] > 0)) {
                                     $checked = "checked";
                                 } else {
@@ -86,11 +86,11 @@ $conn = dbConnect();
                                 }
                             echo '</p>';
                             echo '<p>';
-                                echo '<lable for="role" class="checkbox-label">Admin <input type="checkbox" name="role" value="1" '.$checked.'></lable>';
+                                echo '<lable for="role-'.$row['id'].'" class="checkbox-label">Admin <input type="checkbox" id="role-'.$row['id'].'" name="role" value="1" '.$checked.'></lable>';
                             echo '</p>';
                             echo '<p>';
-                                echo '<lable for="password">Passwort <input type="password" name="password" required></lable>';
-                                echo '<input type="number" name="userID" value="'.$row['id'].'" style="display:none;" required>';
+                                echo '<lable for="password-'.$row['id'].'">Passwort <input type="password" id="password-'.$row['id'].'" name="password" required></lable>';
+                                echo '<input type="number" name="userID" id="userID-'.$row['id'].'" value="'.$row['id'].'" style="display:none;" required>';
                             echo '</p>';
                             echo '<p class="text-right marg-no">';
                                 echo '<button class="btn btn-success" type="submit" name="edit-user">Speichern</button>';
@@ -116,14 +116,14 @@ $conn = dbConnect();
                 <form method="post" action="users">              
                     <p>
                         <label for="username">Benutzername
-                        <input type="text" name="username" placeholder="Benutzername" required></label>
+                        <input type="text" id="username" name="username" placeholder="Benutzername" required></label>
                     </p>
                     <p>
-                        <lable for="role" class="checkbox-label">Admin <input type="checkbox" name="role"></lable>
+                        <lable for="role" class="checkbox-label">Admin <input type="checkbox" id="role" name="role"></lable>
                     </p>
                     <p>
                         <label for="password">Passwort
-                        <input type="password" name="password" placeholder="Passwort" required></label>
+                        <input type="password" id="password" name="password" placeholder="Passwort" required></label>
                     </p>
                     <p class="text-right">
                         <button class="btn btn-success" type="submit" name="register">Registrieren</button>

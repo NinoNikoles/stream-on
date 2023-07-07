@@ -22,7 +22,7 @@ if ( isset($_POST['add-movie']) ) {
 
             <div class="col12 marg-bottom-m">
                 <div id="searchbar">
-                    <label for="movie-name">Film Name*
+                    <label for="movie-api-search">Film Name*
                         <input type="text" id="movie-api-search" name="movie-name" placeholder="<?php echo lang_snippet('movie_title'); ?>" value="" required>
                     </label>
                     <div id="movieSearchResults" class="hidden"></div>      
