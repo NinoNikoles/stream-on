@@ -31,7 +31,7 @@
                     // Bild in den Zielordner verschieben
                     move_uploaded_file($bildTmpName, $ziel);
 
-                    $sql = 'UPDATE users SET user_img="'.$neuerName.'" WHERE id="'.$_POST['id'].'"';
+                    $sql = "UPDATE users SET user_img='$neuerName' WHERE id='".$_POST['id']."'";
                     if ($conn->query($sql) === TRUE) {
                         echo "Record updated successfully";
                         set_callout('success','user_img_upload_success');

@@ -28,10 +28,10 @@
                 }
     
                 echo '<a href="#movie-'.$movieID.'" class="display-flex flex-row marg-no" data-modal data-src="#content-'.$movieID.'">';
-                    echo '<figure class="poster" style="width:20%;max-width:100px;">';
+                    echo '<figure class="square" style="width:20%;max-width:100px;">';
                         echo '<img src="'.loadImg('original', $moviePoster).'" loading="lazy">';
                     echo '</figure>';
-                    echo '<span class="pad-xs" style="width:80%;">'.$title.'</span>';
+                    echo '<span class="pad-xs marg-no" style="width:80%;">'.$title.'</span>';
                 echo '</a>';
 
                 echo '<div class="info-popup" id="content-'.$movieID.'" style="display:none;">';

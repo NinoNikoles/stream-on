@@ -101,9 +101,9 @@
 
         @include MQ(xsmall) {
             padding: {
-                top: rem-calc($grid-padding);
+                top: rem-calc($grid-padding*2);
                 right: rem-calc($grid-padding);
-                bottom: rem-calc($grid-padding);
+                bottom: rem-calc($grid-padding*2);
                 left: rem-calc($grid-padding);
             }
         }
