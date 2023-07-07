@@ -13,6 +13,10 @@
             }
         }
 
+        &-wrapper {
+            position: relative;
+        }
+        
         .title {
             display: block;
             background: {
@@ -173,6 +177,7 @@
     color: var(--font-color-invert);
     margin: {
         right: 8px;
+        bottom: 8px;
     }
     padding: {
         top: 2px;
@@ -181,6 +186,12 @@
         left: 8px;
     }
     @include transition(background-color $transition-default, color $transition-default);
+
+    &-list {
+        margin: {
+            bottom: rem-calc(-8);
+        }
+    }
 }
 
 .card-slider {

@@ -35,12 +35,12 @@ function movie_card($movie, $extraClasses = '') {
 
     if ( $conn->query($watchListCheckSQL)->num_rows > 0 ) {
         $listButtons = '
-        <a href="#" class="btn btn-white icon-left icon-add mylist-btn add-to-list hidden" data-movie-id="'.$movieID.'" data-type="add">'.lang_snippet('my_list').'</a>
-        <a href="#" class="btn btn-white icon-left icon-remove mylist-btn remove-from-list" data-movie-id="'.$movieID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
+        <a href="#" class="btn btn-small btn-white icon-left icon-add mylist-btn add-to-list hidden loading" data-movie-id="'.$movieID.'" data-type="add">'.lang_snippet('my_list').'</a>
+        <a href="#" class="btn btn-small btn-white icon-left icon-remove mylist-btn remove-from-list loading" data-movie-id="'.$movieID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
     } else {
         $listButtons = '
-        <a href="#" class="btn btn-white icon-left icon-add mylist-btn add-to-list" data-movie-id="'.$movieID.'" data-type="add">'.lang_snippet('my_list').'</a>
-        <a href="#" class="btn btn-white icon-left icon-remove mylist-btn remove-from-list hidden" data-movie-id="'.$movieID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
+        <a href="#" class="btn btn-small btn-white icon-left icon-add mylist-btn add-to-list loading" data-movie-id="'.$movieID.'" data-type="add">'.lang_snippet('my_list').'</a>
+        <a href="#" class="btn btn-small btn-white icon-left icon-remove mylist-btn remove-from-list hidden loading" data-movie-id="'.$movieID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
     }
 
     if ( $_SESSION['role'] === "1" ) {
@@ -75,15 +75,15 @@ function movie_card($movie, $extraClasses = '') {
                 <div class="innerWrap">
                     <div class="col7 marg-right-col1">
                         <p class="h2">'.$title.'</p>
-                        <p class="small">
+                        <p class="small tag-list marg-bottom-base">
                             <span class="tag">'.$releaseYear.'</span>
                             <span class="tag">'.$rating.'/10</span>
                             <span class="tag">'.runtimeToString($runtime).'</span>
                         </p>
-                        <a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>
+                        <a href="/watch/?id='.$movieID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>
                         '.$listButtons.'
                         <p class="small">'.$overview.'</p>
-                        <p class="small">'.$genreHTML.'</p>
+                        <p class="small tag-list">'.$genreHTML.'</p>
                     </div>
                     <div class="col4 desktop-only">
                         <figure class="poster">

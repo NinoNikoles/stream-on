@@ -188,7 +188,7 @@ main .main {
     .marg-#{$step} { margin: rem-calc($val/2) !important; @include MQ(medium) { margin: rem-calc($val) !important; } }
     .marg-top-#{$step} { margin-top: rem-calc($val/2); @include MQ(medium) { margin-top: rem-calc($val); } }
     .marg-right-#{$step} { margin-right: rem-calc($val/2); @include MQ(medium) { margin-right: rem-calc($val); } }
-    .marg-bottom-#{$step} { margin-bottom: rem-calc($val/2); @include MQ(medium) { margin-bottom: rem-calc($val); } }
+    .marg-bottom-#{$step} { margin-bottom: rem-calc($val/2) !important; @include MQ(medium) { margin-bottom: rem-calc($val) !important; } }
     .marg-left-#{$step} { margin-left: rem-calc($val/2); @include MQ(medium) { margin-left: rem-calc($val); } }
     .marg-horizontal-#{$step} { margin: { right: rem-calc($val/2); left: rem-calc($val/2); } @include MQ(medium) { margin: { right: rem-calc($val); left: rem-calc($val); } } }
     .marg-vertical-#{$step} { margin: { top: rem-calc($val/2); bottom: rem-calc($val/2); } @include MQ(medium) { margin: { top: rem-calc($val); bottom: rem-calc($val); } } }

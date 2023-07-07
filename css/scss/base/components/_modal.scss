@@ -75,17 +75,17 @@
     
         &.small {
             @include MQ(medium) {
-                width: 30%;
+                width: 25%;
             }
         }
         &.medium {
             @include MQ(medium) {
-                width: 50%;
+                width: 35%;
             }
         }
         &.large {
             @include MQ(medium) {
-                width: 75%;
+                width: 50%;
             }
         }
         &.full {
@@ -101,9 +101,9 @@
 
         @include MQ(xsmall) {
             padding: {
-                top: rem-calc($grid-padding*2);
+                top: rem-calc($grid-padding);
                 right: rem-calc($grid-padding);
-                bottom: rem-calc($grid-padding*2);
+                bottom: rem-calc($grid-padding);
                 left: rem-calc($grid-padding);
             }
         }
@@ -157,8 +157,12 @@
         }
 
         @include MQ(xsmall) {
-            width: rem-calc(15);
-            height: rem-calc(15);
+            background: {
+                color: transparent;
+            }
+            width: rem-calc($grid-padding*2);
+            height: rem-calc($grid-padding*2);
+            padding: 0;
             position: absolute;
             top: 0;
             right: 0;

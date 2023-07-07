@@ -655,7 +655,7 @@ $(document).ready(function() {
 
         myList: function() {
             function btnAction(self) {
-                $(self).addClass('loading');
+                $(self).addClass('is-loading');
                 var movieID = $(self).attr('data-movie-id'),
                     type = $(self).attr('data-type');
 
@@ -671,7 +671,7 @@ $(document).ready(function() {
                         }
                     });
 
-                    $(self).removeClass('loading');
+                    $(self).removeClass('is-loading');
 
                     if ( type === 'add' ) {
                         $('a[data-movie-id="'+movieID+'"][data-type="add"]').addClass('hidden');
@@ -687,7 +687,7 @@ $(document).ready(function() {
                 e.preventDefault();
                 var self = this;
 
-                if ( !$(self).hasClass('loading') ) {
+                if ( !$(self).hasClass('is-loading') ) {
                     btnAction(self);
                 }
             })
@@ -696,7 +696,7 @@ $(document).ready(function() {
                 e.preventDefault();
                 var self = this;
 
-                if ( !$(self).hasClass('loading') ) {
+                if ( !$(self).hasClass('is-loading') ) {
                     btnAction(self);
                 }
             })

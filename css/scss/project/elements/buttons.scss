@@ -32,16 +32,24 @@ a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
     }
 
     &.loading {
-        color: transparent !important;
-
-        &::before {
+        &::after {
+            display: block !important;
+            background: {
+                color: transparent;
+            }
             content: '\f110';
             color: var(--black) !important;
+            font: {
+                family: $icon-font;
+                size: rem-calc(40);
+            }
             margin: 0 !important;
             position: absolute !important;
             top: 50% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) rotate(0deg);
+            opacity: 0;
+            visibility: hidden;
 
             @include keyframes(spinner) {
                 0% {
@@ -52,6 +60,16 @@ a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
                 }
             };
             @include animate(spinner, 2s, linear, infinite);
+
+        }
+
+        &.is-loading {
+            color: transparent !important;
+    
+            &::after {
+                opacity: 1;
+                visibility: visible;
+            }
         }
     }
 }
