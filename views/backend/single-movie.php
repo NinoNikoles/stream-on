@@ -58,7 +58,7 @@ if ( $movie == 0 ) {
                     echo '<div class="col7 marg-right-col1">';
                         echo '<form method="post" action="/admin/movie/?id='.$id.'">';
                             echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
-                            echo '<button type="submit" name="delete-movie">Löschen</button>';
+                            echo '<button type="submit" class="btn btn-small btn-alert" name="delete-movie">Löschen</button>';
                         echo '</form>';
                         echo '<div class="col12"><h1>'.$title.'</h1></div>';
                         if(($tagline > 1)) {
@@ -80,7 +80,7 @@ if ( $movie == 0 ) {
                 <div class="col4">
                     <div class="col12">
                         <?php
-                            echo '<a href="#file-list-popup" class="btn" data-fancybox data-src="#file-list-popup">'.lang_snippet('select_movie_file').'</a>';
+                            echo '<a href="#file-list-popup" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup">'.lang_snippet('select_movie_file').'</a>';
                                 
                             echo '<div id="file-list-popup" style="display:none;">';
                                 echo '<div id="file-tree"></div>';

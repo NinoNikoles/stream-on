@@ -36,4 +36,16 @@ a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
 	&.btn-black { @include button-colors(var(--black), var(--black), var(--white), var(--primary));
 		&.hollow { @include button-hollow(var(--white), var(--black), var(--white), var(--white)); }
 	}
+
+	&.btn-success { @include button-colors(var(--white), var(--white), var(--success), var(--success-dark));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--success), var(--success-dark)); }
+    }
+
+    &.btn-warning { @include button-colors(var(--white), var(--white), var(--warning), var(--warning-dark));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--warning), var(--warning-dark)); }
+    }
+
+    &.btn-alert { @include button-colors(var(--white), var(--white), var(--alert), var(--alert-dark));
+        &.hollow { @include button-hollow(var(--white), var(--white), var(--alert), var(--alert-dark)); }
+    }
 }

@@ -15,7 +15,7 @@ $conn = dbConnect();
             </div>
 
             <div class="col12 text-right">
-                <button data-src="#add-user" class="btn btn-secondary icon-left icon-add-user" data-fancybox><?php echo lang_snippet('add_user'); ?></button>
+                <button data-src="#add-user" class="btn btn-small btn-success icon-left icon-add-user" data-fancybox><?php echo lang_snippet('add_user'); ?></button>
             </div>
 
             <div class="col12">
@@ -62,8 +62,8 @@ $conn = dbConnect();
                         echo '<tr>';
                             echo '<td>'.$row['username'].'</td>';
                             echo '<td>'.$role.'</td>';
-                            echo '<td><button data-src="#edit-user-'.$row['id'].'" class="btn btn-success icon-only icon-pen marg-no" data-fancybox></button></td>';
-                            echo '<td><button data-src="#delete-user-'.$row['id'].'" class="btn btn-alert icon-only icon-trash marg-no" data-fancybox></button></td>';
+                            echo '<td><button data-src="#edit-user-'.$row['id'].'" class="btn btn-small btn-warning icon-only icon-pen marg-no" data-fancybox></button></td>';
+                            echo '<td><button data-src="#delete-user-'.$row['id'].'" class="btn btn-small btn-alert icon-only icon-trash marg-no" data-fancybox></button></td>';
                         echo '</tr>';
                     }
 

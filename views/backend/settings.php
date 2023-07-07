@@ -56,7 +56,7 @@
                     </p>
                 </div>
                 <div class="col12 column text-right">
-                    <button class="btn btn-primary" type="submit" name="save-settings"><?php echo lang_snippet('save'); ?></button>
+                    <button class="btn btn-small btn-primary" type="submit" name="save-settings"><?php echo lang_snippet('save'); ?></button>
                 </div>
             </form>
         </div>

@@ -16,7 +16,7 @@ a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
     min-height: rem-calc(50) !important;
 
     @include MQ(xsmall) {
-        min-width: rem-calc(200) !important;
+        min-width: unset !important;
     }
 
     &::before {

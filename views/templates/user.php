@@ -73,7 +73,7 @@
                         <lable for="user-img">User img <input type="file" name="user-img" accept="image/*"></lable>
                     </p>
                     <p>
-                        <button type="submit" name="submit" value="Hochladen">Hochladen</button>
+                        <button type="submit" class="btn btn-small" name="submit" value="Hochladen">Hochladen</button>
                     </p>
                 </form>
             </div>
