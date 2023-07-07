@@ -13,19 +13,19 @@ post('/logout', 'views/logout.php');
 
 // Dynamic GET. Example with 1 variable
 // The $id will be available in user.php
-get('/user/$id', 'views/templates/user');
-post('/user/$id', 'views/templates/user');
+get('/user/$id', 'views/templates/user.php');
+post('/user/$id', 'views/templates/user.php');
 
 get('/user-img-upload', 'views/actions/user-image-upload.php');
 post('/user-img-upload', 'views/actions/user-image-upload.php');
 
 // Movie Page
-get('/movies', 'views/movies');
-post('/movies', 'views/movies');
+get('/movies', 'views/movies.php');
+post('/movies', 'views/movies.php');
 
 // Mediaplayer page
-get('/watch/$id', 'views/templates/watch');
-post('/watch/$id', 'views/templates/watch');
+get('/watch/$id', 'views/templates/watch.php');
+post('/watch/$id', 'views/templates/watch.php');
 
 // Search page
 get('/search', 'views/search.php');
@@ -84,6 +84,19 @@ if ($_SESSION['role'] == '1') {
 
     get('/admin/genres', 'views/backend/genres.php');
     post('/admin/genres', 'views/backend/genres.php');
+}
+
+$folderPath = 'css/';
+
+$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($folderPath), RecursiveIteratorIterator::SELF_FIRST);
+
+foreach ($iterator as $file) {
+    if ($file->isFile()) {
+        $filePath = str_replace("\\", "/", $file->getPathname());
+
+        get('/'.$filePath, $filePath);
+        post('/'.$filePath, $filePath);
+    }
 }
 
 

@@ -9,7 +9,6 @@ module.exports = function(grunt) {
         },
         jsResources: [
             '<%= config.root %>js/basics/jquery-3.6.0.min.js',
-            '<%= config.root %>js/plugins/fancybox4.js',
             '<%= config.root %>js/plugins/videojs.js',
             '<%= config.root %>js/plugins/scrolltrigger.js',
             '<%= config.root %>js/plugins/swiper-bundle.min.js',
@@ -84,7 +83,7 @@ module.exports = function(grunt) {
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
-    grunt.registerTask('default',[ 'concat', 'uglify', 'sass:dist', 'copy:main', 'watch']);
+    grunt.registerTask('default',[ 'concat', 'sass:dist', 'copy:main', 'watch']);
 
 
     grunt.loadNpmTasks('grunt-sass');
