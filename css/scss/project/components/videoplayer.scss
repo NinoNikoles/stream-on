@@ -11,14 +11,14 @@
 
     .vjs-control-bar {
         width: calc(100% - #{$grid-padding*2}px);
-        height: rem-calc(120)!important;
+        height: rem-calc(96)!important;
         margin: 0 auto;
         bottom: rem-calc($grid-padding);
     }
 
     .vjs-progress-control {
         width: 100%;
-        height: rem-calc(60);
+        height: rem-calc(20);
         position: absolute;
         top: 0;
         left: 0;
@@ -239,6 +239,12 @@
 
         &:hover {
             cursor: pointer;
+
+            &::before {
+                font: {
+                    size: rem-calc(56);
+                }
+            }
         }
 
         &::before {
@@ -252,6 +258,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            @include transition(all $transition-default);
         }
     }
 
@@ -266,6 +273,33 @@
             #player-back-btn {
                 visibility: hidden;
                 opacity: 0;
+            }
+        }
+    }
+}
+
+.video-js .vjs-volume-panel.vjs-hover .vjs-mute-control ~ .vjs-volume-control.vjs-volume-horizontal, .video-js .vjs-volume-panel.vjs-hover .vjs-volume-control.vjs-volume-horizontal {
+    width: rem-calc(96);
+}
+
+.vjs-volume-bar.vjs-slider-horizontal {
+    width: rem-calc(96);
+}
+
+
+.vjs-control {
+    .vjs-icon-placeholder {
+        &::before {
+            @include transition(all $transition-default);
+        }
+    }
+
+    &:hover {
+        .vjs-icon-placeholder {
+            &::before {
+                font: {
+                    size: rem-calc(56);
+                }
             }
         }
     }
