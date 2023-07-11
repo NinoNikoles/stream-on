@@ -54,6 +54,23 @@ function addHighlight($movieID) {
     }
 }
 
+function deactivateHighlight($movieID) {
+    $conn = dbConnect();
+    $sql = "INSERT INTO highlights(movie_id, highlight_status) VALUES
+    ($movieID, 0)
+    ON DUPLICATE KEY UPDATE highlight_status = VALUES(highlight_status)";
+
+    if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
+        set_callout('alert','update_trailer_alert');
+        page_redirect('/admin/highlights');
+    } else {
+        $conn->close();
+        set_callout('success','update_trailer_success');
+        page_redirect('/admin/highlights');
+    }
+}
+
 function isHighlight($movieID) {
     $conn = dbConnect();
     $sql = "SELECT highlight_status FROM highlights WHERE movie_id=$movieID";
