@@ -64,31 +64,31 @@ function movie_card($movie, $extraClasses = '') {
                     </div>
                 </div>
                 '.$timebar.'
-            </div>
 
-            <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
-                <div class="col12 marg-bottom-xs mobile-only">
-                    <figure class="widescreen">
-                        <img src="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
-                    </figure>
-                </div>
-                <div class="innerWrap">
-                    <div class="col7 marg-right-col1">
-                        <p class="h2">'.$title.'</p>
-                        <p class="small tag-list marg-bottom-base">
-                            <span class="tag">'.$releaseYear.'</span>
-                            <span class="tag">'.$rating.'/10 ★</span>
-                            <span class="tag">'.runtimeToString($runtime).'</span>
-                        </p>
-                        <a href="/watch/?id='.$movieID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>
-                        '.$listButtons.'
-                        <p class="small">'.$overview.'</p>
-                        <p class="small tag-list">'.$genreHTML.'</p>
-                    </div>
-                    <div class="col4 desktop-only">
-                        <figure class="poster">
-                            <img src="'.loadImg('original', $poster).'" alt="" loading="lazy" importance="low">
+                <div class="info-popup" id="content-'.$movieID.'" style="display:none;">
+                    <div class="col12 marg-bottom-xs mobile-only">
+                        <figure class="widescreen">
+                            <img src="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
                         </figure>
+                    </div>
+                    <div class="innerWrap">
+                        <div class="col7 marg-right-col1">
+                            <p class="h2">'.$title.'</p>
+                            <p class="small tag-list marg-bottom-base">
+                                <span class="tag">'.$releaseYear.'</span>
+                                <span class="tag">'.$rating.'/10 ★</span>
+                                <span class="tag">'.runtimeToString($runtime).'</span>
+                            </p>
+                            <a href="/watch/?id='.$movieID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>
+                            '.$listButtons.'
+                            <p class="small">'.$overview.'</p>
+                            <p class="small tag-list">'.$genreHTML.'</p>
+                        </div>
+                        <div class="col4 desktop-only">
+                            <figure class="poster">
+                                <img src="'.loadImg('original', $poster).'" alt="" loading="lazy" importance="low">
+                            </figure>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@ function myList() {
     if ( $results->num_rows > 0 ) {    
         while ($movies = $results->fetch_assoc()) {
             $currMovie = moviesDataconverter($movies);
-            echo movie_card($currMovie, 'col-6 col-3-medium grid-padding');
+            echo movie_card($currMovie, 'col-6 col-4-xsmall col-2-medium grid-padding');
         }
     }
 

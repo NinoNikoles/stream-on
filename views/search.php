@@ -13,7 +13,7 @@ $conn = dbConnect();
                 if ( isset($_POST['search']) && $_POST['search'] !== '' ) {
                     $movies = selectMovieByTitle($_POST['search']);
                     foreach ( $movies as $movie ) {    
-                        echo movie_card($movie, 'col-6 col-2-medium grid-padding');
+                        echo movie_card($movie, 'col-6 col-4-xsmall col-2-medium grid-padding');
                     }
                 }
             ?>
