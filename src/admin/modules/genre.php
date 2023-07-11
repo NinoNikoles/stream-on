@@ -4,26 +4,26 @@ function initGenres() {
     $tmdb = setupTMDB();
 
     $genres = $tmdb->getGenres();
+
     $data = [];
     foreach ($genres as $genre) {
-        $data[] = '("'.mysqli_real_escape_string($conn, $genre->getID()).'", "'.mysqli_real_escape_string($conn, $genre->getName()).'")';
+        $data[] = "(".$genre->getID().", '".$genre->getName()."')";
     }
 
-    $dataSring = json_encode($data);
+    $dataSring = json_encode($data, JSON_UNESCAPED_UNICODE);
     $dataSring = str_replace(array('[', ']', "[", "]"), '', $dataSring);
     $dataSring = str_replace('"(', '(', $dataSring);
     $dataSring = str_replace(')"', ')', $dataSring);
     $dataSring = stripslashes($dataSring);
-
+ 
     $sql = "INSERT INTO genres (genre_id, genre_name) VALUES $dataSring";
+    echo $sql;
     $result = $conn->query($sql);
 
     if (!$result) {
-        $conn->close();
         set_callout('alert','genres_created_alert');
         page_redirect("/admin/genres");
     } else {
-        $conn->close();
         set_callout('success','genres_created_success');
         page_redirect("/admin/genres");
     }
