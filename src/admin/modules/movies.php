@@ -127,7 +127,7 @@ function selectMovieByID($movieID) {
     $tmdb = setupTMDB();
     $conn = dbConnect();
 
-    $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection, movie_file_path, movie_genres FROM movies WHERE movie_tmdbID='$movieID'";
+    $sql = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_collection, movie_file_path, movie_genres, movie_trailer FROM movies WHERE movie_tmdbID='$movieID'";
     $result = $conn->query($sql);
 
     $data = [];
@@ -152,6 +152,7 @@ function selectMovieByID($movieID) {
             } else {
                 $data['collection'] = '';
             }
+            $data['trailer'] = $row['movie_trailer'];
             $data['genres'] = [];
 
             $movie = $tmdb->getMovie($data['id']);

@@ -16,6 +16,7 @@ if ( $movie == 0 ) {
     $genres = $movie['genres'];
     $currentMovieCollection = $movie['collection'];
     $filepath = $movie['file_path'];
+    $tailer = $movie['trailer'];
 }
 ?>
 
@@ -31,6 +32,11 @@ if ( $movie == 0 ) {
                     // Update/select local path to movie file
                     if(isset($_POST['moviePath'])) {
                         updateMovieFilePath($_POST['moviePath'], $_POST['id']);
+                    }
+
+                    // Update trailer
+                    if(isset($_POST['trailer'])) {
+                        updateMovieTrailer($_POST['id'], $_POST['trailer']);
                     }
 
                     // Change movie poster
@@ -68,13 +74,20 @@ if ( $movie == 0 ) {
                         echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$movie['voteAverage'].'/10</p></div>';
                         echo '<div class="col5"><p><strong>'.lang_snippet('release_date').':</strong><br>'.outputDate($movie['release']).'</p></div>';
                         echo '<div class="col4"><p><strong>'.lang_snippet('runtime').':</strong><br>'.runtimeToString($movie['runtime']).'</p></div>';
-                        echo '<div class="col12"><p><span><strong>'.lang_snippet('genres').':</strong></span><br>';                    
+                        echo '<div class="col12"><p><span><strong>'.lang_snippet('genres').':</strong></span><br>';                
                         
                         foreach ($genres as $genre) {
                             echo '<span class="tag">'.$genre['name'].'</span>';
                         }
                         echo '</p></div>';
-                    echo '</div>';
+                        echo '<div class="col12">';
+                            echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
+                                echo '<label for="trailer"><strong>'.lang_snippet('trailer').':</strong> <input type="text" id="trailer" name="trailer" value="'.$tailer.'"></label>';
+                                echo '<span class="smaller">'.lang_snippet('trailer_info').'</span>';
+                                echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
+                                echo '<button class="btn btn-small btn-success" id="trailerSubmit" type="submit">'.lang_snippet('save').'</button>';
+                            echo '</form>';
+                        echo '</div>';
 
                 ?>
                 <div class="col4">
