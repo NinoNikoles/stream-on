@@ -19,11 +19,14 @@ function getHighlight() {
     $conn = dbConnect();
     $sql = "SELECT movie_tmdbID, movie_poster, movie_thumbnail FROM movies INNER JOIN highlights ON movies.movie_tmdbID=highlights.movie_id WHERE highlights.highlight_status=1 ORDER BY RAND() LIMIT 1";
     if ( $conn->query($sql)->num_rows > 0) {
+        $result = $conn->query($sql);
 
-        $movieID = $conn->query($sql)->fetch_assoc()['movie_tmdbID'];
-        $poster = $conn->query($sql)->fetch_assoc()['movie_poster'];
-        $backdrop = $conn->query($sql)->fetch_assoc()['movie_thumbnail'];
-    
+        while ( $row = $result->fetch_assoc() ) {
+            $movieID = $row['movie_tmdbID'];
+            $poster = $row['movie_poster'];
+            $backdrop = $row['movie_thumbnail'];
+        }
+
         $hightlight = "
         <figure class='widescreen'>
             <img src=".loadImg('original', $backdrop)." loading='lazy'>
