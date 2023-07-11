@@ -268,7 +268,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         movie_id INT NOT NULL,
         watched_seconds DECIMAL(10,6),
         total_length DECIMAL(10,6),
-        watched INT(1) NOT NULL,
+        watched INT(1),
         last_watched TIMESTAMP,
         UNIQUE (user_id, movie_id),
         FOREIGN KEY (user_id) REFERENCES users(id),

@@ -10,10 +10,16 @@
     }
 
     .vjs-control-bar {
-        width: calc(100% - #{$grid-padding*2}px);
-        height: rem-calc(96)!important;
+        width: calc(100% - #{$grid-padding}px);
+        height: rem-calc(60)!important;
         margin: 0 auto;
-        bottom: rem-calc($grid-padding);
+        bottom: rem-calc($grid-padding/2);
+
+        @include MQ(medium) {
+            width: calc(100% - #{$grid-padding*2}px);
+            height: rem-calc(96)!important;
+            bottom: rem-calc($grid-padding);  
+        }
     }
 
     .vjs-progress-control {
@@ -63,16 +69,25 @@
 
     .vjs-control-bar {
         background: transparent !important;
-        height: rem-calc(60);
+        height: rem-calc(40);
+
+        @include MQ(medium) {
+            height: rem-calc(60);
+        }
     }
 
     .vjs-play-control {
         display: block;
-        width: rem-calc(60);
-        height: rem-calc(60);
+        width: rem-calc(40);
+        height: rem-calc(40);
         position: absolute;
         left: 0;
         bottom: 0;
+
+        @include MQ(medium) {
+            width: rem-calc(60);
+            height: rem-calc(60);
+        }
 
         .vjs-icon-placeholder {
             display: block;
@@ -90,11 +105,17 @@
                 display: block;
                 font: {
                     family: $icon-font;
-                    size: rem-calc(40);
+                    size: rem-calc(30);
                 }
                 position: relative;
                 top: unset;
                 left: unset;
+
+                @include MQ(medium) {
+                    font: {
+                        size: rem-calc(40);
+                    }
+                }
             }
         }
     }
@@ -117,15 +138,23 @@
 
     .vjs-volume-panel,
     .vjs-mute-control {
-        width: rem-calc(60);
-        height: rem-calc(60);
+        width: rem-calc(40);
+        height: rem-calc(40);
 
+        @include MQ(medium) {
+            width: rem-calc(60);
+            height: rem-calc(60);
+        }
     }
 
     .vjs-volume-panel {
         position: absolute !important;
-        left: 60px;
+        left: rem-calc(40);
         bottom: 0;
+
+        @include MQ(medium) {
+            left: rem-calc(60);
+        }
 
         .vjs-mute-control {
             .vjs-icon-placeholder {
@@ -146,11 +175,19 @@
         }
 
         .vjs-volume-control {
-            height: rem-calc(60);
+            height: rem-calc(40);
+
+            @include MQ(medium) {
+                height: rem-calc(60);
+            }
         }
 
         .vjs-volume-bar {
-            margin: rem-calc(28) rem-calc(5);
+            margin: rem-calc(18.5) rem-calc(5);
+
+            @include MQ(medium) {
+                margin: rem-calc(28) rem-calc(5);
+            }
         }
     }
 
@@ -188,22 +225,32 @@
     }
 
     .vjs-fullscreen-control {
-        width: rem-calc(60) !important;
-        height: rem-calc(60) !important;
+        width: rem-calc(40) !important;
+        height: rem-calc(40) !important;
         position: absolute !important;
         right: 0;
         bottom: 0;
 
-        .vjs-icon-placeholder {
+        @include MQ(medium) {
             width: rem-calc(60) !important;
-            height: rem-calc(60) !important;
+            height: rem-calc(60) !important; 
+        }
+
+        .vjs-icon-placeholder {
+            width: rem-calc(40) !important;
+            height: rem-calc(40) !important;
             margin: 0;
+
+            @include MQ(medium) {
+                width: rem-calc(60) !important;
+                height: rem-calc(60) !important; 
+            }
 
             &::before {
                 content: "\e920";
                 font: {
                     family: $icon-font;
-                    size: rem-calc(40);
+                    size: rem-calc(30);
                 }
                 line-height: 1;
                 width: auto;
@@ -212,6 +259,13 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
+
+                @include MQ(medium) {
+                    font: {
+                        family: $icon-font;
+                        size: rem-calc(40);
+                    }
+                }
             }
         }
     }
@@ -241,8 +295,10 @@
             cursor: pointer;
 
             &::before {
-                font: {
-                    size: rem-calc(56);
+                @include MQ(medium) {
+                    font: {
+                        size: rem-calc(56);
+                    }    
                 }
             }
         }
@@ -278,8 +334,23 @@
     }
 }
 
-.video-js .vjs-volume-panel.vjs-hover .vjs-mute-control ~ .vjs-volume-control.vjs-volume-horizontal, .video-js .vjs-volume-panel.vjs-hover .vjs-volume-control.vjs-volume-horizontal {
+.video-js .vjs-volume-panel .vjs-mute-control ~ .vjs-volume-control.vjs-volume-horizontal, 
+.video-js .vjs-volume-panel .vjs-volume-control.vjs-volume-horizontal {
+    height: rem-calc(40);
+
+    @include MQ(medium) {
+        height: rem-calc(60);
+    }
+}
+
+.video-js .vjs-volume-panel.vjs-hover .vjs-mute-control ~ .vjs-volume-control.vjs-volume-horizontal, 
+.video-js .vjs-volume-panel.vjs-hover .vjs-volume-control.vjs-volume-horizontal {
     width: rem-calc(96);
+    height: rem-calc(40);
+
+    @include MQ(medium) {
+        height: rem-calc(60);
+    }
 }
 
 .vjs-volume-bar.vjs-slider-horizontal {
@@ -297,8 +368,10 @@
     &:hover {
         .vjs-icon-placeholder {
             &::before {
-                font: {
-                    size: rem-calc(56);
+                @include MQ(medium) {
+                    font: {
+                        size: rem-calc(56);
+                    }    
                 }
             }
         }

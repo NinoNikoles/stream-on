@@ -19,9 +19,7 @@
         ON DUPLICATE KEY UPDATE watched_seconds = VALUES(watched_seconds)";
     }
 
-    
-
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
-    } //283566
+    }
 ?>

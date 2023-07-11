@@ -577,82 +577,6 @@ $(document).ready(function() {
             });
         },
 
-        infinitLoad: function() {
-            var self = this;
-            $resultList = $('#movie-list');
-
-            if ( $resultList.length === 1) {
-                var movieList = []; // Hier gehen wir davon aus, dass movieList das Array der Filme enthält
-                var startIndex = 0; // Startindex für die Ausgabe
-                var itemsPerPage = 20; // Anzahl der Elemente pro Seite
-                var isLoading = false; // Flag, um zu verhindern, dass mehrere AJAX-Anfragen gleichzeitig gesendet werden
-                var secureEnd = false;
-                var addTimer = false;
-
-                // Funktion zum Ausgeben der nächsten Elemente
-                function displayNextMovies() {
-                    if (isLoading) {
-                        return; // Wenn bereits eine AJAX-Anfrage läuft oder der Startindex größer oder gleich der Anzahl der Filme ist, beende die Funktion vorzeitig
-                    }
-
-                    if ( secureEnd !== true) {
-                        isLoading = true; // Setze das Flag, um anzuzeigen, dass eine AJAX-Anfrage ausgeführt wird
-                        $('#loading-message').css('display','block');
-
-                        setTimeout(function() {
-                            $('#loading-message').css('display','none');
-
-                            var endIndex = Math.min(startIndex + itemsPerPage, movieList.length); // Endindex für die Ausgabe
-                            var moviesToDisplay = movieList.slice(startIndex, endIndex); // Ausschnitt des movieList-Arrays für die aktuelle Ausgabe
-    
-                            for (var i = 0; i < moviesToDisplay.length; i++) {
-                                // Hier kannst du den entsprechenden Code zum Erstellen und Anzeigen der einzelnen Filme einfügen
-                                $('<div class="col-6 col-2-medium grid-padding">'+moviesToDisplay[i]+'</div>').appendTo('#movie-list');
-                            }
-    
-                            startIndex += moviesToDisplay.length; // Aktualisiere den Startindex für die nächste Ausgabe
-                            if (startIndex === movieList.length) {
-                                secureEnd = true;
-                            }
-
-                            isLoading = false; // Setze das Flag zurück, um anzuzeigen, dass die AJAX-Anfrage abgeschlossen ist
-                        }, 1000);                      
-                    }
-                }
-
-                // Überprüfe, ob der Benutzer das Ende der Seite erreicht hat
-                $(window).scroll(function() {
-                    var wheight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-                    var dheight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight);
-
-                    if (window.scrollY + wheight >= dheight) {
-                        displayNextMovies();
-                    }
-                });
-
-                // Lade die Filme und rufe die erste Ausgabe auf
-                function loadMovies() {
-
-                    $.ajax({
-                        url: '/movie-scroll-load',
-                        method: 'GET',
-                        //data: { page: page },
-                        success: function(response) {
-                            movieList = JSON.parse(response);
-                            displayNextMovies();
-                        },
-                        error: function(xhr, status, error) {
-                            console.log('Fehler beim Laden weiterer Filme.');
-                            isLoading = false; // Setze das Flag zurück, um anzuzeigen, dass die AJAX-Anfrage abgeschlossen ist
-                        }
-                    });
-                }
-
-                // Lade die Filme und rufe die erste Ausgabe auf
-                loadMovies();
-            }
-        },
-
         myList: function() {
             function btnAction(self) {
                 $(self).addClass('is-loading');
@@ -731,7 +655,7 @@ $(document).ready(function() {
                     function saveTime() {
                         var currentSecond = video.currentTime;
                         var totalDuration = video.duration;
-                        $resultList = $('#test');
+                        $resultList = $('#time');
 
                         if ( currentSecond === totalDuration ) {
                             currentSecond = 0;
@@ -746,7 +670,7 @@ $(document).ready(function() {
                                 totalLength: totalDuration,
                             },
                             success: function(response) {
-                                $resultList.html(response);
+                                $resultList.attr('data-time', currentSecond);
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
                                 console.log('Fehler: ' + error);

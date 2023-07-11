@@ -2,4 +2,3 @@ package-lock.json
 node_modules/
 views/build/
 config.php
-config.php
