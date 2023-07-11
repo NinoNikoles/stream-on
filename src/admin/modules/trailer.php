@@ -17,7 +17,7 @@ function getTrailer($movieID, $extraClass="") {
 
 function getHighlight() {
     $conn = dbConnect();
-    $sql = "SELECT movie_tmdbID, movie_poster, movie_thumbnail FROM movies INNER JOIN highlights ON movies.movie_tmdbID=highlights.movie_id WHERE highlights.highlight_status=1";
+    $sql = "SELECT movie_tmdbID, movie_poster, movie_thumbnail FROM movies INNER JOIN highlights ON movies.movie_tmdbID=highlights.movie_id WHERE highlights.highlight_status=1 ORDER BY RAND() LIMIT 1";
     if ( $conn->query($sql)->num_rows > 0) {
 
         $movieID = $conn->query($sql)->fetch_assoc()['movie_tmdbID'];

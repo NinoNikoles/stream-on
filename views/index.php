@@ -1,5 +1,7 @@
 <?php include(ROOT_PATH.'/views/header.php');
 
+getHighlight();
+
 currentWatchlist();
 
 genreSlider();

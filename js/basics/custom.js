@@ -69,6 +69,7 @@ $(document).ready(function() {
             self.movieTimeSafe();
             self.initPlayer();
             self.myList();
+            //self.highlight();
             //self.videoTriggerFullscreen();
         },
 
@@ -682,6 +683,29 @@ $(document).ready(function() {
                         });
                     }
                 });
+            }
+        },
+
+        highlight: function() {
+            var highlight;
+
+            function onYouTubePlayerAPIReady() {
+                highlight = new YT.Player('highlight', {
+                    events: {
+                        'onStateChange': onPlayerStateChange // Funktion, die aufgerufen wird, wenn sich der Player-Status ändert
+                    }
+                });
+            }            
+
+            onYouTubePlayerAPIReady();
+              
+              // Callback-Funktion, die aufgerufen wird, wenn sich der Player-Status ändert
+            function onPlayerStateChange(event) {
+                // Player-Status hat sich geändert
+                if (event.data === YT.PlayerState.ENDED) {
+                    // Video ist fertig, iFrame ausblenden
+                    document.getElementById('highlight').style.display = 'none';
+                }
             }
         },
 

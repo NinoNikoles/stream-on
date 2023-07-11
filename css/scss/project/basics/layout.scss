@@ -1,3 +1,7 @@
+.header, #header {
+    background: linear-gradient(180deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0.95) 15%, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.08) 90%, rgba(0,0,0,0.06) 92%, rgba(0,0,0,0.04) 94%, rgba(0,0,0,0.03) 96%, rgba(0,0,0,0) 98%);
+}
+
 body {
     padding: {
         top: rem-calc(50) !important;

@@ -195,12 +195,12 @@
 }
 
 .card-slider {
-    opacity: 0;
+   /* opacity: 0;
     @include transition(opacity 1s ease-in 0.75s);
 
     &.visible {
         opacity: 1;
-    }
+    }*/
 
     .swiper-slide {
         height: auto;
@@ -225,9 +225,10 @@
     }
 }
 
+.currentWatch-slider,
 .genre-slider {
     opacity: 0;
-    @include transition(opacity 1s ease-in 0.75s);
+    @include transition(opacity 0.75s ease-in 0.5s);
 
     &.visible {
         opacity: 1;

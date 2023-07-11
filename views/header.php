@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
     <title><?php echo getSiteTitle();?></title>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 <header id="header" class="bar-active-root bar-active fixed-header overlay" lang="de-DE">

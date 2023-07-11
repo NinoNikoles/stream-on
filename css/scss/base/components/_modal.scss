@@ -97,7 +97,7 @@
 
     &-inner-wrap {
         position: relative;
-        overflow-x: hidden;
+        overflow-y: scroll;
 
         @include MQ(xsmall) {
             padding: {
