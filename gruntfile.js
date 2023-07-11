@@ -30,7 +30,6 @@ module.exports = function(grunt) {
                 files: {
                     '<%= config.root %>views/build/style.min.css' : '<%= config.root %>css/scss/style.scss',
                     '<%= config.root %>views/build/font.min.css' : '<%= config.root %>css/scss/font.scss',
-                    '<%= config.root %>views/build/editor.min.css' : '<%= config.root %>css/scss/editor.scss',
                 }
             }
         },

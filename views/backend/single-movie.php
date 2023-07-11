@@ -93,16 +93,16 @@ if ( $movie == 0 ) {
                                 echo '<button class="btn btn-small btn-success" id="trailerSubmit" type="submit">'.lang_snippet('save').'</button>';
                             echo '</form>';
                         echo '</div>';
+                    echo '</div>';
 
                 ?>
                 <div class="col4">
                     <?php
-                    var_dump(isHighlight($id));
                         if ( !isHighlight($id) ) {
                             echo '<div class="col12">';
                                 echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
                                     echo '<input type="text" name="highlight" id="highlight" value="'.$_GET['id'].'" style="display:none;">';
-                                    echo '<button class="btn marg-top-m marg-bottom-no" id="addHighlight" name="addHighlight" type="submit">'.lang_snippet('Add as highlight').'</button>';
+                                    echo '<button class="btn btn-small" id="addHighlight" name="addHighlight" type="submit">'.lang_snippet('add_highlight').'</button>';
                                 echo '</form>';
                             echo '</div>';
                         }

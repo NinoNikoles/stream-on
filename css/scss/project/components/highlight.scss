@@ -1,5 +1,6 @@
 .highlight {
     &-wrapper {
+        display: flex;
         max-height: 70vh;
         margin: {
             bottom: rem-calc(-60);
@@ -16,11 +17,12 @@
 
         &::after {
             display: block;
-            background: rgb(0,0,0);
-            background: linear-gradient(0deg, rgba(18,18,18,1) 10%, rgba(18,18,18,0.95) 15%, rgba(18,18,18,0.9) 20%, rgba(18,18,18,0.08) 90%, rgba(18,18,18,0.06) 92%, rgba(18,18,18,0.04) 94%, rgba(18,18,18,0.02) 96%, rgba(18,18,18,0.01) 98%);
+            //background: rgb(0,0,0);
+            //background: linear-gradient(0deg, rgba(18,18,18,1) 10%, rgba(18,18,18,0.95) 15%, rgba(18,18,18,0.9) 20%, rgba(18,18,18,0.08) 90%, rgba(18,18,18,0.06) 92%, rgba(18,18,18,0.04) 94%, rgba(18,18,18,0.02) 96%, rgba(18,18,18,0.01) 98%);
+            background-image: linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#121212 68%,#121212);
             content: "";
             width: 100%;
-            height: rem-calc(45);
+            height: 20%;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -31,21 +33,62 @@
         }
 
         .poster {
-            aspect-ratio: .6666666667;
-            width: auto;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            display: flex;
+            width: 25%;
         }
 
         .widescreen {
+            display: flex;
+            width: 75%;
+
             img {
                 @include MQ(medium) {
                     max-height: 70vh;
                 }
             }
             
+        }
+
+        .content-wrap {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 100%;
+            padding: {
+                right: rem-calc($space-base);
+                bottom: rem-calc($space-base);
+                left: rem-calc($space-base);
+            }
+            position: absolute;            
+            right: 0;
+            bottom: 0;
+            width: 75%;
+
+            @include MQ(medium) {
+                padding: {
+                    right: rem-calc($space-base*4);
+                    bottom: rem-calc(140);
+                    left: rem-calc($space-base*4);
+                }
+            }
+
+            &::before {
+                display: block;
+                background: {
+                    image: linear-gradient(180deg, rgba(20,20,20,0) 0, rgba(20,20,20,0.15) 15%, rgba(20,20,20,0.35) 29%, rgba(20,20,20,0.58) 44%, #121212 90%, #121212);
+                }
+                content: "";
+                width: 100%;
+                height: 80%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                z-index: 0;
+            }
+
+            > * {
+                z-index: 1;
+            }
         }
     }
 }

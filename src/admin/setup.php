@@ -297,9 +297,12 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     $sql = "CREATE TABLE highlights (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         movie_id INT,
-        status BOOLEAN,
+        highlight_status BOOLEAN,
         FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID)
     )";
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
     
     //-- One Time Setup Done --
     $sql = 'UPDATE settings SET setting_option="1" WHERE setting_name="one_time_setup"';

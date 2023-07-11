@@ -43,6 +43,7 @@ class langSnippets {
 			'movie_title' => 'Movie title',
             'continue' => 'Continue',
             'my_list' => 'My list',
+            'add_highlight' => 'Add to highlights',
             'apikey_info'=> 'You need an apikey to fetch fetch infos from the movie database. Klick <a href="https://www.themoviedb.org/settings/api" target="_blank" title="TMDB">here</a> to get your own key!',
             'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY',
 			'trailer_info' => 'ID of the YouTube video URL. Example: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
@@ -143,7 +144,8 @@ class langSnippets {
 			'movie_title' => 'Movie Title',
             'continue' => 'Fortsetzen',
             'my_list' => 'Meine Liste',
-			
+			'add_highlight' => 'Zu Highlights hinzufügen',
+
 			// Movie
 			'rating' => 'Bewertung',
 			'runtime' => 'Dauer',

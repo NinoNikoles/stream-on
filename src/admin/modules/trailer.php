@@ -17,23 +17,34 @@ function getTrailer($movieID, $extraClass="") {
 
 function getHighlight() {
     $conn = dbConnect();
-    $sql = "SELECT movie_tmdbID, movie_poster, movie_thumbnail FROM movies INNER JOIN highlights ON movies.movie_tmdbID=highlights.movie_id WHERE highlights.highlight_status=1 ORDER BY RAND() LIMIT 1";
+    $sql = "SELECT movie_tmdbID, movie_title, movie_overview, movie_poster, movie_thumbnail FROM movies INNER JOIN highlights ON movies.movie_tmdbID=highlights.movie_id WHERE highlights.highlight_status=1 ORDER BY RAND() LIMIT 1";
     if ( $conn->query($sql)->num_rows > 0) {
         $result = $conn->query($sql);
 
         while ( $row = $result->fetch_assoc() ) {
             $movieID = $row['movie_tmdbID'];
+            $title = $row['movie_title'];
+            $description = $row['movie_overview'];
             $poster = $row['movie_poster'];
             $backdrop = $row['movie_thumbnail'];
         }
 
         $hightlight = "
+        <figure class='poster'>
+            <img src=".loadImg('original', $poster)." loading='lazy'>
+        </figure>
         <figure class='widescreen'>
             <img src=".loadImg('original', $backdrop)." loading='lazy'>
         </figure>
-        <figure class='poster'>
-            <img src=".loadImg('original', $poster)." loading='lazy'>
-        </figure>";
+        <div class='content-wrap mobile-only'>
+            <h1 class='h6'>".$title."</h1>
+            <p class='smaller'>".truncate($description)."</p>
+        </div>
+        <div class='content-wrap desktop-only'>
+            <h1 class='h2'>".$title."</h1>
+            <p>".$description."</p>
+        </div>
+        ";
     
         $conn->close();
         echo '<div class="highlight-wrapper">'.$hightlight.'</div>';
