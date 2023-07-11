@@ -305,6 +305,23 @@ function updateMovieBackdrop($movieID, $backdrop) {
     }
 }
 
+//-- Updates the previewd backdrop image of movies --
+function updateMovieTrailer($movieID, $trailer) {
+    $conn = dbConnect();
+    $trailerID = mysqli_real_escape_string($conn, $trailer);
+
+    $sql = "UPDATE movies SET movie_trailer='$trailerID' WHERE movie_tmdbID='$movieID'";
+    if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
+        set_callout('alert','update_trailer_alert');
+        page_redirect('/admin/movie/?id='.$movieID);
+    } else {
+        $conn->close();
+        set_callout('success','update_trailer_success');
+        page_redirect('/admin/movie/?id='.$movieID);
+    }
+}
+
 //-- Movie data converter --
 function moviesDataconverter($row) {
     $data['tmdbID'] = $row['movie_tmdbID'];

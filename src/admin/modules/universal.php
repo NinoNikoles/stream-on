@@ -353,7 +353,7 @@ function runtimeToString($runtime) {
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
     return "http://image.tmdb.org/t/p/$size$img";
-    //return '';
+    //return '/views/build/css/images/img_preview.webp';
 }
 
 function getWatchedTime($watchedTime, $totalDuration) {

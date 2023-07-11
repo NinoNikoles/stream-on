@@ -7,6 +7,7 @@ include_modules('user');
 include_modules('api');
 include_modules('player');
 include_modules('container');
+include_modules('trailer');
 
 
 

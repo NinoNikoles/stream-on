@@ -83,8 +83,10 @@ function movie_card($movie, $extraClasses = '') {
                             '.$listButtons.'
                             <p class="small">'.$overview.'</p>
                             <p class="small tag-list">'.$genreHTML.'</p>
+                            '.getTrailer($movieID, 'marg-top-xs marg-bottom-xs').'
                         </div>
                         <div class="col4 desktop-only">
+                            '.getTrailer($movieID, 'marg-bottom-xs').'
                             <figure class="poster">
                                 <img src="'.loadImg('original', $poster).'" alt="" loading="lazy" importance="low">
                             </figure>
