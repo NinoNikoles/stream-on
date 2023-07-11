@@ -39,6 +39,11 @@ if ( $movie == 0 ) {
                         updateMovieTrailer($_POST['id'], $_POST['trailer']);
                     }
 
+                    // Add highlight
+                    if(isset($_POST['highlight'])) {
+                        addHighlight($_POST['highlight']);
+                    }
+
                     // Change movie poster
                     if(isset($_POST['change-poster'])) {
                         updateMoviePoster($_POST['id'], $_POST['poster']);
@@ -91,6 +96,17 @@ if ( $movie == 0 ) {
 
                 ?>
                 <div class="col4">
+                    <?php
+                    var_dump(isHighlight($id));
+                        if ( !isHighlight($id) ) {
+                            echo '<div class="col12">';
+                                echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
+                                    echo '<input type="text" name="highlight" id="highlight" value="'.$_GET['id'].'" style="display:none;">';
+                                    echo '<button class="btn marg-top-m marg-bottom-no" id="addHighlight" name="addHighlight" type="submit">'.lang_snippet('Add as highlight').'</button>';
+                                echo '</form>';
+                            echo '</div>';
+                        }
+                    ?>
                     <div class="col12">
                         <?php
                             echo '<a href="#file-list-popup" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup">'.lang_snippet('select_movie_file').'</a>';

@@ -36,3 +36,39 @@ function getHighlight() {
         echo '<div class="highlight-wrapper">'.$hightlight.'</div>';
     }  
 }
+
+function addHighlight($movieID) {
+    $conn = dbConnect();
+    $sql = "INSERT INTO highlights(movie_id, highlight_status) VALUES
+    ($movieID, 1)
+    ON DUPLICATE KEY UPDATE highlight_status = VALUES(highlight_status)";
+
+    if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
+        set_callout('alert','update_trailer_alert');
+        page_redirect('/admin/movie/?id='.$movieID);
+    } else {
+        $conn->close();
+        set_callout('success','update_trailer_success');
+        page_redirect('/admin/movie/?id='.$movieID);
+    }
+}
+
+function isHighlight($movieID) {
+    $conn = dbConnect();
+    $sql = "SELECT highlight_status FROM highlights WHERE movie_id=$movieID";
+    $result = $conn->query($sql);
+
+    if ( $result->num_rows > 0) {
+        if ( $result->fetch_assoc()['highlight_status'] ) {
+            $conn->close();
+            return true;
+        }
+
+        $conn->close();
+        return false;
+    }
+
+    $conn->close();
+    return false;
+}
