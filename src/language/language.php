@@ -10,6 +10,7 @@ class langSnippets {
             'shows' => 'TV Shows',
             'genres' => 'Genres',
             'logout' => 'Logout',
+            'highlights' => 'Highlights',
 
             // Universal
             'cancel' => 'Cancel',
@@ -35,6 +36,8 @@ class langSnippets {
             'profile' => 'Profile',
             'more_informations' => 'More infromations',
             'list' => 'My List',
+            'trailer' => 'Trailer',
+            'highlight' => 'Highlight',
 			
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -42,7 +45,8 @@ class langSnippets {
             'my_list' => 'My list',
             'apikey_info'=> 'You need an apikey to fetch fetch infos from the movie database. Klick <a href="https://www.themoviedb.org/settings/api" target="_blank" title="TMDB">here</a> to get your own key!',
             'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY',
-			
+			'trailer_info' => 'ID of the YouTube video URL. Example: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
+
 			// Movie
 			'rating' => 'Rating',
 			'runtime' => 'Runtime',
@@ -67,7 +71,8 @@ class langSnippets {
             'genres_created_success' => 'Genres created successfully!',            
             'update_poster_success' => 'Poster updated successfully!',            
             'update_backdrop_success' => 'Thumbnail updated successfully!',         
-            'update_file_path_success' => 'File path updated successfully!',         
+            'update_file_path_success' => 'File path updated successfully!',        
+            'update_trailer_success' => 'Trailer updated successfully!',        
 
             'logout_message' => 'Successfully logged out!',
             'user_img_upload_success' => 'Image successfully uploaded!',
@@ -85,7 +90,8 @@ class langSnippets {
             'genres_created_alert' => 'Genres could not be created!', 
             'update_poster_alert' => 'Poster could not be updated!',            
             'update_backdrop_alert' => 'Thumbnail could not be updated!',         
-            'update_file_path_alert' => 'File path could not be updated!',  			
+            'update_file_path_alert' => 'File path could not be updated!',			
+            'update_trailer_alert' => 'Trailer could not be updated!',			
 
             'user_img_upload_alert' => 'Img could not be uploaded!',
 
@@ -104,6 +110,7 @@ class langSnippets {
             'shows' => 'Serien',
             'genres' => 'Genre',
             'logout' => 'Ausloggen',
+            'highlights' => 'Highlights',
 
             // Universell
             'cancel' => 'Abbrechen',
@@ -129,6 +136,8 @@ class langSnippets {
             'profile' => 'Profil',
             'more_informations' => 'Mehr erfahren',
             'list' => 'Meine Liste',
+            'trailer' => 'Trailer',
+            'highlight' => 'Highlight',
 			
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
@@ -147,6 +156,7 @@ class langSnippets {
 
             'apikey_info'=> 'Du brauchst einen eigenen API Key von TMDB um Inhalte laden zu können. Klicke <a href="https://www.themoviedb.org/settings/api" target="_blank" title="TMDB">hier</a> um einen Schlüssel zu bekommen!',
             'lang_info' => 'Dies wird benötigt um alle Inhalte in der gewünschten Sprache zu laden. Format: language-COUNTRY',
+            'trailer_info' => 'ID der YouTube Video URL. Bsp.: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
 
             // -- Messages --
             // Success
@@ -162,7 +172,8 @@ class langSnippets {
             'genres_created_success' => 'Genre wurden erfolgreich geladen!',
             'update_poster_success' => 'Poster wurde erfolgreich aktualisiert!',            
             'update_backdrop_success' => 'Thumbnail wurde erfolgreich aktualisiert!',         
-            'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',    			
+            'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',   			
+            'update_trailer_success' => 'Trailer wurde erfolgreich aktualisiert!',   			
 
             'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
             'user_img_upload_success' => 'Bild erfolgreich hochgeladen',
@@ -180,7 +191,8 @@ class langSnippets {
             'genres_created_alert' => 'Genre konntent nicht geladen werden!',
             'update_poster_alert' => 'Poster konntent nicht aktualisiert werden!',            
             'update_backdrop_alert' => 'Thumbnail konntent nicht aktualisiert werden!',         
-            'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!',  			
+            'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!', 			
+            'update_trailer_alert' => 'Trailer konntent nicht aktualisiert werden!', 			
 
             'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
 
