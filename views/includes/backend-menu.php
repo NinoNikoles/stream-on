@@ -11,7 +11,7 @@
                 $genreCheck = genreCheck();
                 if ( $genreCheck === true) {
                     echo '<li><a href="/admin/movies">'.lang_snippet('movies').'</a></li>';
-                    echo '<li><a href="/admin/highlight">'.lang_snippet('highlight').'</a></li>';
+                    echo '<li><a href="/admin/highlights">'.lang_snippet('highlights').'</a></li>';
                 }
             }
         ?>

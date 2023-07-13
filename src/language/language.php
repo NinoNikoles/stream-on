@@ -38,6 +38,7 @@ class langSnippets {
             'list' => 'My List',
             'trailer' => 'Trailer',
             'highlight' => 'Highlight',
+            'status' => 'Status',
 			
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -139,6 +140,7 @@ class langSnippets {
             'list' => 'Meine Liste',
             'trailer' => 'Trailer',
             'highlight' => 'Highlight',
+            'status' => 'Status',
 			
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
@@ -225,7 +227,5 @@ class langSnippets {
 function lang_snippet($langSnippet) {
     $languages = new langSnippets();
 
-    return $languages->get_lang($langSnippet);  
+    return $languages->get_lang($langSnippet);
 }
-    
-    

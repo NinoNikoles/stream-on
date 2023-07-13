@@ -103,3 +103,18 @@ function isHighlight($movieID) {
     $conn->close();
     return false;
 }
+
+function deleteHighlight($movieID) {
+    $conn = dbConnect();
+    $sql = "DELETE FROM highlights WHERE movie_id=$movieID";
+   
+    if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
+        //set_callout('alert','update_trailer_alert');
+        page_redirect('/admin/highlights');
+    } else {
+        $conn->close();
+        //set_callout('success','update_trailer_success');
+        page_redirect('/admin/highlights');
+    }
+}

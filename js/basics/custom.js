@@ -69,7 +69,7 @@ $(document).ready(function() {
             self.movieTimeSafe();
             self.initPlayer();
             self.myList();
-            //self.highlight();
+            self.highlight();
             //self.videoTriggerFullscreen();
         },
 
@@ -543,8 +543,8 @@ $(document).ready(function() {
         initPlayer: function() {
             var self = this;
 
-            if ( !self.isSmartphone() ) {
-                if ( $('#player').length > 0 ) {
+            if ( $('#player').length > 0 ) {
+                if ( !self.isSmartphone() ) {
                     var player = videojs('player');
 
                     video = $('video')[0];
@@ -555,16 +555,15 @@ $(document).ready(function() {
                         video.currentTime = sekunde;
                         $('#player-back-btn').appendTo(".video-js");
                     });
+                } else {
+                    video = $('video')[0];
+                    sekunde = $('span[data-time]').attr('data-time');
+        
+                    video.addEventListener("loadedmetadata", function() {
+                        video.currentTime = sekunde;
+                    });
                 }
-            } else {
-                video = $('video')[0];
-                sekunde = $('span[data-time]').attr('data-time');
-    
-                video.addEventListener("loadedmetadata", function() {
-                    video.currentTime = sekunde;
-                });
             }
-
         },
 
         userMenuBtn: function() {
@@ -695,26 +694,33 @@ $(document).ready(function() {
         },
 
         highlight: function() {
-            var highlight;
+            $('.highlight-change').on('change', function() {
+                console.log('change');
+                var movieID = $(this).attr('data-movie'),
+                    status = $(this).prop('checked');
 
-            function onYouTubePlayerAPIReady() {
-                highlight = new YT.Player('highlight', {
-                    events: {
-                        'onStateChange': onPlayerStateChange // Funktion, die aufgerufen wird, wenn sich der Player-Status ändert
+                    if (status) {
+                        status = 1;
+                    } else {
+                        status = 0;
+                    }
+
+                console.log(status);
+
+                $.ajax({
+                    url: '/highlight-status',
+                    type: 'post',
+                    data: { 
+                        movieID: movieID,
+                        status: status
+                    },
+                    success: function(response) {
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
                     }
                 });
-            }            
-
-            onYouTubePlayerAPIReady();
-              
-              // Callback-Funktion, die aufgerufen wird, wenn sich der Player-Status ändert
-            function onPlayerStateChange(event) {
-                // Player-Status hat sich geändert
-                if (event.data === YT.PlayerState.ENDED) {
-                    // Video ist fertig, iFrame ausblenden
-                    document.getElementById('highlight').style.display = 'none';
-                }
-            }
+            });
         },
 
         isSmartphone: function() {

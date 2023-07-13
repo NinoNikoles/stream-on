@@ -21,6 +21,7 @@ class routes {
             '/searchbar' => 'views/actions/searchbar.php',
             '/movie-watch-time' => 'views/actions/movie-watched-time.php',
             '/live-search' => 'views/actions/livesearch.php',
+            '/highlight-status' => 'views/actions/highlight-status.php',
         ],
         'admin' => [
             '/admin/settings' => 'views/backend/settings.php',
