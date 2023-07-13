@@ -93,6 +93,9 @@ function deleteMovie($movieID) {
         $genreDeleteQuery = "DELETE FROM movie_genre WHERE movie_id = $id";
         $conn->query($genreDeleteQuery);
 
+        $highlightDeleteQuery = "DELETE FROM highlights WHERE movie_id = $id";
+        $conn->query($highlightDeleteQuery);
+
         // Lösche den Film aus der movies-Tabelle
         $filmDeleteQuery = "DELETE FROM movies WHERE id = $id";
         $conn->query($filmDeleteQuery);
