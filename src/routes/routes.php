@@ -12,6 +12,8 @@ if ($_SESSION['role'] == '1') {
     routes('admin');
 }
 
+routes('error');
+
 $folderPath = 'css/';
 
 $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($folderPath), RecursiveIteratorIterator::SELF_FIRST);
