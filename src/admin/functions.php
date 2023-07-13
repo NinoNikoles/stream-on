@@ -1,5 +1,6 @@
 <?php
 require_once ROOT_PATH.'/src/language/language.php';
+require_once ROOT_PATH.'/src/admin/routing.php';
 require_once ROOT_PATH.'/src/admin/modules/universal.php';
 include_modules('movies');
 include_modules('genre');
