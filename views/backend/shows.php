@@ -36,7 +36,7 @@ if ( isset($_POST['showSubmit']) ) {
             <div class="grid-row">
                 <?php
                     echo '<form method="post" action="/admin/shows">';
-                        echo '<input type="number" name="id" value="1100" style="display:none;">';
+                        echo '<input type="number" name="id" value="60572" style="display:none;">';
                         echo '<button class="btn btn-small btn-success" id="showSubmit" name="showSubmit" type="submit">'.lang_snippet('save').'</button>';
                     echo '</form>';
                 ?>

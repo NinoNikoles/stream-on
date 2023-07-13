@@ -12,6 +12,7 @@ class routes {
             '/user-img-upload' => 'views/actions/user-image-upload.php',
 
             '/movies' => 'views/movies.php',
+            '/shows' => 'views/shows.php',
             '/watch/$id' => 'views/templates/watch.php',
             '/search' => 'views/search.php',
             '/my-list' => 'views/my-list.php',

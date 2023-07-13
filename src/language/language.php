@@ -39,6 +39,10 @@ class langSnippets {
             'trailer' => 'Trailer',
             'highlight' => 'Highlight',
             'status' => 'Status',
+            'episode' => 'Episode',
+            'episodes' => 'Episodes',
+            'season' => 'Season',
+            'seasons' => 'Seasons',
 			
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -141,6 +145,10 @@ class langSnippets {
             'trailer' => 'Trailer',
             'highlight' => 'Highlight',
             'status' => 'Status',
+            'episode' => 'Episode',
+            'episodes' => 'Episoden',
+            'season' => 'Staffel',
+            'seasons' => 'Staffeln',
 			
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
