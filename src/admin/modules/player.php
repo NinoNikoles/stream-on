@@ -20,7 +20,7 @@ function videoPlayer($movieID, $fullscreen = false) {
 
         if($fullscreen === true) {
             echo '<figure>';
-                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" poster="'.$tmdb->getImageURL().$backdrop.'">'; //'.$tmdb->getImageURL().$backdrop.' //
+                echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" controls preload="auto" poster="'.$tmdb->getImageURL().$backdrop.'">'; //'.$tmdb->getImageURL().$backdrop.' // data-current-time="true" data-duration="true"
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
                 echo '<button id="player-back-btn" title="Back" onclick="history.back()"></button>';
