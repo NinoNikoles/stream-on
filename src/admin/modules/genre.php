@@ -17,7 +17,6 @@ function initGenres() {
     $dataSring = stripslashes($dataSring);
  
     $sql = "INSERT INTO genres (genre_id, genre_name) VALUES $dataSring";
-    echo $sql;
     $result = $conn->query($sql);
 
     if (!$result) {

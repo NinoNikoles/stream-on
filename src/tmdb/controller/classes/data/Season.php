@@ -123,6 +123,24 @@ class Season{
     }
 
     /**
+     * 	Get the ApiObjects Overview
+     *
+     * 	@return string
+     */
+    public function getOverview() {
+        return $this->_data['overview'];
+    }
+
+    /**
+     * 	Get the ApiObjects vote average
+     *
+     * 	@return int
+     */
+    public function getVoteAverage() {
+        return $this->_data['vote_average'];
+    }
+
+    /**
      * 	Get the Season's AirDate
      *
      * 	@return string

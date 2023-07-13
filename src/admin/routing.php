@@ -32,7 +32,8 @@ class routes {
             '/admin/file-api' => 'views/actions/file-api.php',
             '/admin/movie/$id' => 'views/backend/single-movie.php',
             '/admin/genres' => 'views/backend/genres.php',
-            '/admin/highlights' => 'views/backend/highlights.php'
+            '/admin/highlights' => 'views/backend/highlights.php',
+            '/admin/shows' => 'views/backend/shows.php',
         ],
         'error' => [
             '/404' => 'views/404.php'

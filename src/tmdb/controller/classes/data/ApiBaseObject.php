@@ -101,6 +101,15 @@ class ApiBaseObject
     }
 
     /**
+     * 	Get the ApiObjects Overview
+     *
+     * 	@return string
+     */
+    public function getOverview() {
+        return $this->_data['overview'];
+    }
+
+    /**
      * 	Get the ApiObjects vote average
      *
      * 	@return int
@@ -110,7 +119,11 @@ class ApiBaseObject
     }
 
     public function getReleaseDate() {
-        return $this->_data['release_date'];
+        if ( array_key_exists('release_date', $this->_data) ) {
+            return $this->_data['release_date'];
+        } else {
+            return $this->_data['first_air_date'];
+        }
     }
 
     public function getRuntime() {

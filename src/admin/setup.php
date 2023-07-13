@@ -279,6 +279,107 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
     }
+
+    //-- TV Shows
+    $sql = 'CREATE TABLE IF NOT EXISTS shows (
+        id INT NOT NULL AUTO_INCREMENT,
+        show_tmdbID INT,
+        show_title TEXT,
+        show_overview TEXT,
+        show_poster TEXT,
+        show_thumbnail TEXT,
+        show_rating INT,
+        show_release DATE,
+        show_season_count INT,
+        show_seasons TEXT,
+        show_episodes_count INT,
+        show_genres VARCHAR(255),
+        show_trailer VARCHAR(255),
+        created TIMESTAMP,
+        UNIQUE(show_tmdbID),
+        PRIMARY KEY (id)
+    )';
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
+
+    //-- Genre show Table -- 
+    $sql = 'CREATE TABLE IF NOT EXISTS show_genre (
+        id INT NOT NULL AUTO_INCREMENT,
+        show_id INT NOT NULL,
+        genre_id INT NOT NULL,
+        UNIQUE (show_id, genre_id),
+        FOREIGN KEY (show_id) REFERENCES shows(show_tmdbID),
+        FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
+        PRIMARY KEY (id)
+    )';
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
+
+    //-- Show Seasons
+    $sql = 'CREATE TABLE IF NOT EXISTS seasons (
+        id INT NOT NULL AUTO_INCREMENT,
+        season_tmdbID INT,
+        season_title TEXT,
+        season_overview TEXT,
+        season_poster TEXT,
+        season_number INT,
+        season_rating INT,
+        season_release DATE,
+        season_episodes_count INT,
+        season_show_tmdbID INT,
+        created TIMESTAMP,
+        UNIQUE(season_tmdbID),
+        PRIMARY KEY (id)
+    )';
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
+
+    //-- Show Seasons
+    $sql = 'CREATE TABLE IF NOT EXISTS seasons (
+        id INT NOT NULL AUTO_INCREMENT,
+        season_tmdbID INT,
+        season_title TEXT,
+        season_overview TEXT,
+        season_poster TEXT,
+        season_number INT,
+        season_rating INT,
+        season_release DATE,
+        season_episodes_count INT,
+        season_show_id INT,
+        created TIMESTAMP,
+        UNIQUE(season_tmdbID),
+        FOREIGN KEY (season_show_id) REFERENCES shows(show_tmdbID),
+        PRIMARY KEY (id)
+    )';
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
+
+    //-- Show Episodes
+    $sql = 'CREATE TABLE IF NOT EXISTS episodes (
+        id INT NOT NULL AUTO_INCREMENT,
+        episode_tmdbID INT,
+        episode_title TEXT,
+        episode_overview TEXT,
+        episode_thumbnail TEXT,
+        episode_file_path TEXT,
+        episode_number INT,
+        episode_rating INT,
+        episode_release DATE,
+        episode_show_id INT,
+        episode_season_id INT,
+        created TIMESTAMP,
+        UNIQUE(episode_tmdbID),
+        FOREIGN KEY (episode_show_id) REFERENCES shows(show_tmdbID),
+        FOREIGN KEY (episode_season_id) REFERENCES seasons(season_tmdbID),
+        PRIMARY KEY (id)
+    )';
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
     
     //-- Movie watch table -- 
     $sql = 'CREATE TABLE IF NOT EXISTS watchlist (
