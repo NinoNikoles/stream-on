@@ -36,6 +36,10 @@ function getHighlight() {
         <figure class='widescreen'>
             <img src=".loadImg('original', $backdrop)." loading='lazy'>
         </figure>
+        <div class='button-wrap'>
+            <div class='col6 grid-padding text-center'><a href='/' class='btn btn-small btn-white'>Mehr erfahren</a></div>
+            <div class='col6 grid-padding text-center'><a href='/' class='btn btn-small btn-white'>Mehr erfahren</a></div>
+        </div>
         <div class='content-wrap mobile-only'>
             <h1 class='h6'>".$title."</h1>
             <p class='smaller'>".truncate($description)."</p>

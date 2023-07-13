@@ -49,6 +49,23 @@
             
         }
 
+        .button-wrap {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            position: absolute;            
+            left: 0;
+            bottom: 0;
+            width: 25% !important;
+            min-width: unset;
+
+            @include MQ(medium) {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
         .content-wrap {
             display: flex;
             flex-direction: column;
