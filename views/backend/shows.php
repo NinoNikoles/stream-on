@@ -39,7 +39,7 @@ if ( isset($_POST['add-show']) ) {
                     if ( $shows > 0 ) {
                         foreach ( $shows as $show ) {
                             echo '<div class="col-6 col-3-medium column">';
-                                echo '<a href="/admin/movie/?id='.$show['show_tmdbID'].'" title="'.$show['show_title'].'" class="media-card">';
+                                echo '<a href="/admin/show/?id='.$show['show_tmdbID'].'" title="'.$show['show_title'].'" class="media-card">';
                                     echo '<figure class="poster">';
                                         echo '<img src="'.loadImg('original', $show['show_poster']).'" alt="" loading="lazy">';
                                     echo '</figure>';

@@ -369,8 +369,10 @@ $(document).ready(function() {
 
                 $el.addClass(sliderClass);
                 var slidesPerViewMobile = 2;
-                var slidesPerViewTablet = 6;
-                var slidesPerViewDesktop = 8;
+                var slidesPerViewSmallTablet = 3;
+                var slidesPerViewTablet = 4;
+                var slidesPerViewDesktop = 6;
+                var smallTabletBP = 720;
                 var tabletBP = 1080;
                 var desktopBP = 1400;
 
@@ -385,6 +387,12 @@ $(document).ready(function() {
                         }
                     } else if ( bp >= tabletBP ) {
                         if ( $(slider + ' .swiper-slide').length > slidesPerViewTablet ) {
+                            swiper.loop = true;
+                        } else {
+                            swiper.loop = false;
+                        }
+                    } else if ( bp >= smallTabletBP ) {
+                        if ( $(slider + ' .swiper-slide').length > slidesPerViewSmallTablet ) {
                             swiper.loop = true;
                         } else {
                             swiper.loop = false;
@@ -410,6 +418,9 @@ $(document).ready(function() {
                     allowTouchMove: true,
                     breakpoints: {
                         // when window width is >= 320px
+                        720: {
+                            slidesPerView: slidesPerViewSmallTablet//itemsTablet,
+                        },
                         1080: {
                             slidesPerView: slidesPerViewTablet//itemsTablet,
                         },

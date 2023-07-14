@@ -81,7 +81,6 @@ $(document).ready(function() {
 
                 setTimeout(function() {
                     var movieName = $this.val();
-                    console.log($('#searchpage').length);
 
                     if ( $('#searchpage').length > 0 ) {
                         $searchValueEl.text(movieName);
