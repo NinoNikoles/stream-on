@@ -228,6 +228,35 @@
         }
     }
 
+    .vjs-current-time,
+    .vjs-time-divider,
+    .vjs-duration {
+        display: flex;
+        align-items: center;
+        height: rem-calc(40);
+        min-width: unset;
+        padding: {
+            right: rem-calc(4);
+            left: rem-calc(4);
+        }
+        position: absolute;
+        bottom: 0;
+
+        @include MQ(medium) {
+            height: rem-calc(60);
+        }
+
+        div,
+        span {
+            line-height: 1;
+            margin: 0;
+        }
+    }
+
+    .vjs-duration {
+        right: rem-calc(60);
+    }
+
     .vjs-fullscreen-control {
         width: rem-calc(40) !important;
         height: rem-calc(40) !important;
