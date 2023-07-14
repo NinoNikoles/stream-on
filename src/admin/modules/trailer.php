@@ -63,10 +63,10 @@ function getHighlight() {
         </div>
         <div class='content-wrap desktop-only'>
             <h1 class='h2'>".$title."</h1>
-            <p>".$description."</p>
+            <p>".truncate($description, 450)."</p>
         </div>
         <div class='button-wrap'>
-            <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='/' class='btn btn-small btn-white'>Mehr erfahren</a></div>
+            <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='/' class='btn btn-small btn-white icon-left icon-info'>Mehr erfahren</a></div>
             <div class='col-12 grid-padding text-center'><a href='/' class='btn btn-small btn-white icon-left icon-play'>Jetzt schauen</a></div>
         </div>
         ";
@@ -110,9 +110,9 @@ function deactivateHighlight($movieID) {
     }
 }
 
-function isHighlight($movieID) {
+function isHighlight($mediaID) {
     $conn = dbConnect();
-    $sql = "SELECT highlight_status FROM highlights WHERE movie_id=$movieID";
+    $sql = "SELECT highlight_status FROM highlights WHERE highlight_id=$mediaID";
     $result = $conn->query($sql);
 
     if ( $result->num_rows > 0) {
@@ -129,9 +129,9 @@ function isHighlight($movieID) {
     return false;
 }
 
-function deleteHighlight($movieID) {
+function deleteHighlight($mediaID) {
     $conn = dbConnect();
-    $sql = "DELETE FROM highlights WHERE movie_id=$movieID";
+    $sql = "DELETE FROM highlights WHERE highlight_id=$mediaID";
    
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
