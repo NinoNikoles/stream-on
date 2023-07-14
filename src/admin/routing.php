@@ -33,6 +33,7 @@ class routes {
             '/admin/shows/show-api-search' => 'views/actions/show-api-search.php',
             '/admin/file-api' => 'views/actions/file-api.php',
             '/admin/movie/$id' => 'views/backend/single-movie.php',
+            '/admin/show/$id' => 'views/backend/single-show.php',
             '/admin/genres' => 'views/backend/genres.php',
             '/admin/highlights' => 'views/backend/highlights.php',
             '/admin/shows' => 'views/backend/shows.php',

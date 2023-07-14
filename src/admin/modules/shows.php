@@ -142,6 +142,50 @@ function selectAllShowsByTitle($order = '') {
     return $shows;
 }
 
+//-- Returns all information of a movie from local database --
+function selectShowByID($showID) {
+    $tmdb = setupTMDB();
+    $conn = dbConnect();
+
+    $sql = "SELECT show_tmdbID, show_title, show_overview, show_poster, show_thumbnail, show_rating, show_release, show_genres, show_trailer FROM shows WHERE show_tmdbID='$showID'";
+    $result = $conn->query($sql);
+
+    $data = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $data['id'] = $row['show_tmdbID'];
+            $data['title'] = $row['show_title'];
+            $data['backdrop'] = $row['show_thumbnail'];
+            $data['poster'] = $row['show_poster'];         
+            $data['overview'] = $row['show_overview'];
+            $data['voteAverage'] = $row['show_rating'];
+            $data['release'] = $row['show_release'];
+            $data['trailer'] = $row['show_trailer'];
+            $data['genres'] = [];
+
+            $show = $tmdb->getTVShow($data['id']);
+            $genres = $show->getGenres();
+            foreach ($genres as $genre) {
+                $genreID = $genre->getId();
+                $genreName = $genre->getName();
+
+                $array = array(
+                    'id' => $genreID,
+                    'name' => $genreName,
+                );
+
+                $data['genres'][] = $array;
+            }
+        }
+    } else {
+        $data = 0;
+    }
+
+    $conn->close();
+    return $data;
+}
+
 function show_card($show, $extraClasses = '') {
     $conn = dbConnect();
 
