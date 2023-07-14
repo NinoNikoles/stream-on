@@ -28,14 +28,15 @@ if ( isset($_POST['delete-highlight']) ) {
                     <th><?php echo lang_snippet('status'); ?></th>
                     <th><?php echo lang_snippet('delete'); ?></th>
                 </thead>
+                <tbody>
                 <?php
                     $conn = dbConnect();
-                    $hightlightSelect = "SELECT highlights.highlight_id, highlight_status, media.type FROM highlights INNER JOIN media ON highlights.highlight_id = media.tmdbID AND media.tmdbID IN (SELECT movies.movie_tmdbID FROM movies UNION SELECT shows.show_tmdbID FROM shows)";
+                    $hightlightSelect = "SELECT highlights.highlight_id, highlight_status, media.type FROM highlights INNER JOIN media ON highlights.highlight_id=media.tmdbID AND media.tmdbID IN (SELECT movies.movie_tmdbID FROM movies UNION SELECT shows.show_tmdbID FROM shows)";
                     $hightlightResult = $conn->query($hightlightSelect);
 
                     if ( $hightlightResult->num_rows > 0) {
                         while ( $highlight = $hightlightResult->fetch_assoc() ) {
-
+                            var_dump($highlight['type']);
                             if (!($highlight['highlight_status'] === NULL) && ($highlight['highlight_status'] > 0)) {
                                 $checked = "checked";
                             } else {
@@ -48,15 +49,16 @@ if ( isset($_POST['delete-highlight']) ) {
                                 $movieResults = $conn->query($getMovie);
                 
                                 while ( $movie = $movieResults->fetch_assoc() ) {
-                                    $movieID = $movie['movie_tmdbID'];
+                                    $mediaID = $movie['movie_tmdbID'];
                                     $title = $movie['movie_title'];
                                 }
                             } else {
-                                $showID = $highlight['highlight_id'];
+                                $mediaID = $highlight['highlight_id'];
                                 $getShow = "SELECT show_tmdbID, show_title FROM shows WHERE show_tmdbID=$mediaID";
                                 $showResults = $conn->query($getShow);
                 
                                 while ( $show = $showResults->fetch_assoc() ) {
+                                    
                                     $mediaID = $show['show_tmdbID'];
                                     $title = $show['show_title'];
                                 }
@@ -67,6 +69,8 @@ if ( isset($_POST['delete-highlight']) ) {
                                 echo '<td><input type="checkbox" data-media="'.$mediaID.'" class="highlight-change" '.$checked.'></td>';
                                 echo '<td><button data-src="#delete-highlight-'.$mediaID.'" class="btn btn-small btn-alert icon-only icon-trash marg-no" data-fancybox></button></td>';
                             echo '</tr>';
+
+                            
 
                             echo '<div id="delete-highlight-'.$mediaID.'" style="display:none;">';
                                 echo '<p>Möchtest du den Nutzer <strong>"'.$title.'"</strong> wirklich löschen?</p>';
@@ -80,6 +84,7 @@ if ( isset($_POST['delete-highlight']) ) {
                         }
                     }
                 ?>
+                </tbody>
             </table>
         </div>
 
