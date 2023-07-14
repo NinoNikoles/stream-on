@@ -86,19 +86,36 @@ function insertShow($showID) {
         $dataSring = str_replace(",',", ", NULL,", $dataSring);
         $dataSring = stripslashes($dataSring);
 
-        $sqlSeasons = "INSERT INTO seasons (season_tmdbID, season_title, season_overview, season_poster, season_number, season_rating, season_release, season_episodes_count, season_show_id) VALUES $dataSring";
+        // Adds all Seasons of the show
+        $sqlSeasons = "INSERT INTO seasons (season_tmdbID, season_title, season_overview, season_poster, season_number, season_rating, season_release, season_episodes_count, season_show_tmdbID) VALUES $dataSring";
         $conn->query($sqlSeasons);
+
+        // Adds to media table
+        $mediaQuery = "INSERT INTO media (tmdbID, type) VALUES ($id, 'show')";
+        $conn->query($mediaQuery);
         
         // Commit der Transaktion
         $conn->commit();
         $conn->close();
         set_callout('success','add_show_success');
-        //page_redirect("/admin/shows");
+        page_redirect("/admin/shows");
     } catch (Exception $e) {
         // Bei einem Fehler Rollback der Transaktion
         $conn->rollback();
         set_callout('alert','add_show_alert');
-        //page_redirect("/admin/shows");
+        page_redirect("/admin/shows");
+    }
+}
+
+//-- Check if movie is in local database --
+function showInLocalDB($showID) {
+    $conn = dbConnect();
+
+    $sql = "SELECT show_tmdbID FROM shows WHERE show_tmdbID='$showID'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $conn->close();
+        return true;
     }
 }
 
@@ -143,12 +160,39 @@ function show_card($show, $extraClasses = '') {
     }
 
     $userID = intval($_SESSION['userID']);
-    var_dump($show['show_season_count']);
+
     if ( intval($show['show_season_count']) === 1 ) {
         $seasonOutput = '1 '.lang_snippet('season');
     } else {
         $seasonOutput = $show['show_season_count'].' '.lang_snippet('seasons');
     }
+
+    // Fetch seasons
+    $querySeasons = "SELECT season_tmdbID, season_title, season_number, season_episodes_count FROM seasons INNER JOIN shows ON seasons.season_show_tmdbID=shows.show_tmdbID WHERE shows.show_tmdbID=$showID";
+    $seasonResults = $conn->query($querySeasons);
+    
+    $options = '';
+    $extras = '';
+    // Go through all seasons
+    if ( $seasonResults->num_rows > 0 ) {
+        while ( $seasonRow = $seasonResults->fetch_assoc() ) {
+            // Generate season select
+            // since season 0 is always extras, it will be added at the end
+            if ( $seasonRow['season_number'] === '0' ) {
+                $extras = '<option value="'.$seasonRow['season_number'].'">'.$seasonRow['season_title'].'</option>';
+            } else {
+                $options = $options.'<option value="'.$seasonRow['season_number'].'">'.$seasonRow['season_title'].'</option>';
+            } 
+        }
+
+        $options = $options.$extras;
+    }
+
+    // Generate Season - Episode list for the show
+    $episodesContainer = 
+    '<div class="episodes-wrap" id="show-'.$showID.'-episode-wrap">
+    
+    </div>';
 
     /*$watchingSQL = "SELECT watched_seconds, total_length FROM show_watched WHERE user_id = $userID and show_id = $showID and watched_seconds > 0";
     $watchInfos = $conn->query($watchingSQL);
@@ -211,7 +255,11 @@ function show_card($show, $extraClasses = '') {
                             </p>
                             <a href="/watch/?id='.$showID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>
                             <p class="small">'.$overview.'</p>
-                            <p class="small tag-list">'.$genreHTML.'</p>
+                            <p class="small tag-list marg-bottom-base">'.$genreHTML.'</p>
+                            <p>
+                                <select class="season-select" id="season-select-'.$showID.'">
+                                '.$options.'
+                                </select>
                             '.getTrailer($showID, 'marg-top-xs marg-bottom-xs').'
                         </div>
                         <div class="col4 desktop-only">

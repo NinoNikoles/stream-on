@@ -1,3 +1,4 @@
+<?php $siteTitle = getSiteTitle(); ?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark">
 <head>
@@ -6,6 +7,6 @@
     <link rel="icon" href="">
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <title>Install</title>
+    <title><?php echo $siteTitle;?></title>
 </head>
 <body>

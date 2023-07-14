@@ -30,6 +30,7 @@ class routes {
             '/admin/movies' => 'views/backend/movies.php',
             '/admin/movies/add-movie' => 'views/backend/add-movie.php',
             '/admin/movies/movie-api-search' => 'views/actions/movie-api-search.php',
+            '/admin/shows/show-api-search' => 'views/actions/show-api-search.php',
             '/admin/file-api' => 'views/actions/file-api.php',
             '/admin/movie/$id' => 'views/backend/single-movie.php',
             '/admin/genres' => 'views/backend/genres.php',

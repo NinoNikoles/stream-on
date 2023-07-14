@@ -64,7 +64,11 @@ function insertMovie($movieID) {
             $genreQuery = "INSERT INTO movie_genre (movie_id, genre_id) VALUES ($id, $genreID)";
             $conn->query($genreQuery);
         }
-    
+        
+        // Adds to media table
+        $mediaQuery = "INSERT INTO media (tmdbID, type) VALUES ($id, 'movie')";
+        $conn->query($mediaQuery);
+
         // Commit der Transaktion
         $conn->commit();
         $conn->close();
@@ -95,6 +99,9 @@ function deleteMovie($movieID) {
 
         $highlightDeleteQuery = "DELETE FROM highlights WHERE movie_id = $id";
         $conn->query($highlightDeleteQuery);
+
+        $mediaDeleteQuery = "DELETE FROM media WHERE tmdbID = $id";
+        $conn->query($mediaDeleteQuery);
 
         // Lösche den Film aus der movies-Tabelle
         $filmDeleteQuery = "DELETE FROM movies WHERE id = $id";

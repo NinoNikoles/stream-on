@@ -5,6 +5,8 @@
             page_redirect("/login");
         }
     }
+
+    $siteTitle = getSiteTitle();
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark" >
@@ -14,7 +16,7 @@
     <link rel="icon" href="">
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
-    <title><?php echo getSiteTitle();?></title>
+    <title><?php echo $siteTitle; ?></title>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>

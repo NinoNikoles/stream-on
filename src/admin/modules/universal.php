@@ -88,11 +88,15 @@ function getSiteTitle() {
     $conn = dbConnect();
 
     $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $conn->close();
-            return $row['setting_option'];
+    if ( $conn->connect_error ) {
+        return 'Install';
+    } else {
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $conn->close();
+                return $row['setting_option'];
+            }
         }
     }
 }

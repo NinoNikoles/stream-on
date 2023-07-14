@@ -16,6 +16,7 @@ $(document).ready(function() {
         $masterWrap: $('#masterWrap'),
         $menuButton: $('.menu-button'),
         $apiSearch: $('#movie-api-search'),
+        $showApiSearch: $('#show-api-search'),
         $liveSearch: $('#movie-live-search'),
         $searchBtn: $('.search-btn'),
 
@@ -31,6 +32,7 @@ $(document).ready(function() {
             var self = this;
 
             self.movieLiveSearch();
+            self.showLiveSearch();
         },
 
         bindHandlers: function () {
@@ -127,6 +129,39 @@ $(document).ready(function() {
                         $('.search-bar').removeClass('active-search');
                     }
                 }
+            });
+        },
+
+        showLiveSearch: function() {
+            var self = this;
+
+            self.$showApiSearch.on('input', function() {
+                console.log('test');
+                $this = $(this);
+                $resultList = $('#showSearchResults');
+
+                setTimeout(function() {
+                    var showName = $this.val();
+                    $this.val(showName);
+                    
+                    if (showName.length == 0) {
+                        $resultList.addClass('hidden'); ;
+                    } else {
+                        $resultList.removeClass('hidden'); 
+                    }
+    
+                    $.ajax({
+                        url: '/admin/shows/show-api-search',
+                        type: 'post',
+                        data: { show: showName },
+                        success: function(response) {
+                            $resultList.html(response);
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
+                        }
+                    });
+                }, 500);
             });
         }
     }

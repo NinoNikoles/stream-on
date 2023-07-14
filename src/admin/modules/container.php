@@ -153,16 +153,16 @@ function genreSlider() {
     $conn = dbConnect();
     $tmdb = setupTMDB(); // 28, 12, 16, 80, 18, 878, 53
 
-    $sql = "SELECT DISTINCT g.genre_id, g.genre_name FROM genres g WHERE g.genre_id IN (SELECT DISTINCT mg.genre_id FROM movie_genre mg)";
+    $sql = "SELECT DISTINCT g.genre_id, g.genre_name FROM genres g WHERE g.genre_id IN (SELECT DISTINCT mg.genre_id FROM movie_genre mg) OR g.genre_id IN (SELECT DISTINCT sg.genre_id FROM show_genre sg)";
     $results = $conn->query($sql);
 
     if ($results->num_rows > 0) {
         $sliderNumber = 1;
 
         while ($genre = $results->fetch_assoc()) {
-            $movieRow = goTrhoughMovies($genre['genre_id'], $conn, $tmdb);
+            $mediaRow = goTrhoughMedia($genre['genre_id'], $conn, $tmdb);
             
-            if ( $movieRow != '' ) {
+            if ( $mediaRow != '' ) {
                 $genre_slider = 'genre-slider-'.$sliderNumber;
 
                 echo '<div class="genre-slider '.$genre_slider.'">';
@@ -174,7 +174,7 @@ function genreSlider() {
                         echo '<div class="column">'; 
                             echo '<div class="swiper card-slider">';
                                 echo '<div class="swiper-wrapper">';
-                                    echo $movieRow;
+                                    echo $mediaRow;
                                 echo '</div>';
                                 echo '<div class="swiper-button-prev"></div>
                                 <div class="swiper-button-next"></div>';
@@ -198,24 +198,40 @@ function genreSlider() {
     $conn->close();
 }
 
-function goTrhoughMovies($db_genre, $conn) {
+function goTrhoughMedia($db_genre, $conn) {
     $genreID = intval($db_genre);
     
-    $query = "SELECT movie_tmdbID, movie_title, movie_tagline, movie_overview, movie_poster, movie_thumbnail, movie_rating, movie_release, movie_runtime, movie_genres FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE movie_genre.genre_id = $genreID ORDER BY RAND() LIMIT 20";
+    $query = "SELECT tmdbID, type FROM media WHERE tmdbID IN (SELECT movie_tmdbID FROM movies INNER JOIN movie_genre ON movies.movie_tmdbID = movie_genre.movie_id WHERE genre_id = $genreID UNION SELECT show_tmdbID FROM shows INNER JOIN show_genre ON shows.show_tmdbID = show_genre.show_id WHERE genre_id = $genreID) ORDER BY RAND() LIMIT 20";
     $results = $conn->query($query);
     
-    $movieRow = '';
+    $mediaRow = '';
 
     if ($results->num_rows > 0) {
         // Es gibt mindestens einen Film des Genres
-        while ( $movie = $results->fetch_assoc() ) {
-            $currentMovie = moviesDataconverter($movie);
-            $movieRow = $movieRow . movie_card($currentMovie, 'swiper-slide');
+        while ( $media = $results->fetch_assoc() ) {
+            if ( $media['type'] === 'movie' ) {
+                $movieID = $media['tmdbID'];
+                $getMovie = "SELECT * FROM movies WHERE movie_tmdbID=$movieID";
+                $movieResults = $conn->query($getMovie);
+
+                while ( $movie = $movieResults->fetch_assoc() ) {
+                    $currentMovie = moviesDataconverter($movie);
+                    $mediaRow = $mediaRow . movie_card($currentMovie, 'swiper-slide');
+                }
+            } else {
+                $showID = $media['tmdbID'];
+                $getShow = "SELECT * FROM shows WHERE show_tmdbID=$showID";
+                $showResults = $conn->query($getShow);
+
+                while ( $show = $showResults->fetch_assoc() ) {
+                    $mediaRow = $mediaRow . show_card($show, 'swiper-slide');
+                }
+            }            
         }
     } else {
-        $movieRow = '';
+        $mediaRow = '';
     }
 
-    return $movieRow;
+    return $mediaRow;
 }
 ?>

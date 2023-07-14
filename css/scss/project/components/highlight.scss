@@ -34,12 +34,29 @@
 
         .poster {
             display: flex;
-            width: 25%;
+
+            @include MQ(xxsmall) {
+                display: none;
+                width: 25%;
+            }
+
+            @include MQ(medium) {
+                display: flex;
+            }
+            
         }
 
         .widescreen {
-            display: flex;
-            width: 75%;
+            display: none;
+            width: 100%;
+
+            @include MQ(xxsmall) {
+                display: flex;
+            }
+
+            @include MQ(medium) {
+                width: 75%;
+            }
 
             img {
                 @include MQ(medium) {
@@ -51,18 +68,33 @@
 
         .button-wrap {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
-            height: 100%;
+            width: 100%;
+            padding: {
+                top: 0;
+                right: 5%;
+                bottom: rem-calc(60);
+                left: 5%;
+            }
             position: absolute;            
             left: 0;
             bottom: 0;
-            width: 25% !important;
             min-width: unset;
+            z-index: 1;
 
             @include MQ(medium) {
-                flex-direction: row;
+                flex-direction: column;
                 align-items: center;
+                width: 25%;
+                height: 100%;   
+                padding: 0;             
+            }
+
+            .btn {
+                display: inline-flex;
+                width: fit-content;
+                min-width: unset;
             }
         }
 
@@ -73,15 +105,16 @@
             height: 100%;
             padding: {
                 right: rem-calc($space-base);
-                bottom: rem-calc($space-base);
+                bottom: rem-calc(140);
                 left: rem-calc($space-base);
             }
             position: absolute;            
             right: 0;
             bottom: 0;
-            width: 75%;
+            width: 100%;
 
             @include MQ(medium) {
+                width: 75%;
                 padding: {
                     right: rem-calc($space-base*4);
                     bottom: rem-calc(140);

@@ -395,16 +395,27 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         die('Error creating table: ' . $conn->error);
     }
 
-    $sql = "CREATE TABLE highlights (
+    //-- To fetch shows and movies at once
+    $sql = "CREATE TABLE IF NOT EXISTS media (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        movie_id INT,
-        highlight_status BOOLEAN,
-        FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID)
+        tmdbID INT,
+        UNIQUE(tmdbID),
+        type varchar(10)
     )";
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
     }
-    
+
+    $sql = "CREATE TABLE IF NOT EXISTS highlights (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        highlight_id INT,
+        highlight_status BOOLEAN,
+        FOREIGN KEY (highlight_id) REFERENCES media(tmdbID)
+    )";
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
+
     //-- One Time Setup Done --
     $sql = 'UPDATE settings SET setting_option="1" WHERE setting_name="one_time_setup"';
     if (!($conn->query($sql) === TRUE)) {

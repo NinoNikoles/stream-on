@@ -4,7 +4,7 @@ $conn = dbConnect();
 $tmdb = setupTMDB();
             
 // Add Movie
-if ( isset($_POST['showSubmit']) ) {
+if ( isset($_POST['add-show']) ) {
     insertShow($_POST['id']);
 }
 ?>
@@ -17,15 +17,15 @@ if ( isset($_POST['showSubmit']) ) {
         
         <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
-                <h1><?php echo lang_snippet('movies'); ?></h1>
+                <h1><?php echo lang_snippet('shows'); ?></h1>
             </div>
 
             <div class="col12 marg-bottom-m">
                 <div id="searchbar">
-                    <label for="movie-api-search">Film Name*
-                        <input type="text" id="movie-api-search" name="movie-name" placeholder="<?php echo lang_snippet('movie_title'); ?>" value="" required>
+                    <label for="show-api-search">Film Name*
+                        <input type="text" id="show-api-search" name="show-name" placeholder="<?php echo lang_snippet('show_title'); ?>" value="" required>
                     </label>
-                    <div id="movieSearchResults" class="hidden"></div>      
+                    <div id="showSearchResults" class="hidden"></div>      
                 </div>
             </div>
 
@@ -34,11 +34,26 @@ if ( isset($_POST['showSubmit']) ) {
             </div>
 
             <div class="grid-row">
-                <?php
-                    echo '<form method="post" action="/admin/shows">';
-                        echo '<input type="number" name="id" value="60572" style="display:none;">';
-                        echo '<button class="btn btn-small btn-success" id="showSubmit" name="showSubmit" type="submit">'.lang_snippet('save').'</button>';
-                    echo '</form>';
+                <?php 
+                    $shows = selectAllShowsByTitle('ASC');
+                    if ( $shows > 0 ) {
+                        foreach ( $shows as $show ) {
+                            echo '<div class="col-6 col-3-medium column">';
+                                echo '<a href="/admin/movie/?id='.$show['show_tmdbID'].'" title="'.$show['show_title'].'" class="media-card">';
+                                    echo '<figure class="poster">';
+                                        echo '<img src="'.loadImg('original', $show['show_poster']).'" alt="" loading="lazy">';
+                                    echo '</figure>';
+                                    echo '<span class="title">'.truncate($show['show_title'],20).'</span>';
+                                echo '</a>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<div class="col12 column">';
+                            echo '<div class="callout warning">';
+                                echo '<p>'.lang_snippet('no_movies_available').'</p>';
+                            echo '</div>';
+                        echo '</div>';
+                    }
                 ?>
             </div>
         </div>

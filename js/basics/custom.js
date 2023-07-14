@@ -696,7 +696,7 @@ $(document).ready(function() {
         highlight: function() {
             $('.highlight-change').on('change', function() {
                 console.log('change');
-                var movieID = $(this).attr('data-movie'),
+                var highlightID = $(this).attr('data-media'),
                     status = $(this).prop('checked');
 
                     if (status) {
@@ -711,7 +711,7 @@ $(document).ready(function() {
                     url: '/highlight-status',
                     type: 'post',
                     data: { 
-                        movieID: movieID,
+                        highlightID: highlightID,
                         status: status
                     },
                     success: function(response) {
