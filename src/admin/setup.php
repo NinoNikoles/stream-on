@@ -224,95 +224,29 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         die('Error creating showsGenre: ' . $conn->error);
     }
     
-    //-- Movie Table --
-    $sql = 'CREATE TABLE IF NOT EXISTS movies (
+    $sql = "CREATE TABLE IF NOT EXISTS media(
         id INT NOT NULL AUTO_INCREMENT,
-        movie_tmdbID INT,
-        movie_title TEXT NOT NULL,
-        movie_tagline TEXT NOT NULL,
-        movie_overview TEXT NOT NULL,
-        movie_poster TEXT NOT NULL,
-        movie_thumbnail TEXT NOT NULL,
-        movie_rating INT NOT NULL,
-        movie_release DATE NOT NULL,
-        movie_runtime INT NOT NULL,
-        movie_collection INT NULL,
-        movie_file_path TEXT NULL,
-        movie_genres VARCHAR(255),
-        movie_trailer VARCHAR(255),
-        created TIMESTAMP,
-        UNIQUE(movie_tmdbID),
-        PRIMARY KEY (id)
-    )';
-    if (!($conn->query($sql) === TRUE)) {
-        die('Error creating table: ' . $conn->error);
-    }
-    
-    //-- Genre Movie Table -- 
-    $sql = 'CREATE TABLE IF NOT EXISTS movie_genre (
-        id INT NOT NULL AUTO_INCREMENT,
-        movie_id INT NOT NULL,
-        genre_id INT NOT NULL,
-        UNIQUE (movie_id, genre_id),
-        FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID),
-        FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
-        PRIMARY KEY (id)
-    )';
-    if (!($conn->query($sql) === TRUE)) {
-        die('Error creating table: ' . $conn->error);
-    }
-    
-    //-- Movie watch table -- 
-    $sql = 'CREATE TABLE IF NOT EXISTS movie_watched (
-        id INT NOT NULL AUTO_INCREMENT,
-        user_id INT NOT NULL,
-        movie_id INT NOT NULL,
-        watched_seconds DECIMAL(10,6),
-        total_length DECIMAL(10,6),
-        watched INT(1),
-        last_watched TIMESTAMP,
-        UNIQUE (user_id, movie_id),
-        FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID),
-        PRIMARY KEY (id)
-    )';
-    if (!($conn->query($sql) === TRUE)) {
-        die('Error creating table: ' . $conn->error);
-    }
-
-    //-- TV Shows
-    $sql = 'CREATE TABLE IF NOT EXISTS shows (
-        id INT NOT NULL AUTO_INCREMENT,
-        show_tmdbID INT,
-        show_title TEXT,
-        show_overview TEXT,
-        show_poster TEXT,
-        show_thumbnail TEXT,
-        show_rating INT,
-        show_release DATE,
+        tmdbID INT,
+        title TEXT NOT NULL,
+        tagline TEXT NOT NULL,
+        overview TEXT NOT NULL,
+        poster TEXT NOT NULL,
+        backdrop TEXT NOT NULL,
+        rating INT NOT NULL,
+        releaseDate DATE NOT NULL,
+        runtime INT NOT NULL,
+        movieCollection INT NULL,
+        file_path TEXT NULL,
+        genres VARCHAR(255),
+        trailer VARCHAR(255),
         show_season_count INT,
         show_seasons TEXT,
         show_episodes_count INT,
-        show_genres VARCHAR(255),
-        show_trailer VARCHAR(255),
+        mediaType varchar(10),
         created TIMESTAMP,
-        UNIQUE(show_tmdbID),
+        UNIQUE(tmdbID),
         PRIMARY KEY (id)
-    )';
-    if (!($conn->query($sql) === TRUE)) {
-        die('Error creating table: ' . $conn->error);
-    }
-
-    //-- Genre show Table -- 
-    $sql = 'CREATE TABLE IF NOT EXISTS show_genre (
-        id INT NOT NULL AUTO_INCREMENT,
-        show_id INT NOT NULL,
-        genre_id INT NOT NULL,
-        UNIQUE (show_id, genre_id),
-        FOREIGN KEY (show_id) REFERENCES shows(show_tmdbID),
-        FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
-        PRIMARY KEY (id)
-    )';
+    )";
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
     }
@@ -320,38 +254,18 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     //-- Show Seasons
     $sql = 'CREATE TABLE IF NOT EXISTS seasons (
         id INT NOT NULL AUTO_INCREMENT,
-        season_tmdbID INT,
-        season_title TEXT,
-        season_overview TEXT,
-        season_poster TEXT,
+        tmdbID INT,
+        title TEXT,
+        overview TEXT,
+        poster TEXT,
         season_number INT,
-        season_rating INT,
-        season_release DATE,
-        season_episodes_count INT,
-        season_show_tmdbID INT,
+        rating INT,
+        releaseDate DATE,
+        episodes_count INT,
+        show_tmdbID INT,
         created TIMESTAMP,
-        UNIQUE(season_tmdbID),
-        PRIMARY KEY (id)
-    )';
-    if (!($conn->query($sql) === TRUE)) {
-        die('Error creating table: ' . $conn->error);
-    }
-
-    //-- Show Seasons
-    $sql = 'CREATE TABLE IF NOT EXISTS seasons (
-        id INT NOT NULL AUTO_INCREMENT,
-        season_tmdbID INT,
-        season_title TEXT,
-        season_overview TEXT,
-        season_poster TEXT,
-        season_number INT,
-        season_rating INT,
-        season_release DATE,
-        season_episodes_count INT,
-        season_show_id INT,
-        created TIMESTAMP,
-        UNIQUE(season_tmdbID),
-        FOREIGN KEY (season_show_id) REFERENCES shows(show_tmdbID),
+        UNIQUE(tmdbID),
+        FOREIGN KEY (show_tmdbID) REFERENCES media(tmdbID),
         PRIMARY KEY (id)
     )';
     if (!($conn->query($sql) === TRUE)) {
@@ -359,7 +273,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     }
 
     //-- Show Episodes
-    $sql = 'CREATE TABLE IF NOT EXISTS episodes (
+    /*$sql = 'CREATE TABLE IF NOT EXISTS episodes (
         id INT NOT NULL AUTO_INCREMENT,
         episode_tmdbID INT,
         episode_title TEXT,
@@ -379,39 +293,59 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     )';
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
+    }*/
+
+        //-- Genre Media Table -- 
+    $sql = 'CREATE TABLE IF NOT EXISTS media_genre (
+        id INT NOT NULL AUTO_INCREMENT,
+        media_id INT NOT NULL,
+        genre_id INT NOT NULL,
+        UNIQUE (media_id, genre_id),
+        FOREIGN KEY (media_id) REFERENCES media(tmdbID),
+        FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
+        PRIMARY KEY (id)
+    )';
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
     }
     
-    //-- Movie watch table -- 
+    //-- Watchlist table -- 
     $sql = 'CREATE TABLE IF NOT EXISTS watchlist (
         id INT NOT NULL AUTO_INCREMENT,
         user_id INT NOT NULL,
-        movie_id INT NOT NULL,
-        UNIQUE (user_id, movie_id),
+        media_id INT NOT NULL,
+        UNIQUE (user_id, media_id),
         FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (movie_id) REFERENCES movies(movie_tmdbID),
         PRIMARY KEY (id)
     )';
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
     }
 
-    //-- To fetch shows and movies at once
-    $sql = "CREATE TABLE IF NOT EXISTS media (
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        tmdbID INT,
-        UNIQUE(tmdbID),
-        type varchar(10)
-    )";
-    if (!($conn->query($sql) === TRUE)) {
-        die('Error creating table: ' . $conn->error);
-    }
-
+    //-- Highlight table
     $sql = "CREATE TABLE IF NOT EXISTS highlights (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         highlight_id INT,
         highlight_status BOOLEAN,
         FOREIGN KEY (highlight_id) REFERENCES media(tmdbID)
     )";
+    if (!($conn->query($sql) === TRUE)) {
+        die('Error creating table: ' . $conn->error);
+    }
+
+    //-- Watch time save table -- 
+    $sql = 'CREATE TABLE IF NOT EXISTS media_watched (
+        id INT NOT NULL AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        media_id INT NOT NULL,
+        watched_seconds DECIMAL(10,6),
+        total_length DECIMAL(10,6),
+        watched INT(1),
+        last_watched TIMESTAMP,
+        UNIQUE (user_id, media_id),
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        PRIMARY KEY (id)
+    )';
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
     }

@@ -23,7 +23,7 @@ if ( isset($_POST['add-show']) ) {
             <div class="col12 marg-bottom-m">
                 <div id="searchbar">
                     <label for="show-api-search">Film Name*
-                        <input type="text" id="show-api-search" name="show-name" placeholder="<?php echo lang_snippet('show_title'); ?>" value="" required>
+                        <input type="text" id="show-api-search" name="show-name" placeholder="<?php echo lang_snippet('title'); ?>" value="" required>
                     </label>
                     <div id="showSearchResults" class="hidden"></div>      
                 </div>
@@ -39,11 +39,11 @@ if ( isset($_POST['add-show']) ) {
                     if ( $shows > 0 ) {
                         foreach ( $shows as $show ) {
                             echo '<div class="col-6 col-3-medium column">';
-                                echo '<a href="/admin/show/?id='.$show['show_tmdbID'].'" title="'.$show['show_title'].'" class="media-card">';
+                                echo '<a href="/admin/show/?id='.$show['tmdbID'].'" title="'.$show['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
-                                        echo '<img src="'.loadImg('original', $show['show_poster']).'" alt="" loading="lazy">';
+                                        echo '<img src="'.loadImg('original', $show['poster']).'" alt="" loading="lazy">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.truncate($show['show_title'],20).'</span>';
+                                    echo '<span class="title">'.truncate($show['title'],20).'</span>';
                                 echo '</a>';
                             echo '</div>';
                         }

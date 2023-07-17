@@ -8,7 +8,7 @@ $movie = selectMovieByID($_GET['id']);
 if ( $movie == 0 ) {
     page_redirect("/admin/movies");
 } else {
-    $id = $movie['id'];            
+    $id = $movie['tmdbID'];            
     $title = $movie['title'];
     $backdrop = $movie['backdrop'];
     $poster = $movie['poster'];       
@@ -76,7 +76,7 @@ if ( $movie == 0 ) {
                             echo '<div class="col12"><p>'.$tagline.'</p></div>';
                         }
                         echo '<div class="col12"><p>'.$movie['overview'].'</p></div>';
-                        echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$movie['voteAverage'].'/10</p></div>';
+                        echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$movie['rating'].'/10</p></div>';
                         echo '<div class="col5"><p><strong>'.lang_snippet('release_date').':</strong><br>'.outputDate($movie['release']).'</p></div>';
                         echo '<div class="col4"><p><strong>'.lang_snippet('runtime').':</strong><br>'.runtimeToString($movie['runtime']).'</p></div>';
                         echo '<div class="col12"><p><span><strong>'.lang_snippet('genres').':</strong></span><br>';                

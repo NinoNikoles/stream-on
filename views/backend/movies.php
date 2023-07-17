@@ -36,6 +36,7 @@ if ( isset($_POST['add-movie']) ) {
             <div class="grid-row">
                 <?php 
                     $movies = selectAllMoviesByTitle('ASC');
+                    
                     if ( $movies > 0 ) {
                         foreach ( $movies as $movie ) {
                             echo '<div class="col-6 col-3-medium column">';

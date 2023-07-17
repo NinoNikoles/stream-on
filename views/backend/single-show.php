@@ -8,7 +8,7 @@ $show = selectShowByID($_GET['id']);
 if ( $show == 0 ) {
     page_redirect("/admin/shows");
 } else {
-    $id = $show['id'];            
+    $id = $show['tmdbID'];            
     $title = $show['title'];
     $backdrop = $show['backdrop'];
     $poster = $show['poster'];
@@ -26,10 +26,6 @@ if ( $show == 0 ) {
         <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <?php
-                    // Update/select local path to show file
-                    if(isset($_POST['showPath'])) {
-                        updateShowFilePath($_POST['showPath'], $_POST['id']);
-                    }
 
                     // Update trailer
                     if(isset($_POST['trailer'])) {
@@ -53,7 +49,7 @@ if ( $show == 0 ) {
                     
                     // Add show from collection
                     if (isset($_POST['delete-show'])) {
-                        deleteShow($_POST['id']);
+                        //deleteShow($_POST['id']);
                     }    
 
                     callout();
@@ -65,7 +61,7 @@ if ( $show == 0 ) {
                         echo '</form>';
                         echo '<div class="col12"><h1>'.$title.'</h1></div>';
                         echo '<div class="col12"><p>'.$show['overview'].'</p></div>';
-                        echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$show['voteAverage'].'/10</p></div>';
+                        echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$show['rating'].'/10</p></div>';
                         echo '<div class="col5"><p><strong>'.lang_snippet('release_date').':</strong><br>'.outputDate($show['release']).'</p></div>';
                         echo '<div class="col12"><p><span><strong>'.lang_snippet('genres').':</strong></span><br>';                
                         
@@ -95,25 +91,6 @@ if ( $show == 0 ) {
                             echo '</div>';
                         }
                     ?>
-                    <div class="col12">
-                        <?php
-                            /*echo '<a href="#file-list-popup" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup">'.lang_snippet('select_show_file').'</a>';
-                                
-                            echo '<div id="file-list-popup" style="display:none;">';
-                                echo '<div id="file-tree"></div>';
-                                echo '<form method="post" action="/admin/show/?id='.$_GET['id'].'">';
-                                    echo '<input type="text" name="showPath" id="inputshowPath" value="" style="display:none;">';
-                                    echo '<input type="text" name="id" id="jstreeID" value="'.$_GET['id'].'" style="display:none;">';
-                                    echo '<button class="btn marg-top-m marg-bottom-no" id="inputshowSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>';
-                                echo '</form>';
-                            echo '</div>';
-
-                            if ( $filepath != '') {
-                                videoPlayer($_GET['id']);
-                                echo '<div class="marg-bottom-s"></div>';
-                            }*/
-                        ?>
-                    </div>
 
                     <div class="col12 marg-bottom-s">
                         <a href="#show-poster" data-fancybox data-src="#show-poster">

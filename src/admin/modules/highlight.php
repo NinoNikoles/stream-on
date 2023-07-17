@@ -1,53 +1,22 @@
 <?php
 
 
-function getTrailer($movieID, $extraClass="") {
-    $conn = dbConnect();
-    $sql = "SELECT movie_trailer FROM movies WHERE movie_tmdbID=$movieID";
-    $result = $conn->query($sql)->fetch_assoc();
-    
-    if ( isset($result['movie_trailer']) ) {
-        $trailerID = $result['movie_trailer'];
-        $iframe = '<figure class="widescreen '.$extraClass.'"><iframe id="ytplayer-'.$movieID.'" type="text/html" src="http://www.youtube.com/embed/'.$trailerID.'?enablejsapi=1" frameborder="0"></iframe></figure>';
 
-        $conn->close();
-        return $iframe;
-    }
-}
 
 function getHighlight() {
     $conn = dbConnect();
-    $hightlightSelect = "SELECT highlights.highlight_id, media.type FROM highlights INNER JOIN media ON highlights.highlight_id = media.tmdbID WHERE highlights.highlight_status = 1 AND media.tmdbID IN (SELECT movies.movie_tmdbID FROM movies UNION SELECT shows.show_tmdbID FROM shows) ORDER BY RAND() LIMIT 1";
+    $hightlightSelect = "SELECT highlights.highlight_id, media.title, media.overview, media.poster, media.backdrop, media.mediaType
+    FROM highlights INNER JOIN media ON highlights.highlight_id = media.tmdbID
+    WHERE highlights.highlight_status = 1
+    ORDER BY RAND() LIMIT 1";
     $hightlightResult = $conn->query($hightlightSelect);
 
     if ( $hightlightResult->num_rows > 0) {
         while ( $highlight = $hightlightResult->fetch_assoc() ) {
-            
-            if ( $highlight['type'] === 'movie' ) {
-                $movieID = $highlight['highlight_id'];
-                $getMovie = "SELECT movie_tmdbID, movie_title, movie_overview, movie_poster, movie_thumbnail FROM movies WHERE movie_tmdbID=$movieID";
-                $movieResults = $conn->query($getMovie);
-
-                while ( $movie = $movieResults->fetch_assoc() ) {
-                    $mediaID = $movie['movie_tmdbID'];
-                    $title = $movie['movie_title'];
-                    $description = $movie['movie_overview'];
-                    $poster = $movie['movie_poster'];
-                    $backdrop = $movie['movie_thumbnail'];
-                }
-            } else {
-                $showID = $highlight['highlight_id'];
-                $getShow = "SELECT show_tmdbID, show_title, show_overview, show_poster, show_thumbnail FROM shows WHERE show_tmdbID=$showID";
-                $showResults = $conn->query($getShow);
-
-                while ( $show = $showResults->fetch_assoc() ) {
-                    $mediaID = $show['show_tmdbID'];
-                    $title = $show['show_title'];
-                    $description = $show['show_overview'];
-                    $poster = $show['show_poster'];
-                    $backdrop = $show['show_thumbnail'];
-                }
-            }
+            $title = $highlight['title'];
+            $description = $highlight['overview'];
+            $poster = $highlight['poster'];
+            $backdrop = $highlight['backdrop'];
         }
 
         $hightlight = "
@@ -76,10 +45,10 @@ function getHighlight() {
     } 
 }
 
-function addHighlight($movieID) {
+function addHighlight($mediaID) {
     $conn = dbConnect();
     $sql = "INSERT INTO highlights(highlight_id, highlight_status) VALUES
-    ($movieID, 1)
+    ($mediaID, 1)
     ON DUPLICATE KEY UPDATE highlight_status = VALUES(highlight_status)";
 
     if (!($conn->query($sql) === TRUE)) {
@@ -93,10 +62,10 @@ function addHighlight($movieID) {
     }
 }
 
-function deactivateHighlight($movieID) {
+function deactivateHighlight($mediaID) {
     $conn = dbConnect();
     $sql = "INSERT INTO highlights(movie_id, highlight_status) VALUES
-    ($movieID, 0)
+    ($mediaID, 0)
     ON DUPLICATE KEY UPDATE highlight_status = VALUES(highlight_status)";
 
     if (!($conn->query($sql) === TRUE)) {

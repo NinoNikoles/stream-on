@@ -16,7 +16,7 @@
                 $id = $movie->getID();
                 $title = $movie->getTitle();
                 $poster = $movie->getPoster();
-                $dbMovie = movieInLocalDB($id);
+                $dbMovie = mediaInLocalDB($id);
 
                 if( $dbMovie !== true ) {
                     echo '<a href="#movie-'.$id.'" class="display-flex flex-row marg-no" data-fancybox data-src="#movie-'.$id.'">';

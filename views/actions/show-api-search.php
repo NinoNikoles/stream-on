@@ -16,7 +16,7 @@
                 $id = $show->getID();
                 $title = $show->getName();
                 $poster = $show->getPoster();
-                $dbShow = showInLocalDB($id);
+                $dbShow = mediaInLocalDB($id);
 
                 if( $dbShow !== true ) {
                     echo '<a href="#show-'.$id.'" class="display-flex flex-row marg-no" data-fancybox data-src="#show-'.$id.'">';

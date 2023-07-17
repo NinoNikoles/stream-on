@@ -31,37 +31,20 @@ if ( isset($_POST['delete-highlight']) ) {
                 <tbody>
                 <?php
                     $conn = dbConnect();
-                    $hightlightSelect = "SELECT highlights.highlight_id, highlight_status, media.type FROM highlights INNER JOIN media ON highlights.highlight_id=media.tmdbID AND media.tmdbID IN (SELECT movies.movie_tmdbID FROM movies UNION SELECT shows.show_tmdbID FROM shows)";
+                    $hightlightSelect = "SELECT highlights.highlight_id, highlight_status, media.title 
+                    FROM highlights INNER JOIN media ON highlights.highlight_id=media.tmdbID AND media.tmdbID";
                     $hightlightResult = $conn->query($hightlightSelect);
 
                     if ( $hightlightResult->num_rows > 0) {
                         while ( $highlight = $hightlightResult->fetch_assoc() ) {
-                            var_dump($highlight['type']);
+                            
+                            $mediaID = $highlight['highlight_id'];
+                            $title = $highlight['title'];
+                            
                             if (!($highlight['highlight_status'] === NULL) && ($highlight['highlight_status'] > 0)) {
                                 $checked = "checked";
                             } else {
                                 $checked = "";
-                            }
-
-                            if ( $highlight['type'] === 'movie' ) {
-                                $mediaID = $highlight['highlight_id'];
-                                $getMovie = "SELECT movie_tmdbID, movie_title FROM movies WHERE movie_tmdbID=$mediaID";
-                                $movieResults = $conn->query($getMovie);
-                
-                                while ( $movie = $movieResults->fetch_assoc() ) {
-                                    $mediaID = $movie['movie_tmdbID'];
-                                    $title = $movie['movie_title'];
-                                }
-                            } else {
-                                $mediaID = $highlight['highlight_id'];
-                                $getShow = "SELECT show_tmdbID, show_title FROM shows WHERE show_tmdbID=$mediaID";
-                                $showResults = $conn->query($getShow);
-                
-                                while ( $show = $showResults->fetch_assoc() ) {
-                                    
-                                    $mediaID = $show['show_tmdbID'];
-                                    $title = $show['show_title'];
-                                }
                             }
 
                             echo '<tr>';
