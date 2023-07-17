@@ -234,7 +234,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         backdrop TEXT NOT NULL,
         rating INT NOT NULL,
         releaseDate DATE NOT NULL,
-        runtime INT NOT NULL,
+        runtime INT NULL,
         movieCollection INT NULL,
         file_path TEXT NULL,
         genres VARCHAR(255),
