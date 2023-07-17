@@ -578,6 +578,7 @@ function media_card($media, $extraClasses = '') {
     $poster = $media['poster'];
     $backdrop = $media['backdrop'];
     $type = $media['mediaType'];
+    $select = '';
     $options = '';
     $extras = '';
 
@@ -606,11 +607,12 @@ function media_card($media, $extraClasses = '') {
                     $options = $options.'<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
                 } 
             }
-        }
 
+            $select = '<p><select class="season-select" id="season-select-'.$mediaID.'">'.$options.$extras.'</select></p>';
+        }
     }
 
-    $options = $options.$extras;
+    
 
     $genres = json_decode($media['genres']);
     $genreHTML = '';
@@ -695,10 +697,7 @@ function media_card($media, $extraClasses = '') {
                             '.$listButtons.'
                             <p class="small">'.$overview.'</p>
                             <p class="small tag-list marg-bottom-base">'.$genreHTML.'</p>
-                            <p>
-                                <select class="season-select" id="season-select-'.$mediaID.'">
-                                '.$options.'
-                                </select>
+                            '.$select.'
                             '.getTrailer($mediaID, 'marg-top-xs marg-bottom-xs').'
                         </div>
                         <div class="col4 desktop-only">
