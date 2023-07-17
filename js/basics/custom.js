@@ -698,7 +698,7 @@ $(document).ready(function() {
                             url: '/movie-watch-time',
                             type: 'post',
                             data: { 
-                                movieID: $(video).attr('data-id'),
+                                mediaID: $(video).attr('data-id'),
                                 time: currentSecond,
                                 totalLength: totalDuration,
                             },
