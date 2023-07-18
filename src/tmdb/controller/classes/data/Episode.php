@@ -56,7 +56,7 @@ class Episode{
      *  @return int
      */
     public function getTVShowID() {
-        return $this->_data['tvshow_id'];
+        return $this->_data['show_id'];
     }
 
     /**
@@ -120,6 +120,15 @@ class Episode{
      */
     public function getVoteCount() {
         return $this->_data['vote_count'];
+    }
+
+    /**
+     * 	Get the Episode's vote count
+     *
+     * 	@return int
+     */
+    public function getRuntime() {
+        return $this->_data['runtime'];
     }
 
     /**

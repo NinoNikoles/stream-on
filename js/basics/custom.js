@@ -58,7 +58,7 @@ $(document).ready(function() {
             self.navMobile();
             self.initPictures();
             //self.accordion();
-            //self.tabs();
+            self.tabs();
             self.modal();
             self.initSlider();
             self.customPagination();
@@ -327,7 +327,7 @@ $(document).ready(function() {
                     });
                 }
             })
-        },
+        },*/
 
         tabs: function () {
             console.log('Tabs loaded');
@@ -357,7 +357,7 @@ $(document).ready(function() {
                     $tabPanel.addClass(self.activeClass);
                 }
             })
-        }*/
+        },
 
         initSlider: function () {
             sliderNumber = 1;

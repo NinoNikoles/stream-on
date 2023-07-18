@@ -77,6 +77,61 @@ if ( $show == 0 ) {
                                 echo '<button class="btn btn-small btn-success" id="trailerSubmit" type="submit">'.lang_snippet('save').'</button>';
                             echo '</form>';
                         echo '</div>';
+
+
+                        $querySeasons = "SELECT tmdbID, title, season_number, episodes_count FROM seasons WHERE show_tmdbID=$id";
+                        $seasonResults = $conn->query($querySeasons);
+                        $seasonTabList = '';
+                        $seasonContentList = '';
+                        $extras = '';
+                        $extrasContent = '';
+
+                        if ( $seasonResults->num_rows > 0 ) {
+                            while ( $seasonRow = $seasonResults->fetch_assoc() ) {
+                                $seasonNumber = $seasonRow['season_number'];
+                                $sql = "SELECT * FROM episodes WHERE show_id=$id AND season_number=$seasonNumber";
+                                $episodeResult = $conn->query($sql);
+                                
+                                $episodesRow = '';
+
+                                while ( $episode = $episodeResult->fetch_assoc() ) {
+                                    $episodesRow .= '
+                                    <div class="col2">
+                                    <figure class="widescreen">
+                                    <img src="'.loadImg('original', $episode['backdrop']).'">
+                                    <span>'.$episode['title'].'</span></div>';
+                                }
+
+                                if ( $seasonNumber === '0' ) {                                  
+
+                                    // Tab - Extras
+                                    $extras = '<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
+                                    //Content - Extras
+                                    $extrasContent = '<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+
+                                } else if ( $seasonNumber === '1' ) {
+                                    // Tab - Season 1
+                                    $seasonTabList = $seasonTabList.'<li class="tabs-title" class="is-active"><a href="#season-'.$seasonNumber.'" aria-selected="true">'.$seasonRow['title'].'</a></li>';
+                                    // Content - Season 1
+                                    $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel is-active" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+
+                                } else {
+                                    // Tab - Rest of Seasons
+                                    $seasonTabList = $seasonTabList.'<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
+                                    // Content - Rest of Seasons
+                                    $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+                                }
+                            }
+
+                            echo '<div class="col12">';
+                                echo '<ul class="tabs" data-tabs id="season-tabs">';
+                                    echo $seasonTabList.$extras;
+                                echo '</ul>';
+                                echo '<div class="tabs-content" data-tabs-content="season-tabs">';
+                                    echo $seasonContentList.$extrasContent;
+                                echo '</div>';
+                            echo '</div>';
+                        }
                     echo '</div>';
 
                 ?>

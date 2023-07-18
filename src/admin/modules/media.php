@@ -214,6 +214,7 @@ function selectMovieByID($movieID) {
 function selectAllMoviesByTitle($order = '') {
     $conn = dbConnect();
     $movies = [];
+    $i = 0;
 
     if ( $order != '' ) {
         $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, releaseDate, runtime, genres, mediaType FROM media WHERE mediaType='movie' ORDER BY title $order";
@@ -224,7 +225,10 @@ function selectAllMoviesByTitle($order = '') {
     $results = $conn->query($sql);
     
     if ( $results->num_rows > 0 ) {
-        $movies[] = $results->fetch_assoc();
+        while ( $movie = $results->fetch_assoc() ) {
+            $movies[$i] = $movie;
+            $i++;
+        }        
     }
 
     $conn->close();
@@ -412,25 +416,44 @@ function insertShow($showID) {
             $conn->query($genreQuery);
         }
 
-        $seasonsData = [];
-
         foreach ( $seasons as $season ) {
-            $title = str_replace("'", '"', $season->getName());
-            $overview = str_replace("'", '"', $season->getOverview());
-            $seasonsData[] = "('".$season->getID()."','".$title."','".$overview."','".$season->getPoster()."','".$season->getSeasonNumber()."','".$season->getVoteAverage()."','".$season->getAirDate()."','".$season->getEpisodeCount()."','".$id."')";
+            $seasonID = $season->getID();
+            $seasonNumber = $season->getSeasonNumber();
+            $seasonEpisodeCount = $season->getEpisodeCount();
+            $seasonTitle = str_replace("'", '"', $season->getName());
+            $seasonOverview = str_replace("'", '"', $season->getOverview());
+            $seasonPoster = $season->getPoster();
+            $seasonRating = $season->getVoteAverage();
+            $seasonRelease = $season->getAirDate();
+    
+            // Adds all Seasons of the show
+            $sqlSeasons = "INSERT INTO seasons (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) VALUES ('".$seasonID."','".$seasonTitle."','".$seasonOverview."','".$seasonPoster."','".$seasonNumber."','".$seasonRating."','".$seasonRelease."','".$seasonEpisodeCount."','".$id."');";
+            $conn->query($sqlSeasons);
+
+            $actualSeason = $tmdb->getSeason($id, $seasonNumber);
+            $seasonEpisodes = $actualSeason->getEpisodes();
+
+            foreach ( $seasonEpisodes as $seasonEpisode ) {
+                $episodeNumber = $seasonEpisode->getEpisodeNumber();
+
+                $episode = $tmdb->getEpisode($id, $seasonNumber, $episodeNumber);
+                $episodeID = $episode->getID();
+                $episodeNumber = $episode->getEpisodeNumber();
+                $episodeName = str_replace("'", '"', $episode->getName());
+                $episodeOverview = str_replace("'", '"', $episode->getOverview());
+                $episodeRuntime = $episode->getRuntime();
+                $episodeSeasonNumber = $seasonNumber;
+                $episodeShowID = $id;
+                $episodeRelease = $episode->getAirDate();
+                $episodeImgPath = $episode->getStill();
+                $episodeRating = $episode->getVoteAverage();
+
+                // Adds all episodes of the show
+                $episodeQuery = "INSERT INTO episodes (tmdbID,episode_number,title,overview,backdrop,runtime,rating,releaseDate,season_number,show_id) VALUES ('".$episodeID."','".$episodeNumber."','".$episodeName."','".$episodeOverview."','".$episodeImgPath."','".$episodeRuntime."','".$episodeRating."','".$episodeRelease."','".$episodeSeasonNumber."','".$episodeShowID."');";
+                $conn->query($episodeQuery);
+            }
         }
 
-        $dataSring = json_encode($seasonsData, JSON_UNESCAPED_UNICODE);
-        $dataSring = str_replace(array('[', ']', "[", "]"), '', $dataSring);
-        $dataSring = str_replace('"(', '(', $dataSring);
-        $dataSring = str_replace(')"', ')', $dataSring);
-        $dataSring = str_replace(",',", ", NULL,", $dataSring);
-        $dataSring = stripslashes($dataSring);
-
-        // Adds all Seasons of the show
-        $sqlSeasons = "INSERT INTO seasons (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) VALUES $dataSring";
-        $conn->query($sqlSeasons);
-        echo $sqlSeasons;
         // Commit der Transaktion
         $conn->commit();
         $conn->close();
@@ -447,6 +470,7 @@ function insertShow($showID) {
 function selectAllShowsByTitle($order = '') {
     $conn = dbConnect();
     $shows = [];
+    $i = 0;
 
     if ( $order != '' ) {
         $sql = "SELECT tmdbID, title, overview, poster, backdrop, rating, releaseDate, genres, show_season_count, mediaType FROM media WHERE mediaType='show' ORDER BY title $order";
@@ -457,7 +481,10 @@ function selectAllShowsByTitle($order = '') {
     $results = $conn->query($sql);
 
     if ( $results->num_rows > 0 ) {
-        $shows[] = $results->fetch_assoc();
+        while ( $show =  $results->fetch_assoc() ) {
+            $shows[$i] = $show;
+            $i++;
+        }
     }
 
     $conn->close();
@@ -580,6 +607,7 @@ function media_card($media, $extraClasses = '') {
     $type = $media['mediaType'];
     $select = '';
     $options = '';
+    $seasonWrap = '';
     $extras = '';
 
     if ( $type === 'movie' ) {
@@ -605,6 +633,7 @@ function media_card($media, $extraClasses = '') {
                     $extras = '<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
                 } else {
                     $options = $options.'<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
+                    $seasonWrap = $seasonWrap.'<div class="col12" data-season="'.$seasonRow['season_number'].'"></div>';
                 } 
             }
 
@@ -697,7 +726,7 @@ function media_card($media, $extraClasses = '') {
                             '.$listButtons.'
                             <p class="small">'.$overview.'</p>
                             <p class="small tag-list marg-bottom-base">'.$genreHTML.'</p>
-                            '.$select.'
+                            '.$select.$seasonWrap.'
                             '.getTrailer($mediaID, 'marg-top-xs marg-bottom-xs').'
                         </div>
                         <div class="col4 desktop-only">

@@ -273,27 +273,27 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     }
 
     //-- Show Episodes
-    /*$sql = 'CREATE TABLE IF NOT EXISTS episodes (
+    $sql = 'CREATE TABLE IF NOT EXISTS episodes (
         id INT NOT NULL AUTO_INCREMENT,
-        episode_tmdbID INT,
-        episode_title TEXT,
-        episode_overview TEXT,
-        episode_thumbnail TEXT,
-        episode_file_path TEXT,
+        tmdbID INT,
         episode_number INT,
-        episode_rating INT,
-        episode_release DATE,
-        episode_show_id INT,
-        episode_season_id INT,
+        title TEXT,
+        overview TEXT,
+        backdrop TEXT,
+        file_path TEXT,
+        runtime INT,
+        rating INT,
+        releaseDate DATE,
+        show_id INT,
+        season_number INT,
         created TIMESTAMP,
-        UNIQUE(episode_tmdbID),
-        FOREIGN KEY (episode_show_id) REFERENCES shows(show_tmdbID),
-        FOREIGN KEY (episode_season_id) REFERENCES seasons(season_tmdbID),
+        UNIQUE(tmdbID),
+        FOREIGN KEY (show_id) REFERENCES media(tmdbID),
         PRIMARY KEY (id)
     )';
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
-    }*/
+    }
 
         //-- Genre Media Table -- 
     $sql = 'CREATE TABLE IF NOT EXISTS media_genre (
