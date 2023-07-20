@@ -665,6 +665,7 @@ function media_card($media, $extraClasses = '') {
                 if ( $episodesResult->num_rows > 0 ) {
                     while ( $episodeRow = $episodesResult->fetch_assoc() ) {
                         if ( $seasonRow['season_number'] === $episodeRow['season_number']) {
+                            $episodeID = $episodeRow['tmdbID'];
                             $episodeBackdrop = $episodeRow['backdrop'];
                             $episodeOverview = $episodeRow['overview'];
                             $episodeWatchTrigger = '';
@@ -672,7 +673,7 @@ function media_card($media, $extraClasses = '') {
                             
 
                             if ( $episodeRow['file_path'] != "" ) {
-                                $episodeWatchTrigger = '<a href="/watch/?id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
+                                $episodeWatchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a>';
                                 $episodeDisabled = '';
                             }
     
