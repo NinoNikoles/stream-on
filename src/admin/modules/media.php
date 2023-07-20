@@ -592,6 +592,32 @@ function updateShowTrailer($showID, $trailer) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////// Episodes
+
+//-- Updates the filepath of movie sources --
+function updateEpisodeFilePath($moviePath, $movieID) {
+    $conn = dbConnect();
+    $moviePath = mysqli_real_escape_string($conn, $moviePath);
+
+    $sql = "UPDATE media SET file_path='$moviePath' WHERE tmdbID='$movieID'";
+
+    if (!($conn->query($sql) === TRUE)) {
+        $conn->close();
+        set_callout('alert','update_file_apth_alert');
+        page_redirect('/admin/movie/?id='.$movieID);
+    } else {
+        $conn->close();
+        set_callout('success','update_file_path_success');
+        page_redirect('/admin/movie/?id='.$movieID);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////// Media Card
 function media_card($media, $extraClasses = '') {
     $conn = dbConnect();
@@ -608,6 +634,7 @@ function media_card($media, $extraClasses = '') {
     $select = '';
     $options = '';
     $seasonWrap = '';
+    $extraSeasonWrap = '';
     $extras = '';
 
     if ( $type === 'movie' ) {
@@ -622,25 +649,69 @@ function media_card($media, $extraClasses = '') {
     
         // Fetch seasons
         $querySeasons = "SELECT tmdbID, title, season_number, episodes_count FROM seasons WHERE show_tmdbID=$mediaID";
-        $seasonResults = $conn->query($querySeasons);
+        $seasonResults = $conn->query($querySeasons);        
 
-            // Go through all seasons
+        // Go through all seasons
         if ( $seasonResults->num_rows > 0 ) {
             while ( $seasonRow = $seasonResults->fetch_assoc() ) {
+
+                // fetch all episodes of season
+                $fetchEpisodes = "SELECT tmdbID, title, overview, backdrop, season_number, file_path FROM episodes WHERE show_id=$mediaID and season_number = ".$seasonRow['season_number']." ORDER BY episode_number ASC";
+                $episodesResult = $conn->query($fetchEpisodes);
+
+                $episodeList = '';
+
+                // Go through all episodes of season
+                if ( $episodesResult->num_rows > 0 ) {
+                    while ( $episodeRow = $episodesResult->fetch_assoc() ) {
+                        if ( $seasonRow['season_number'] === $episodeRow['season_number']) {
+                            $episodeBackdrop = $episodeRow['backdrop'];
+                            $episodeOverview = $episodeRow['overview'];
+                            $episodeWatchTrigger = '';
+                            $episodeDisabled = 'disabled';
+                            
+
+                            if ( $episodeRow['file_path'] != "" ) {
+                                $episodeWatchTrigger = '<a href="/watch/?id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
+                                $episodeDisabled = '';
+                            }
+    
+                            // creates eipsode item for show
+                            $episodeList.= '<div class="col12 media-card-episode '.$episodeDisabled.' pad-top-xs pad-bottom-xs">
+                                <div class="col-5 col-3-medium">
+                                    <figure class="widescreen">
+                                        <img src="'.loadImg('original', $episodeBackdrop).'">
+                                    </figure>
+                                    <div class="link-wrapper">'.$episodeWatchTrigger.'</div>
+                                </div>
+                                <div class="col-7 col-9-medium pad-left-xs">
+                                    <p class="small">'.truncate($episodeOverview, 100).'</p>
+                                </div>
+                            </div>';
+                        }                        
+                    }
+                }
+                
                 // Generate season select
                 // since season 0 is always extras, it will be added at the end
                 if ( $seasonRow['season_number'] === '0' ) {
                     $extras = '<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
+                    $extraSeasonWrap .= '<div class="col12 select-tab-content season-select-'.$mediaID.'" data-select-tab="'.$seasonRow['season_number'].'">'.$episodeList.'</div>';
+                } else if ( $seasonRow['season_number'] === '1' ) {
+                    $options .= '<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
+                    $seasonWrap .= '<div class="col12 select-tab-content season-select-'.$mediaID.' is-active" data-select-tab="'.$seasonRow['season_number'].'">'.$episodeList.'</div>';
                 } else {
-                    $options = $options.'<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
-                    $seasonWrap = $seasonWrap.'<div class="col12" data-season="'.$seasonRow['season_number'].'"></div>';
-                } 
+                    $options .= '<option value="'.$seasonRow['season_number'].'">'.$seasonRow['title'].'</option>';
+                    $seasonWrap .= '<div class="col12 select-tab-content season-select-'.$mediaID.'" data-select-tab="'.$seasonRow['season_number'].'">'.$episodeList.'</div>';
+                }
             }
 
-            $select = '<p><select class="season-select" id="season-select-'.$mediaID.'">'.$options.$extras.'</select></p>';
+            // Season select
+            $select = '<p><select class="tab-select season-select-'.$mediaID.'" id="season-select-'.$mediaID.'">'.$options.$extras.'</select></p>';
+            // episodes lists for seasons
+            $seasonWrap = $seasonWrap.$extraSeasonWrap;
         }
     }
-
     
 
     $genres = json_decode($media['genres']);
@@ -650,28 +721,11 @@ function media_card($media, $extraClasses = '') {
     }
 
     $userID = intval($_SESSION['userID']);
-
-    // Generate Season - Episode list for the show
-    $episodesContainer = 
-    '<div class="episodes-wrap" id="media-'.$mediaID.'-episode-wrap">
-    
-    </div>';
-
-    
-    $watchingSQL = "SELECT watched_seconds, total_length FROM media_watched WHERE user_id = $userID and media_id = $mediaID and watched_seconds > 0";
-    $watchInfos = $conn->query($watchingSQL);
-    if ( $watchInfos->num_rows > 0 ) {
-        while ( $watchInfo = $watchInfos->fetch_assoc() ) {
-            $watchedInPercent = getWatchedTime($watchInfo['watched_seconds'], $watchInfo['total_length']);
-        }
-        $timebar = '<div class="watched-bar"><progress max="100" value="'.$watchedInPercent.'"></progress></div>';
-    } else {
-        $timebar = '';
-    }
     
     //-- Watch list --
     $watchListCheckSQL = "SELECT id FROM watchlist WHERE user_id=$userID and media_id=$mediaID";
 
+    // Adds watchlist buttons
     if ( $conn->query($watchListCheckSQL)->num_rows > 0 ) {
         $listButtons = '
         <a href="#" class="btn btn-small btn-white icon-left icon-add mylist-btn add-to-list hidden loading" data-media-id="'.$mediaID.'" data-type="add">'.lang_snippet('my_list').'</a>
@@ -682,6 +736,7 @@ function media_card($media, $extraClasses = '') {
         <a href="#" class="btn btn-small btn-white icon-left icon-remove mylist-btn remove-from-list hidden loading" data-media-id="'.$mediaID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
     }
 
+    // Adds edit btn when user is admin
     if ( $_SESSION['role'] === "1" ) {
         if ( $type === 'movie' ) {
             $editBtn = '<a href="/admin/movie/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
@@ -690,9 +745,46 @@ function media_card($media, $extraClasses = '') {
         }
     }
 
+    $watchTrigger= '';
+    $watchBtn = '';
+    $timebar = '';
+    $disabled = '';
+    
+    if ( $type === 'movie' ) {
+        $disabled = 'disabled';
+        
+        // Add play btn when media has file path
+        if ( $media['file_path'] != "" ) {
+            $watchTrigger = '<a href="/watch/?id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
+            $watchBtn = '<a href="/watch/?id='.$mediaID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>';
+            $disabled = '';
+        }
+
+        // Adds watch progress bar movie
+        $watchingSQL = "SELECT watched_seconds, total_length FROM media_watched WHERE user_id = $userID and media_id = $mediaID and watched_seconds > 0";
+        $watchInfos = $conn->query($watchingSQL);
+        if ( $watchInfos->num_rows > 0 ) {
+            while ( $watchInfo = $watchInfos->fetch_assoc() ) {
+                $watchedInPercent = getWatchedTime($watchInfo['watched_seconds'], $watchInfo['total_length']);
+            }
+            $timebar = '<div class="watched-bar"><progress max="100" value="'.$watchedInPercent.'"></progress></div>';
+        }
+    } else {
+
+        // Adds watch progress bar show
+        $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID and watched_seconds > 0 ORDER BY last_watched LIMIT 1";
+        $currEpisodeResult = $conn->query($currEpisodeSQL);
+        if ( $currEpisodeResult->num_rows > 0 ) {
+            while ( $currEpisode = $currEpisodeResult->fetch_assoc() ) {
+                $currEpisodeTime = getWatchedTime($currEpisode['watched_seconds'], $currEpisode['total_length']);
+            }
+            $timebar = '<div class="watched-bar"><progress max="100" value="'.$currEpisodeTime.'"></progress></div>';
+        }
+    }
+
     $card = '
         <div class="'.$extraClasses.'">
-            <div class="media-card">
+            <div class="media-card '.$disabled.'">
                 <div class="media-card-wrapper">
                     <figure class="widescreen desktop-only">
                         <img src="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
@@ -701,9 +793,9 @@ function media_card($media, $extraClasses = '') {
                         <img src="'.loadImg('original', $poster).'" loading="lazy" importance="low">
                     </figure>
                     <div class="link-wrapper">
-                        <a href="/watch/?id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>
-                        <a href="#content-'.$mediaID.'" title="'.lang_snippet('more_informations').'" class="info-trigger" data-modal data-src="#content-'.$mediaID.'"></a>
-                        '.$editBtn.'
+                    '.$watchTrigger.'
+                    <a href="#content-'.$mediaID.'" title="'.lang_snippet('more_informations').'" data-fancybox class="info-trigger" data-modal data-src="#content-'.$mediaID.'"></a>
+                    './*$editBtn*/'
                     </div>
                 </div>
                 '.$timebar.'
@@ -722,8 +814,7 @@ function media_card($media, $extraClasses = '') {
                                 <span class="tag">'.$rating.'/10 ★</span>
                                 <span class="tag">'.$extraInfo.'</span>
                             </p>
-                            <a href="/watch/?id='.$mediaID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>
-                            '.$listButtons.'
+                            '.$watchBtn.$listButtons.'
                             <p class="small">'.$overview.'</p>
                             <p class="small tag-list marg-bottom-base">'.$genreHTML.'</p>
                             '.$select.$seasonWrap.'

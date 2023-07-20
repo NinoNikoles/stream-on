@@ -59,7 +59,8 @@ $(document).ready(function() {
             self.initPictures();
             //self.accordion();
             self.tabs();
-            self.modal();
+            self.selectTabs();
+            //self.modal();
             self.initSlider();
             self.customPagination();
             self.initScrolltrigger();
@@ -70,6 +71,7 @@ $(document).ready(function() {
             self.initPlayer();
             self.myList();
             self.highlight();
+            self.fancyBox();
             //self.videoTriggerFullscreen();
         },
 
@@ -214,7 +216,7 @@ $(document).ready(function() {
             })
         },
 
-        modal: function() {
+        /*modal: function() {
             var self = this;
 
             if ( !($('#modal').length > 0) ) {
@@ -248,7 +250,7 @@ $(document).ready(function() {
                 $modal.removeClass('active');
                 $('body').removeClass('active-modal');
             });
-        },
+        },*/
 
         /*accordion: function () {
             console.log('Accordion loaded');
@@ -357,6 +359,48 @@ $(document).ready(function() {
                     $tabPanel.addClass(self.activeClass);
                 }
             })
+        },
+
+        selectTabs: function () {
+            console.log('Tabs loaded');
+
+            var self = this;
+
+            $(document).on('change', '.tab-select', function (e) {
+                e.preventDefault();
+                console.log('change');
+                var $this = $(this),
+                    valAtr = $this.val();
+                    tabsClass = $this.attr('id');
+                    $currTab = $('.'+tabsClass+'[data-select-tab="'+valAtr+'"]');
+                
+                $('body select.'+tabsClass).each(function(index, e) {
+                    $(e).val(valAtr);
+                    console.log($(e));                    
+                });
+
+                $('body select.'+tabsClass).val(valAtr);
+                $('body select.'+tabsClass+' option[value="'+valAtr+'"]').prop('selected', true);
+                
+                $('.'+tabsClass+'.is-active').toggleClass('is-active');
+                $currTab.toggleClass('is-active');
+            })
+        },
+
+        fancyBox: function() {
+            /*$('.info-popup').each(function(index, el) {
+                var self = el;
+                $self = $(el);
+                
+
+            });*/
+
+
+            Fancybox.bind('[data-fancybox]', {
+                dragToClose: false,
+            });
+
+            console.log(Fancybox);
         },
 
         initSlider: function () {

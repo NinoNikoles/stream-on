@@ -127,6 +127,14 @@
                 }
             }
         }
+
+        &.disabled {
+            .media-card-wrapper {
+                img {
+                    filter: grayscale(1);
+                }
+            }
+        }
     }
 }
 
@@ -225,6 +233,22 @@
     }
 }
 
+.media-card-episode {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.2);
+
+    &.disabled {
+        img {
+            filter: grayscale(1);
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
 .currentWatch-slider,
 .genre-slider {
     opacity: 0;
@@ -232,5 +256,78 @@
 
     &.visible {
         opacity: 1;
+    }
+}
+
+.fancybox__slide {
+    padding: 0 !important;
+}
+
+.info-popup {
+    padding: {
+        top: rem-calc(50);
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    width: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+
+    @include MQ(medium) {
+        width: 80%;
+        height: 90%;
+        min-height: 90%;
+    }
+
+    .is-close-btn {
+        background: none !important;
+        box-shadow: none !important;
+        justify-content: flex-start;
+        padding: {
+            left: rem-calc($space-base);
+        }
+        width: 100%;
+        height: rem-calc(50);
+        top: 0 !important;
+        right: unset !important;
+        left: 0 !important;
+
+        svg {
+            display: none;
+        }
+
+        @include MQ(medium) {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            right: 0 !important;
+            left: unset !important;            
+        }
+
+        &::before {
+            display: block;
+            content: "\e918";
+            font-family: $icon-font;
+            font-size: rem-calc(30);
+            line-height: 1;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+            @include MQ(medium) {
+                content: "x";  
+            }
+        }
+    }
+}
+
+* {
+    outline: none !important;
+
+    &:hover,
+    &:focus,
+    &:active {
+        outline: none !important;
     }
 }
