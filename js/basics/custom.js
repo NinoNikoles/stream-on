@@ -65,6 +65,7 @@ $(document).ready(function() {
             self.customPagination();
             self.initScrolltrigger();
             self.jstree();
+            self.jstreeEpisode();
             self.userMenuBtn();
             //self.infinitLoad();
             self.movieTimeSafe();
@@ -595,6 +596,77 @@ $(document).ready(function() {
             }
         },
 
+        jstreeEpisode: function() {
+            if ( $('.file-tree-episode').length > 0 ) {
+                $('.file-tree-episode').each(function(i, el) {
+                    console.log('test');
+                    $.ajax({
+                        url: '/admin/file-api', // Hier den Pfad zur API auf deinem Server einfügen
+                        type: 'get',
+                        dataType: 'json',
+                        success: function(response) {
+                        // Die Antwort enthält die Daten für den jsTree
+                            $(el).jstree({
+                                "core": {
+                                    "animation" : 0,
+                                    "check_callback" : true,
+                                    "themes" : { "stripes" : true },
+                                    'data': response,
+                                    "multiple": false,
+                                },
+                                "checkbox": {
+                                    "three_state": false
+                                },
+                                "types": {
+                                    "video": {
+                                        "icon": 'jstree-file'
+                                    }
+                                },
+                                "plugins": [
+                                    "contextmenu", "dnd", "search",
+                                    "state", "types", "wholerow"
+                                ],
+                            })
+    
+                            $(el).on('select_node.jstree', function(e, data) {
+                                var node = data.instance.get_node(data.selected[0]);
+                                if (node.text.endsWith('.mp4')) {
+                                    var path = $(el).jstree('get_path', data.node, '/');
+                                    elID = $(el).attr('data-element-id');
+                                    $('[data-submit="'+elID+'"]').attr('data-path', '/media/'+path);
+                                    $('[data-submit="'+elID+'"]').css('display', 'inline-flex');
+                                } else {
+                                    data.instance.deselect_node(data.selected[0]);
+                                    $('[data-submit="'+elID+'"]').css('display', 'none');
+                                }                      
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Fehlerbehandlung, wenn die Anfrage fehlschlägt
+                            console.error(error);
+                        }
+                    });
+                });
+
+                $('.episode-path-submit').on('click', function() {
+                    var path = $(this).attr('data-path'),
+                        mediaID = $(this).attr('data-submit');
+
+                    $.ajax({
+                        url: '/admin/episode-file-path',
+                        type: 'post',
+                        data: { mediaID: mediaID, path: path },
+                        success: function(response) {
+                            alert('Gespeichert');
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
+                        }
+                    });
+                });
+            }
+        },
+
         initPlayer: function() {
             var self = this;
 
@@ -604,7 +676,6 @@ $(document).ready(function() {
 
                     video = $('video')[0];
                     sekunde = $('span[data-time]').attr('data-time');
-
                     // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
                     video.addEventListener("loadedmetadata", function() {
                         video.currentTime = sekunde;
@@ -732,6 +803,7 @@ $(document).ready(function() {
                     function saveTime() {
                         var currentSecond = video.currentTime;
                         var totalDuration = video.duration;
+                        var showID = $('#time').attr('data-show');
                         $resultList = $('#time');
 
                         if ( currentSecond === totalDuration ) {
@@ -743,11 +815,13 @@ $(document).ready(function() {
                             type: 'post',
                             data: { 
                                 mediaID: $(video).attr('data-id'),
+                                show: showID,
                                 time: currentSecond,
                                 totalLength: totalDuration,
                             },
                             success: function(response) {
                                 $resultList.attr('data-time', currentSecond);
+                                $resultList.attr('data-show', showID);
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
                                 console.log('Fehler: ' + error);

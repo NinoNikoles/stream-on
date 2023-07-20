@@ -97,9 +97,18 @@ if ( $show == 0 ) {
                                 while ( $episode = $episodeResult->fetch_assoc() ) {
                                     $episodesRow .= '
                                     <div class="col2">
-                                    <figure class="widescreen">
-                                    <img src="'.loadImg('original', $episode['backdrop']).'">
-                                    <span>'.$episode['title'].'</span></div>';
+                                        <figure class="widescreen">
+                                            <img src="'.loadImg('original', $episode['backdrop']).'">
+                                        </figure>
+                                        <span>'.$episode['title'].'</span>
+                                        <a href="#file-list-popup-'.$episode['tmdbID'].'" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup-'.$episode['tmdbID'].'">'.lang_snippet('select_movie_file').'</a>
+                                
+                                        <div id="file-list-popup-'.$episode['tmdbID'].'" style="display:none;">
+                                            <div class="file-tree-episode" data-element-id="'.$episode['tmdbID'].'"></div>
+                                                <a href="#" class="btn marg-top-m marg-bottom-no episode-path-submit" data-submit="'.$episode['tmdbID'].'" data-path="" style="display:none;">'.lang_snippet('save').'</a>
+                                            </div>
+                                        </div>
+                                    </div>';
                                 }
 
                                 if ( $seasonNumber === '0' ) {                                  

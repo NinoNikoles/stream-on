@@ -121,7 +121,7 @@ if ( $movie == 0 ) {
                             echo '</div>';
 
                             if ( $filepath != '') {
-                                videoPlayer($_GET['id']);
+                                movieVideoPlayer($_GET['id']);
                                 echo '<div class="marg-bottom-s"></div>';
                             }
                         ?>

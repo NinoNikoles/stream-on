@@ -6,7 +6,7 @@ echo '<div id="mainPlayer" class="fullscreen">';
     if ( !isset($_GET['s']) ) {
         movieVideoPlayer($_GET['id'], true);
     } else {
-        showVideoPlayer($GET_['s'], $_GET['id'], true);
+        showVideoPlayer($_GET['id'], $_GET['s'], true);
     }    
 echo '</div>';
 

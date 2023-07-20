@@ -673,7 +673,7 @@ function media_card($media, $extraClasses = '') {
                             
 
                             if ( $episodeRow['file_path'] != "" ) {
-                                $episodeWatchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a>';
+                                $episodeWatchTrigger = '<div class="link-wrapper"><a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a></div>';
                                 $episodeDisabled = '';
                             }
     
@@ -683,11 +683,11 @@ function media_card($media, $extraClasses = '') {
                                     <figure class="widescreen">
                                         <img src="'.loadImg('original', $episodeBackdrop).'">
                                     </figure>
-                                    <div class="link-wrapper">'.$episodeWatchTrigger.'</div>
                                 </div>
                                 <div class="col-7 col-9-medium pad-left-xs">
                                     <p class="small">'.truncate($episodeOverview, 100).'</p>
                                 </div>
+                                '.$episodeWatchTrigger.'
                             </div>';
                         }                        
                     }
