@@ -33,7 +33,7 @@ if ( isset($_POST['add-movie']) ) {
                 <?php callout(); ?>
             </div>
 
-            <div class="grid-row">
+            <div class="row">
                 <?php 
                     $movies = selectAllMoviesByTitle('ASC');
                     

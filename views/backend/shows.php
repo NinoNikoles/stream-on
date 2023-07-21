@@ -33,7 +33,7 @@ if ( isset($_POST['add-show']) ) {
                 <?php callout(); ?>
             </div>
 
-            <div class="grid-row">
+            <div class="row">
                 <?php 
                     $shows = selectAllShowsByTitle('ASC');
                     if ( $shows > 0 ) {
