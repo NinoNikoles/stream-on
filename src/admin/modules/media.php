@@ -712,6 +712,7 @@ function updateEpisodeFilePath($moviePath, $movieID) {
 function media_card($media, $extraClasses = '') {
     $conn = dbConnect();
 
+    $userID = intval($_SESSION['userID']);
     $mediaID = $media['tmdbID'];
     $title = $media['title'];
     $overview = $media['overview'];
@@ -727,6 +728,7 @@ function media_card($media, $extraClasses = '') {
     $extraSeasonWrap = '';
     $extras = '';
 
+    ////-- Loads seasons and episodes of seasons --////
     if ( $type === 'movie' ) {
         //$tagline = $media['tagline'];
         $extraInfo = runtimeToString($media['runtime']);
@@ -810,16 +812,14 @@ function media_card($media, $extraClasses = '') {
         }
     }
     
-
+    ////-- Generates genre tag list --////
     $genres = json_decode($media['genres']);
     $genreHTML = '';
     foreach ( $genres as $genre ) {
         $genreHTML = $genreHTML . '<span class="tag">'.getDBGenreNameByID($genre).'</span>';
     }
 
-    $userID = intval($_SESSION['userID']);
-    
-    //-- Watch list --
+    ////-- Watch list --////
     $watchListCheckSQL = "SELECT id FROM watchlist WHERE user_id=$userID and media_id=$mediaID";
 
     // Adds watchlist buttons
@@ -833,7 +833,7 @@ function media_card($media, $extraClasses = '') {
         <a href="#" class="btn btn-small btn-white icon-left icon-remove mylist-btn remove-from-list hidden loading" data-media-id="'.$mediaID.'" data-type="remove">'.lang_snippet('my_list').'</a>';
     }
 
-    // Adds edit btn when user is admin
+    ////-- Adds edit btn when user is admin --////
     if ( $_SESSION['role'] === "1" ) {
         if ( $type === 'movie' ) {
             $editBtn = '<a href="/admin/movie/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
@@ -842,6 +842,7 @@ function media_card($media, $extraClasses = '') {
         }
     }
 
+    ////-- Play buttons and time progressbar --////
     $watchTrigger= '';
     $watchBtn = '';
     $timebar = '';
@@ -913,6 +914,7 @@ function media_card($media, $extraClasses = '') {
         }
     }
 
+    ////-- Generated output --////
     $card = '
         <div class="'.$extraClasses.'">
             <div class="media-card '.$disabled.'">
@@ -960,10 +962,20 @@ function media_card($media, $extraClasses = '') {
                 </div>
             </div>
         </div>';
+
     $conn->close();
     return $card;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////// Extras
+
+// Get trailer
 function getTrailer($movieID, $extraClass="") {
     $conn = dbConnect();
     $sql = "SELECT trailer FROM media WHERE tmdbID=$movieID";
