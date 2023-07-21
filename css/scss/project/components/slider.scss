@@ -1,0 +1,44 @@
+.currentWatch-slider,
+.genre-slider {
+    .column {
+        overflow: hidden;
+    }
+}
+
+.card-slider {
+    overflow: initial;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: var(--white);
+    width: rem-calc(40);
+    height: 120%;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::after {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.swiper-button-prev {
+    background: linear-gradient(90deg, var(--dark), transparent);
+    left: rem-calc(-16);
+
+    &::after {
+        left: 50%;
+    }
+}
+
+.swiper-button-next {
+    background: linear-gradient(270deg, var(--dark), transparent);
+    right: rem-calc(-16);
+
+    &::after {
+        left: 50%;
+    }
+}
