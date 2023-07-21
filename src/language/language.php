@@ -43,6 +43,8 @@ class langSnippets {
             'episodes' => 'Episodes',
             'season' => 'Season',
             'seasons' => 'Seasons',
+            'watch_now' => 'Watch now',
+            'continue_watching' => 'Continue',
 			
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -74,6 +76,11 @@ class langSnippets {
             'add_movie_success' => 'Movie added successfully!',
             'delete_movie_success' => 'Movie deleted successfully!',
 
+            'add_show_success' => 'Die Serie wurde erfolgreich hinzugefügt!',
+            'edit_show_success' => 'Die Serie wurde erfolgreich bearbeitet!',
+            'delete_show_success' => 'Die Serie wurde erfolgreich gelöscht!',
+            'update_show_success' => 'Die Serie wurde erfolgreich aktualisiert!',
+
             'genres_created_success' => 'Genres created successfully!',            
             'update_poster_success' => 'Poster updated successfully!',            
             'update_backdrop_success' => 'Thumbnail updated successfully!',         
@@ -92,6 +99,11 @@ class langSnippets {
             'edit_movie_alert' => 'Movie could not be edited!',
             'add_movie_alert' => 'Movie could not be added!',
             'delete_movie_alert' => 'Movie could not be deleted!',
+
+            'add_show_alert' => 'Die Serie konnte nicht hinzugefügt werden!',
+            'edit_show_alert' => 'Die Serie konnte nicht bearbeitet werden!',
+            'delete_show_alert' => 'Die Serie konnte nicht gelöscht werden!',
+            'update_show_alert' => 'Die Serie konnte nicht aktualisiert werden!',
 
             'genres_created_alert' => 'Genres could not be created!', 
             'update_poster_alert' => 'Poster could not be updated!',            
@@ -155,6 +167,8 @@ class langSnippets {
             'continue' => 'Fortsetzen',
             'my_list' => 'Meine Liste',
 			'add_highlight' => 'Zu Highlights hinzufügen',
+            'watch_now' => 'Jetzt schauen',
+            'continue_watching' => 'Fortsetzen',
 
 			// Movie
 			'rating' => 'Bewertung',
@@ -181,6 +195,11 @@ class langSnippets {
             'add_movie_success' => 'Der Film wurde erfolgreich hinzugefügt!',
             'delete_movie_success' => 'Der Film wurde erfolgreich gelöscht!',
 
+            'add_show_success' => 'Die Serie wurde erfolgreich hinzugefügt!',
+            'edit_show_success' => 'Die Serie wurde erfolgreich bearbeitet!',
+            'delete_show_success' => 'Die Serie wurde erfolgreich gelöscht!',
+            'update_show_success' => 'Die Serie wurde erfolgreich aktualisiert!',
+
             'genres_created_success' => 'Genre wurden erfolgreich geladen!',
             'update_poster_success' => 'Poster wurde erfolgreich aktualisiert!',            
             'update_backdrop_success' => 'Thumbnail wurde erfolgreich aktualisiert!',         
@@ -199,6 +218,11 @@ class langSnippets {
             'edit_movie_alert' => 'Der Film konnte nicht bearbeitet werden!',
             'add_movie_alert' => 'Der Film konnte nicht hinzugefügt werden!',
             'delete_movie_alert' => 'Der Film konnte nicht gelöscht werden!',
+
+            'add_show_alert' => 'Die Serie konnte nicht hinzugefügt werden!',
+            'edit_show_alert' => 'Die Serie konnte nicht bearbeitet werden!',
+            'delete_show_alert' => 'Die Serie konnte nicht gelöscht werden!',
+            'update_show_alert' => 'Die Serie konnte nicht aktualisiert werden!',
 
             'genres_created_alert' => 'Genre konntent nicht geladen werden!',
             'update_poster_alert' => 'Poster konntent nicht aktualisiert werden!',            

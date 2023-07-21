@@ -47,18 +47,35 @@ if ( $show == 0 ) {
                         updateShowBackdrop($_POST['id'], $_POST['backdrop']);
                     }
                     
-                    // Add show from collection
+                    // Delete show
                     if (isset($_POST['delete-show'])) {
-                        //deleteShow($_POST['id']);
-                    }    
+                        deleteShow($_POST['id']);
+                    }
+
+                    // Update Show
+                    if (isset($_POST['update-show'])) {
+                        updateShow($_POST['id']);
+                    }   
 
                     callout();
-
+                    
+                    
                     echo '<div class="col7 marg-right-col1">';
-                        echo '<form method="post" action="/admin/show/?id='.$id.'">';
-                            echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
-                            echo '<button type="submit" class="btn btn-small btn-alert" name="delete-show">Löschen</button>';
-                        echo '</form>';
+                        echo '<div class="col6">';
+                            // Delete Btn
+                            echo '<form method="post" action="/admin/show/?id='.$id.'">';
+                                echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
+                                echo '<button type="submit" class="btn btn-small btn-alert" name="delete-show">Löschen</button>';
+                            echo '</form>';
+                        echo '</div>';
+                        echo '<div class="col6">';
+                            // Update Btn
+                            echo '<form method="post" action="/admin/show/?id='.$id.'">';
+                                echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
+                                echo '<button type="submit" class="btn btn-small btn-warning" id="update-show" name="update-show">Update</button>';
+                            echo '</form>';
+                        echo '</div>';
+
                         echo '<div class="col12"><h1>'.$title.'</h1></div>';
                         echo '<div class="col12"><p>'.$show['overview'].'</p></div>';
                         echo '<div class="col3"><p><strong>'.lang_snippet('rating').':</strong><br>'.$show['rating'].'/10</p></div>';
@@ -77,70 +94,6 @@ if ( $show == 0 ) {
                                 echo '<button class="btn btn-small btn-success" id="trailerSubmit" type="submit">'.lang_snippet('save').'</button>';
                             echo '</form>';
                         echo '</div>';
-
-
-                        $querySeasons = "SELECT tmdbID, title, season_number, episodes_count FROM seasons WHERE show_tmdbID=$id";
-                        $seasonResults = $conn->query($querySeasons);
-                        $seasonTabList = '';
-                        $seasonContentList = '';
-                        $extras = '';
-                        $extrasContent = '';
-
-                        if ( $seasonResults->num_rows > 0 ) {
-                            while ( $seasonRow = $seasonResults->fetch_assoc() ) {
-                                $seasonNumber = $seasonRow['season_number'];
-                                $sql = "SELECT * FROM episodes WHERE show_id=$id AND season_number=$seasonNumber";
-                                $episodeResult = $conn->query($sql);
-                                
-                                $episodesRow = '';
-
-                                while ( $episode = $episodeResult->fetch_assoc() ) {
-                                    $episodesRow .= '
-                                    <div class="col2">
-                                        <figure class="widescreen">
-                                            <img src="'.loadImg('original', $episode['backdrop']).'">
-                                        </figure>
-                                        <span>'.$episode['title'].'</span>
-                                        <a href="#file-list-popup-'.$episode['tmdbID'].'" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup-'.$episode['tmdbID'].'">'.lang_snippet('select_movie_file').'</a>
-                                
-                                        <div id="file-list-popup-'.$episode['tmdbID'].'" style="display:none;">
-                                            <div class="file-tree-episode" data-element-id="'.$episode['tmdbID'].'"></div>
-                                                <a href="#" class="btn marg-top-m marg-bottom-no episode-path-submit" data-submit="'.$episode['tmdbID'].'" data-path="" style="display:none;">'.lang_snippet('save').'</a>
-                                            </div>
-                                        </div>
-                                    </div>';
-                                }
-
-                                if ( $seasonNumber === '0' ) {                                  
-
-                                    // Tab - Extras
-                                    $extras = '<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
-                                    //Content - Extras
-                                    $extrasContent = '<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
-
-                                } else if ( $seasonNumber === '1' ) {
-                                    // Tab - Season 1
-                                    $seasonTabList = $seasonTabList.'<li class="tabs-title" class="is-active"><a href="#season-'.$seasonNumber.'" aria-selected="true">'.$seasonRow['title'].'</a></li>';
-                                    // Content - Season 1
-                                    $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel is-active" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
-
-                                } else {
-                                    // Tab - Rest of Seasons
-                                    $seasonTabList = $seasonTabList.'<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
-                                    // Content - Rest of Seasons
-                                    $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
-                                }
-                            }
-
-                            echo '<div class="col12">';
-                                echo '<ul class="tabs" data-tabs id="season-tabs">';
-                                    echo $seasonTabList.$extras;
-                                echo '</ul>';
-                                echo '<div class="tabs-content" data-tabs-content="season-tabs">';
-                                    echo $seasonContentList.$extrasContent;
-                                echo '</div>';
-                            echo '</div>';
-                        }
                     echo '</div>';
 
                 ?>
@@ -234,6 +187,78 @@ if ( $show == 0 ) {
                             </form>
                         </div>
                     </div>
+                </div>
+
+                <div class="col12">
+                <?php
+                    $querySeasons = "SELECT tmdbID, title, season_number, episodes_count FROM seasons WHERE show_tmdbID=$id";
+                    $seasonResults = $conn->query($querySeasons);
+                    $seasonTabList = '';
+                    $seasonContentList = '';
+                    $extras = '';
+                    $extrasContent = '';
+
+                    if ( $seasonResults->num_rows > 0 ) {
+                        while ( $seasonRow = $seasonResults->fetch_assoc() ) {
+                            $seasonNumber = $seasonRow['season_number'];
+                            $sql = "SELECT * FROM episodes WHERE show_id=$id AND season_number=$seasonNumber";
+                            $episodeResult = $conn->query($sql);
+                            
+                            $episodesRow = '';
+
+                            while ( $episode = $episodeResult->fetch_assoc() ) {
+                                $disabled = 'disabled';
+
+                                if ( $episode['file_path'] != "" ) {
+                                    $disabled = '';
+                                }
+
+                                $episodesRow .= '
+                                <div class="col4 '.$disabled.'">
+                                    <figure class="widescreen">
+                                        <img src="'.loadImg('original', $episode['backdrop']).'">
+                                    </figure>
+                                    <span class="small marg-top-xxs">'.$episode['title'].'</span>
+                                    <a href="#file-list-popup-'.$episode['tmdbID'].'" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup-'.$episode['tmdbID'].'">'.lang_snippet('select_movie_file').'</a>
+                                    <div id="file-list-popup-'.$episode['tmdbID'].'" style="display:none;">
+                                        <div class="file-tree-episode" data-element-id="'.$episode['tmdbID'].'">
+                                            <a href="#" class="btn marg-top-m marg-bottom-no episode-path-submit" data-submit="'.$episode['tmdbID'].'" data-path="" style="display:none;">'.lang_snippet('save').'</a>
+                                        </div>
+                                    </div>
+                                </div>';
+                            }
+
+                            if ( $seasonNumber === '0' ) {                                  
+
+                                // Tab - Extras
+                                $extras = '<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
+                                //Content - Extras
+                                $extrasContent = '<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+
+                            } else if ( $seasonNumber === '1' ) {
+                                // Tab - Season 1
+                                $seasonTabList = $seasonTabList.'<li class="tabs-title" class="is-active"><a href="#season-'.$seasonNumber.'" aria-selected="true">'.$seasonRow['title'].'</a></li>';
+                                // Content - Season 1
+                                $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel is-active" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+
+                            } else {
+                                // Tab - Rest of Seasons
+                                $seasonTabList = $seasonTabList.'<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
+                                // Content - Rest of Seasons
+                                $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+                            }
+                        }
+
+                        echo '<div class="col12 marg-top-s">';
+                            echo '<ul class="tabs" data-tabs id="season-tabs">';
+                                echo $seasonTabList.$extras;
+                            echo '</ul>';
+                            echo '<div class="tabs-content" data-tabs-content="season-tabs">';
+                                echo $seasonContentList.$extrasContent;
+                            echo '</div>';
+                        echo '</div>';
+                    }
+                ?>
                 </div>
             </div>
         </div>

@@ -73,3 +73,35 @@ a.btn, .btn, .button:not(.acf-button):not(.add_media), [type="submit"] {
         }
     }
 }
+
+i {
+    &.icon-spinner {
+        &::after {
+            display: block !important;
+            background: {
+                color: transparent;
+            }
+            content: '\f110';
+            color: var(--white) !important;
+            font: {
+                family: $icon-font;
+                size: rem-calc(40);
+            }
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+
+            @include keyframes(spinner) {
+                0% {
+                    transform: translate(-50%, -50%) rotate(0deg);
+                }
+                100% {
+                    transform: translate(-50%, -50%) rotate(360deg);
+                }
+            };
+            @include animate(spinner, 2s, linear, infinite);
+
+        }
+    }
+}

@@ -17,7 +17,7 @@
     &.active {
         pointer-events: all;
         left: 0;
-        z-index: 200;
+        z-index: 9999;
         @include transitions(left $transition-default 0.1s, z-index 0s ease 0s);
 
         .modal-overlay {

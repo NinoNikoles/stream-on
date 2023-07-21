@@ -32,7 +32,7 @@ function movieVideoPlayer($movieID, $fullscreen = false) {
                 echo '</video>';
             echo '</figure>';
         }
-        echo '<span data-time="'.$watchedTime.'" id="time"></span>';
+        echo '<span data-time="'.$watchedTime.'" data-show="'.$movieID.'" id="time"></span>';
     }
 
     $conn->close();

@@ -8,9 +8,9 @@
     $watchedTime = floatval($_POST['time']);
     $totalLength = floatval($_POST['totalLength']);
     $watchedInPercent = ($watchedTime/$totalLength)*100;
-    echo $_POST['showID'];
-    if ( isset($_POST['showID']) ) {
-        $showID = $_POST['showID'];
+
+    if ( isset($_POST['show']) ) {
+        $showID = $_POST['show'];
     } else {
         $showID = NULL;
     }

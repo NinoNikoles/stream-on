@@ -5,8 +5,8 @@ function currentWatchlist() {
     $userID = $_SESSION['userID'];
 
     $query = "SELECT * FROM media
-    INNER JOIN media_watched ON media.tmdbID = media_watched.media_id
-    WHERE media_watched.user_id = $userID and media_watched.watched_seconds > 0";
+    INNER JOIN media_watched ON media.tmdbID = media_watched.show_id
+    WHERE media_watched.user_id = $userID AND media_watched.watched_seconds > 0";
     $results = $conn->query($query);
     
     if ( $results->num_rows > 0 ) {

@@ -1,6 +1,7 @@
 .tabs {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     border: {
         color: var(--border-color);
         radius: rem-calc($border-radius);
@@ -13,7 +14,7 @@
     @include MQ(medium) {
         flex-direction: row;
     }
-
+    
     &-title {
         > a {
             display: block;

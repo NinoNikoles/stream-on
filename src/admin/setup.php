@@ -338,6 +338,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         id INT NOT NULL AUTO_INCREMENT,
         user_id INT NOT NULL,
         media_id INT NOT NULL,
+        show_id INT NULL,
         watched_seconds DECIMAL(10,6),
         total_length DECIMAL(10,6),
         watched INT(1),

@@ -32,7 +32,7 @@
                         echo '<form name="movie-'.$id.'-form" id="movie-'.$id.'-form" method="post" action="/admin/movies">';
                             echo '<input type="text" name="id" value="'.$id.'" required style="display:none;">';
                             echo '<p class="text-right">';
-                                echo '<button type="submit" class="btn btn-success" name="add-movie">Hinzufügen</button>';
+                                echo '<button type="submit" class="btn btn-success" id="add-movie" name="add-movie">Hinzufügen</button>';
                             echo '</p>';
                         echo '</form>';
                     echo '</div>';

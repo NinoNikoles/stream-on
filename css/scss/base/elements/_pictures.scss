@@ -69,3 +69,15 @@ figure,
         bottom: 0;
     }
 }
+
+a {
+    &[data-fancybox] {
+        display: block;
+    }
+}
+
+.disabled {
+    img {
+        filter: grayscale(1);
+    }
+}

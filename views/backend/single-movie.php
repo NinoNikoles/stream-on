@@ -232,7 +232,7 @@ if ( $movie == 0 ) {
                                     echo '<form method="post" action="/admin/movie/?id='.$id.'">';
                                     echo '<input type="number" name="id" value="'.$movieID.'" style="display:none;">';
                                         echo '<p class="text-right">';
-                                            echo '<button type="submit" class="btn btn-success" name="add-movie">'.lang_snippet('add').'</button>';
+                                            echo '<button type="submit" class="btn btn-success" id="add-movie" name="add-movie">'.lang_snippet('add').'</button>';
                                         echo '</p>';
                                     echo '</form>';
                                 echo '</div>';

@@ -108,34 +108,22 @@ function insertMovie($movieID) {
 function deleteMovie($movieID) {
     $conn = dbConnect();
 
-    $genreDeleteQuery = "DELETE FROM media_genre WHERE media_id = $movieID";
-    $conn->query($genreDeleteQuery);
-    if (!($conn->query($genreDeleteQuery) === TRUE)) {
-        $conn->close();
-        set_callout('alert','delete_movie_alert');
-        page_redirect('/admin/movie/?id='.$movieID);
-    }
-
-    $highlightDeleteQuery = "DELETE FROM highlights WHERE media_id = $movieID";
-    $conn->query($highlightDeleteQuery);
-    if (!($conn->query($highlightDeleteQuery) === TRUE)) {
-        $conn->close();
-        set_callout('alert','delete_movie_alert');
-        page_redirect('/admin/movie/?id='.$movieID);
-    }
+    $sql = "DELETE FROM media_watched WHERE show_id=$movieID;";
+    $sql .= "DELETE FROM watchlist WHERE media_id=$movieID;";
+    $sql .= "DELETE FROM highlights WHERE highlight_id=$movieID;";
+    $sql .= "DELETE FROM media_genre WHERE media_id = $movieID";
+    $sql .= "DELETE FROM media WHERE tmdbID=$movieID;";
 
     // Lösche den Film aus der movies-Tabelle
-    $filmDeleteQuery = "DELETE FROM media WHERE id = $movieID";
-    $conn->query($filmDeleteQuery);
-    if (!($conn->query($filmDeleteQuery) === TRUE)) {
+    if (!($conn->multi_query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','delete_movie_alert');
         page_redirect('/admin/movie/?id='.$movieID);
-    }
-
-    $conn->close();
-    set_callout('success','delete_movie_success');
-    page_redirect("/admin/movies");
+    } else {
+        $conn->close();
+        set_callout('success','delete_movie_success');
+        page_redirect("/admin/movies");
+    }    
 }
 
 //-- Returns all information of a movie from local database --
@@ -467,6 +455,28 @@ function insertShow($showID) {
     }
 }
 
+function deleteShow($showID) {
+    $conn = dbConnect();
+
+    $sql = "DELETE FROM media_watched WHERE show_id=$showID;";
+    $sql .= "DELETE FROM watchlist WHERE media_id=$showID;";
+    $sql .= "DELETE FROM episodes WHERE show_id=$showID;";
+    $sql .= "DELETE FROM seasons WHERE show_tmdbID=$showID;";
+    $sql .= "DELETE FROM media_genre WHERE media_id=$showID;";
+    $sql .= "DELETE FROM highlights WHERE highlight_id=$showID;";
+    $sql .= "DELETE FROM media WHERE tmdbID=$showID;";
+
+    if (!($conn->multi_query($sql) === TRUE)) {
+        $conn->close();
+        set_callout('alert','delete_show_alert');
+        page_redirect('/admin/shows');
+    } else {
+        $conn->close();
+        set_callout('success','delete_show_success');
+        page_redirect('/admin/shows');
+    }
+}
+
 function selectAllShowsByTitle($order = '') {
     $conn = dbConnect();
     $shows = [];
@@ -586,6 +596,86 @@ function updateShowTrailer($showID, $trailer) {
     }
 }
 
+function updateShow($showID) {
+    $conn = dbConnect();
+    $tmdb = setupTMDB();
+
+    $conn->begin_transaction();
+
+    $id = $showID;
+    $show = $tmdb->getTVShow($id);
+    $seasons = $show->getSeasons();
+    $seasonsCount = $show->getNumSeasons();
+    $episodesCount = $show->getNumEpisodes();
+
+    $dataSeasonsIDs = [];
+    
+    foreach ( $seasons as $season ) {
+        $dataSeasonsIDs[] = $season->getID();
+    }
+    
+    $seasonsIDs = json_encode($dataSeasonsIDs);
+
+    try {
+        // Füge den neuen Film in die "shows"-Tabelle ein
+        $showQuery = "UPDATE media SET
+            show_season_count = $seasonsCount,
+            show_seasons = '$seasonsIDs',
+            show_episodes_count = $episodesCount,
+            WHERE tmdbID = $id AND mediaType='show';";
+        $conn->query($showQuery);
+
+        foreach ( $seasons as $season ) {
+            $seasonID = $season->getID();
+            $seasonNumber = $season->getSeasonNumber();
+            $seasonEpisodeCount = $season->getEpisodeCount();
+            $seasonTitle = str_replace("'", '"', $season->getName());
+            $seasonOverview = str_replace("'", '"', $season->getOverview());
+            $seasonPoster = $season->getPoster();
+            $seasonRating = $season->getVoteAverage();
+            $seasonRelease = $season->getAirDate();
+    
+            // Adds all Seasons of the show
+            $sqlSeasons = "INSERT INTO seasons (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) VALUES ('".$seasonID."','".$seasonTitle."','".$seasonOverview."','".$seasonPoster."','".$seasonNumber."','".$seasonRating."','".$seasonRelease."','".$seasonEpisodeCount."','".$id."');";
+            $conn->query($sqlSeasons);
+
+            $actualSeason = $tmdb->getSeason($id, $seasonNumber);
+            $seasonEpisodes = $actualSeason->getEpisodes();
+
+            foreach ( $seasonEpisodes as $seasonEpisode ) {
+                $episodeNumber = $seasonEpisode->getEpisodeNumber();
+
+                $episode = $tmdb->getEpisode($id, $seasonNumber, $episodeNumber);
+                $episodeID = $episode->getID();
+                $episodeNumber = $episode->getEpisodeNumber();
+                $episodeName = str_replace("'", '"', $episode->getName());
+                $episodeOverview = str_replace("'", '"', $episode->getOverview());
+                $episodeRuntime = $episode->getRuntime();
+                $episodeSeasonNumber = $seasonNumber;
+                $episodeShowID = $id;
+                $episodeRelease = $episode->getAirDate();
+                $episodeImgPath = $episode->getStill();
+                $episodeRating = $episode->getVoteAverage();
+
+                // Adds all episodes of the show
+                $episodeQuery = "INSERT INTO episodes (tmdbID,episode_number,title,overview,backdrop,runtime,rating,releaseDate,season_number,show_id) VALUES ('".$episodeID."','".$episodeNumber."','".$episodeName."','".$episodeOverview."','".$episodeImgPath."','".$episodeRuntime."','".$episodeRating."','".$episodeRelease."','".$episodeSeasonNumber."','".$episodeShowID."');";
+                $conn->query($episodeQuery);
+            }
+        }
+
+        // Commit der Transaktion
+        $conn->commit();
+        $conn->close();
+        set_callout('success','add_show_success');
+        page_redirect("/admin/show/?id=$id");
+    } catch (Exception $e) {
+        // Bei einem Fehler Rollback der Transaktion
+        $conn->rollback();
+        set_callout('alert','add_show_alert');
+        page_redirect("/admin/shows/?id=$id");
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -673,7 +763,13 @@ function media_card($media, $extraClasses = '') {
                             
 
                             if ( $episodeRow['file_path'] != "" ) {
-                                $episodeWatchTrigger = '<div class="link-wrapper"><a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a></div>';
+                                $episodeWatchTrigger = '<div class="link-wrapper">
+                                    <a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger">
+                                        <span class="icon-wrap col-5 col-3-medium pad-top-xs pad-bottom-xs">
+                                            <i class="icon-play"></i>
+                                        </span>
+                                    </a>
+                                    </div>';
                                 $episodeDisabled = '';
                             }
     
@@ -757,7 +853,7 @@ function media_card($media, $extraClasses = '') {
         // Add play btn when media has file path
         if ( $media['file_path'] != "" ) {
             $watchTrigger = '<a href="/watch/?id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
-            $watchBtn = '<a href="/watch/?id='.$mediaID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">Jetzt schauen</a>';
+            $watchBtn = '<a href="/watch/?id='.$mediaID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
             $disabled = '';
         }
 
@@ -771,15 +867,49 @@ function media_card($media, $extraClasses = '') {
             $timebar = '<div class="watched-bar"><progress max="100" value="'.$watchedInPercent.'"></progress></div>';
         }
     } else {
+        
 
         // Adds watch progress bar show
-        $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID and watched_seconds > 0 ORDER BY last_watched LIMIT 1";
+        $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID AND watched_seconds > 0 ORDER BY last_watched LIMIT 1";
         $currEpisodeResult = $conn->query($currEpisodeSQL);
+
         if ( $currEpisodeResult->num_rows > 0 ) {
             while ( $currEpisode = $currEpisodeResult->fetch_assoc() ) {
+                $episodeID = $currEpisode['media_id'];
                 $currEpisodeTime = getWatchedTime($currEpisode['watched_seconds'], $currEpisode['total_length']);
             }
+
+            // Sets time bar for last episode watched
             $timebar = '<div class="watched-bar"><progress max="100" value="'.$currEpisodeTime.'"></progress></div>';
+
+            // Sets play button for last episode watched
+            $getSeason = "SELECT title, season_number FROM episodes WHERE tmdbID = ".$episodeID." AND show_id = $mediaID";
+            $getSeasonResult = $conn->query($getSeason);
+
+            while ( $currSeason = $getSeasonResult->fetch_assoc() ) {
+                $seasonNr = $currSeason['season_number'];
+            }
+
+            $watchTrigger = '<a href="/watch/?s='.$seasonNr.'&id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
+            $watchBtn = '<a href="/watch/?s='.$seasonNr.'&id='.$mediaID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
+        } else {
+            // Adds watch progress bar show
+            $firstEpisodeSQL = "SELECT tmdbID, file_path FROM episodes WHERE show_id = $mediaID AND season_number = 1 AND episode_number = 1";
+            $firstEpisodeResult = $conn->query($firstEpisodeSQL);
+
+            if ( $firstEpisodeResult->num_rows > 0 ) {
+                while ( $firstEpisode = $firstEpisodeResult->fetch_assoc() ) {
+                    if ( $firstEpisode['file_path'] != NULL ) {
+                        // Sets play button for first episode of show
+                        $watchTrigger = '<a href="/watch/?s=1&id='.$firstEpisode['tmdbID'].'" title="'.$title.'" class="play-trigger"></a>';
+                        $watchBtn = '<a href="/watch/?s=1&id='.$firstEpisode['tmdbID'].'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
+                    } else {
+                        $disabled = 'disabled';
+                    }
+                }
+            } else {
+                $disabled = 'disabled';
+            }
         }
     }
 
@@ -796,7 +926,7 @@ function media_card($media, $extraClasses = '') {
                     <div class="link-wrapper">
                     '.$watchTrigger.'
                     <a href="#content-'.$mediaID.'" title="'.lang_snippet('more_informations').'" data-fancybox class="info-trigger" data-modal data-src="#content-'.$mediaID.'"></a>
-                    './*$editBtn*/'
+                    '.$editBtn.'
                     </div>
                 </div>
                 '.$timebar.'

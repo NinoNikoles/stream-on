@@ -32,7 +32,7 @@
                         echo '<form name="show-'.$id.'-form" id="show-'.$id.'-form" method="post" action="/admin/shows">';
                             echo '<input type="text" name="id" value="'.$id.'" required style="display:none;">';
                             echo '<p class="text-right">';
-                                echo '<button type="submit" class="btn btn-success" name="add-show">Hinzufügen</button>';
+                                echo '<button type="submit" class="btn btn-success" id="add-show" name="add-show">Hinzufügen</button>';
                             echo '</p>';
                         echo '</form>';
                     echo '</div>';
