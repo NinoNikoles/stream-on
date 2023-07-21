@@ -334,8 +334,6 @@ $(document).ready(function() {
         },*/
 
         tabs: function () {
-            console.log('Tabs loaded');
-
             var self = this,
                 $tabTitleLink = $('.tabs .tabs-title > a');
 
@@ -364,21 +362,18 @@ $(document).ready(function() {
         },
 
         selectTabs: function () {
-            console.log('Tabs loaded');
-
             var self = this;
 
             $(document).on('change', '.tab-select', function (e) {
                 e.preventDefault();
-                console.log('change');
+
                 var $this = $(this),
                     valAtr = $this.val();
                     tabsClass = $this.attr('id');
                     $currTab = $('.'+tabsClass+'[data-select-tab="'+valAtr+'"]');
                 
                 $('body select.'+tabsClass).each(function(index, e) {
-                    $(e).val(valAtr);
-                    console.log($(e));                    
+                    $(e).val(valAtr);                
                 });
 
                 $('body select.'+tabsClass).val(valAtr);
@@ -390,19 +385,9 @@ $(document).ready(function() {
         },
 
         fancyBox: function() {
-            /*$('.info-popup').each(function(index, el) {
-                var self = el;
-                $self = $(el);
-                
-
-            });*/
-
-
             Fancybox.bind('[data-fancybox]', {
                 dragToClose: false,
             });
-
-            console.log(Fancybox);
         },
 
         initSlider: function () {
@@ -600,7 +585,7 @@ $(document).ready(function() {
         jstreeEpisode: function() {
             if ( $('.file-tree-episode').length > 0 ) {
                 $('.file-tree-episode').each(function(i, el) {
-                    console.log('test');
+
                     $.ajax({
                         url: '/admin/file-api', // Hier den Pfad zur API auf deinem Server einfügen
                         type: 'get',
@@ -717,7 +702,6 @@ $(document).ready(function() {
             });
 
             $menuBtn.on('blur', function() {
-                console.log('change');
                 var $this = $(this);
 
                 if ( !$this.is(':hover') && $this.hasClass('active') ) {
@@ -822,7 +806,6 @@ $(document).ready(function() {
                                 totalLength: totalDuration,
                             },
                             success: function(response) {
-                                console.log(response);
                                 $resultList.attr('data-time', currentSecond);
                                 $resultList.attr('data-show', showID);
                             }, error: function(xhr, status, error) {
@@ -861,7 +844,7 @@ $(document).ready(function() {
 
         highlight: function() {
             $('.highlight-change').on('change', function() {
-                console.log('change');
+
                 var highlightID = $(this).attr('data-media'),
                     status = $(this).prop('checked');
 
