@@ -205,9 +205,9 @@ function selectAllMoviesByTitle($order = '') {
     $i = 0;
 
     if ( $order != '' ) {
-        $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, releaseDate, runtime, genres, mediaType FROM media WHERE mediaType='movie' ORDER BY title $order";
+        $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, file_path, releaseDate, runtime, genres, mediaType FROM media WHERE mediaType='movie' ORDER BY title $order";
     } else {
-        $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, releaseDate, runtime, genres, mediaType FROM WHERE mediaType='movie'";
+        $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, file_path, releaseDate, runtime, genres, mediaType FROM WHERE mediaType='movie'";
     }
     
     $results = $conn->query($sql);
