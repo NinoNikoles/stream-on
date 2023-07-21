@@ -308,11 +308,22 @@
         right: 0;
         left: unset;
         @include transition(right $transition-default);
+
+        .is-close-btn {
+            background-color: var(--dark-light) !important;
+            position: fixed !important;
+            border-radius: 0 !important;
+            opacity: 1 !important;
+        }
     }
 
     &.is-animated {
         .info-popup { 
             right: -100%;
+            
+            .is-close-btn {
+                position: absolute !important;
+            }
         }
     }
 }
