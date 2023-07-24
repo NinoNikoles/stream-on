@@ -20,6 +20,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
+<div id="loader"></div>
 <header id="header" class="bar-active-root bar-active fixed-header overlay" lang="de-DE">
 	<div class="row header--content">
 		<div class="col12 column header--content--nav">
@@ -56,7 +57,7 @@
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">
                     <figure class="square">
-                        <img src="<?php echo userProfileImg(); ?>" loading="lazy">
+                        <img data-img="<?php echo userProfileImg(); ?>" loading="lazy">
                     </figure>
 
                     <menu class="user-menu">

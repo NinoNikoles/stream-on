@@ -21,10 +21,10 @@ function getHighlight() {
 
         $hightlight = "
         <figure class='poster'>
-            <img src=".loadImg('original', $poster)." loading='lazy'>
+            <img data-img=".loadImg('original', $poster)." loading='lazy'>
         </figure>
         <figure class='widescreen'>
-            <img src=".loadImg('original', $backdrop)." loading='lazy'>
+            <img data-img=".loadImg('original', $backdrop)." loading='lazy'>
         </figure>
         <div class='content-wrap mobile-only'>
             <h1 class='h1 text-center'>".$title."</h1>

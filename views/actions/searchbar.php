@@ -29,7 +29,7 @@
     
                 echo '<a href="#movie-'.$movieID.'" class="display-flex flex-row marg-no" data-modal data-src="#content-'.$movieID.'">';
                     echo '<figure class="square" style="width:20%;max-width:100px;">';
-                        echo '<img src="'.loadImg('original', $moviePoster).'" loading="lazy">';
+                        echo '<img data-img="'.loadImg('original', $moviePoster).'" loading="lazy">';
                     echo '</figure>';
                     echo '<span class="pad-xs marg-no" style="width:80%;">'.$title.'</span>';
                 echo '</a>';
@@ -37,7 +37,7 @@
                 echo '<div class="info-popup" id="content-'.$movieID.'" style="display:none;">';
                     echo '<div class="col12 marg-bottom-xs mobile-only">';
                         echo '<figure class="widescreen">';
-                            echo '<img src="'.loadImg('original', $backdrop).'" loading="lazy">';
+                            echo '<img data-img="'.loadImg('original', $backdrop).'" loading="lazy">';
                         echo '</figure>';
                     echo '</div>';
                     echo '<div class="innerWrap">';
@@ -54,7 +54,7 @@
                         echo '</div>';
                         echo '<div class="col4 desktop-only">';
                             echo '<figure class="poster">';
-                                echo '<img src="'.loadImg('original', $moviePoster).'" alt="" loading="lazy">';
+                                echo '<img data-img="'.loadImg('original', $moviePoster).'" alt="" loading="lazy">';
                             echo '</figure>';
                         echo '</div>';
                     echo '</div>';
