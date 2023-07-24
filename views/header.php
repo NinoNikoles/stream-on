@@ -48,9 +48,25 @@
 				<!-- Navigation -->
 				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
                     <ul class="menu">
+                        <div class="col12 mobile-only">
+                            <div class="innerWrap">
+                                <div class="col12">
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
                         <li class="menu-item"><a href="/movies" title="<?php echo lang_snippet('movies'); ?>"><?php echo lang_snippet('movies'); ?></a></li>
                         <li class="menu-item"><a href="/shows" title="<?php echo lang_snippet('shows'); ?>"><?php echo lang_snippet('shows'); ?></a></li>
                         <li class="menu-item"><a href="/my-list" title="<?php echo lang_snippet('list'); ?>"><?php echo lang_snippet('list'); ?></a></li>
+                        <div class="col12 mobile-only">
+                            <div class="innerWrap">
+                                <div class="col12">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <?php echo adminMenu('main-menu');?>
+                        </div>
                     </ul>
                 </nav>
 
@@ -62,7 +78,7 @@
 
                     <menu class="user-menu">
                         <ul>
-                            <?php echo adminMenu();?>
+                            <?php echo adminMenu('user-menu');?>
                             
                             <li class="menu-item"><a href="/user/?id=<?php echo getUserID(); ?>" title="<?php echo lang_snippet('profile'); ?>"><?php echo lang_snippet('profile'); ?></a></li>
                             <li class="menu-item"><a href="/logout" title="<?php echo lang_snippet('logout'); ?>"><?php echo lang_snippet('logout'); ?></a></li>
