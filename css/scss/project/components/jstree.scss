@@ -15,3 +15,38 @@
         }
     }
 }
+
+.jstree-default>.jstree-striped {
+    background: none;
+}
+
+.jstree-default>.jstree-no-dots .jstree-node, .jstree-default>.jstree-no-dots .jstree-leaf>.jstree-ocl {
+    background-image: url('/views/build/css/images/jstree/32px.png');
+    background-color: transparent;
+    background-position: -292px -4px;
+    background-repeat: repeat-y;
+}
+
+.jstree-default>.jstree-no-dots .jstree-closed>.jstree-ocl {
+    background-position: -100px -4px;
+}
+
+.jstree-default>.jstree-no-dots .jstree-open>.jstree-ocl {
+    background-position: -132px -4px;
+}
+
+.jstree-default .jstree-node, .jstree-default .jstree-icon {
+    background-image: url('/views/build/css/images/jstree/32px.png');
+}
+
+.jstree-default .jstree-file {
+    background: url('/views/build/css/images/jstree/32px.png') -100px -68px no-repeat;
+}
+
+.jstree-default .jstree-folder {
+    background: url('/views/build/css/images/jstree/32px.png') -260px -4px no-repeat;
+}
+
+.jstree-default .jstree-leaf>.jstree-ocl {
+    background-position: -68px -4px !important;
+}

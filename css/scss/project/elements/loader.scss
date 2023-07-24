@@ -1,0 +1,39 @@
+@keyframes spin {
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+#loader {
+    background: {
+        color: var(--black);
+    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+
+    &::after {
+        display: flex;
+        content: "";
+        border: 12px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 12px solid #444444;
+        width: 70px;
+        height: 70px;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0);
+    }
+
+    &.hidden {
+        opacity: 0;
+        visibility: hidden;
+        z-index: -99999;
+        @include transitions(opacity $transition-default, visibility 0s ease 0.3s, z-index 0s ease 0.3s);
+    }
+}

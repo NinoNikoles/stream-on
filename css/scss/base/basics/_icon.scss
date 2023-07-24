@@ -89,45 +89,48 @@ a.icon-right:hover {
 
 // Normal Icons
 .icon {
-    &-add { &::before { content: "+"; } }
-    &-add-user { &::before { content: "\e934"; } }
-    &-arrow-back { &::before { content: "\e91e"; } }
-    &-check { &::before { content: "\c"; } }
-    &-chevron-down { &::before { content: "\e917"; transform: translate(-50%, -50%) !important; rotate: 90deg !important; } }
-    &-chevron-left { &::before { content: "\e918"; } }
-    &-chevron-up { &::before { content: "\e91a"; } }
-    &-chevron-right { &::before { content: "\e919"; } }
-    &-calender { &::before { content: "\e910"; } }
-    &-close { &::before { content: "x"; } }
-    &-error { &::before { content: "!"; } }
-    &-globe { &::before { content: "g"; } }
-    &-help { &::before { content: "?"; } }
-    &-home { &::before { content: "h"; } }
-    &-info { &::before { content: "i"; } }
-    &-location { &::before { content: "\e91d"; } }
-    &-mail { &::before { content: "m"; } }
-    &-moon { &::before { content: "\e91b"; } }
-    &-pause { &::before { content: "\e901"; } }
-    &-pen { &::before { content: "e"; } }
-    &-phone { &::before { content: "p"; } }
-    &-play { &::before { content: "\e902"; } }
-    &-remove { &::before { content: "-"; } }
-    &-repeat { &::before { content: "\e903"; } }
-    &-repeat-one { &::before { content: "\e904"; } }
-    &-replay { &::before { content: "\e905"; } }
-    &-shuffle { &::before { content: "\e906"; } }
-    &-send { &::before { content: "s"; } }
-    &-search { &::before { content: "\e90d"; } }
-    &-skip-next { &::before { content: "\e907"; } }
-    &-skip-previous { &::before { content: "\e908"; } }
-    &-spotify { &::before { content: "\f1bc"; } }
-    &-stop { &::before { content: "\e908"; } }
-    &-sun { &::before { content: "\e91c"; } }
-    &-trash { &::before { content: "\e900"; } }
-    &-volume-down { &::before { content: "\e909"; } }
-    &-volume-mute { &::before { content: "\e90a"; } }
-    &-volume-off { &::before { content: "\e90b"; } }
-    &-volume-up { &::before { content: "\e90c"; } }
+    &-add { &::before { content: $icon-add; } }
+    &-add-user { &::before { content: $icon-add-user; } }
+    &-arrow-back { &::before { content: $icon-arrow-back; } }
+    &-check { &::before { content: $icon-check; } }
+    &-chevron-down { &::before { content: $icon-chevron-down; transform: translate(-50%, -50%) !important; rotate: 90deg !important; } }
+    &-chevron-left { &::before { content: $icon-chevron-left; } }
+    &-chevron-up { &::before { content: $icon-chevron-up; } }
+    &-chevron-right { &::before { content: $icon-chevron-right; } }
+    &-calender { &::before { content: $icon-calender; } }
+    &-close { &::before { content: $icon-close; } }
+    &-error { &::before { content: $icon-error; } }
+    &-globe { &::before { content: $icon-globe; } }
+    &-help { &::before { content: $icon-help; } }
+    &-home { &::before { content: $icon-home; } }
+    &-info { &::before { content: $icon-info; } }
+    &-location { &::before { content: $icon-location; } }
+    &-mail { &::before { content: $icon-mail; } }
+    &-media { &::before { content: $icon-media; } }
+    &-moon { &::before { content: $icon-moon; } }
+    &-pause { &::before { content: $icon-pause; } }
+    &-pen { &::before { content: $icon-pen; } }
+    &-phone { &::before { content: $icon-phone; } }
+    &-play { &::before { content: $icon-play; } }
+    &-remove { &::before { content: $icon-remove; } }
+    &-repeat { &::before { content: $icon-repeat; } }
+    &-repeat-one { &::before { content: $icon-repeat-one; } }
+    &-replay { &::before { content: $icon-replay; } }
+    &-shuffle { &::before { content: $icon-shuffle; } }
+    &-save { &::before { content: $icon-save; } }
+    &-send { &::before { content: $icon-send; } }
+    &-search { &::before { content: $icon-search; } }
+    &-skip-next { &::before { content: $icon-skip-next; } }
+    &-skip-previous { &::before { content: $icon-skip-previous; } }
+    &-spotify { &::before { content: $icon-spotify; } }
+    &-stop { &::before { content: $icon-stop; } }
+    &-sun { &::before { content: $icon-sun; } }
+    &-trash { &::before { content: $icon-trash; } }
+    &-update { &::before { content: $icon-update; } }
+    &-volume-down { &::before { content: $icon-volume-down; } }
+    &-volume-mute { &::before { content: $icon-volume-mute; } }
+    &-volume-off { &::before { content: $icon-volume-off; } }
+    &-volume-up { &::before { content: $icon-volume-up; } }
 }
 
 // Brand Icons
