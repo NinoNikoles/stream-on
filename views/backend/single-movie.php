@@ -238,7 +238,7 @@ if ( $movie == 0 ) {
                             echo '<div class="col3 column">';
                                 echo '<a href="#add-movie-'.$movieID.'" class="media-card" data-fancybox data-src="#add-movie-'.$movieID.'">';
                                     echo '<figure class="poster">';
-                                        echo '<img data-img="'.$tmdb->getImageURL().$movie->getPoster().'" alt="" loading="lazy">';
+                                        echo '<img data-img="'.loadImg('original', $movie->getPoster()).'" alt="" loading="lazy">';
                                     echo '</figure>';
                                     echo '<span class="title">'.$movie->getTitle().'</span>';
                                 echo '</a>';

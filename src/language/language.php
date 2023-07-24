@@ -56,6 +56,9 @@ class langSnippets {
             'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY',
 			'trailer_info' => 'ID of the YouTube video URL. Example: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
             'back_to_homepage' => 'Back to homepage',
+            'admin_setup_here' => 'Please update the page settings <a href="/admin/settings"><strong>here</strong></a> to be able to add your content.',
+            'pls_wait_for_admin_setup' => 'No content has been added yet. Please be patient a little longer.',
+            'loading_content' => 'Loading content, please wait.',
 
 			// Movie
 			'rating' => 'Rating',
@@ -174,6 +177,9 @@ class langSnippets {
             'continue_watching' => 'Fortsetzen',
             'page_not_found' => 'Seite nicht gefunden',
             'back_to_homepage' => 'Zurück zur Startseite',
+            'admin_setup_here' => 'Bitte aktualisiere <a href="/admin/settings"><strong>hier</strong></a> die Einstellungen um Inhalte hinzufügen zu können.',
+            'pls_wait_for_admin_setup' => 'Es wurden bisher noch keine Inhalte hinzugefügt. Bitte habe noch etwas Gedult.',
+            'loading_content' => 'Inhalte werden geladen, bitte warten.',
 
 			// Movie
 			'rating' => 'Bewertung',

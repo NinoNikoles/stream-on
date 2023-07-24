@@ -303,29 +303,6 @@
 
 .fancybox__container {
     overflow: auto;
-    
-    .info-popup { 
-        right: 0;
-        left: unset;
-        @include transition(right $transition-default);
-
-        .is-close-btn {
-            background-color: var(--dark-light) !important;
-            position: fixed !important;
-            border-radius: 0 !important;
-            opacity: 1 !important;
-        }
-    }
-
-    &.is-animated {
-        .info-popup { 
-            right: -100%;
-            
-            .is-close-btn {
-                position: absolute !important;
-            }
-        }
-    }
 }
 
 .fancybox__slide {
@@ -335,18 +312,6 @@
 
 .fancybox__content {
     overflow: auto;
-
-    @include MQ(medium) {
-        height: 80%;
-        min-height: 80%;
-        
-    }
-
-
-    >.f-button.is-close-btn {
-        position: fixed;
-        top: 0;
-    }
 }
 
 .info-popup {

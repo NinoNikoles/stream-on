@@ -19,8 +19,15 @@
     <title><?php echo $siteTitle; ?></title>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
-<body>
-<div id="loader"></div>
+<body class="loading">
+
+<div id="loader" class="visible">
+    <div class="content-wrap">
+        <i></i>
+        <span><?php echo lang_snippet('loading_content'); ?></span>
+    </div>
+</div>
+
 <header id="header" class="bar-active-root bar-active fixed-header overlay" lang="de-DE">
 	<div class="row header--content">
 		<div class="col12 column header--content--nav">
@@ -36,14 +43,14 @@
 			<div class="navWrap">
 
                 <!-- Suche -->
-                <div class="search-bar">
+                <!-- <div class="search-bar">
                     <form method="post" action="/search">
                         <div class="search-bar-fix"></div>
                         <input type="text" id="movie-live-search" name="search" placeholder="Suchen">
                         <button type="submit" class="search-btn"></button>
                     </form>
                     <div id="movieLivesearchResults"></div>
-                </div>
+                </div>-->
 
 				<!-- Navigation -->
 				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">

@@ -94,7 +94,11 @@ function genreSlider() {
     } else {
         echo '<div class="innerWrap marg-top-l">';
             echo '<div class="col12">';
-                echo '<p>Keine Genres vorhanden!</p>';
+                if ( $_SESSION['role'] !== '1' ) {
+                    echo '<p>'.lang_snippet('pls_wait_for_admin_setup').'</p>';
+                } else {
+                    echo '<p>'.lang_snippet('admin_setup_here').'</p>';
+                }
             echo '</div>';
         echo '</div>';
     }
