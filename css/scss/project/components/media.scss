@@ -361,12 +361,6 @@
     overflow-y: auto;
     overflow-x: hidden;
 
-    @include MQ(medium) {
-        width: 80%;
-        height: 90%;
-        min-height: 90%;
-    }
-
     .is-close-btn {
         background: none !important;
         box-shadow: none !important;

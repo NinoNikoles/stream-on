@@ -4,6 +4,7 @@ $conn = dbConnect();
 $tmdb = setupTMDB();
 
 echo '<div class="innerWrap marg-top-l marg-bottom-l">';
+    echo '<h1>'.lang_snippet('shows').'</h1>';
     echo '<div class="grid-row" id="movie-list">';
     $shows = selectAllShowsByTitle('ASC');
     foreach ($shows as $show) {

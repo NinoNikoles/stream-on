@@ -48,7 +48,7 @@
                                 echo '<span class="tag">'.$movieRating.'/10</span>';
                                 echo '<span class="tag">'.runtimeToString($movieRuntime).'</span>';
                             echo '</p>';
-                            echo '<a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">Jetzt schauen</a>';
+                            echo '<a href="/watch/?id='.$movieID.'" class="btn btn-white icon-left icon-play">'.lang_snippet('watch_now').'</a>';
                             echo '<p class="small">'.$movieOverview.'</p>';
                             echo '<p class="small">'.$genreHTML.'</p>';
                         echo '</div>';

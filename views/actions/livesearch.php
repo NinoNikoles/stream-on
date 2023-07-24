@@ -14,7 +14,7 @@
             
             if ($movies) {
                 foreach ( $movies as $movie ) {    
-                    echo movie_card($movie, 'col-6 col-4-xsmall col-2-medium grid-padding');
+                    echo media_card($movie, 'col-6 col-4-xsmall col-2-medium grid-padding');
                 }
             } else if ( $_POST['movie'] !== '' ) {
                 echo '<p>'.lang_snippet('no_movies_found').'</p>';
