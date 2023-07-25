@@ -1,3 +1,24 @@
-.modal {
+.fancybox__content {
+    width: 100%;
+    height: 100%;
 
+    @include MQ(xsmall) {
+        width: rem-calc(500);
+        height: auto;
+    }
+
+    >.f-button.is-close-btn {
+        --f-button-border-radius: 50%;
+        --f-button-color: #fff;
+        --f-button-hover-color: #fff;
+        --f-button-outline-color: #000;
+        --f-button-bg: rgba(0, 0, 0, 0.6);
+        --f-button-active-bg: rgba(0, 0, 0, 0.6);
+        --f-button-hover-bg: rgba(0, 0, 0, 0.6);
+        --f-button-svg-width: 18px;
+        --f-button-svg-height: 18px;
+        --f-button-svg-filter: none;
+        top: 5px;
+        right: 5px;
+    }
 }
