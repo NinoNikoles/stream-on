@@ -23,7 +23,9 @@ class langSnippets {
             'update' => 'Update',
             'add_user' => 'Add User',
             'username' => 'Username',
+            'password' => 'Password',
             'role' => 'Role',
+            'admin' => 'Admin',
             'id' => 'ID',
             'tmdb_id' => 'TMDB ID',
             'name' => 'Name',
@@ -52,13 +54,14 @@ class langSnippets {
             'continue' => 'Continue',
             'my_list' => 'My list',
             'add_highlight' => 'Add to highlights',
-            'apikey_info'=> 'You need an apikey to fetch fetch infos from the movie database. Klick <a href="https://www.themoviedb.org/settings/api" target="_blank" title="TMDB">here</a> to get your own key!',
+            'apikey_info'=> 'You need an apikey to fetch fetch infos from the movie database. Klick <a href="https://www.themoviedb.org/settings/api" class="smaller" target="_blank" title="TMDB">here</a> to get your own key!',
             'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY',
 			'trailer_info' => 'ID of the YouTube video URL. Example: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
             'back_to_homepage' => 'Back to homepage',
             'admin_setup_here' => 'Please update the page settings <a href="/admin/settings"><strong>here</strong></a> to be able to add your content.',
             'pls_wait_for_admin_setup' => 'No content has been added yet. Please be patient a little longer.',
             'loading_content' => 'Loading content, please wait.',
+            'edit_user' => 'Edit user',
 
 			// Movie
 			'rating' => 'Rating',
@@ -146,7 +149,9 @@ class langSnippets {
             'update' => 'Aktualisieren',
             'add_user' => 'Benutzer hinzufügen',
             'username' => 'Benutzername',
+            'password' => 'Passwort',
             'role' => 'Rolle',
+            'admin' => 'Admin',
             'id' => 'ID',
             'tmdb_id' => 'TMDB ID',
             'name' => 'Name',
@@ -180,6 +185,7 @@ class langSnippets {
             'admin_setup_here' => 'Bitte aktualisiere <a href="/admin/settings"><strong>hier</strong></a> die Einstellungen um Inhalte hinzufügen zu können.',
             'pls_wait_for_admin_setup' => 'Es wurden bisher noch keine Inhalte hinzugefügt. Bitte habe noch etwas Gedult.',
             'loading_content' => 'Inhalte werden geladen, bitte warten.',
+            'edit_user' => 'Benutzer bearbeiten',
 
 			// Movie
 			'rating' => 'Bewertung',
@@ -191,7 +197,7 @@ class langSnippets {
             'select_movie_file' => 'Wähle eine Video Datei aus',
 			'add_movie' => 'Möchtest du den Film hinzufügen?',
 
-            'apikey_info'=> 'Du brauchst einen eigenen API Key von TMDB um Inhalte laden zu können. Klicke <a href="https://www.themoviedb.org/settings/api" target="_blank" title="TMDB">hier</a> um einen Schlüssel zu bekommen!',
+            'apikey_info'=> 'Du brauchst einen eigenen API Key von TMDB um Inhalte laden zu können. Klicke <a href="https://www.themoviedb.org/settings/api" class="smaller" target="_blank" title="TMDB">hier</a> um einen Schlüssel zu bekommen!',
             'lang_info' => 'Dies wird benötigt um alle Inhalte in der gewünschten Sprache zu laden. Format: language-COUNTRY',
             'trailer_info' => 'ID der YouTube Video URL. Bsp.: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
 

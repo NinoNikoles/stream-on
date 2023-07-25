@@ -192,7 +192,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         lastname varchar(255),
         password varchar(255),
         user_img varchar(255),
-        role BOOLEAN,
+        role VARCHAR(10),
         created TIMESTAMP,
         UNIQUE (username),
         PRIMARY KEY (id)
@@ -202,7 +202,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
     } else {
         $username = $adminUsername;
         $password = $adminPassword;
-        $role = 1;
+        $role = 'superadmin';
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         
         $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$hashed_password', '$role')";

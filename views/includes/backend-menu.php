@@ -1,4 +1,4 @@
-<div class="col2 sidebar">
+<div class="col2 sidebar desktop-only">
     <ul>
         <li><a href="/admin/settings"><?php echo lang_snippet('settings'); ?></a></li>
         <li><a href="/admin/users"><?php echo lang_snippet('users'); ?></a></li>

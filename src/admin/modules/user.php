@@ -48,9 +48,9 @@ function registerUser($post) {
     $conn = dbConnect();
     $username = mysqli_real_escape_string($conn, $post['username']);
     if (isset($post['role']) && $_POST['role'] === 'on') {
-        $role = mysqli_real_escape_string($conn, 1);
+        $role = mysqli_real_escape_string($conn, 'admin');
     } else {
-        $role = mysqli_real_escape_string($conn, 0);;
+        $role = mysqli_real_escape_string($conn, 'user');
     }
     $password = mysqli_real_escape_string($conn, $post['password']);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -72,7 +72,7 @@ function editUser($post) {
     if (isset($post['role'])) {
         $role = mysqli_real_escape_string($conn, $post['role']);
     } else {
-        $role = 0;
+        $role = 'user';
     }
     $password = mysqli_real_escape_string($conn, $post['password']);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -84,10 +84,11 @@ function editUser($post) {
         page_redirect("/admin/users");
     } else {
         set_callout('success','edit_user_success');
-        session_start();
-        $_SESSION['username'] = $username;
-        $_SESSION['role'] = $role;
-        $_SESSION['logged_in'] = true;
+        if ( intval($_SESSION['userID']) === intval($post['userID']) ) {
+            $_SESSION['username'] = $username;
+            $_SESSION['role'] = $role;
+            $_SESSION['logged_in'] = true;
+        }
 
         page_redirect('/admin/users');
     }

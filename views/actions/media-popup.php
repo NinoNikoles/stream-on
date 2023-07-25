@@ -130,7 +130,7 @@ while ( $media = $result->fetch_assoc() ) {
     }
 
     ////-- Adds edit btn when user is admin --////
-    if ( $_SESSION['role'] === "1" ) {
+    if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
         if ( $type === 'movie' ) {
             $editBtn = '<a href="/admin/movie/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
         } else if ( $type === 'show' ) {

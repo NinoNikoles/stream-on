@@ -1,34 +1,31 @@
 <?php
     /**
-     * Ersetze localhost mit der MySQL-Serveradresse.
+     * Replace localhost with the MySQL server address.
      */
     define( 'DB_HOST', 'localhost' );
     
     /**
-     * Ersetze benutzername_hier_einfuegen
-     * mit deinem MySQL-Datenbank-Benutzernamen.
+     * Replace root with your MySQL database username.
      */
     define( 'DB_USER', 'root' );
     
     /**
-     * Ersetze passwort_hier_einfuegen mit deinem MySQL-Passwort.
+     * Replace password with your MySQL password.
      */
-    define( 'DB_PASSWORD', '' );
+    define( 'DB_PASSWORD', 'password' );
     
     /**
-     * Ersetze datenbankname_hier_einfuegen
-     * mit dem Namen der Datenbank, die du verwenden möchtest.
+     * Replace database_name with the name of the database you want to use.
      */
-    define( 'DB_NAME', 'database' );
+    define( 'DB_NAME', 'database_name' );
     
     /**
-     * Der Datenbankzeichensatz, der beim Erstellen der
-     * Datenbanktabellen verwendet werden soll
+     * Don't change this.
      */
     define( 'DB_CHARSET', 'utf8mb4' );
     
     /**
-     * Der Collate-Type sollte nicht geändert werden.
+     * Don't change this.
      */
     define('DB_COLLATE', '');
     

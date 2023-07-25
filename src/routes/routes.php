@@ -8,7 +8,7 @@ routes('ajax');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Admin Check
-if ($_SESSION['role'] == '1') {
+if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
     routes('admin');
 }
 

@@ -94,7 +94,7 @@ function genreSlider() {
     } else {
         echo '<div class="innerWrap marg-top-l">';
             echo '<div class="col12">';
-                if ( $_SESSION['role'] !== '1' ) {
+                if ( $_SESSION['role'] !== 'admin' || $_SESSION['role'] !== 'superadmin'  ) {
                     echo '<p>'.lang_snippet('pls_wait_for_admin_setup').'</p>';
                 } else {
                     echo '<p>'.lang_snippet('admin_setup_here').'</p>';
