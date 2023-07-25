@@ -175,56 +175,23 @@ function get_apikey_db() {
     }
 }
 
-/*function faviconPath() {
-    $bildName = $_FILES['user-img']['name'];
-    $bildTmpName = $_FILES['user-img']['tmp_name'];
-    $bildSize = $_FILES['user-img']['size'];
-    $bildError = $_FILES['user-img']['error'];
-    $bildType = $_FILES['user-img']['type'];
-
-    // Dateiendung des Bildes extrahieren
-    $bildExt = strtolower(pathinfo($bildName, PATHINFO_EXTENSION));
-
-    // Erlaubte Dateitypen festlegen
-    $erlaubteTypen = array('jpg', 'jpeg', 'png', 'gif', 'svg');
-
-    // Überprüfen, ob die Datei ein Bild ist und erlaubte Dateitypen hat
-    if(in_array($bildExt, $erlaubteTypen)) {
-        // Dateinamen für das Bild generieren
-        $neuerName = uniqid('', true) . '.' . $bildExt;
-        $ziel = ROOT_PATH.'/uploads/' . $neuerName;
-
-        // Bild in den Zielordner verschieben
-        move_uploaded_file($bildTmpName, $ziel);
-
-        $sql = 'UPDATE users SET user_img="'.$neuerName.'" WHERE id="'.$_POST['id'].'"';
-        if ($conn->query($sql) === TRUE) {
-            echo "Record updated successfully";
-            set_callout('success','user_img_upload_success');
-            header('Location: /user/?id='.$_POST['id']);
-            exit();
-        } else {
-            set_callout('alert','user_img_upload_alert');
-            header('Location: /user/?id='.$_POST['id']);
-            exit();
-        }
-    } else {
-        echo 'Das hochgeladene File muss ein Bild sein (JPG, JPEG, PNG, GIF).';
-        set_callout('warning','user_img_upload_wrong_file');
-        header('Location: /user/?id='.$_POST['id']);
-        exit();
-    }
-
+function loadFavicon() {
+    $iconPath = '/views/assets/icons';
     $conn = dbConnect();
 
     $sql = "SELECT setting_option FROM settings WHERE setting_name='favicon_path'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            return $row['setting_option'];
+            echo '<link rel="icon" type="image/png" href="'.$iconPath.'/'.$row['setting_option'].'">';
         }
+    } else {
+        echo '<link rel="apple-touch-icon" sizes="180x180" href="'.$iconPath.'/apple-touch-icon.png">';
+        echo '<link rel="icon" type="image/png" sizes="32x32" href="'.$iconPath.'/favicon-32x32.png">';
+        echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$iconPath.'/favicon-16x16.png">';
+        echo '<link rel="manifest" href="/site.webmanifest">';
     }
-};*/
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -367,8 +334,8 @@ function runtimeToString($runtime) {
 
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
-    return "http://image.tmdb.org/t/p/$size$img";
-    //return '/views/build/css/images/img_preview.webp';
+    //return "http://image.tmdb.org/t/p/$size$img";
+    return '/views/build/css/images/img_preview.webp';
 }
 
 function getWatchedTime($watchedTime, $totalDuration) {

@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="">
+    <?php loadFavicon(); ?>
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
     <title><?php echo $siteTitle; ?></title>
