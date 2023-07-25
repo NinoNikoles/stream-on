@@ -301,6 +301,24 @@
     }
 }
 
+.currentWatch-slider {
+    .watchbar {
+        background: {
+            color: var(--white-15);
+        }
+        padding: {
+            top: rem-calc(10);
+            right: rem-calc(10);
+            bottom: rem-calc(10);
+            left: rem-calc(10);
+        }
+    }
+
+    progress {
+        display: block;
+    }
+}
+
 .fancybox__container {
     overflow: auto;
 }
