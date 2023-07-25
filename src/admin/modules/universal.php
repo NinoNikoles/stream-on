@@ -275,11 +275,18 @@ function updateSettings($values) {
     $siteTitle = mysqli_real_escape_string($conn, $values['site_title']);
     $apikey = mysqli_real_escape_string($conn, $values['apikey']);
     $apiLang = mysqli_real_escape_string($conn, $values['language']);
+    
+    if ( isset($values['enable-edit']) ) {
+        $checked = "checked";
+    } else {
+        $checked = "false";
+    }
 
     $sql = "INSERT INTO settings(setting_name, setting_option) VALUES 
     ('site_title', '$siteTitle'),
     ('apikey', '$apikey'),
-    ('apilang', '$apiLang')
+    ('apilang', '$apiLang'),
+    ('enable_edit_btn', '$checked')
     ON DUPLICATE KEY UPDATE setting_option = VALUES(setting_option)";
 
     if (!($conn->query($sql) === TRUE)) {

@@ -711,6 +711,7 @@ function updateEpisodeFilePath($moviePath, $movieID) {
 ////////// Media Card
 function media_card($media, $extraClasses = '') {
     $conn = dbConnect();
+    $cnf = tmdbConfig();
 
     $userID = intval($_SESSION['userID']);
     $mediaID = $media['tmdbID'];
@@ -718,13 +719,16 @@ function media_card($media, $extraClasses = '') {
     $poster = $media['poster'];
     $backdrop = $media['backdrop'];
     $type = $media['mediaType'];
+    $editBtn = '';
 
     ////-- Adds edit btn when user is admin --////
-    if ( $_SESSION['role'] !== 'admin' || $_SESSION['role'] !== 'superadmin' ) {
-        if ( $type === 'movie' ) {
-            $editBtn = '<a href="/admin/movie/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
-        } else if ( $type === 'show' ) {
-            $editBtn = '<a href="/admin/show/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
+    if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
+        if ( $cnf['enable_edit_btn'] === 'checked') {
+            if ( $type === 'movie' ) {
+                $editBtn = '<a href="/admin/movie/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
+            } else if ( $type === 'show' ) {
+                $editBtn = '<a href="/admin/show/?id='.$mediaID.'" title="'.lang_snippet('edit').'" class="edit-trigger"></a>';
+            }
         }
     }
 

@@ -178,7 +178,8 @@ function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $page
         ('one_time_setup', 0),
         ('apikey', NULL),
         ('apilang', NULL),
-        ('site_title', '$pageTitle')";
+        ('site_title', '$pageTitle'),
+        ('enable_edit_btn', 'false')";
         if (!($conn->query($sql) === TRUE)) {
             die('Error creating table: ' . $conn->error);
         }

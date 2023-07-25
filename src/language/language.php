@@ -55,13 +55,14 @@ class langSnippets {
             'my_list' => 'My list',
             'add_highlight' => 'Add to highlights',
             'apikey_info'=> 'You need an apikey to fetch fetch infos from the movie database. Klick <a href="https://www.themoviedb.org/settings/api" class="smaller" target="_blank" title="TMDB">here</a> to get your own key!',
-            'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY',
+            'lang_info' => 'The language is need to fetch all infos in your desired language. Format: language-COUNTRY (example: en-US)',
 			'trailer_info' => 'ID of the YouTube video URL. Example: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
             'back_to_homepage' => 'Back to homepage',
             'admin_setup_here' => 'Please update the page settings <a href="/admin/settings"><strong>here</strong></a> to be able to add your content.',
             'pls_wait_for_admin_setup' => 'No content has been added yet. Please be patient a little longer.',
             'loading_content' => 'Loading content, please wait.',
             'edit_user' => 'Edit user',
+            'enable_edit_btn' => 'Do you want to allow media editing from the main pages? (concerns admins only)',
 
 			// Movie
 			'rating' => 'Rating',
@@ -198,8 +199,9 @@ class langSnippets {
 			'add_movie' => 'Möchtest du den Film hinzufügen?',
 
             'apikey_info'=> 'Du brauchst einen eigenen API Key von TMDB um Inhalte laden zu können. Klicke <a href="https://www.themoviedb.org/settings/api" class="smaller" target="_blank" title="TMDB">hier</a> um einen Schlüssel zu bekommen!',
-            'lang_info' => 'Dies wird benötigt um alle Inhalte in der gewünschten Sprache zu laden. Format: language-COUNTRY',
+            'lang_info' => 'Dies wird benötigt um alle Inhalte in der gewünschten Sprache zu laden. Format: language-COUNTRY (Bsp.: de-DE)',
             'trailer_info' => 'ID der YouTube Video URL. Bsp.: https://www.youtube.com/watch?v=<strong>iUISLveqaII</strong>',
+            'enable_edit_btn' => 'Möchtest du die Bearbeitung von Medien über die Hauptseiten erlauben? (Betrifft nur Admins)',
 
             // -- Messages --
             // Success

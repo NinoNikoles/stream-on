@@ -7,6 +7,7 @@
     $siteTitle = $cnf['site_title'];
     $apikey = $cnf['apikey'];
     $apiLang = $cnf['lang'];
+    $checked = $cnf['enable_edit_btn'];
 
     // Benutzeranmeldung
     if(isset($_POST['save-settings'])) {
@@ -16,6 +17,7 @@
     $siteTitle = $siteTitle;
     $apikey = $apikey;
     $apiLang = $apiLang;
+    $checked = $checked;
 ?>
 
 <div class="col12">
@@ -23,7 +25,7 @@
     <?php get_backend_menu(); ?>
 
     <div class="innerWrap">
-        
+
         <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2 marg-right-col4">
             <div class="col12">
                 <h1><?php echo lang_snippet('settings'); ?></h1>
@@ -55,7 +57,14 @@
                         <span class="smaller"><?php echo lang_snippet('lang_info'); ?></span>
                     </p>
                 </div>
-                <div class="col12 column text-right">
+                <div class="col12 column">
+                    <p>
+                        <lable for="enable-edit" class="checkbox-label"><?php echo lang_snippet('enable_edit_btn'); ?>
+                            <input type="checkbox" id="enable-edit" name="enable-edit" <?php echo $checked; ?>>
+                        </lable>
+                    </p>
+                </div>
+                <div class="col12 column text-right marg-top-base">
                     <button class="btn btn-small btn-success icon-left icon-save" type="submit" name="save-settings"><?php echo lang_snippet('save'); ?></button>
                 </div>
             </form>
