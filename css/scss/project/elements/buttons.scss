@@ -105,3 +105,14 @@ i {
         }
     }
 }
+
+.menu-button {
+    &.active-button {
+        .bar {
+            &-2 {
+                width: 0;
+                opacity: 1;
+            }
+        }
+    }
+}
