@@ -73,6 +73,10 @@ figure,
 a {
     &[data-fancybox] {
         display: block;
+
+        &.display-flex {
+            display: flex;
+        }
     }
 }
 

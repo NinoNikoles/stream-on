@@ -13,6 +13,7 @@ function getHighlight() {
 
     if ( $hightlightResult->num_rows > 0) {
         while ( $highlight = $hightlightResult->fetch_assoc() ) {
+            $mediaID = $highlight['highlight_id'];
             $title = $highlight['title'];
             $description = $highlight['overview'];
             $poster = $highlight['poster'];
@@ -35,7 +36,7 @@ function getHighlight() {
             <p>".truncate($description, 450)."</p>
         </div>
         <div class='button-wrap'>
-            <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='/' class='btn btn-small btn-white icon-left icon-info'>Mehr erfahren</a></div>
+            <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='#content-$mediaID' class='btn btn-small btn-white icon-left icon-info info-trigger' data-modal data-src='$mediaID'>Mehr erfahren</a></div>
             <div class='col-12 grid-padding text-center'><a href='/' class='btn btn-small btn-white icon-left icon-play'>Jetzt schauen</a></div>
         </div>
         ";

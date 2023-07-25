@@ -43,7 +43,7 @@ if ( isset($_POST['add-show']) ) {
                                     echo '<figure class="poster">';
                                         echo '<img data-img="'.loadImg('original', $show['poster']).'" alt="" loading="lazy">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.truncate($show['title'],20).'</span>';
+                                    echo '<span class="title">'.truncate($show['title'],15).'</span>';
                                 echo '</a>';
                             echo '</div>';
                         }

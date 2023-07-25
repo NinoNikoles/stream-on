@@ -956,7 +956,6 @@ $(document).ready(function() {
         fancyLoad: function() {
             $('img').each(function(i, el) {
                 var img = $(el).attr('data-img');
-                console.log(img);
                 $(el).attr('src', img).removeAttr('data-img');
             });
         }

@@ -65,6 +65,7 @@ $(document).ready(function() {
                         data: { movie: movieName },
                         success: function(response) {
                             $resultList.html(response);
+                            self.fancyLoad();
                         }, error: function(xhr, status, error) {
                             // Hier wird eine Fehlermeldung ausgegeben
                             console.log('Fehler: ' + error);
@@ -91,6 +92,7 @@ $(document).ready(function() {
                             data: { movie: movieName },
                             success: function(response) {
                                 $resultPageList.html(response);
+                                self.fancyLoad();
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
                                 console.log('Fehler: ' + error);
@@ -109,6 +111,7 @@ $(document).ready(function() {
                             data: { movie: movieName },
                             success: function(response) {
                                 $resultList.html(response);
+                                self.fancyLoad();
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
                                 console.log('Fehler: ' + error);
@@ -155,12 +158,21 @@ $(document).ready(function() {
                         data: { show: showName },
                         success: function(response) {
                             $resultList.html(response);
+                            self.fancyLoad();
                         }, error: function(xhr, status, error) {
                             // Hier wird eine Fehlermeldung ausgegeben
                             console.log('Fehler: ' + error);
                         }
                     });
                 }, 500);
+            });
+        },
+
+        fancyLoad: function() {
+            $('img').each(function(i, el) {
+                var img = $(el).attr('data-img');
+                console.log(img);
+                $(el).attr('src', img).removeAttr('data-img');
             });
         }
     }
