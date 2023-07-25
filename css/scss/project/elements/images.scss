@@ -1,0 +1,9 @@
+img {
+    &[loading="lazy"] {
+        background: {
+            image: url('/views/build/css/images/img_preview.webp');
+            position: center;
+            size: cover;
+        }
+    }
+}
