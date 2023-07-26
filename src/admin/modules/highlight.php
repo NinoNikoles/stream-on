@@ -86,9 +86,6 @@ function isHighlight($mediaID) {
             $conn->close();
             return true;
         }
-
-        $conn->close();
-        return false;
     }
 
     $conn->close();
