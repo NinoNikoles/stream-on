@@ -38,4 +38,10 @@
             }
         }
     }
+
+    &-title {
+        > a {
+            width: max-content;
+        }
+    }
 }
