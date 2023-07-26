@@ -139,7 +139,7 @@ if ( $show == 0 ) {
                                                         echo '<input type="radio" id="poster-'.$i.'" name="poster" value="'.$showPoster.'">';
                                                         echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
                                                         echo '<figure class="poster">';
-                                                            echo '<img data-img="'.loadImg('original', $showPoster).'" loading="lazy">';
+                                                            echo '<img data-img="'.loadImg('original', $showPoster).'" loading="lazy" importance="low">';
                                                         echo '</figure>';
                                                     echo '</div>';
                                                 echo '</div>';
@@ -180,7 +180,7 @@ if ( $show == 0 ) {
                                                     echo '<input type="radio" id="backdrop-'.$i.'" name="backdrop" value="'.$showBackdrop.'">';
                                                     echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
                                                     echo '<figure class="original">';
-                                                        echo '<img data-img="'.loadImg('original', $showBackdrop).'" loading="lazy">';
+                                                        echo '<img data-img="'.loadImg('original', $showBackdrop).'" loading="lazy" importance="low">';
                                                     echo '</figure>';
                                                 echo '</div>';
                                             echo '</div>';
@@ -224,9 +224,9 @@ if ( $show == 0 ) {
                                 $episodesRow .= '
                                 <div class="col4 '.$disabled.'">
                                     <figure class="widescreen">
-                                        <img data-img="'.loadImg('original', $episode['backdrop']).'">
+                                        <img data-img="'.loadImg('original', $episode['backdrop']).'" loading="lazy" importance="low">
                                     </figure>
-                                    <span class="small marg-top-xxs">'.$episode['title'].'</span>
+                                    <span class="small marg-top-xxs">Episode '.$episode['episode_number'].': '.$episode['title'].'</span>
                                     <a href="#file-list-popup-'.$episode['tmdbID'].'" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup-'.$episode['tmdbID'].'">'.lang_snippet('select_movie_file').'</a>
                                     <div id="file-list-popup-'.$episode['tmdbID'].'" style="display:none;">
                                         <div class="file-tree-episode" data-element-id="'.$episode['tmdbID'].'">

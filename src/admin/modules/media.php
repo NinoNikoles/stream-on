@@ -110,11 +110,10 @@ function deleteMovie($movieID) {
 
     $sql = "DELETE FROM media_watched WHERE show_id=$movieID;";
     $sql .= "DELETE FROM watchlist WHERE media_id=$movieID;";
+    $sql .= "DELETE FROM media_genre WHERE media_id=$movieID;";
     $sql .= "DELETE FROM highlights WHERE highlight_id=$movieID;";
-    $sql .= "DELETE FROM media_genre WHERE media_id = $movieID";
     $sql .= "DELETE FROM media WHERE tmdbID=$movieID;";
 
-    // Lösche den Film aus der movies-Tabelle
     if (!($conn->multi_query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','delete_movie_alert');
@@ -122,8 +121,8 @@ function deleteMovie($movieID) {
     } else {
         $conn->close();
         set_callout('success','delete_movie_success');
-        page_redirect("/admin/movies");
-    }    
+        page_redirect('/admin/movies');
+    }   
 }
 
 //-- Returns all information of a movie from local database --
@@ -294,7 +293,7 @@ function updateMovieBackdrop($movieID, $backdrop) {
     $conn = dbConnect();
     $backdropPATH = mysqli_real_escape_string($conn, $backdrop);
 
-    $sql = "UPDATE media SET thumbnail='$backdropPATH' WHERE tmdbID='$movieID'";
+    $sql = "UPDATE media SET backdrop='$backdropPATH' WHERE tmdbID='$movieID'";
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','update_backdrop_alert');
@@ -503,7 +502,6 @@ function selectAllShowsByTitle($order = '') {
 
 //-- Returns all information of a movie from local database --
 function selectShowByID($showID) {
-    $tmdb = setupTMDB();
     $conn = dbConnect();
 
     $sql = "SELECT tmdbID, title, overview, poster, backdrop, rating, releaseDate, genres, trailer FROM media WHERE tmdbID='$showID'";
@@ -522,12 +520,16 @@ function selectShowByID($showID) {
             $data['release'] = $row['releaseDate'];
             $data['trailer'] = $row['trailer'];
             $data['genres'] = [];
+            $genres = json_decode($row['genres']);
+        
+            foreach ($genres as $genre_id) {
+                $genreSQL = "SELECT genre_id, genre_name FROM genres WHERE genre_id = $genre_id;";
+                $genreResult = $conn->query($genreSQL);
 
-            $show = $tmdb->getTVShow($data['tmdbID']);
-            $genres = $show->getGenres();
-            foreach ($genres as $genre) {
-                $genreID = $genre->getId();
-                $genreName = $genre->getName();
+                while ( $genre = $genreResult->fetch_assoc() ) {
+                    $genreID = $genre['genre_id'];
+                    $genreName = $genre['genre_name'];
+                }                
 
                 $array = array(
                     'id' => $genreID,
@@ -554,11 +556,11 @@ function updateShowPoster($showID, $poster) {
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','update_poster_alert');
-        page_redirect('/admin/movie/?id='.$showID);
+        page_redirect('/admin/show/?id='.$showID);
     } else {
         $conn->close();
         set_callout('success','update_poster_success');
-        page_redirect('/admin/movie/?id='.$showID);
+        page_redirect('/admin/show/?id='.$showID);
     }
 }
 
@@ -567,15 +569,15 @@ function updateShowBackdrop($showID, $backdrop) {
     $conn = dbConnect();
     $backdropPATH = mysqli_real_escape_string($conn, $backdrop);
 
-    $sql = "UPDATE media SET thumbnail='$backdropPATH' WHERE tmdbID='$showID'";
+    $sql = "UPDATE media SET backdrop='$backdropPATH' WHERE tmdbID='$showID'";
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','update_backdrop_alert');
-        page_redirect('/admin/movie/?id='.$showID);
+        page_redirect('/admin/show/?id='.$showID);
     } else {
         $conn->close();
         set_callout('success','update_backdrop_success');
-        page_redirect('/admin/movie/?id='.$showID);
+        page_redirect('/admin/show/?id='.$showID);
     }
 }
 
@@ -588,11 +590,11 @@ function updateShowTrailer($showID, $trailer) {
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','update_trailer_alert');
-        page_redirect('/admin/movie/?id='.$showID);
+        page_redirect('/admin/show/?id='.$showID);
     } else {
         $conn->close();
         set_callout('success','update_trailer_success');
-        page_redirect('/admin/movie/?id='.$showID);
+        page_redirect('/admin/show/?id='.$showID);
     }
 }
 
