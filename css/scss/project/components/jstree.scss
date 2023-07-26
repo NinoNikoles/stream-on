@@ -1,4 +1,17 @@
+#file-list-popup {
+    @include MQ(xsmall) {
+        height: 70%;
+        width: 80%;
+    }
+
+    @include MQ(medium) {
+        width: 60%;
+    }
+}
+
 #file-tree {
+    height: 100%;
+    max-height: 80%;
     overflow-x: hidden;
 
     .jstree-wholerow-clicked {
