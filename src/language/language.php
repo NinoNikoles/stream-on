@@ -48,7 +48,7 @@ class langSnippets {
             'seasons' => 'Seasons',
             'watch_now' => 'Watch now',
             'continue_watching' => 'Continue',
-			
+
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
             'continue' => 'Continue',
@@ -90,11 +90,14 @@ class langSnippets {
             'delete_show_success' => 'Die Serie wurde erfolgreich gelöscht!',
             'update_show_success' => 'Die Serie wurde erfolgreich aktualisiert!',
 
-            'genres_created_success' => 'Genres created successfully!',            
-            'update_poster_success' => 'Poster updated successfully!',            
-            'update_backdrop_success' => 'Thumbnail updated successfully!',         
-            'update_file_path_success' => 'File path updated successfully!',        
-            'update_trailer_success' => 'Trailer updated successfully!',        
+            'genres_created_success' => 'Genres created successfully!',
+            'update_poster_success' => 'Poster updated successfully!',
+            'update_backdrop_success' => 'Thumbnail updated successfully!',
+            'update_file_path_success' => 'File path updated successfully!',
+            'update_trailer_success' => 'Trailer updated successfully!',
+            
+            'add_highlight_success' => 'Highlight added successfully!', 
+            'delete_highlight_success' => 'Highlight deleted successfully!', 
 
             'logout_message' => 'Successfully logged out!',
             'user_img_upload_success' => 'Image successfully uploaded!',
@@ -114,11 +117,14 @@ class langSnippets {
             'delete_show_alert' => 'Die Serie konnte nicht gelöscht werden!',
             'update_show_alert' => 'Die Serie konnte nicht aktualisiert werden!',
 
-            'genres_created_alert' => 'Genres could not be created!', 
-            'update_poster_alert' => 'Poster could not be updated!',            
-            'update_backdrop_alert' => 'Thumbnail could not be updated!',         
-            'update_file_path_alert' => 'File path could not be updated!',			
-            'update_trailer_alert' => 'Trailer could not be updated!',			
+            'genres_created_alert' => 'Genres could not be created!',
+            'update_poster_alert' => 'Poster could not be updated!',
+            'update_backdrop_alert' => 'Thumbnail could not be updated!',
+            'update_file_path_alert' => 'File path could not be updated!',
+            'update_trailer_alert' => 'Trailer could not be updated!',
+
+            'add_highlight_alert' => 'Highlight could not be added!', 
+            'delete_highlight_alert' => 'Highlight could not be deleted!', 
 
             'user_img_upload_alert' => 'Img could not be uploaded!',
 
@@ -173,7 +179,7 @@ class langSnippets {
             'episodes' => 'Episoden',
             'season' => 'Staffel',
             'seasons' => 'Staffeln',
-			
+
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
             'continue' => 'Fortsetzen',
@@ -220,10 +226,13 @@ class langSnippets {
             'update_show_success' => 'Die Serie wurde erfolgreich aktualisiert!',
 
             'genres_created_success' => 'Genre wurden erfolgreich geladen!',
-            'update_poster_success' => 'Poster wurde erfolgreich aktualisiert!',            
-            'update_backdrop_success' => 'Thumbnail wurde erfolgreich aktualisiert!',         
-            'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',   			
-            'update_trailer_success' => 'Trailer wurde erfolgreich aktualisiert!',   			
+            'update_poster_success' => 'Poster wurde erfolgreich aktualisiert!',
+            'update_backdrop_success' => 'Thumbnail wurde erfolgreich aktualisiert!',
+            'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',
+            'update_trailer_success' => 'Trailer wurde erfolgreich aktualisiert!',
+
+            'add_highlight_success' => 'Highlight wurde erfolgreich hinzugefügt!',
+            'delete_highlight_success' => 'Highlight wurde erfolgreich gelöscht!',
 
             'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
             'user_img_upload_success' => 'Bild erfolgreich hochgeladen',
@@ -244,10 +253,13 @@ class langSnippets {
             'update_show_alert' => 'Die Serie konnte nicht aktualisiert werden!',
 
             'genres_created_alert' => 'Genre konntent nicht geladen werden!',
-            'update_poster_alert' => 'Poster konntent nicht aktualisiert werden!',            
-            'update_backdrop_alert' => 'Thumbnail konntent nicht aktualisiert werden!',         
-            'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!', 			
-            'update_trailer_alert' => 'Trailer konntent nicht aktualisiert werden!', 			
+            'update_poster_alert' => 'Poster konntent nicht aktualisiert werden!',
+            'update_backdrop_alert' => 'Thumbnail konntent nicht aktualisiert werden!',
+            'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!',
+            'update_trailer_alert' => 'Trailer konntent nicht aktualisiert werden!',
+
+            'add_highlight_alert' => 'Highlight konnte nicht hinzugefügt werden!',
+            'delete_highlight_alert' => 'Highlight konnte nicht gelöscht werden!',
 
             'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
 

@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 function getHighlight() {
     $conn = dbConnect();
     $hightlightSelect = "SELECT highlights.highlight_id, media.title, media.overview, media.poster, media.backdrop, media.mediaType
@@ -37,9 +34,10 @@ function getHighlight() {
         </div>
         <div class='button-wrap'>
             <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='#content-$mediaID' class='btn btn-small btn-white icon-left icon-info info-trigger' data-modal data-src='$mediaID'>Mehr erfahren</a></div>
-            <div class='col-12 grid-padding text-center'><a href='/' class='btn btn-small btn-white icon-left icon-play'>Jetzt schauen</a></div>
         </div>
         ";
+
+        //<div class='col-12 grid-padding text-center'><a href='/' class='btn btn-small btn-white icon-left icon-play'>Jetzt schauen</a></div>
     
         $conn->close();
         echo '<div class="highlight-wrapper">'.$hightlight.'</div>';
@@ -54,11 +52,11 @@ function addHighlight($mediaID) {
 
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
-        set_callout('alert','update_trailer_alert');
+        set_callout('alert','add_highlight_alert');
         page_redirect('/admin/highlights');
     } else {
         $conn->close();
-        set_callout('success','update_trailer_success');
+        set_callout('success','add_highlight_success');
         page_redirect('/admin/highlights');
     }
 }
@@ -71,11 +69,9 @@ function deactivateHighlight($mediaID) {
 
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
-        set_callout('alert','update_trailer_alert');
         page_redirect('/admin/highlights');
     } else {
         $conn->close();
-        set_callout('success','update_trailer_success');
         page_redirect('/admin/highlights');
     }
 }
@@ -105,11 +101,11 @@ function deleteHighlight($mediaID) {
    
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
-        //set_callout('alert','update_trailer_alert');
+        set_callout('alert','delete_highlight_alert');
         page_redirect('/admin/highlights');
     } else {
         $conn->close();
-        //set_callout('success','update_trailer_success');
+        set_callout('success','delete_highlight_success');
         page_redirect('/admin/highlights');
     }
 }
