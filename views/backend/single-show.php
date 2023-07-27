@@ -55,7 +55,11 @@ if ( $show == 0 ) {
                     // Update Show
                     if (isset($_POST['update-show'])) {
                         updateShow($_POST['id']);
-                    }   
+                    }
+
+                    if (isset($_POST['episodeFilePathSubmit'])) {
+                        updateEpisodeFilePath($_POST['episodePath'], $_POST['episodeID'], $_GET['id']);
+                    }
 
                     callout();
                     
@@ -228,10 +232,14 @@ if ( $show == 0 ) {
                                     </figure>
                                     <span class="small marg-top-xxs">Episode '.$episode['episode_number'].': '.$episode['title'].'</span>
                                     <a href="#file-list-popup-'.$episode['tmdbID'].'" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup-'.$episode['tmdbID'].'">'.lang_snippet('select_movie_file').'</a>
+                                    
                                     <div id="file-list-popup-'.$episode['tmdbID'].'" style="display:none;">
-                                        <div class="file-tree-episode" data-element-id="'.$episode['tmdbID'].'">
-                                            <a href="#" class="btn marg-top-m marg-bottom-no episode-path-submit" data-submit="'.$episode['tmdbID'].'" data-path="" style="display:none;">'.lang_snippet('save').'</a>
-                                        </div>
+                                        <div class="file-tree-episode" data-element-id="'.$episode['tmdbID'].'"></div>
+                                        <form method="post" action="/admin/show/?id='.$_GET['id'].'">
+                                            <input type="text" name="episodePath" id="inputEpisodePath-'.$episode['tmdbID'].'" value="" style="display:none;">
+                                            <input type="text" name="episodeID" value="'.$episode['tmdbID'].'" style="display:none;">
+                                            <button class="btn marg-top-m marg-bottom-no" id="inputEpisodeSubmit-'.$episode['tmdbID'].'" name="episodeFilePathSubmit" type="submit" style="display:none;">'.lang_snippet('save').'</button>
+                                        </form>
                                     </div>
                                 </div>';
                             }

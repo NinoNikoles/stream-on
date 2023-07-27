@@ -582,6 +582,57 @@ $(document).ready(function() {
                     }
                 });
             }
+
+            if ( $('.file-tree-episode').length > 0 ) {
+                $.ajax({
+                    url: '/admin/file-api', // Hier den Pfad zur API auf deinem Server einfügen
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response) {
+                    // Die Antwort enthält die Daten für den jsTree
+                        $('.file-tree-episode').jstree({
+                            "core": {
+                                "animation" : 0,
+                                "check_callback" : true,
+                                "themes" : { "stripes" : true },
+                                'data': response,
+                                "multiple": false,
+                            },
+                            "checkbox": {
+                                "three_state": false
+                            },
+                            "types": {
+                                "video": {
+                                    "icon": 'jstree-file'
+                                }
+                            },
+                            "plugins": [
+                                "contextmenu", "dnd", "search",
+                                "state", "types", "wholerow"
+                            ],
+                        });
+
+                        $('.file-tree-episode').on('select_node.jstree', function(e, data) {        
+                            var node = data.instance.get_node(data.selected[0]);
+                            var episodeID = $(this).attr('data-element-id');
+
+                            if (node.text.endsWith('.mp4')) {
+                                var path = $(this).jstree('get_path', data.node, '/');
+                                $('#inputEpisodePath-'+episodeID).attr('value', '/media/'+path);
+                                $('#inputEpisodeSubmit-'+episodeID).css('display', 'inline-flex');
+
+                            } else {
+                                data.instance.deselect_node(data.selected[0]);
+                                $('#inputEpisodeSubmit-'+episodeID).css('display', 'none');
+                            }                      
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Fehlerbehandlung, wenn die Anfrage fehlschlägt
+                        console.error(error);
+                    }
+                });
+            }
         },
 
         jstreeEpisode: function() {

@@ -1,5 +1,5 @@
 php_value display_errors 1
 
 RewriteEngine On
-RewriteCond %{REQUEST_URI}  !(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4)$
+RewriteCond %{REQUEST_URI}  !(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4|\.webmanifest)$
 RewriteRule (\.*) index.php [QSA,L]

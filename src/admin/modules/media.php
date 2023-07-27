@@ -173,12 +173,16 @@ function selectMovieByID($movieID) {
             }
             $data['trailer'] = $row['trailer'];
             $data['genres'] = [];
+            $genres = json_decode($row['genres']);
+        
+            foreach ($genres as $genre_id) {
+                $genreSQL = "SELECT genre_id, genre_name FROM genres WHERE genre_id = $genre_id;";
+                $genreResult = $conn->query($genreSQL);
 
-            $movie = $tmdb->getMovie($data['tmdbID']);
-            $genres = $movie->getGenres();
-            foreach ($genres as $genre) {
-                $genreID = $genre->getId();
-                $genreName = $genre->getName();
+                while ( $genre = $genreResult->fetch_assoc() ) {
+                    $genreID = $genre['genre_id'];
+                    $genreName = $genre['genre_name'];
+                }                
 
                 $array = array(
                     'id' => $genreID,
@@ -187,6 +191,7 @@ function selectMovieByID($movieID) {
 
                 $data['genres'][] = $array;
             }
+
             $data['file_path'] = $row['file_path'];
         }
     } else {
@@ -687,20 +692,20 @@ function updateShow($showID) {
 ////////// Episodes
 
 //-- Updates the filepath of movie sources --
-function updateEpisodeFilePath($moviePath, $movieID) {
+function updateEpisodeFilePath($episodePath, $episodeID, $showID) {
     $conn = dbConnect();
-    $moviePath = mysqli_real_escape_string($conn, $moviePath);
+    $episodePath = mysqli_real_escape_string($conn, $episodePath);
 
-    $sql = "UPDATE media SET file_path='$moviePath' WHERE tmdbID='$movieID'";
+    $sql = "UPDATE episodes SET file_path='$episodePath' WHERE tmdbID='$episodeID'";
 
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
         set_callout('alert','update_file_apth_alert');
-        page_redirect('/admin/movie/?id='.$movieID);
+        page_redirect('/admin/show/?id='.$showID);
     } else {
         $conn->close();
         set_callout('success','update_file_path_success');
-        page_redirect('/admin/movie/?id='.$movieID);
+        page_redirect('/admin/show/?id='.$showID);
     }
 }
 
