@@ -6,9 +6,11 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
     $username = DB_USER;
     $password = DB_PASSWORD;
     $dbname = DB_NAME;
+    $charset = DB_CHARSET;
+    $collate = DB_COLLATE;
 
     if ( !databaseExists($servername, $username, $password, $dbname) ) {
-        createDatabase($servername, $username, $password, $dbname);
+        createDatabase($servername, $username, $password, $dbname, $charset, $collate);
         page_redirect("/");
 
     } else if ( isset($_POST['table-submit']) ) {
@@ -59,7 +61,7 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
         $dbname = $_POST['database'];
 
         createConfig($servername, $username, $password, $dbname);
-        createDatabase($servername, $username, $password, $dbname);
+        createDatabase($servername, $username, $password, $dbname, $charset, $collate);
         page_redirect("/");
 
     }

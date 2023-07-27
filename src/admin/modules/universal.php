@@ -190,6 +190,9 @@ function loadFavicon() {
         echo '<link rel="icon" type="image/png" sizes="32x32" href="'.$iconPath.'/favicon-32x32.png">';
         echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$iconPath.'/favicon-16x16.png">';
         echo '<link rel="manifest" href="'.$iconPath.'/site.webmanifest">';
+        echo '<link rel="mask-icon" href="'.$iconPath.'/safari-pinned-tab.svg" color="#5bbad5">';
+        echo '<meta name="msapplication-TileColor" content="#da532c">';
+        echo '<meta name="theme-color" content="#ffffff">';
     }
 };
 
@@ -341,8 +344,8 @@ function runtimeToString($runtime) {
 
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
-    //return "http://image.tmdb.org/t/p/$size$img";
-    return '/views/build/css/images/img_preview.webp';
+    return "http://image.tmdb.org/t/p/$size$img";
+    //return '/views/build/css/images/img_preview.webp';
 }
 
 function getWatchedTime($watchedTime, $totalDuration) {

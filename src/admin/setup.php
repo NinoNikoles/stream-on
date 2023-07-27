@@ -116,12 +116,12 @@ function createConfig($servername, $username, $password, $dbname) {
      * Der Datenbankzeichensatz, der beim Erstellen der
      * Datenbanktabellen verwendet werden soll
      */
-    define( 'DB_CHARSET', 'utf8mb4' );
+    define( 'DB_CHARSET', 'utf8' );
     
     /**
      * Der Collate-Type sollte nicht geändert werden.
      */
-    define('DB_COLLATE', '');
+    define('DB_COLLATE', 'utf8_general_ci');
     
     
     ?>";
@@ -133,11 +133,11 @@ function createConfig($servername, $username, $password, $dbname) {
     fclose($filename);
 }
 
-function createDatabase($servername, $username, $password, $dbname) {
+function createDatabase($servername, $username, $password, $dbname, $charset, $collate) {
     if (!databaseExists($servername, $username, $password, $dbname)) {
         $conn = new mysqli($servername, $username, $password);
     
-        $sql = "CREATE DATABASE $dbname";
+        $sql = "CREATE DATABASE $dbname CHARACTER SET $charset COLLATE $collate";
         if ( $conn->query($sql) === true ) {
             $conn = new mysqli($servername, $username, $password, $dbname);
             if ( !tablesExists($servername, $username, $password, $dbname) === true ) {

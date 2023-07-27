@@ -75,7 +75,7 @@ while ( $media = $result->fetch_assoc() ) {
                             $episodeList.= '<div class="col12 media-card-episode '.$episodeDisabled.' pad-top-xs pad-bottom-xs">
                                 <div class="col-5 col-3-medium">
                                     <figure class="widescreen">
-                                        <img data-img="'.loadImg('original', $episodeBackdrop).'">
+                                        <img data-img="'.loadImg('original', $episodeBackdrop).'" alt="'.$title.'">
                                     </figure>
                                 </div>
                                 <div class="col-7 col-9-medium pad-left-xs">
@@ -214,7 +214,7 @@ while ( $media = $result->fetch_assoc() ) {
     $popup =    '<div class="info-popup" id="'.$mediaID.'" style="display:none;">
                     <div class="col12 marg-bottom-xs mobile-only">
                         <figure class="widescreen">
-                            <img data-img="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
+                            <img data-img="'.loadImg('original', $backdrop).'" loading="lazy" importance="low" alt="'.$title.'">
                         </figure>
                     </div>
                     <div class="innerWrap">
@@ -233,7 +233,7 @@ while ( $media = $result->fetch_assoc() ) {
                         </div>
                         <div class="col4 desktop-only">
                             <figure class="poster">
-                                <img data-img="'.loadImg('original', $poster).'" alt="" loading="lazy" importance="low">
+                                <img data-img="'.loadImg('original', $poster).'" alt="" loading="lazy" importance="low" alt="'.$title.'">
                             </figure>
                         </div>
                     </div>

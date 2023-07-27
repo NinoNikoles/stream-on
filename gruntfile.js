@@ -8,12 +8,12 @@ module.exports = function(grunt) {
             root: ''
         },
         jsResources: [
-            '<%= config.root %>js/basics/jquery-3.6.0.min.js',
-            '<%= config.root %>js/plugins/fancybox5.js',
-            '<%= config.root %>js/plugins/videojs.js',
+            //'<%= config.root %>js/basics/jquery-3.6.0.min.js',
+            //'<%= config.root %>js/plugins/fancybox5.js',
+            //'<%= config.root %>js/plugins/videojs.js',
             '<%= config.root %>js/plugins/scrolltrigger.js',
-            '<%= config.root %>js/plugins/swiper-bundle.min.js',
-            '<%= config.root %>js/plugins/jstree.min.js',
+            //'<%= config.root %>js/plugins/swiper-bundle.min.js',
+            //'<%= config.root %>js/plugins/jstree.min.js',
             '<%= config.root %>js/basics/menu.js',
             '<%= config.root %>js/basics/movie.js',
             '<%= config.root %>js/basics/custom.js',
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= config.root %>js/**/*.js'],
-                tasks: ['concat'] // , 'uglify' // wieder rein wenns in die heiße phase geht, ne
+                tasks: ['uglify'] // , 'uglify' // wieder rein wenns in die heiße phase geht, ne
             }
         },
         concat: {
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
-    grunt.registerTask('default',[ 'concat', 'sass:dist', 'copy:main', 'watch']);
+    grunt.registerTask('default',[ 'uglify', 'sass:dist', 'copy:main', 'watch']);
 
 
     grunt.loadNpmTasks('grunt-sass');

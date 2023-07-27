@@ -40,8 +40,14 @@
     }
 
     &-title {
+        max-width: 100%;
+
         > a {
-            width: max-content;
+            width: 100%;
+
+            @include MQ(medium) {
+                width: max-content;
+            }
         }
     }
 }

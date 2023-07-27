@@ -21,7 +21,7 @@
                 if( $dbShow !== true ) {
                     echo '<a href="#show-'.$id.'" class="display-flex flex-row marg-no" data-fancybox data-src="#show-'.$id.'">';
                         echo '<figure class="poster" style="width:20%;max-width:100px;">';
-                            echo '<img data-img="'.loadImg('original', $poster).'" loading="lazy">';
+                            echo '<img data-img="'.loadImg('original', $poster).'" loading="lazy" alt="'.$title.'">';
                         echo '</figure>';
                         echo '<span class="pad-xs" style="width:80%;">'.$title.'</span>';
                     echo '</a>';

@@ -13,7 +13,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enjoy your local movies and shows with a nice look">
     <?php loadFavicon(); ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default-dark/style.min.css" integrity="sha512-CQDjN7GvO35Yq+qvFhfRO6mNhjEHoJ2xGcCV4EOQB10jdBjLKZN5DkXkoNg0VKq4/BfKyMtkqoZ2WmhGnT9Tmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css" integrity="sha512-Chxzu1hIgdTWzvBYD6rifXuhsG91mXCtYP/hKHSHPRyYUluMJt3PVEE6k4ThFrE4l0NVnq9dfYSj7mEubGCTvw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
     <title><?php echo $siteTitle; ?></title>
@@ -80,7 +84,7 @@
                 <!-- Profil -->
                 <button href="#" id="user-menu-btn">
                     <figure class="square">
-                        <img data-img="<?php echo userProfileImg(); ?>" loading="lazy">
+                        <img data-img="<?php echo userProfileImg(); ?>" loading="lazy" alt="">
                     </figure>
 
                     <menu class="user-menu">

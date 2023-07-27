@@ -94,7 +94,7 @@ if ( $show == 0 ) {
                                 // Delete Btn
                                 echo '<form method="post" action="/admin/show/?id='.$id.'">';
                                     echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
-                                    echo '<button type="submit" class="btn btn-small btn-alert icon-left icon-trash" name="delete-show">'.lang_snippet('delete').'</button>';
+                                    echo '<button type="submit" class="btn btn-small btn-alert icon-left icon-trash" id="delete-show" name="delete-show">'.lang_snippet('delete').'</button>';
                                 echo '</form>';
                             echo '</div>';
                             echo '<div class="column col6">';
@@ -122,7 +122,7 @@ if ( $show == 0 ) {
                         <div class="column col-6 marg-bottom-s">
                             <a href="#show-poster" data-fancybox data-src="#show-poster">
                                 <figure class="poster">
-                                    <img data-img="<?php echo loadImg('original', $poster); ?>" loading="lazy">
+                                    <img data-img="<?php echo loadImg('original', $poster); ?>" loading="lazy" alt="">
                                 </figure>
                             </a>
                             
@@ -138,12 +138,12 @@ if ( $show == 0 ) {
                                             $i = 1;
                                             foreach ($showPosters as $showPoster) {
                                                 
-                                                echo '<div class="col3 column">';
+                                                echo '<div class="col-6 col-3-medium column marg-bottom-base">';
                                                     echo '<div class="poster-select">';
                                                         echo '<input type="radio" id="poster-'.$i.'" name="poster" value="'.$showPoster.'">';
                                                         echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
                                                         echo '<figure class="poster">';
-                                                            echo '<img data-img="'.loadImg('original', $showPoster).'" loading="lazy" importance="low">';
+                                                            echo '<img data-img="'.loadImg('original', $showPoster).'" loading="lazy" importance="low" alt="">';
                                                         echo '</figure>';
                                                     echo '</div>';
                                                 echo '</div>';
@@ -163,7 +163,7 @@ if ( $show == 0 ) {
                         <div class="column col-6">
                             <a href="#show-backdrop" data-fancybox data-src="#show-backdrop">
                                 <figure class="original">
-                                    <img data-img="<?php echo loadImg('original', $backdrop);?>" loading="lazy">
+                                    <img data-img="<?php echo loadImg('original', $backdrop);?>" loading="lazy" alt="">
                                 </figure>
                             </a>
 
@@ -179,12 +179,12 @@ if ( $show == 0 ) {
                                         $i = 1;
 
                                         foreach ($showBackdrops as $showBackdrop) {
-                                            echo '<div class="col3 column">';
+                                            echo '<div class="col-6 col-3-medium column marg-bottom-base">';
                                                 echo '<div class="poster-select">';
                                                     echo '<input type="radio" id="backdrop-'.$i.'" name="backdrop" value="'.$showBackdrop.'">';
                                                     echo '<input type="number" name="id" value="'.$id.'" style="display:none;">';
                                                     echo '<figure class="original">';
-                                                        echo '<img data-img="'.loadImg('original', $showBackdrop).'" loading="lazy" importance="low">';
+                                                        echo '<img data-img="'.loadImg('original', $showBackdrop).'" loading="lazy" importance="low" alt="">';
                                                     echo '</figure>';
                                                 echo '</div>';
                                             echo '</div>';
@@ -228,7 +228,7 @@ if ( $show == 0 ) {
                                 $episodesRow .= '
                                 <div class="col4 '.$disabled.'">
                                     <figure class="widescreen">
-                                        <img data-img="'.loadImg('original', $episode['backdrop']).'" loading="lazy" importance="low">
+                                        <img data-img="'.loadImg('original', $episode['backdrop']).'" loading="lazy" importance="low" alt="'.$episode['title'].'">
                                     </figure>
                                     <span class="small marg-top-xxs">Episode '.$episode['episode_number'].': '.$episode['title'].'</span>
                                     <a href="#file-list-popup-'.$episode['tmdbID'].'" class="btn btn-small btn-success" data-fancybox data-src="#file-list-popup-'.$episode['tmdbID'].'">'.lang_snippet('select_movie_file').'</a>

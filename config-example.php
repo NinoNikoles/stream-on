@@ -22,12 +22,12 @@
     /**
      * Don't change this.
      */
-    define( 'DB_CHARSET', 'utf8mb4' );
+    define( 'DB_CHARSET', 'utf8' );
     
     /**
      * Don't change this.
      */
-    define('DB_COLLATE', '');
+    define('DB_COLLATE', 'utf8_general_ci');
     
     
     ?>

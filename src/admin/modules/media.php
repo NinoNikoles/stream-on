@@ -361,9 +361,45 @@ function insertShow($showID) {
     foreach ( $genres as $genre ) {
         $data[] = $genre->getID();
     }
-    
+
+    $dataSeasonSQLQuerys = [];
+    $dataEpisodesSQLquery = [];
+
     foreach ( $seasons as $season ) {
-        $dataSeasonsIDs[] = $season->getID();
+        $seasonID = $season->getID();
+        $dataSeasonsIDs[] = $seasonID;        
+        $seasonNumber = $season->getSeasonNumber();
+        $seasonEpisodeCount = $season->getEpisodeCount();
+        $seasonTitle = str_replace("'", '"', $season->getName());
+        $seasonOverview = str_replace("'", '"', $season->getOverview());
+        $seasonPoster = $season->getPoster();
+        $seasonRating = $season->getVoteAverage();
+        $seasonRelease = $season->getAirDate();
+
+        // Adds all Seasons of the show
+        $dataSeasonSQLQuerys[] = "INSERT INTO seasons (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) VALUES ('".$seasonID."','".$seasonTitle."','".$seasonOverview."','".$seasonPoster."','".$seasonNumber."','".$seasonRating."','".$seasonRelease."','".$seasonEpisodeCount."','".$id."');";
+        
+        $actualSeason = $tmdb->getSeason($id, $seasonNumber);
+        $seasonEpisodes = $actualSeason->getEpisodes();
+
+        foreach ( $seasonEpisodes as $seasonEpisode ) {
+            $episodeNumber = $seasonEpisode->getEpisodeNumber();
+
+            $episode = $tmdb->getEpisode($id, $seasonNumber, $episodeNumber);
+            $episodeID = $episode->getID();
+            $episodeNumber = $episode->getEpisodeNumber();
+            $episodeName = str_replace("'", '"', $episode->getName());
+            $episodeOverview = str_replace("'", '"', $episode->getOverview());
+            $episodeRuntime = $episode->getRuntime();
+            $episodeSeasonNumber = $seasonNumber;
+            $episodeShowID = $id;
+            $episodeRelease = $episode->getAirDate();
+            $episodeImgPath = $episode->getStill();
+            $episodeRating = $episode->getVoteAverage();
+            
+            // Adds all episodes of the show
+            $dataEpisodesSQLQuerys[] = "INSERT INTO episodes (tmdbID,episode_number,title,overview,backdrop,runtime,rating,releaseDate,season_number,show_id) VALUES ('".$episodeID."','".$episodeNumber."','".$episodeName."','".$episodeOverview."','".$episodeImgPath."','".$episodeRuntime."','".$episodeRating."','".$episodeRelease."','".$episodeSeasonNumber."','".$episodeShowID."');";    
+        }
     }
     
     $seasonsIDs = json_encode($dataSeasonsIDs);
@@ -408,42 +444,12 @@ function insertShow($showID) {
             $conn->query($genreQuery);
         }
 
-        foreach ( $seasons as $season ) {
-            $seasonID = $season->getID();
-            $seasonNumber = $season->getSeasonNumber();
-            $seasonEpisodeCount = $season->getEpisodeCount();
-            $seasonTitle = str_replace("'", '"', $season->getName());
-            $seasonOverview = str_replace("'", '"', $season->getOverview());
-            $seasonPoster = $season->getPoster();
-            $seasonRating = $season->getVoteAverage();
-            $seasonRelease = $season->getAirDate();
-    
-            // Adds all Seasons of the show
-            $sqlSeasons = "INSERT INTO seasons (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) VALUES ('".$seasonID."','".$seasonTitle."','".$seasonOverview."','".$seasonPoster."','".$seasonNumber."','".$seasonRating."','".$seasonRelease."','".$seasonEpisodeCount."','".$id."');";
-            $conn->query($sqlSeasons);
+        foreach ( $dataSeasonSQLQuerys as $seasonSQLQuery ) {
+            $conn->query($seasonSQLQuery);
+        }
 
-            $actualSeason = $tmdb->getSeason($id, $seasonNumber);
-            $seasonEpisodes = $actualSeason->getEpisodes();
-
-            foreach ( $seasonEpisodes as $seasonEpisode ) {
-                $episodeNumber = $seasonEpisode->getEpisodeNumber();
-
-                $episode = $tmdb->getEpisode($id, $seasonNumber, $episodeNumber);
-                $episodeID = $episode->getID();
-                $episodeNumber = $episode->getEpisodeNumber();
-                $episodeName = str_replace("'", '"', $episode->getName());
-                $episodeOverview = str_replace("'", '"', $episode->getOverview());
-                $episodeRuntime = $episode->getRuntime();
-                $episodeSeasonNumber = $seasonNumber;
-                $episodeShowID = $id;
-                $episodeRelease = $episode->getAirDate();
-                $episodeImgPath = $episode->getStill();
-                $episodeRating = $episode->getVoteAverage();
-
-                // Adds all episodes of the show
-                $episodeQuery = "INSERT INTO episodes (tmdbID,episode_number,title,overview,backdrop,runtime,rating,releaseDate,season_number,show_id) VALUES ('".$episodeID."','".$episodeNumber."','".$episodeName."','".$episodeOverview."','".$episodeImgPath."','".$episodeRuntime."','".$episodeRating."','".$episodeRelease."','".$episodeSeasonNumber."','".$episodeShowID."');";
-                $conn->query($episodeQuery);
-            }
+        foreach ( $dataEpisodesSQLQuerys as $episodesSQLQuery ) {
+            $conn->query($episodesSQLQuery);
         }
 
         // Commit der Transaktion
@@ -811,10 +817,10 @@ function media_card($media, $extraClasses = '') {
             <div class="media-card '.$disabled.'">
                 <div class="media-card-wrapper">
                     <figure class="widescreen desktop-only">
-                        <img data-img="'.loadImg('original', $backdrop).'" loading="lazy" importance="low">
+                        <img data-img="'.loadImg('original', $backdrop).'" loading="lazy" importance="low" alt="'.$title.'">
                     </figure>
                     <figure class="poster mobile-only">
-                        <img data-img="'.loadImg('original', $poster).'" loading="lazy" importance="low">
+                        <img data-img="'.loadImg('original', $poster).'" loading="lazy" importance="low" alt="'.$title.'">
                     </figure>
                     <div class="link-wrapper">
                     '.$watchTrigger.'

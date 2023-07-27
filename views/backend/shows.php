@@ -41,7 +41,7 @@ if ( isset($_POST['add-show']) ) {
                             echo '<div class="col-6 col-3-medium column">';
                                 echo '<a href="/admin/show/?id='.$show['tmdbID'].'" title="'.$show['title'].'" class="media-card">';
                                     echo '<figure class="poster">';
-                                        echo '<img data-img="'.loadImg('original', $show['poster']).'" alt="" loading="lazy">';
+                                        echo '<img data-img="'.loadImg('original', $show['poster']).'" alt="" loading="lazy" alt="'.$show['title'].'">';
                                     echo '</figure>';
                                     echo '<span class="title">'.truncate($show['title'],15).'</span>';
                                 echo '</a>';

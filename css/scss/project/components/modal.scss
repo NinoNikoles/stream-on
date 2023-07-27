@@ -22,3 +22,15 @@
         right: 5px;
     }
 }
+
+#movie-poster,
+#show-poster,
+#movie-backdrop,
+#show-backdrop {
+
+    @include MQ(xsmall) {
+        width: 70%;
+        height: auto;
+        max-height: 90%;
+    }
+}

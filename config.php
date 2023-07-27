@@ -25,12 +25,12 @@
      * Der Datenbankzeichensatz, der beim Erstellen der
      * Datenbanktabellen verwendet werden soll
      */
-    define( 'DB_CHARSET', 'utf8mb4' );
+    define( 'DB_CHARSET', 'utf8' );
     
     /**
      * Der Collate-Type sollte nicht geändert werden.
      */
-    define('DB_COLLATE', '');
+    define('DB_COLLATE', 'utf8_general_ci');
     
     
     ?>

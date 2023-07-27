@@ -220,121 +220,6 @@ $(document).ready(function() {
             })
         },
 
-        /*modal: function() {
-            var self = this;
-
-            if ( !($('#modal').length > 0) ) {
-                self.$body.append('<div class="modal" id="modal"><div class="modal-overlay"></div><div class="modal-wrap large"><div class="modal-inner-wrap"></div><a href="#" class="modal-close"></a></div></div>');
-            }
-
-            $modal = $('#modal');
-            $modalWrap = $('#modal .modal-wrap');
-            $modalInnerWrap = $('#modal .modal-inner-wrap');
-            $modalOverlay = $('#modal .modal-overlay');
-            $modalCloseBtn = $('#modal .modal-close');
-
-            $(document).on('click', 'a[data-modal]', function(e) {
-                e.preventDefault();
-                var self = this,
-                    $this = $(self);
-                    $src = $($this.attr('data-src'));
-                $modalInnerWrap.empty();
-                $src.clone().appendTo('.modal-inner-wrap');
-                $('body').addClass('active-modal');
-                $modal.addClass('active');
-            });
-
-            $modalOverlay.on('click', function() {
-                $modal.removeClass('active');
-                $('body').removeClass('active-modal');
-            });
-
-            $modalCloseBtn.on('click', function(e) {
-                e.preventDefault();
-                $modal.removeClass('active');
-                $('body').removeClass('active-modal');
-            });
-        },*/
-
-        /*accordion: function () {
-            console.log('Accordion loaded');
-
-            var self = this,
-                $accordionTitle = $('.accordion .accordion-item .accordion-title');
-
-            $('.accordion-content').each(function() {
-                $id = $(this).attr('id');
-                $(this).appendTo($('[data-accordion-item="'+$id+'"'));
-            })
-
-            $('.accordion .accordion-item.is-active .accordion-content').css('display', 'block');
-
-            $accordionTitle.on('click', function (e) {
-                e.preventDefault();
-
-                var $this = $(this),
-                    $accordionItem = $this.parent(),
-                    $accordion = $accordionItem.parent(),
-                    $accordionContent = $accordionItem.children('.accordion-content');
-
-                //-- Prevent animation bugging
-                if ( $this.hasClass('animating') ) return false;
-                $this.addClass('animating');
-
-                //-- Check for animation speed
-                if ( !parseInt($accordion.attr('data-speed')) ) {
-                    var openSpeed = 0;
-                } else {
-                    openSpeed = parseInt($accordion.attr('data-speed'));
-                }
-
-                //-- When accordion is closed
-                if ( !$accordionItem.hasClass(self.activeClass) ) {
-                    $accordionItem.addClass(self.activeClass);
-                    $accordionContent.attr('aria-expanded', 'true');
-
-                    //-- Get correct Content height
-                    var contentBorder = parseInt($accordionContent.css('border-top-width')),
-                        contentHeight = $accordionContent.outerHeight() - contentBorder*2,
-                        contentPadding = (contentHeight - $accordionContent.height()) / 2;
-
-                    //-- Open animation
-                    $accordionContent.attr('style', 'display:block;height:0;padding-top:0;padding-bottom:0;');
-                    $accordionContent.animate({
-                        height: contentHeight,
-                        paddingTop: contentPadding,
-                        paddingBottom: contentPadding,
-                    }, openSpeed).promise().done(function () {
-                        //-- Triggers when animation is done
-                        $this.removeClass('animating');
-                        $accordionContent.attr('style', 'display:block;');
-                    });
-
-                //-- When accordion is open
-                } else {
-                    //-- Get correct Content height
-                    contentBorder = parseInt($accordionContent.css('border-top-width'));
-                    contentHeight = $accordionContent.outerHeight() - contentBorder*2;
-                    contentPadding = (contentHeight - $accordionContent.height()) / 2;
-
-                    $accordionContent.attr('aria-expanded', 'false');
-
-                    //-- Closing animation
-                    $accordionContent.attr('style', 'display:block;height:'+contentHeight+'px;padding-top:'+contentPadding+'px;padding-bottom:'+contentPadding+'px;');
-                    $accordionContent.animate({
-                        height: 0,
-                        paddingTop: 0,
-                        paddingBottom: 0,
-                    }, openSpeed).promise().done(function () {
-                        //-- Triggers when animation is done
-                        $accordionItem.removeClass(self.activeClass);
-                        $this.removeClass('animating');
-                        $accordionContent.attr('style', 'display:none;');
-                    });
-                }
-            })
-        },*/
-
         tabs: function () {
             var self = this,
                 $tabTitleLink = $('.tabs .tabs-title > a');
@@ -877,18 +762,15 @@ $(document).ready(function() {
                 $('#loader').removeClass('hidden');
                 $('#loader span').addClass('visible');
             }
+            
+            $(document).on('click', '#add-movie', loader);
+            $(document).on('click', '#delete-movie', loader);
 
-            $(document).on('click', '#add-show', function() {
-                loader();
-            });
+            $(document).on('click', '#add-show', loader);
+            $(document).on('click', '#update-show', loader);
+            $(document).on('click', '#delete-show', loader);
 
-            $(document).on('click', '#add-movie', function() {
-                loader();
-            });
-
-            $(document).on('click', 'update-show', function() {
-                loader();
-            });
+            $(document).on('click', '#addHighlight', loader);            
         },
 
         highlight: function() {
