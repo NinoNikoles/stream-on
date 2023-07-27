@@ -124,7 +124,7 @@ $(document).ready(function() {
             self.desktopViewportCheck();
             self.fixedHeader();
             self.navMobile();
-            self.initPictures();
+            self.fancyLoad();
         },
 
         initScrolltrigger: function(){
@@ -866,7 +866,7 @@ $(document).ready(function() {
         fancyLoad: function() {
             var self = this;
             self.src = "data-img";
-            
+
             forEach(document.querySelectorAll('img[data-img]'), function(el){
                 el.setAttribute('src', el.getAttribute(self.src));
                 $(el).removeAttr('data-img');
