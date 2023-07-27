@@ -62,7 +62,7 @@ $(document).ready(function() {
             self.selectTabs();
             //self.modal();
             self.initSlider();
-            self.customPagination();
+            //self.customPagination();
             self.initScrolltrigger();
             self.jstree();
             self.jstreeEpisode();
@@ -368,7 +368,7 @@ $(document).ready(function() {
             });
         },
 
-        customPagination: function(){
+        /*customPagination: function(){
 			$sortField = $('#sortField'); // Select: Sortierung
 			$sizeField = $('#sizeField'); // Select: Anzahl Pro seite
 			$btnPrev = $('.pag-prev'); // Btn vorherige Seite
@@ -417,7 +417,7 @@ $(document).ready(function() {
 				$btnCurrentVal = parseInt($btnCurrent.attr('data-site'));
 				getValues();
 			});
-		},
+		},*/
 
         jstree: function() {
             if ( $('#file-tree').length > 0 ) {
