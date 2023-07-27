@@ -44,7 +44,7 @@ function myList() {
     
     if ( $results->num_rows > 0 ) {    
         while ($movies = $results->fetch_assoc()) {
-            echo media_card($movies, 'col-6 col-4-xsmall col-2-medium grid-padding');
+            echo media_card($movies, 'col-6 col-4-xsmall col-3-medium grid-padding');
         }
     }
 
