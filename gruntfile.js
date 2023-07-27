@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= config.root %>js/**/*.js'],
-                tasks: ['uglify'] // , 'uglify' // wieder rein wenns in die heiße phase geht, ne
+                tasks: ['concat', 'uglify'] // , 'uglify' // wieder rein wenns in die heiße phase geht, ne
             }
         },
         concat: {
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
-    grunt.registerTask('default',[ 'uglify', 'sass:dist', 'copy:main', 'watch']);
+    grunt.registerTask('default',[ 'concat', 'uglify', 'sass:dist', 'copy:main', 'watch']);
 
 
     grunt.loadNpmTasks('grunt-sass');

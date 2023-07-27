@@ -56,7 +56,7 @@ $(document).ready(function() {
             self.desktopViewportCheck();
             self.fixedHeader();
             self.navMobile();
-            self.initPictures();
+            //self.initPictures();
             //self.accordion();
             self.tabs();
             self.selectTabs();
@@ -147,29 +147,6 @@ $(document).ready(function() {
             trigger.add('#load-count');
             trigger.add('.currentWatch-slider');
 		},
-
-        initPictures: function () {
-            var self = this;
-            if( self.$window.width() < 860) {
-                self.src = "data-mobile-src";
-            } else if ( self.$window.width() < 1280 ){
-                self.src = "data-tablet-src";
-            } else {
-                self.src = "data-desktop-src";
-            }
-
-            forEach(document.querySelectorAll('.lazyOwl'), function(el){
-                el.setAttribute('src', el.getAttribute(self.src));
-            });
-
-            forEach(document.querySelectorAll('.lazyPic'), function(el){
-                el.setAttribute('src', el.getAttribute(self.src));
-            });
-
-            forEach(document.querySelectorAll('.lazyBG'), function(el){
-                el.parentElement.style.backgroundImage  = "url('"+el.getAttribute(self.src)+"')";
-            });
-        },
 
         fixedHeader: function() {
             var self = this;
@@ -887,10 +864,14 @@ $(document).ready(function() {
         },
 
         fancyLoad: function() {
-            $('img').each(function(i, el) {
-                var img = $(el).attr('data-img');
-                $(el).attr('src', img).removeAttr('data-img');
+            var self = this;
+            self.src = "data-img";
+            
+            forEach(document.querySelectorAll('img[data-img]'), function(el){
+                el.setAttribute('src', el.getAttribute(self.src));
+                $(el).removeAttr('data-img');
             });
+
         }
     }
 
