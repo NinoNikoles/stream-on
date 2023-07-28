@@ -1,7 +1,17 @@
 .currentWatch-slider,
 .genre-slider {
     .column {
-        overflow: hidden;
+        .swiper-slide {
+            z-index: 0;
+            transition: scale $transition-default;
+
+            &:hover {
+                @include MQ(medium) {
+                    scale: 1.2;
+                    z-index: 1;
+                }
+            }
+        }
     }
 }
 
