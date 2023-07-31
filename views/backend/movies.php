@@ -44,7 +44,7 @@ if ( isset($_POST['add-movie']) ) {
                                     echo '<figure class="poster">';
                                         echo '<img data-img="'.loadImg('original', $movie['poster']).'" alt="" loading="lazy" alt="'.$movie['title'].'">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.truncate($movie['title'],15).'</span>';
+                                    echo '<span class="title marg-no">'.truncate($movie['title'],15).'</span>';
                                 echo '</a>';
                             echo '</div>';
                         }

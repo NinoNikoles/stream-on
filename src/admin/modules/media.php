@@ -858,3 +858,11 @@ function getTrailer($movieID, $extraClass="") {
         return $iframe;
     }
 }
+
+function getWatchedTime($watchedTime, $totalDuration) {
+    $watchedTime = floatval($watchedTime);
+    $totalDuration = floatval($totalDuration);
+    $watchedInPercent = ($watchedTime/$totalDuration)*100;
+
+    return $watchedInPercent;
+}

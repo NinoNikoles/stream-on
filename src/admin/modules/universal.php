@@ -257,12 +257,9 @@ function include_modules($file) {
 }
 
 function truncate($string,$length=100,$append=" ...") {
-    $string = trim($string);
 
     if(strlen($string) > $length) {
-      $string = wordwrap($string, $length);
-      $string = explode("\n", $string, 2);
-      $string = $string[0] . $append;
+        $string = substr($string, 0, $length) . $append;
     }
   
     return $string;
@@ -346,13 +343,5 @@ function runtimeToString($runtime) {
 function loadImg($size, $img) {
     return "http://image.tmdb.org/t/p/$size$img";
     //return '/views/build/css/images/img_preview.webp';
-}
-
-function getWatchedTime($watchedTime, $totalDuration) {
-    $watchedTime = floatval($watchedTime);
-    $totalDuration = floatval($totalDuration);
-    $watchedInPercent = ($watchedTime/$totalDuration)*100;
-
-    return $watchedInPercent;
 }
 ?>

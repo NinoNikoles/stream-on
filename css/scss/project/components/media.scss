@@ -294,7 +294,7 @@
 .currentWatch-slider,
 .genre-slider {
     opacity: 0;
-    @include transition(opacity 0.75s ease-in 0.5s);
+    @include transition(opacity 0.75s ease-in 0.25s);
 
     &.visible {
         opacity: 1;
