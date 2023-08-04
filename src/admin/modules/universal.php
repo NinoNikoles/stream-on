@@ -265,6 +265,15 @@ function truncate($string,$length=100,$append=" ...") {
     return $string;
 }
 
+function text_truncate($text, $laenge) {
+        if (strlen($text) > $laenge) {
+            $text = substr($text, 0, $laenge); // Zuerst den Text auf die gewünschte Länge kürzen
+            $text = substr($text, 0, strrpos($text, ' ')); // Dann den Text auf das letzte Leerzeichen zurückkürzen
+            $text .= ' ...'; // Am Ende " [...]" hinzufügen
+        }
+        return $text;
+    }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Settings --///////////
