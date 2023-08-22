@@ -28,7 +28,7 @@
             padding: {
                 top: rem-calc(10);
                 right: rem-calc($space-base);
-                bottom: rem-calc($space-base);
+                bottom: rem-calc(10);
                 left: rem-calc($space-base);
             }
         }
@@ -330,6 +330,12 @@
 
 .fancybox__content {
     overflow: auto;
+
+    &>.f-button.is-close-btn {
+        border-radius: 0;
+        top: 0 !important;
+        right: 0 !important;
+    }
 }
 
 .info-popup {

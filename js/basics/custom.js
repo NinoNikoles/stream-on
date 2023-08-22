@@ -398,31 +398,28 @@ $(document).ready(function() {
 
         jstree: function() {
             if ( $('#file-tree').length > 0 ) {
+                console.log('test');
                 $.ajax({
                     url: '/admin/file-api', // Hier den Pfad zur API auf deinem Server einfügen
                     type: 'get',
                     dataType: 'json',
                     success: function(response) {
+                        console.log(response);
                     // Die Antwort enthält die Daten für den jsTree
                         $('#file-tree').jstree({
                             "core": {
-                                "animation" : 0,
-                                "check_callback" : true,
-                                "themes" : { "stripes" : true },
+                                //"animation" : 0,
+                                "themes" : { 
+                                    "stripes" : true,
+                                },
                                 'data': response,
                                 "multiple": false,
                             },
                             "checkbox": {
                                 "three_state": false
                             },
-                            "types": {
-                                "video": {
-                                    "icon": 'jstree-file'
-                                }
-                            },
                             "plugins": [
-                                "contextmenu", "dnd", "search",
-                                "state", "types", "wholerow"
+                                /*"checkbox", */"search", "state", "wholerow"
                             ],
                         })
 
@@ -430,12 +427,22 @@ $(document).ready(function() {
                             var node = data.instance.get_node(data.selected[0]);
                             if (node.text.endsWith('.mp4')) {
                                 var path = $('#file-tree').jstree('get_path', data.node, '/');
+                                console.log(path);
                                 $('#inputMoviePath').attr('value', '/media/'+path);
                                 $('#inputMovieSubmit').css('display', 'inline-flex');
                             } else {
                                 data.instance.deselect_node(data.selected[0]);
                                 $('#inputMovieSubmit').css('display', 'none');
                             }                      
+                        });
+
+                        var to = false;
+                        $('#jstree-search').keyup(function () {
+                            if(to) { clearTimeout(to); }
+                            to = setTimeout(function () {
+                            var v = $('#jstree-search').val();
+                            $('#file-tree').jstree(true).search(v);
+                            }, 250);
                         });
                     },
                     error: function(xhr, status, error) {
@@ -581,6 +588,7 @@ $(document).ready(function() {
                     video.addEventListener("loadedmetadata", function() {
                         video.currentTime = sekunde;
                         $('#player-back-btn').appendTo(".video-js");
+                        $('#next-episode-btn').appendTo(".video-js");
                     });
 
                     player.on('play', function() {
@@ -678,8 +686,7 @@ $(document).ready(function() {
             var self = this;
 
             if ( $('#mainPlayer').length > 0 ) {
-                $player = $('#mainPlayer');
-                video = $('video')[0];
+                video = $('#player')[0];
                 
                 // Ausführen, wenn die Metadaten geladen sind
                 $(video).on('loadedmetadata', function() {
@@ -857,8 +864,8 @@ $(document).ready(function() {
 
         pageReady: function() {
             var self = this;
-            document.querySelector("#loader").classList.add('hidden');
-            document.querySelector("body").classList.remove('loading');
+            $('#loader').addClass('hidden');
+            $("body").removeClass('loading');
             
             self.fancyLoad();
         },

@@ -35,9 +35,7 @@ function getFolderStructure($folderPath) {
 function getIconForExtension($extension) {
   // Mapping von Dateierweiterung zu Icon-Klassen
   $iconMapping = array(
-    'pdf' => 'jstree-pdf',
-    'doc' => 'jstree-word',
-    'xls' => 'jstree-excel',
+    'mp4' => 'icon icon-media',
     // weitere Dateierweiterungen und Icons hier hinzufügen
   );
 

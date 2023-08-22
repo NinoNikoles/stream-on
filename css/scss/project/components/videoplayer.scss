@@ -415,3 +415,67 @@
         }
     }
 }
+
+.next-episode-btn {
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    width: rem-calc(150);
+    margin: 0;
+    position: absolute;
+    right: rem-calc($space-base);
+    bottom: rem-calc(80);
+    visibility: hidden;
+    opacity: 0;
+    @include transitions(opacity $transition-default, bottom $transition-default);
+
+    &.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    @include MQ(medium) {
+        width: rem-calc(300);
+        bottom: rem-calc(130);
+
+        &.visible {
+            visibility: hidden;
+            opacity: 0;
+        }
+    }
+
+    i {
+        color: var(--white);
+        font: {
+            size: rem-calc(60);
+        }
+
+        &::before {
+            text-shadow: 0px 0px 10px rgba(0,0,0,0.75), 0px 0px 20px #000;
+        }
+    }
+
+    span {
+        display: block;
+        background: {
+            color: var(--black-50);
+        }
+        margin: 0;
+        padding: rem-calc(5) rem-calc(10);
+    }
+}
+
+.video-js.vjs-has-started {
+    .next-episode-btn {
+        &.visible {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    }
+
+    &.vjs-user-inactive {
+        .next-episode-btn {
+            bottom: rem-calc($space-base);
+        }
+    }
+}

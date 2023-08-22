@@ -102,7 +102,7 @@ while ( $media = $result->fetch_assoc() ) {
             }
 
             // Season select
-            $select = '<p><select class="tab-select season-select-'.$mediaID.'" id="season-select-'.$mediaID.'">'.$options.$extras.'</select></p>';
+            $select = '<p><label>'.lang_snippet('seasons').' <select class="tab-select season-select-'.$mediaID.'" id="season-select-'.$mediaID.'">'.$options.$extras.'</select></label></p>';
             // episodes lists for seasons
             $seasonWrap = $seasonWrap.$extraSeasonWrap;
         }

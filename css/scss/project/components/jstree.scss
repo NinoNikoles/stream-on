@@ -9,9 +9,16 @@
     }
 }
 
+.fancybox__container {
+    &[aria-hidden="false"] {
+        #file-list-popup {
+            display: flex !important;
+        }
+    }
+}
+
 #file-tree {
     height: 100%;
-    max-height: 80%;
     overflow-x: hidden;
 
     .jstree-wholerow-clicked {
@@ -60,6 +67,14 @@
     background: url('/views/build/css/images/jstree/32px.png') -260px -4px no-repeat;
 }
 
+.jstree-default .jstree-icon.icon {
+    background: none;
+}
+
 .jstree-default .jstree-leaf>.jstree-ocl {
     background-position: -68px -4px !important;
+}
+
+.jstree-default .jstree-search {
+    color: var(--success);
 }
