@@ -43,12 +43,18 @@ function onetimesetup($servername, $username, $password, $dbname) {
     $conn = new mysqli($servername, $username, $password, $dbname);
     if ($conn->connect_error) {
         return false;
-    }
+    } else {
+        $query = "SHOW TABLES LIKE 'settings'";
+        $result = $conn->query($query);
 
-    $result = $conn->query("SELECT setting_option FROM settings WHERE setting_name='one_time_setup'");
-    
-    $conn->close();
-    return $result;
+        if ($result->num_rows > 0) {
+            $result = $conn->query("SELECT setting_option FROM settings WHERE setting_name='one_time_setup'");
+            $conn->close();
+            return $result;
+        } else {
+            return false;
+        }
+    }
 }
 
 // Überprüfen, ob die erforderlichen Tabellen existieren
@@ -160,7 +166,7 @@ function createDatabase($servername, $username, $password, $dbname, $charset, $c
     }
 }
 
-function createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $pageLang) {
+function createTables($pageTitle, $adminUsername, $adminPassword) {
     $conn = dbConnect();
 
     //-- Settings Table --

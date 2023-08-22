@@ -125,6 +125,7 @@ if ( $movie == 0 ) {
                                 echo '<a href="#file-list-popup" class="btn btn-small btn-warning icon-left icon-media" data-fancybox data-src="#file-list-popup">'.lang_snippet('select_movie_file').'</a>';
                                     
                                 echo '<div id="file-list-popup" style="display:none;">';
+                                    echo '<input type="text" id="jstree-search" value="" placeholder="Search" class="marg-bottom-s">';
                                     echo '<div id="file-tree"></div>';
                                     echo '<form method="post" action="/admin/movie/?id='.$_GET['id'].'">';
                                         echo '<input type="text" name="moviePath" id="inputMoviePath" value="" style="display:none;">';
@@ -235,12 +236,12 @@ if ( $movie == 0 ) {
                         $movieID = $movie->getID();
 
                         if ( movieIsInCollection($movieID) !== true ) {
-                            echo '<div class="col3 column">';
+                            echo '<div class="col-6 col-3-medium column">';
                                 echo '<a href="#add-movie-'.$movieID.'" class="media-card" data-fancybox data-src="#add-movie-'.$movieID.'">';
                                     echo '<figure class="poster">';
                                         echo '<img data-img="'.loadImg('original', $movie->getPoster()).'" alt="" loading="lazy" alt="'.$movie->getTitle().'">';
                                     echo '</figure>';
-                                    echo '<span class="title">'.$movie->getTitle().'</span>';
+                                    echo '<span class="title">'.truncate($movie->getTitle(), 30).'</span>';
                                 echo '</a>';
 
                                 echo '<div id="add-movie-'.$movieID.'" style="display:none;">';

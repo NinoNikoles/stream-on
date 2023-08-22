@@ -63,6 +63,7 @@ class langSnippets {
             'loading_content' => 'Loading content, please wait.',
             'edit_user' => 'Edit user',
             'enable_edit_btn' => 'Do you want to allow media editing from the main pages? (concerns admins only)',
+            'next_episode' => 'Next episode',
 
 			// Movie
 			'rating' => 'Rating',
@@ -193,6 +194,7 @@ class langSnippets {
             'pls_wait_for_admin_setup' => 'Es wurden bisher noch keine Inhalte hinzugefügt. Bitte habe noch etwas Gedult.',
             'loading_content' => 'Inhalte werden geladen, bitte warten.',
             'edit_user' => 'Benutzer bearbeiten',
+            'next_episode' => 'Nächste Folge',
 
 			// Movie
 			'rating' => 'Bewertung',

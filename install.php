@@ -43,8 +43,8 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
                                 <input type="text" name="password" id="password" required>
                             </label>
                         </div>
-                        <div class="col12">
-                            <button type="submit" name="table-submit" id="table-submit">Speichern</button>
+                        <div class="col12 text-right">
+                            <button type="submit" name="table-submit" id="table-submit" class="btn-success marg-top-s">Speichern</button>
                         </div>
                     </form>
                 </div>
@@ -54,6 +54,8 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
         }
     }
 } else {
+    new mysqli('localhost', 'root', '');
+
     if ( isset($_POST['db-submit']) ) {
         $servername = $_POST['host'];
         $username = $_POST['user'];
@@ -61,9 +63,12 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
         $dbname = $_POST['database'];
 
         createConfig($servername, $username, $password, $dbname);
-        createDatabase($servername, $username, $password, $dbname, $charset, $collate);
-        page_redirect("/");
 
+        require_once ROOT_PATH.'/config.php';
+        $charset = DB_CHARSET;
+        $collate = DB_COLLATE;
+
+        createDatabase($servername, $username, $password, $dbname, $charset, $collate);
     }
 ?>
 
@@ -90,8 +95,8 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
                         <input type="text" name="database" id="database">
                     </label>
                 </div>
-                <div class="col12">
-                    <button type="submit" name="db-submit" id="db-submit">Speichern</button>
+                <div class="col12 text-right">
+                    <button type="submit" name="db-submit" id="db-submit" class="btn-success marg-top-s">Speichern</button>
                 </div>
             </form>
         </div>

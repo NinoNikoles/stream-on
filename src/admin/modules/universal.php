@@ -10,14 +10,15 @@ function dbConnect() {
         $username = DB_USER;
         $password = DB_PASSWORD;
         $dbname = DB_NAME;
+
+        return new mysqli($servername, $username, $password, $dbname);
     } else {
-        $servername = "";
-        $username = "";
+        $servername = "localhost";
+        $username = "root";
         $password = "";
-        $dbname = "";
-    }
-    
-    return new mysqli($servername, $username, $password, $dbname);
+
+        return new mysqli($servername, $username, $password);
+    }    
 }
 
 //-- Returns TMDB Class --
@@ -87,18 +88,29 @@ function destroySesssion() {
 function getSiteTitle() {
     $conn = dbConnect();
 
-    $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
-    if ( $conn->connect_error ) {
-        return 'Install';
-    } else {
-        $result = $conn->query($sql);
+    if ( file_exists( ROOT_PATH.'/config.php') ) {
+        $query = "SHOW TABLES LIKE 'settings'";
+        $result = $conn->query($query);
+
         if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $conn->close();
-                return $row['setting_option'];
+            $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
+            if ( $conn->connect_error ) {
+                return 'Install';
+            } else {
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $conn->close();
+                        return $row['setting_option'];
+                    }
+                }
             }
+        } else {
+            return 'Install';
         }
-    }
+    } else {
+        return 'Install';
+    }    
 }
 
 //-- Set Browserlanguage --
@@ -228,13 +240,22 @@ function callout() {
 function adminMenu($menu) {
     if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
         if ( $menu === 'main-menu' ) {
-            return '
-            <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
-            <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">- '.lang_snippet('users').'</a></li>
-            <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">- '.lang_snippet('genres').'</a></li>
-            <li class="menu-item mobile-only"><a href="/admin/movies" title="'.lang_snippet('movies').'">- '.lang_snippet('movies').'</a></li>
-            <li class="menu-item mobile-only"><a href="/admin/shows" title="'.lang_snippet('shows').'">- '.lang_snippet('shows').'</a></li>
-            <li class="menu-item mobile-only"><a href="/admin/highlights" title="'.lang_snippet('highlights').'">- '.lang_snippet('highlights').'</a></li>';
+            $genreCheck = genreCheck();
+            if ( $genreCheck === true) {
+                return '
+                <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">- '.lang_snippet('users').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">- '.lang_snippet('genres').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/movies" title="'.lang_snippet('movies').'">- '.lang_snippet('movies').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/shows" title="'.lang_snippet('shows').'">- '.lang_snippet('shows').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/highlights" title="'.lang_snippet('highlights').'">- '.lang_snippet('highlights').'</a></li>';
+            } else {
+                return '
+                <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">- '.lang_snippet('users').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">- '.lang_snippet('genres').'</a></li>';
+            }
+            
         } else if ( 'user-menu' ) {
             return '<li class="menu-item desktop-only"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
         }
@@ -256,7 +277,7 @@ function include_modules($file) {
     require_once ROOT_PATH.'/src/admin/modules/'.$file.'.php';
 }
 
-function truncate($string,$length=100,$append=" ...") {
+function truncate($string,$length=100,$append="...") {
 
     if(strlen($string) > $length) {
         $string = substr($string, 0, $length) . $append;

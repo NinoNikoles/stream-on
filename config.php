@@ -19,7 +19,7 @@
      * Ersetze datenbankname_hier_einfuegen
      * mit dem Namen der Datenbank, die du verwenden möchtest.
      */
-    define( 'DB_NAME', 'test' );
+    define( 'DB_NAME', 'stream_on' );
     
     /**
      * Der Datenbankzeichensatz, der beim Erstellen der
