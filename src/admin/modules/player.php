@@ -101,16 +101,16 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
             if ( $episodesResult->num_rows > 0 ) {
                 while ( $episodeRow = $episodesResult->fetch_assoc() ) {
                     if ( $seasonRow['season_number'] === $episodeRow['season_number']) {
-                        $episodeID = $episodeRow['tmdbID'];
-                        $episodeBackdrop = $episodeRow['backdrop'];
-                        $episodeOverview = $episodeRow['overview'];
+                        $episodeIDrun = $episodeRow['tmdbID'];
+                        $episodeBackdropRun = $episodeRow['backdrop'];
+                        $episodeOverviewRun = $episodeRow['overview'];
                         $episodeWatchTrigger = '';
                         $episodeDisabled = 'disabled';
                         
 
                         if ( $episodeRow['file_path'] != "" ) {
                             $episodeWatchTrigger = '<div class="link-wrapper">
-                                <a href="/watch/?s='.$showID.'&id='.$episodeID.'" class="play-trigger">
+                                <a href="/watch/?s='.$showID.'&id='.$episodeIDrun.'" class="play-trigger">
                                     <span class="icon-wrap col-5 col-3-medium pad-top-xxs pad-bottom-xxs pad-left-xxs">
                                         <i class="icon-play"></i>
                                     </span>
@@ -124,11 +124,11 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                         <div class="col12 media-card-episode '.$episodeDisabled.' pad-top-xxs pad-bottom-xxs">
                             <div class="col-3 pad-left-xxs">
                                 <figure class="widescreen">
-                                    <img data-img="'.loadImg('original', $episodeBackdrop).'">
+                                    <img data-img="'.loadImg('original', $episodeBackdropRun).'">
                                 </figure>
                             </div>
                             <div class="col-9 pad-left-xxs pad-right-xxs">
-                                <p class="smaller">'.truncate($episodeOverview, 100).'</p>
+                                <p class="smaller">'.truncate($episodeOverviewRun, 100).'</p>
                             </div>
                             '.$episodeWatchTrigger.'
                         </div></li>';

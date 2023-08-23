@@ -816,7 +816,7 @@ function media_card($media, $extraClasses = '') {
         }
     } else {
         // Adds watch progress bar show
-        $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID AND watched_seconds > 0 ORDER BY last_watched LIMIT 1";
+        $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID AND watched_seconds > 0 ORDER BY last_watched DESC LIMIT 1";
         $currEpisodeResult = $conn->query($currEpisodeSQL);
 
         if ( $currEpisodeResult->num_rows > 0 ) {
