@@ -61,6 +61,10 @@ if ( $show == 0 ) {
                         updateEpisodeFilePath($_POST['episodePath'], $_POST['episodeID'], $_GET['id']);
                     }
 
+                    if (isset($_POST['deleteSeason'])) {
+                        deleteSeason($_POST['seasonID'], $_POST['seasonNumber'], $_GET['id']);
+                    }
+
                     callout();
                     
                     // Main content
@@ -213,6 +217,7 @@ if ( $show == 0 ) {
                     if ( $seasonResults->num_rows > 0 ) {
                         while ( $seasonRow = $seasonResults->fetch_assoc() ) {
                             $seasonNumber = $seasonRow['season_number'];
+                            $seasonID = $seasonRow['tmdbID'];
                             $sql = "SELECT * FROM episodes WHERE show_id=$id AND season_number=$seasonNumber";
                             $episodeResult = $conn->query($sql);
                             
@@ -244,24 +249,34 @@ if ( $show == 0 ) {
                                 </div>';
                             }
 
+                            $seasonDeleteBtn = '
+                            <div class="col12 text-right">
+                            <form method="post" action="/admin/show/?id='.$_GET['id'].'">
+                            <input type="text" name="seasonID" id="seasonID-'.$seasonID.'" value="'.$seasonID.'" style="display:none;">
+                            <input type="text" name="seasonNumber" id="seasonNumber-'.$seasonNumber.'" value="'.$seasonNumber.'" style="display:none;">
+                            <input type="text" name="showID" value="'.$_GET['id'].'" style="display:none;">
+                            <button class="btn btn-alert btn-small" id="deleteSeason-'.$seasonID.'" name="deleteSeason" type="submit">'.lang_snippet('delete').'</button>
+                            </form>
+                            </div>';
+
                             if ( $seasonNumber === '0' ) {                                  
 
                                 // Tab - Extras
                                 $extras = '<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
                                 //Content - Extras
-                                $extrasContent = '<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+                                $extrasContent = '<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$seasonDeleteBtn.$episodesRow.'</div>';
 
                             } else if ( $seasonNumber === '1' ) {
                                 // Tab - Season 1
                                 $seasonTabList = $seasonTabList.'<li class="tabs-title" class="is-active"><a href="#season-'.$seasonNumber.'" aria-selected="true">'.$seasonRow['title'].'</a></li>';
                                 // Content - Season 1
-                                $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel is-active" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+                                $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel is-active" id="season-'.$seasonNumber.'">'.$seasonDeleteBtn.$episodesRow.'</div>';
 
                             } else {
                                 // Tab - Rest of Seasons
                                 $seasonTabList = $seasonTabList.'<li class="tabs-title"><a href="#season-'.$seasonNumber.'">'.$seasonRow['title'].'</a></li>';
                                 // Content - Rest of Seasons
-                                $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$episodesRow.'</div>';
+                                $seasonContentList = $seasonContentList.'<div class="col12 tabs-panel" id="season-'.$seasonNumber.'">'.$seasonDeleteBtn.$episodesRow.'</div>';
                             }
                         }
 

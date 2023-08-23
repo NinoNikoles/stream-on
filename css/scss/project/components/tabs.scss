@@ -33,6 +33,14 @@
                 }
             }
 
+            &:first-of-type {
+                &:hover {
+                    background: {
+                        color: transparent;
+                    }
+                }
+            }
+
             > span {
                 flex-grow: 1;
             }

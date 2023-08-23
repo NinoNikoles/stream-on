@@ -1,12 +1,4 @@
 .fancybox__content {
-    width: 100%;
-    height: 100%;
-
-    @include MQ(xsmall) {
-        width: rem-calc(500);
-        height: auto;
-    }
-
     >.f-button.is-close-btn {
         --f-button-border-radius: 50%;
         --f-button-color: #fff;

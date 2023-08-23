@@ -164,12 +164,11 @@ while ( $media = $result->fetch_assoc() ) {
             $timebar = '<div class="watched-bar"><progress max="100" value="'.$watchedInPercent.'"></progress></div>';
         }
     } else {
-        
-
         // Adds watch progress bar show
         $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID AND watched_seconds > 0 ORDER BY last_watched LIMIT 1";
         $currEpisodeResult = $conn->query($currEpisodeSQL);
 
+        // Wenn eine Episode geschaut wurde
         if ( $currEpisodeResult->num_rows > 0 ) {
             while ( $currEpisode = $currEpisodeResult->fetch_assoc() ) {
                 $episodeID = $currEpisode['media_id'];
@@ -179,27 +178,25 @@ while ( $media = $result->fetch_assoc() ) {
             // Sets time bar for last episode watched
             $timebar = '<div class="watched-bar"><progress max="100" value="'.$currEpisodeTime.'"></progress></div>';
 
-            // Sets play button for last episode watched
-            $getSeason = "SELECT title, season_number FROM episodes WHERE tmdbID = ".$episodeID." AND show_id = $mediaID";
-            $getSeasonResult = $conn->query($getSeason);
-
-            while ( $currSeason = $getSeasonResult->fetch_assoc() ) {
-                $seasonNr = $currSeason['season_number'];
-            }
-
-            $watchTrigger = '<a href="/watch/?s='.$seasonNr.'&id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
-            $watchBtn = '<a href="/watch/?s='.$seasonNr.'&id='.$mediaID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
+            $watchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a>';
+            $watchBtn = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
         } else {
             // Adds watch progress bar show
-            $firstEpisodeSQL = "SELECT tmdbID, file_path FROM episodes WHERE show_id = $mediaID AND season_number = 1 AND episode_number = 1";
+            $firstEpisodeSQL = "SELECT e.tmdbID AS episode_tmdbID, e.file_path, s.tmdbID AS season_tmdb 
+            FROM episodes e
+            INNER JOIN seasons s ON e.show_id = s.show_tmdbID AND e.season_number = s.season_number
+            WHERE e.show_id = $mediaID 
+            AND e.season_number = 1 
+            AND e.episode_number = 1 
+            AND s.season_number = 1";
             $firstEpisodeResult = $conn->query($firstEpisodeSQL);
 
             if ( $firstEpisodeResult->num_rows > 0 ) {
                 while ( $firstEpisode = $firstEpisodeResult->fetch_assoc() ) {
                     if ( $firstEpisode['file_path'] != NULL ) {
                         // Sets play button for first episode of show
-                        $watchTrigger = '<a href="/watch/?s=1&id='.$firstEpisode['tmdbID'].'" title="'.$title.'" class="play-trigger"></a>';
-                        $watchBtn = '<a href="/watch/?s=1&id='.$firstEpisode['tmdbID'].'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
+                        $watchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$firstEpisode['episode_tmdbID'].'" title="'.$title.'" class="play-trigger"></a>';
+                        $watchBtn = '<a href="/watch/?s='.$mediaID.'&id='.$firstEpisode['episode_tmdbID'].'" class="btn btn-small btn-white icon-left icon-play marg-right-xs">'.lang_snippet('watch_now').'</a>';
                     } else {
                         $disabled = 'disabled';
                     }

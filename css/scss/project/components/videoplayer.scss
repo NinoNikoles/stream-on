@@ -253,10 +253,6 @@
         }
     }
 
-    .vjs-duration {
-        right: rem-calc(60);
-    }
-
     .vjs-fullscreen-control {
         width: rem-calc(40) !important;
         height: rem-calc(40) !important;
@@ -429,11 +425,6 @@
     opacity: 0;
     @include transitions(opacity $transition-default, bottom $transition-default);
 
-    &.visible {
-        visibility: visible;
-        opacity: 1;
-    }
-
     @include MQ(medium) {
         width: rem-calc(300);
         bottom: rem-calc(130);
@@ -468,8 +459,8 @@
 .video-js.vjs-has-started {
     .next-episode-btn {
         &.visible {
-            visibility: visible !important;
-            opacity: 1 !important;
+            visibility: visible;
+            opacity: 1;
         }
     }
 
@@ -477,5 +468,79 @@
         .next-episode-btn {
             bottom: rem-calc($space-base);
         }
+    }
+}
+
+#show-container {
+    background-color: var(--dark-light);
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: rem-calc(150);
+    height: rem-calc(150);
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    @include MQ(medium) {
+        width: rem-calc(300);//
+        height: rem-calc(200);
+    }
+
+    ul.menu {
+        list-style-type: none;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        > li {
+            > a {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                margin: 0;
+                padding: {
+                    top: rem-calc(5);
+                    right: rem-calc(10);
+                    bottom: rem-calc(5);
+                    left: rem-calc(10);
+                }
+
+                span {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    margin: 0;
+                }
+            }
+
+            ul.sub-menu {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 100%;
+
+                display: none;
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+    }
+
+    &.active-submenu {
+        ul.menu {
+            left: -100%;
+        }
+
+        ul.sub-menu.active {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    .back {
+        display: block;
+        margin: 0;
     }
 }

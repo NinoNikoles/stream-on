@@ -487,6 +487,24 @@ function deleteShow($showID) {
     }
 }
 
+function deleteSeason($seasonID, $seasonNumber, $showID) {
+    $conn = dbConnect();
+
+    $sql = "DELETE FROM episodes WHERE show_id=$showID AND season_number=$seasonNumber;";
+    $sql .= "DELETE FROM seasons WHERE tmdbID=$seasonID AND show_tmdbID=$showID;";
+    //$sql .= "DELETE FROM media WHERE tmdbID=$showID;";
+
+    if (!($conn->multi_query($sql) === TRUE)) {
+        $conn->close();
+        set_callout('alert','delete_season_alert');
+        page_redirect('/admin/show/?id='.$showID);
+    } else {
+        $conn->close();
+        set_callout('success','delete_season_success');
+        page_redirect('/admin/show/?id='.$showID);
+    }
+}
+
 function selectAllShowsByTitle($order = '') {
     $conn = dbConnect();
     $shows = [];
@@ -634,7 +652,7 @@ function updateShow($showID) {
         $showQuery = "UPDATE media SET
             show_season_count = $seasonsCount,
             show_seasons = '$seasonsIDs',
-            show_episodes_count = $episodesCount,
+            show_episodes_count = $episodesCount
             WHERE tmdbID = $id AND mediaType='show';";
         $conn->query($showQuery);
 
@@ -649,7 +667,22 @@ function updateShow($showID) {
             $seasonRelease = $season->getAirDate();
     
             // Adds all Seasons of the show
-            $sqlSeasons = "INSERT INTO seasons (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) VALUES ('".$seasonID."','".$seasonTitle."','".$seasonOverview."','".$seasonPoster."','".$seasonNumber."','".$seasonRating."','".$seasonRelease."','".$seasonEpisodeCount."','".$id."');";
+            $sqlSeasons = "INSERT INTO seasons 
+            (tmdbID, title, overview, poster, season_number, rating, releaseDate, episodes_count, show_tmdbID) 
+            VALUES 
+            (
+                $seasonID,
+                '$seasonTitle',
+                '$seasonOverview',
+                '$seasonPoster',
+                $seasonNumber,
+                $seasonRating,
+                '$seasonRelease',
+                $seasonEpisodeCount,
+                $id
+            ) 
+            ON DUPLICATE KEY UPDATE tmdbID = VALUES(tmdbID);";
+            var_dump($sqlSeasons);
             $conn->query($sqlSeasons);
 
             $actualSeason = $tmdb->getSeason($id, $seasonNumber);
@@ -671,7 +704,20 @@ function updateShow($showID) {
                 $episodeRating = $episode->getVoteAverage();
 
                 // Adds all episodes of the show
-                $episodeQuery = "INSERT INTO episodes (tmdbID,episode_number,title,overview,backdrop,runtime,rating,releaseDate,season_number,show_id) VALUES ('".$episodeID."','".$episodeNumber."','".$episodeName."','".$episodeOverview."','".$episodeImgPath."','".$episodeRuntime."','".$episodeRating."','".$episodeRelease."','".$episodeSeasonNumber."','".$episodeShowID."');";
+                $episodeQuery = "INSERT INTO episodes 
+                (tmdbID,episode_number,title,overview,backdrop,runtime,rating,releaseDate,season_number,show_id) 
+                VALUES (
+                    $episodeID,
+                    $episodeNumber,
+                    '$episodeName',
+                    '$episodeOverview',
+                    '$episodeImgPath',
+                    $episodeRuntime,
+                    $episodeRating,
+                    '$episodeRelease',
+                    $episodeSeasonNumber,
+                    $episodeShowID
+                ) ON DUPLICATE KEY UPDATE tmdbID = VALUES(tmdbID);";
                 $conn->query($episodeQuery);
             }
         }
@@ -685,7 +731,7 @@ function updateShow($showID) {
         // Bei einem Fehler Rollback der Transaktion
         $conn->rollback();
         set_callout('alert','add_show_alert');
-        page_redirect("/admin/shows/?id=$id");
+        page_redirect("/admin/show/?id=$id");
     }
 }
 
@@ -782,25 +828,25 @@ function media_card($media, $extraClasses = '') {
             // Sets time bar for last episode watched
             $timebar = '<div class="watched-bar"><progress max="100" value="'.$currEpisodeTime.'"></progress></div>';
 
-            // Sets play button for last episode watched
-            $getSeason = "SELECT title, season_number FROM episodes WHERE tmdbID = ".$episodeID." AND show_id = $mediaID";
-            $getSeasonResult = $conn->query($getSeason);
-
-            while ( $currSeason = $getSeasonResult->fetch_assoc() ) {
-                $seasonNr = $currSeason['season_number'];
-            }
-
-            $watchTrigger = '<a href="/watch/?s='.$seasonNr.'&id='.$mediaID.'" title="'.$title.'" class="play-trigger"></a>';
+            $watchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a>';
         } else {
             // Adds watch progress bar show
-            $firstEpisodeSQL = "SELECT tmdbID, file_path FROM episodes WHERE show_id = $mediaID AND season_number = 1 AND episode_number = 1";
+            $firstEpisodeSQL = 
+            "SELECT e.tmdbID AS episode_tmdbID, e.file_path, s.tmdbID AS season_tmdb 
+            FROM episodes e
+            INNER JOIN seasons s ON e.show_id = s.show_tmdbID AND e.season_number = s.season_number
+            WHERE e.show_id = $mediaID 
+            AND e.season_number = 1 
+            AND e.episode_number = 1 
+            AND s.season_number = 1";
+
             $firstEpisodeResult = $conn->query($firstEpisodeSQL);
 
             if ( $firstEpisodeResult->num_rows > 0 ) {
                 while ( $firstEpisode = $firstEpisodeResult->fetch_assoc() ) {
                     if ( $firstEpisode['file_path'] != NULL ) {
                         // Sets play button for first episode of show
-                        $watchTrigger = '<a href="/watch/?s=1&id='.$firstEpisode['tmdbID'].'" title="'.$title.'" class="play-trigger"></a>';
+                        $watchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$firstEpisode['episode_tmdbID'].'" title="'.$title.'" class="play-trigger"></a>';
                     } else {
                         $disabled = 'disabled';
                     }

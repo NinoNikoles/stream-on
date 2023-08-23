@@ -53,8 +53,6 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
         }
     }
 
-
-
     $nextEpisodeID = null;
 
     // Nun die nächstmögliche id mit derselben show_id und größerer episode_number finden
@@ -80,6 +78,80 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
         $nextBTN = '';
     }
 
+    // Generating episodes window
+    $sql = "SELECT id, tmdbID, title, season_number, episodes_count FROM seasons WHERE show_tmdbID=$showID;";
+    $seasonsResult = $conn->query($sql);
+
+    $seasonList = '';
+    $options = '';
+    $seasonWrap = '';
+    $extraSeasonWrap = '';
+    $extras = '';
+
+    if ($seasonsResult->num_rows > 0) {
+        while ( $seasonRow = $seasonsResult->fetch_assoc() ) {
+
+            // fetch all episodes of season
+            $fetchEpisodes = "SELECT tmdbID, title, overview, backdrop, season_number, file_path FROM episodes WHERE show_id=$showID and season_number = ".$seasonRow['season_number']." ORDER BY episode_number ASC";
+            $episodesResult = $conn->query($fetchEpisodes);
+
+            $episodeList = '';
+
+            // Go through all episodes of season
+            if ( $episodesResult->num_rows > 0 ) {
+                while ( $episodeRow = $episodesResult->fetch_assoc() ) {
+                    if ( $seasonRow['season_number'] === $episodeRow['season_number']) {
+                        $episodeID = $episodeRow['tmdbID'];
+                        $episodeBackdrop = $episodeRow['backdrop'];
+                        $episodeOverview = $episodeRow['overview'];
+                        $episodeWatchTrigger = '';
+                        $episodeDisabled = 'disabled';
+                        
+
+                        if ( $episodeRow['file_path'] != "" ) {
+                            $episodeWatchTrigger = '<div class="link-wrapper">
+                                <a href="/watch/?s='.$showID.'&id='.$episodeID.'" class="play-trigger">
+                                    <span class="icon-wrap col-5 col-3-medium pad-top-xxs pad-bottom-xxs pad-left-xxs">
+                                        <i class="icon-play"></i>
+                                    </span>
+                                </a>
+                                </div>';
+                            $episodeDisabled = '';
+                        }
+
+                        // creates eipsode item for show
+                        $episodeList.= '<li class="list-item">
+                        <div class="col12 media-card-episode '.$episodeDisabled.' pad-top-xxs pad-bottom-xxs">
+                            <div class="col-3 pad-left-xxs">
+                                <figure class="widescreen">
+                                    <img data-img="'.loadImg('original', $episodeBackdrop).'">
+                                </figure>
+                            </div>
+                            <div class="col-9 pad-left-xxs pad-right-xxs">
+                                <p class="smaller">'.truncate($episodeOverview, 100).'</p>
+                            </div>
+                            '.$episodeWatchTrigger.'
+                        </div></li>';
+                    }                        
+                }
+            }
+            
+            // Generate season select
+            // since season 0 is always extras, it will be added at the end
+            if ( $seasonRow['season_number'] === '0' ) {
+                $extraSeasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back"><i class="icon-left icon-chevron-left"></i></a>'.$episodeList.'</ul></li>';
+            } else if ( $seasonRow['season_number'] === '1' ) {
+                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back"><i class="icon-left icon-chevron-left"></i></a>'.$episodeList.'</ul></li>';
+            } else {
+                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back"><i class="icon-left icon-chevron-left"></i></a>'.$episodeList.'</ul></li>';
+            }
+
+
+            $seasonList = $seasonWrap.$extraSeasonWrap;
+        }
+    }
+
+    $showContainer = '<div id="show-container"><ul class="menu">'.$seasonList.'</ul></div>';
 
     if ( $filePath !== "" ) {
         $userID = $_SESSION['userID'];
@@ -97,28 +169,13 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                 echo '</video>';
                 echo '<button id="player-back-btn" title="Back" onclick="history.back()"></button>';
                 echo $nextBTN;
+                echo $showContainer;
             echo '</figure>';
            
             
             echo '<script>
-                const videoSRC = document.getElementById("player");
-                const nextEpisodeBtn = document.getElementById("next-episode-btn");
-
-                if (nextEpisodeBtn){
-                    videoSRC.addEventListener("timeupdate", function() {
-                        const currentTime = videoSRC.currentTime;
-                        const duration = video.duration;
-                        const last20Seconds = duration - 20;
-
-                        if (currentTime >= last20Seconds) {
-                            nextEpisodeBtn.classList.add("visible");
-                        }
-
-                        if (currentTime <= last20Seconds && nextEpisodeBtn.classList.contains("visible") ) {
-                            nextEpisodeBtn.classList.remove("visible");
-                        }
-                    });
-                }
+                
+            
             </script>';
         } else {
             echo '<figure class="widescreen">';

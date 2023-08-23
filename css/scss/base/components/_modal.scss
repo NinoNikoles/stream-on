@@ -199,11 +199,7 @@ body.active-modal {
     }
 }
 
-.fancybox__content {
-    @include MQ(small) {
-        width: 75%;
-    }
-    
+.fancybox__content {    
     > .carousel__button {
         &.is-close {
             top: 0 !important;

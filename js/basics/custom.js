@@ -579,35 +579,75 @@ $(document).ready(function() {
             var self = this;
 
             if ( $('#player').length > 0 ) {
-                if ( !self.isSmartphone() ) {
-                    var player = videojs('player');
+                //if ( !self.isSmartphone() ) {
+                var player = videojs('player');
 
-                    video = $('video')[0];
-                    sekunde = $('span[data-time]').attr('data-time');
-                    // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
-                    video.addEventListener("loadedmetadata", function() {
-                        video.currentTime = sekunde;
-                        $('#player-back-btn').appendTo(".video-js");
-                        $('#next-episode-btn').appendTo(".video-js");
+                video = $('video')[0];
+                sekunde = $('span[data-time]').attr('data-time');
+                // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
+                video.addEventListener("loadedmetadata", function() {
+                    video.currentTime = sekunde;
+                    $('#player-back-btn').appendTo(".video-js");
+                    $('#next-episode-btn').appendTo(".video-js");
+                    $('#show-container').appendTo(".video-js");
+                });
+
+                player.on('play', function() {
+                    $currTime = $('.vjs-current-time');
+                    $divider = $('.vjs-time-divider');
+                    $duration = $('.vjs-duration');
+
+                    $duration.css('right', $('.vjs-fullscreen-control').outerWidth());
+                    $divider.css('right', ($('.vjs-fullscreen-control').outerWidth()+$duration.outerWidth()));
+                    $currTime.css('right', ($('.vjs-fullscreen-control').outerWidth()+$duration.outerWidth()+$divider.outerWidth()));
+                });
+
+
+                $nextEpisodeBtn = $("#next-episode-btn");
+
+                if ( $nextEpisodeBtn ){
+                    video.addEventListener("timeupdate", function() {
+                        const currentTime = video.currentTime;
+                        const duration = video.duration;
+                        const last20Seconds = duration - 20;
+
+                        if (currentTime >= last20Seconds) {
+                            $nextEpisodeBtn.addClass("visible");
+                        }
+
+                        if (currentTime <= last20Seconds && $nextEpisodeBtn.hasClass("visible") ) {
+                            $nextEpisodeBtn.removeClass("visible");
+                        }
                     });
+                }
 
-                    player.on('play', function() {
-                        $currTime = $('.vjs-current-time');
-                        $divider = $('.vjs-time-divider');
-                        $duration = $('.vjs-duration');
-    
-                        $divider.css('right', (60+$duration.outerWidth()));
-                        $currTime.css('right', (60+$duration.outerWidth()+$divider.outerWidth()));
-                    });
+                showContainer = '#show-container';
 
-                } else {
+                $(showContainer+' .menu li>a').on('click', function(e) {
+                    e.preventDefault();
+
+                    $(showContainer).addClass('active-submenu');
+                    listID = $(this).attr('data-id');
+
+                    $(showContainer+' ul.sub-menu#'+listID).addClass('active');
+                });
+
+                $(showContainer+' .menu li .sub-menu .back').on('click', function(e) {
+                    e.preventDefault();
+
+                    $(showContainer).removeClass('active-submenu');
+
+                    $(showContainer+' ul.sub-menu').removeClass('active');
+                });
+
+                /*} else {
                     video = $('video')[0];
                     sekunde = $('span[data-time]').attr('data-time');
         
                     video.addEventListener("loadedmetadata", function() {
                         video.currentTime = sekunde;
                     });
-                }
+                }*/
             }
         },
 
