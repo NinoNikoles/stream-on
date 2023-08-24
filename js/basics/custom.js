@@ -966,11 +966,11 @@ $(document).ready(function() {
             }
 
             $('#genre-filter').on('change', function() {
-                self.orderSetup();
+                orderSetup();
             });
 
             $('#title-filter').on('change', function() {
-                self.orderSetup();
+                orderSetup();
             });
         },
 
