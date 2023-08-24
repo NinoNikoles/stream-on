@@ -725,12 +725,12 @@ function updateShow($showID) {
         // Commit der Transaktion
         $conn->commit();
         $conn->close();
-        set_callout('success','add_show_success');
+        set_callout('success','update_show_success');
         page_redirect("/admin/show/?id=$id");
     } catch (Exception $e) {
         // Bei einem Fehler Rollback der Transaktion
         $conn->rollback();
-        set_callout('alert','add_show_alert');
+        set_callout('alert','update_show_alert');
         page_redirect("/admin/show/?id=$id");
     }
 }
@@ -812,8 +812,14 @@ function media_card($media, $extraClasses = '') {
             while ( $watchInfo = $watchInfos->fetch_assoc() ) {
                 $watchedInPercent = getWatchedTime($watchInfo['watched_seconds'], $watchInfo['total_length']);
             }
-            $timebar = '<div class="watched-bar"><progress max="100" value="'.$watchedInPercent.'"></progress></div>';
+
+            $mov = "SELECT title FROM media WHERE tmdbID = $mediaID;";
+            $movTitle = $conn->query($mov)->fetch_assoc()['title'];
+
+            $timebar = '<div class="watched-bar"><p class="smaller marg-bottom-xxs">'.$movTitle.'</p><progress max="100" value="'.$watchedInPercent.'"></progress></div>';
         }
+
+
     } else {
         // Adds watch progress bar show
         $currEpisodeSQL = "SELECT * FROM media_watched WHERE user_id = $userID and show_id = $mediaID AND watched_seconds > 0 ORDER BY last_watched DESC LIMIT 1";
@@ -822,15 +828,18 @@ function media_card($media, $extraClasses = '') {
         if ( $currEpisodeResult->num_rows > 0 ) {
             while ( $currEpisode = $currEpisodeResult->fetch_assoc() ) {
                 $episodeID = $currEpisode['media_id'];
+                $watched = $currEpisode['watched'];
                 $currEpisodeTime = getWatchedTime($currEpisode['watched_seconds'], $currEpisode['total_length']);
             }
 
-            // Sets time bar for last episode watched
-            $timebar = '<div class="watched-bar"><progress max="100" value="'.$currEpisodeTime.'"></progress></div>';
+            $ep = "SELECT title FROM episodes WHERE tmdbID = $episodeID;";
+            $eTitle = $conn->query($ep)->fetch_assoc()['title'];
 
-            $watchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a>';
-        } else {
-            // Adds watch progress bar show
+            // Sets time bar for last episode watched
+            $timebar = '<div class="watched-bar"><p class="smaller marg-bottom-xxs">'.$eTitle.'</p><progress max="100" value="'.$currEpisodeTime.'"></progress></div>';
+            $watchTrigger = '<a href="/watch/?s='.$mediaID.'&id='.$episodeID.'" title="'.$title.'" class="play-trigger"></a>';   
+
+        } else {            
             $firstEpisodeSQL = 
             "SELECT e.tmdbID AS episode_tmdbID, e.file_path, s.tmdbID AS season_tmdb 
             FROM episodes e

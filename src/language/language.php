@@ -64,6 +64,7 @@ class langSnippets {
             'edit_user' => 'Edit user',
             'enable_edit_btn' => 'Do you want to allow media editing from the main pages? (concerns admins only)',
             'next_episode' => 'Next episode',
+            'sorting' => 'Order',
 
 			// Movie
 			'rating' => 'Rating',
@@ -86,10 +87,10 @@ class langSnippets {
             'add_movie_success' => 'Movie added successfully!',
             'delete_movie_success' => 'Movie deleted successfully!',
 
-            'add_show_success' => 'Die Serie wurde erfolgreich hinzugefügt!',
-            'edit_show_success' => 'Die Serie wurde erfolgreich bearbeitet!',
-            'delete_show_success' => 'Die Serie wurde erfolgreich gelöscht!',
-            'update_show_success' => 'Die Serie wurde erfolgreich aktualisiert!',
+            'add_show_success' => 'Show added successfully!',
+            'edit_show_success' => 'Show edited successfully!',
+            'delete_show_success' => 'Show deleted successfully!',
+            'update_show_success' => 'Show updated successfully!',
 
             'genres_created_success' => 'Genres created successfully!',
             'update_poster_success' => 'Poster updated successfully!',
@@ -99,6 +100,7 @@ class langSnippets {
             
             'add_highlight_success' => 'Highlight added successfully!', 
             'delete_highlight_success' => 'Highlight deleted successfully!', 
+            'delete_season_success' => 'Season deleted successfully!',
 
             'logout_message' => 'Successfully logged out!',
             'user_img_upload_success' => 'Image successfully uploaded!',
@@ -113,10 +115,10 @@ class langSnippets {
             'add_movie_alert' => 'Movie could not be added!',
             'delete_movie_alert' => 'Movie could not be deleted!',
 
-            'add_show_alert' => 'Die Serie konnte nicht hinzugefügt werden!',
-            'edit_show_alert' => 'Die Serie konnte nicht bearbeitet werden!',
-            'delete_show_alert' => 'Die Serie konnte nicht gelöscht werden!',
-            'update_show_alert' => 'Die Serie konnte nicht aktualisiert werden!',
+            'add_show_alert' => 'Show could not be added!',
+            'edit_show_alert' => 'Show could not be edited!',
+            'delete_show_alert' => 'Show could not be deleted!',
+            'update_show_alert' => 'Show could not be updated!',
 
             'genres_created_alert' => 'Genres could not be created!',
             'update_poster_alert' => 'Poster could not be updated!',
@@ -125,7 +127,8 @@ class langSnippets {
             'update_trailer_alert' => 'Trailer could not be updated!',
 
             'add_highlight_alert' => 'Highlight could not be added!', 
-            'delete_highlight_alert' => 'Highlight could not be deleted!', 
+            'delete_highlight_alert' => 'Highlight could not be deleted!',
+            'delete_season_alert' => 'Season could not be deleted!',
 
             'user_img_upload_alert' => 'Img could not be uploaded!',
 
@@ -176,8 +179,8 @@ class langSnippets {
             'trailer' => 'Trailer',
             'highlight' => 'Highlight',
             'status' => 'Status',
-            'episode' => 'Episode',
-            'episodes' => 'Episoden',
+            'episode' => 'Folge',
+            'episodes' => 'Folgen',
             'season' => 'Staffel',
             'seasons' => 'Staffeln',
 
@@ -195,6 +198,7 @@ class langSnippets {
             'loading_content' => 'Inhalte werden geladen, bitte warten.',
             'edit_user' => 'Benutzer bearbeiten',
             'next_episode' => 'Nächste Folge',
+            'sorting' => 'Sortierung',
 
 			// Movie
 			'rating' => 'Bewertung',
@@ -232,9 +236,11 @@ class langSnippets {
             'update_backdrop_success' => 'Thumbnail wurde erfolgreich aktualisiert!',
             'update_file_path_success' => 'Dateipfad wurde erfolgreich aktualisiert!',
             'update_trailer_success' => 'Trailer wurde erfolgreich aktualisiert!',
+            'update_show_success' => 'Serie wurde erfolgreich aktualisiert!',
 
             'add_highlight_success' => 'Highlight wurde erfolgreich hinzugefügt!',
             'delete_highlight_success' => 'Highlight wurde erfolgreich gelöscht!',
+            'delete_season_success' => 'Staffel wurde erfolgreich gelöscht werden!',
 
             'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
             'user_img_upload_success' => 'Bild erfolgreich hochgeladen',
@@ -259,9 +265,11 @@ class langSnippets {
             'update_backdrop_alert' => 'Thumbnail konntent nicht aktualisiert werden!',
             'update_file_path_alert' => 'Dateipfad konntent nicht aktualisiert werden!',
             'update_trailer_alert' => 'Trailer konntent nicht aktualisiert werden!',
+            'update_show_alert' => 'Serie konntent nicht aktualisiert werden!',
 
             'add_highlight_alert' => 'Highlight konnte nicht hinzugefügt werden!',
             'delete_highlight_alert' => 'Highlight konnte nicht gelöscht werden!',
+            'delete_season_alert' => 'Staffel konnte nicht gelöscht werden!',
 
             'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
 

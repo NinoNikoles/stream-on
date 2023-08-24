@@ -581,25 +581,41 @@ $(document).ready(function() {
             if ( $('#player').length > 0 ) {
                 //if ( !self.isSmartphone() ) {
                 var player = videojs('player');
-
                 video = $('video')[0];
                 sekunde = $('span[data-time]').attr('data-time');
+
                 // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
                 video.addEventListener("loadedmetadata", function() {
                     video.currentTime = sekunde;
                     $('#player-back-btn').appendTo(".video-js");
-                    $('#next-episode-btn').appendTo(".video-js");
-                    $('#show-container').appendTo(".video-js");
+                    
+                    if ( $('#next-episode-btn').length > 0 ) {
+                        $('#next-episode-btn').appendTo(".video-js");
+                    }
+                    if ( $('#show-container').length > 0 ) {
+                        $('#show-container').appendTo(".video-js");
+                    }
+                    if ( $('#show-eps-btn').length > 0 ) {
+                        $('#show-eps-btn').appendTo(".video-js .vjs-control-bar");
+                    }                    
                 });
 
                 player.on('play', function() {
+                    $fullscreen = $('.vjs-fullscreen-control');
                     $currTime = $('.vjs-current-time');
                     $divider = $('.vjs-time-divider');
                     $duration = $('.vjs-duration');
 
-                    $duration.css('right', $('.vjs-fullscreen-control').outerWidth());
-                    $divider.css('right', ($('.vjs-fullscreen-control').outerWidth()+$duration.outerWidth()));
-                    $currTime.css('right', ($('.vjs-fullscreen-control').outerWidth()+$duration.outerWidth()+$divider.outerWidth()));
+                    if ( $('#show-eps-btn').length > 0 ) {
+                        $epsBtnWidth = $('#show-eps-btn').outerWidth();
+                        $('#show-eps-btn').css('right', $fullscreen.outerWidth());
+                    } else {
+                        $epsBtnWidth = 0;
+                    }
+
+                    $duration.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth ));
+                    $divider.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth + $duration.outerWidth() ));
+                    $currTime.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth + $duration.outerWidth() + $divider.outerWidth() ));
                 });
 
 
@@ -638,6 +654,12 @@ $(document).ready(function() {
                     $(showContainer).removeClass('active-submenu');
 
                     $(showContainer+' ul.sub-menu').removeClass('active');
+                });
+
+                $('a#show-eps-btn').on('click', function(e) {
+                    e.preventDefault();
+
+                    $(showContainer).toggleClass('visible');
                 });
 
                 /*} else {
@@ -731,31 +753,38 @@ $(document).ready(function() {
                 // Ausführen, wenn die Metadaten geladen sind
                 $(video).on('loadedmetadata', function() {
                     var interval = false;
+                    var isVideoEnded = false;
 
                     $(video).on('play', function() {
-                        saveTime();
+                        isVideoEnded = false;
+                        saveTime(video.currentTime, video.duration);
                         clearInterval(interval);
                         interval = setInterval(saveTime, 30000);
                     });
 
+                    $(video).on('ended', function() {
+                        isVideoEnded = true;
+                        clearInterval(interval);
+                        saveTime(video.duration, video.duration);
+                    });
+
                     $(video).on('pause', function() {
-                        clearInterval(interval);
-                        saveTime();
+                        if (!isVideoEnded && video.currentTime !== video.duration ) {
+                            clearInterval(interval);
+                            saveTime(video.currentTime, video.duration);
+                        }
                     });
 
-                    $(video).on('stop', function() {
-                        clearInterval(interval);
-                        saveTime();
-                    });
-
-                    function saveTime() {
-                        var currentSecond = video.currentTime;
-                        var totalDuration = video.duration;
+                    function saveTime(currentVideoTime, videoDuration) {
+                        var currentSecond = currentVideoTime;
+                        var totalDuration = videoDuration;
                         $resultList = $('#time');
                         var showID = $resultList.attr('data-show');
 
                         if ( currentSecond === totalDuration ) {
-                            currentSecond = 0;
+                            watched = 1;
+                        } else {
+                            watched = 0;
                         }
 
                         $.ajax({
@@ -765,6 +794,7 @@ $(document).ready(function() {
                                 mediaID: $(video).attr('data-id'),
                                 show: showID,
                                 time: currentSecond,
+                                watched: watched,
                                 totalLength: totalDuration,
                             },
                             success: function(response) {
@@ -908,6 +938,30 @@ $(document).ready(function() {
             $("body").removeClass('loading');
             
             self.fancyLoad();
+        },
+
+        sorting: function() {
+            function orderSetup() {
+                var genreID = $('#genre-filter').val();
+                var order = $('#title-filter').val();
+
+                $.ajax({
+                    url: '/sorting',
+                    type: 'post',
+                    data: { 
+                        genreID: genreID,
+                        order: order
+                    },
+                    success: function(response) {
+                        var mediaSrc = response;
+                        $('#media-list').empty();
+                        $('#media-list').append(mediaSrc);
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
+                    }
+                });
+            }
         },
 
         fancyLoad: function() {

@@ -311,6 +311,7 @@
 
     #player-back-btn {
         display: block;
+        color: var(--white);
         flex: none;
         width: rem-calc(50);
         height: rem-calc(50);
@@ -362,6 +363,13 @@
             }
         }
     }
+
+    .vjs-poster {
+        img {
+            height: 100%;
+            max-width: unset;
+        }
+    }
 }
 
 #player-back-btn {
@@ -395,6 +403,7 @@
 .vjs-control {
     .vjs-icon-placeholder {
         &::before {
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
             @include transition(all $transition-default);
         }
     }
@@ -419,14 +428,14 @@
     width: rem-calc(150);
     margin: 0;
     position: absolute;
-    right: rem-calc($space-base);
+    right: rem-calc(26);
     bottom: rem-calc(80);
     visibility: hidden;
     opacity: 0;
     @include transitions(opacity $transition-default, bottom $transition-default);
 
     @include MQ(medium) {
-        width: rem-calc(300);
+        width: rem-calc(320);
         bottom: rem-calc(130);
 
         &.visible {
@@ -457,6 +466,7 @@
 }
 
 .video-js.vjs-has-started {
+    #show-container, 
     .next-episode-btn {
         &.visible {
             visibility: visible;
@@ -464,26 +474,83 @@
         }
     }
 
+    #show-eps-btn {
+        visibility: visible;
+        opacity: 1;
+    }
+
     &.vjs-user-inactive {
-        .next-episode-btn {
+        .next-episode-btn,
+        #show-container {
             bottom: rem-calc($space-base);
+        }
+    }
+}
+
+#show-eps-btn {
+    color: var(--white);
+    position: absolute;
+    bottom: 0;
+    width: rem-calc(40);
+    height: rem-calc(40);
+    margin: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    @include MQ(medium) {
+        width: rem-calc(60);
+        height: rem-calc(60);
+    }
+
+    &::before {
+        font: {
+            size: rem-calc(20);
+        }
+        
+        @include transition(all $transition-default);
+
+        @include MQ(medium) {
+            font: {
+                size: rem-calc(30);
+            } 
+        }
+    }
+
+    &:hover {
+        &::before {
+            font: {
+                size: rem-calc(20);
+            }
+
+            @include MQ(medium) {
+                font: {
+                    size: rem-calc(40);
+                } 
+            }
         }
     }
 }
 
 #show-container {
     background-color: var(--dark-light);
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
     position: absolute;
-    top: 0;
-    right: 0;
+    right: rem-calc(26);
+    bottom: rem-calc(80);
 
-    width: rem-calc(150);
-    height: rem-calc(150);
+    width: rem-calc(320);//
+    height: rem-calc(200);
     overflow: hidden;
 
+    visibility: hidden;
+    opacity: 0;
+    @include transitions(opacity $transition-default, bottom $transition-default);
+
     @include MQ(medium) {
-        width: rem-calc(300);//
-        height: rem-calc(200);
+        bottom: rem-calc(130); 
     }
 
     ul.menu {
@@ -496,10 +563,13 @@
         @include transition(left $transition-default);//
 
         > li {
+            border-bottom: 1px solid var(--white-20);
+
             > a {
                 display: flex;
                 flex-wrap: nowrap;
                 justify-content: space-between;
+                color: var(--white);
                 margin: 0;
                 padding: {
                     top: rem-calc(5);
@@ -508,10 +578,18 @@
                     left: rem-calc(10);
                 }
 
+                &:hover,
+                &:focus {
+                    background: {
+                        color: var(--dark);
+                    }
+                }
+
                 span {
                     display: flex;
                     flex-direction: row-reverse;
                     margin: 0;
+                    opacity: 0.7;
                 }
             }
 
@@ -545,7 +623,34 @@
     }
 
     .back {
-        display: block;
+        display: flex;
+        color: var(--white);
+        width: 100%;
         margin: 0;
+        padding: {
+            top: rem-calc(5);
+            right: rem-calc(10);
+            bottom: rem-calc(5);
+            left: rem-calc(10);
+        }
+
+        &:hover,
+        &:focus {
+            background: {
+                color: var(--dark);
+            }
+        }
     }
+}
+
+#player-back-btn::before,
+#show-eps-btn::before,
+.vjs-current-time-display,
+.vjs-time-divider span,
+.vjs-duration-display {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+.video-js .vjs-progress-control .vjs-progress-holder {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
 }

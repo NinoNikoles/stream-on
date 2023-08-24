@@ -22,7 +22,7 @@ function movieVideoPlayer($movieID, $fullscreen = false) {
                 echo '<video id="player" class="video-js" data-id="'.$movieID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" data-current-time="true" data-duration="true" controls preload="auto" poster="'.loadImg('original', $backdrop).'">'; //'.$tmdb->getImageURL().$backdrop.' // 
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
-                echo '<button id="player-back-btn" title="Back" onclick="history.back()"></button>';
+                echo '<a href="/" id="player-back-btn" title="Back"></a>';
             echo '</figure>';
             //
         } else {
@@ -111,7 +111,7 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                         if ( $episodeRow['file_path'] != "" ) {
                             $episodeWatchTrigger = '<div class="link-wrapper">
                                 <a href="/watch/?s='.$showID.'&id='.$episodeIDrun.'" class="play-trigger">
-                                    <span class="icon-wrap col-5 col-3-medium pad-top-xxs pad-bottom-xxs pad-left-xxs">
+                                    <span class="icon-wrap col-3 pad-top-xxs pad-bottom-xxs pad-left-xxs">
                                         <i class="icon-play"></i>
                                     </span>
                                 </a>
@@ -139,11 +139,11 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
             // Generate season select
             // since season 0 is always extras, it will be added at the end
             if ( $seasonRow['season_number'] === '0' ) {
-                $extraSeasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back"><i class="icon-left icon-chevron-left"></i></a>'.$episodeList.'</ul></li>';
+                $extraSeasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul></li>';
             } else if ( $seasonRow['season_number'] === '1' ) {
-                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back"><i class="icon-left icon-chevron-left"></i></a>'.$episodeList.'</ul></li>';
+                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul></li>';
             } else {
-                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back"><i class="icon-left icon-chevron-left"></i></a>'.$episodeList.'</ul></li>';
+                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul></li>';
             }
 
 
@@ -167,7 +167,8 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                 echo '<video id="player" class="video-js" data-id="'.$episodeID.'" data-set="fullscreen" data-fullscreen="true" data-sound="true" data-current-time="true" data-duration="true" controls preload="auto" poster="'.loadImg('original', $backdrop).'">'; //'.$tmdb->getImageURL().$backdrop.' // 
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
-                echo '<button id="player-back-btn" title="Back" onclick="history.back()"></button>';
+                echo '<a href="/" id="player-back-btn" title="Back"></a>';
+                echo '<a href="#" id="show-eps-btn" class="icon icon-multilayer" title="All episodes"></a>';
                 echo $nextBTN;
                 echo $showContainer;
             echo '</figure>';

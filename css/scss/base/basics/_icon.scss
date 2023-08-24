@@ -108,6 +108,7 @@ a.icon-right:hover {
     &-mail { &::before { content: $icon-mail; } }
     &-media { &::before { content: $icon-media; } }
     &-moon { &::before { content: $icon-moon; } }
+    &-multilayer { &::before { content: $icon-multilayer; } }
     &-pause { &::before { content: $icon-pause; } }
     &-pen { &::before { content: $icon-pen; } }
     &-phone { &::before { content: $icon-phone; } }

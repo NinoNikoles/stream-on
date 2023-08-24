@@ -301,8 +301,13 @@
     }
 }
 
+.watched-bar {
+    display: none;
+}
+
 .currentWatch-slider {
     .watched-bar {
+        display: block;
         background: {
             color: var(--white-15);
         }
