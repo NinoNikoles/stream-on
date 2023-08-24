@@ -76,6 +76,7 @@ $(document).ready(function() {
             self.updateOverlay();
             self.pageReady();
             self.mediaPopUp();
+            self.sorting();
             //self.videoTriggerFullscreen();
         },
 
