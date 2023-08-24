@@ -55,4 +55,20 @@ function getDBGenreNameByID($id) {
         }
     }
 }
+
+function getAllGenre() {
+    $conn = dbConnect();
+    $genres = [];
+    $sql = "SELECT * FROM genres ORDER BY genre_name ASC";
+    $results = $conn->query($sql);
+    if ($results->num_rows > 0) {
+        while ($genre = $results->fetch_assoc()) {
+            $genres[] = $genre;
+        }
+
+        return $genres;
+    } else {
+        return false;
+    }
+}
 ?>
