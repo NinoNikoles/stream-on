@@ -941,6 +941,8 @@ $(document).ready(function() {
         },
 
         sorting: function() {
+            var self = this;
+
             function orderSetup() {
                 var genreID = $('#genre-filter').val();
                 var order = $('#title-filter').val();
@@ -962,6 +964,14 @@ $(document).ready(function() {
                     }
                 });
             }
+
+            $('#genre-filter').on('change', function() {
+                self.orderSetup();
+            });
+
+            $('#title-filter').on('change', function() {
+                self.orderSetup();
+            });
         },
 
         fancyLoad: function() {
