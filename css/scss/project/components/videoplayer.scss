@@ -153,11 +153,11 @@
 
     .vjs-volume-panel {
         position: absolute !important;
-        left: rem-calc(40);
+        left: rem-calc(120);
         bottom: 0;
 
         @include MQ(medium) {
-            left: rem-calc(60);
+            left: rem-calc(180);
         }
 
         .vjs-mute-control {
@@ -466,7 +466,7 @@
 }
 
 .video-js.vjs-has-started {
-    #show-container, 
+    #show-container,
     .next-episode-btn {
         &.visible {
             visibility: visible;
@@ -474,6 +474,8 @@
         }
     }
 
+    #player-sek-forward,
+    #player-sek-back,
     #show-eps-btn {
         visibility: visible;
         opacity: 1;
@@ -484,6 +486,68 @@
         #show-container {
             //bottom: rem-calc($space-base);
         }
+    }
+}
+
+#player-sek-forward,
+#player-sek-back {
+    color: var(--white);
+    position: absolute;
+    bottom: 0;
+    width: rem-calc(40);
+    height: rem-calc(40);
+    margin: 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    @include MQ(medium) {
+        width: rem-calc(60);
+        height: rem-calc(60);
+    }
+
+    &::before {
+        font: {
+            size: rem-calc(20);
+        }
+        
+        @include transition(all $transition-default);
+
+        @include MQ(medium) {
+            font: {
+                size: rem-calc(30);
+            } 
+        }
+    }
+
+    &:hover {
+        &::before {
+            font: {
+                size: rem-calc(20);
+            }
+
+            @include MQ(medium) {
+                font: {
+                    size: rem-calc(40);
+                } 
+            }
+        }
+    }
+}
+
+#player-sek-forward {
+    left: rem-calc(40);
+
+    @include MQ(medium) {
+        left: rem-calc(60)
+    }
+}
+
+#player-sek-back {
+    left: rem-calc(80);
+
+    @include MQ(medium) {
+        left: rem-calc(120);
     }
 }
 
@@ -659,6 +723,8 @@
 }
 
 #player-back-btn::before,
+#player-sek-forward::before,
+#player-sek-back::before,
 #show-eps-btn::before,
 .vjs-current-time-display,
 .vjs-time-divider span,

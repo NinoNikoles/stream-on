@@ -23,6 +23,8 @@ function movieVideoPlayer($movieID, $fullscreen = false) {
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
+                echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
+                echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
             echo '</figure>';
             //
         } else {
@@ -183,6 +185,8 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
+                echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
+                echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
                 echo '<a href="#" id="show-eps-btn" class="icon icon-multilayer" title="All episodes"></a>';
                 echo $nextBTN;
                 echo $showContainer;

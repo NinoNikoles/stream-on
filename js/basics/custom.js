@@ -363,6 +363,8 @@ $(document).ready(function() {
                 video.addEventListener("loadedmetadata", function() {
                     video.currentTime = sekunde;
                     $('#player-back-btn').appendTo(".video-js");
+                    $('#player-sek-forward').appendTo(".video-js .vjs-control-bar");
+                    $('#player-sek-back').appendTo(".video-js .vjs-control-bar");
                     
                     if ( $('#next-episode-btn').length > 0 ) {
                         $('#next-episode-btn').appendTo(".video-js");
@@ -435,6 +437,18 @@ $(document).ready(function() {
                     e.preventDefault();
 
                     $(showContainer).toggleClass('visible');
+                });
+
+                $('#player-sek-forward').on('click', function(e) {
+                    e.preventDefault();
+
+                    player.currentTime(player.currentTime() + 10);
+                });
+
+                $('#player-sek-back').on('click', function(e) {
+                    e.preventDefault();
+
+                    player.currentTime(player.currentTime() - 10);
                 });
             }
         },
