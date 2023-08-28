@@ -244,16 +244,16 @@ function adminMenu($menu) {
             if ( $genreCheck === true) {
                 return '
                 <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">- '.lang_snippet('users').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">- '.lang_snippet('genres').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/movies" title="'.lang_snippet('movies').'">- '.lang_snippet('movies').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/shows" title="'.lang_snippet('shows').'">- '.lang_snippet('shows').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/highlights" title="'.lang_snippet('highlights').'">- '.lang_snippet('highlights').'</a></li>';
+                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">'.lang_snippet('users').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">'.lang_snippet('genres').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/movies" title="'.lang_snippet('movies').'">'.lang_snippet('movies').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/shows" title="'.lang_snippet('shows').'">'.lang_snippet('shows').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/highlights" title="'.lang_snippet('highlights').'">'.lang_snippet('highlights').'</a></li>';
             } else {
                 return '
                 <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">- '.lang_snippet('users').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">- '.lang_snippet('genres').'</a></li>';
+                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">'.lang_snippet('users').'</a></li>
+                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">'.lang_snippet('genres').'</a></li>';
             }
             
         } else if ( 'user-menu' ) {
