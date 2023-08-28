@@ -407,3 +407,32 @@
         outline: none !important;
     }
 }
+
+@for $i from 1 through 100 {
+    $width:  $i / 100 * 100%;
+
+    .watched-#{$i} {
+        &::before,
+        &::after {
+            content: "";
+            height: 2px;
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+
+            @include MQ(medium) {
+                bottom: 12px;
+            }
+        }
+        &::before {
+            background-color: var(--grey);
+            width: 100%;
+        }
+
+        &::after {
+            background-color: var(--alert);
+            width: $width;
+            z-index: 1;
+        }
+    }
+}

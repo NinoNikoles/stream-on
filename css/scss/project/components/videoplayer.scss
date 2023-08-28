@@ -482,7 +482,7 @@
     &.vjs-user-inactive {
         .next-episode-btn,
         #show-container {
-            bottom: rem-calc($space-base);
+            //bottom: rem-calc($space-base);
         }
     }
 }
@@ -550,6 +550,8 @@
     @include transitions(opacity $transition-default, bottom $transition-default);
 
     @include MQ(medium) {
+        width: rem-calc(480);
+        height: rem-calc(288);
         bottom: rem-calc(130); 
     }
 
@@ -560,7 +562,14 @@
         position: absolute;
         top: 0;
         left: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
         @include transition(left $transition-default);//
+
+        &::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
 
         > li {
             border-bottom: 1px solid var(--white-20);
@@ -592,20 +601,25 @@
                     opacity: 0.7;
                 }
             }
+        }
+    }
 
-            ul.sub-menu {
-                list-style-type: none;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 100%;
+    ul.sub-menu {
+        list-style-type: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 100%;
 
-                visibility: hidden;
-                opacity: 0;
-                overflow-y: scroll;
-                @include transition(all 0s ease 0.3s);
-            }
+        visibility: hidden;
+        opacity: 0;
+        overflow-y: auto;
+        @include transition(all $transition-default);
+
+        &::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
         }
     }
 
@@ -616,9 +630,10 @@
 
         ul.sub-menu.active {
             display: block;
+            left: 0;
             visibility: visible;
             opacity: 1;
-            @include transition(all 0s ease 0s);
+            @include transition(all $transition-default);
         }
     }
 

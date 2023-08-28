@@ -87,12 +87,13 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
     $seasonWrap = '';
     $extraSeasonWrap = '';
     $extras = '';
+    $subMenuList = "";
 
     if ($seasonsResult->num_rows > 0) {
         while ( $seasonRow = $seasonsResult->fetch_assoc() ) {
 
             // fetch all episodes of season
-            $fetchEpisodes = "SELECT tmdbID, title, overview, backdrop, season_number, file_path FROM episodes WHERE show_id=$showID and season_number = ".$seasonRow['season_number']." ORDER BY episode_number ASC";
+            $fetchEpisodes = "SELECT tmdbID, title, episode_number, overview, backdrop, season_number, file_path FROM episodes WHERE show_id=$showID and season_number = ".$seasonRow['season_number']." ORDER BY episode_number ASC";
             $episodesResult = $conn->query($fetchEpisodes);
 
             $episodeList = '';
@@ -103,15 +104,27 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                     if ( $seasonRow['season_number'] === $episodeRow['season_number']) {
                         $episodeIDrun = $episodeRow['tmdbID'];
                         $episodeBackdropRun = $episodeRow['backdrop'];
+                        $episodeTitleRun = $episodeRow['title'];
+                        $episodeNumberRun = $episodeRow['episode_number'];
                         $episodeOverviewRun = $episodeRow['overview'];
                         $episodeWatchTrigger = '';
                         $episodeDisabled = 'disabled';
+                        $watchedClass = "";
+
+                        $watchCheck = "SELECT * FROM media_watched WHERE user_id = ".$_SESSION['userID']." AND media_id = $episodeIDrun;";
+                        $watchCheckResult = $conn->query($watchCheck);
+                        
+                        if ( $watchCheckResult->num_rows > 0 ) {
+                            while ( $watchInfoChecked = $watchCheckResult->fetch_assoc() ) {
+                                $watchedClass = 'watched-'.round(getWatchedTime($watchInfoChecked['watched_seconds'], $watchInfoChecked['total_length']), 0);
+                            }
+                        }
                         
 
                         if ( $episodeRow['file_path'] != "" ) {
                             $episodeWatchTrigger = '<div class="link-wrapper">
-                                <a href="/watch/?s='.$showID.'&id='.$episodeIDrun.'" class="play-trigger">
-                                    <span class="icon-wrap col-3 pad-top-xxs pad-bottom-xxs pad-left-xxs">
+                                <a href="/watch/?s='.$showID.'&id='.$episodeIDrun.'" class="play-trigger" title="'.lang_snippet('episode').' '.$episodeNumberRun.': '.$episodeTitleRun.'">
+                                    <span class="icon-wrap col-3 pad-top-xs pad-bottom-xs">
                                         <i class="icon-play"></i>
                                     </span>
                                 </a>
@@ -120,14 +133,15 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                         }
 
                         // creates eipsode item for show
-                        $episodeList.= '<li class="list-item">
-                        <div class="col12 media-card-episode '.$episodeDisabled.' pad-top-xxs pad-bottom-xxs">
-                            <div class="col-3 pad-left-xxs">
+                        $episodeList.= '<li class="list-item pad-left-xs pad-right-xs">
+                        <div class="col12 media-card-episode '.$episodeDisabled.' '.$watchedClass.' pad-top-xs pad-bottom-xs">
+                            <div class="col-3">
                                 <figure class="widescreen">
                                     <img data-img="'.loadImg('original', $episodeBackdropRun).'">
                                 </figure>
                             </div>
-                            <div class="col-9 pad-left-xxs pad-right-xxs">
+                            <div class="col-9 pad-left-xs">
+                                <p class="small strong marg-no">'.lang_snippet('episode').' '.$episodeNumberRun.': '.truncate($episodeTitleRun, 50).'</p>
                                 <p class="smaller">'.truncate($episodeOverviewRun, 100).'</p>
                             </div>
                             '.$episodeWatchTrigger.'
@@ -139,19 +153,20 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
             // Generate season select
             // since season 0 is always extras, it will be added at the end
             if ( $seasonRow['season_number'] === '0' ) {
-                $extraSeasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul></li>';
+                $extraSeasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a></li>';
             } else if ( $seasonRow['season_number'] === '1' ) {
-                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul></li>';
+                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a></li>';
             } else {
-                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a><ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul></li>';
+                $seasonWrap .= '<li class="list-item"><a href="#season-'.$seasonRow['tmdbID'].'-container" data-id="'.$seasonRow['tmdbID'].'">'.$seasonRow['title'].'<span class="icon-right icon-chevron-right">'.$seasonRow['episodes_count'].' '.lang_snippet('episodes').'</span></a></li>';
             }
 
-
-            $seasonList = $seasonWrap.$extraSeasonWrap;
+            $subMenuList .= '<ul class="sub-menu" id="'.$seasonRow['tmdbID'].'"><a href="#" class="back icon-left icon-chevron-left">'.lang_snippet("seasons").'</a>'.$episodeList.'</ul>';
+            
         }
     }
 
-    $showContainer = '<div id="show-container"><ul class="menu">'.$seasonList.'</ul></div>';
+    $seasonList = $seasonWrap.$extraSeasonWrap;
+    $showContainer = '<div id="show-container"><ul class="menu">'.$seasonList.'</ul>'.$subMenuList.'</div>';
 
     if ( $filePath !== "" ) {
         $userID = $_SESSION['userID'];

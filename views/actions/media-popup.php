@@ -58,7 +58,16 @@ while ( $media = $result->fetch_assoc() ) {
                             $episodeOverview = $episodeRow['overview'];
                             $episodeWatchTrigger = '';
                             $episodeDisabled = 'disabled';
+                            $watchedClass = '';
+
+                            $watchCheck = "SELECT * FROM media_watched WHERE user_id = ".$_SESSION['userID']." AND media_id = $episodeID;";
+                            $watchCheckResult = $conn->query($watchCheck);
                             
+                            if ( $watchCheckResult->num_rows > 0 ) {
+                                while ( $watchInfoChecked = $watchCheckResult->fetch_assoc() ) {
+                                    $watchedClass = 'watched-'.round(getWatchedTime($watchInfoChecked['watched_seconds'], $watchInfoChecked['total_length']), 0);
+                                }
+                            }
 
                             if ( $episodeRow['file_path'] != "" ) {
                                 $episodeWatchTrigger = '<div class="link-wrapper">
@@ -72,7 +81,7 @@ while ( $media = $result->fetch_assoc() ) {
                             }
     
                             // creates eipsode item for show
-                            $episodeList.= '<div class="col12 media-card-episode '.$episodeDisabled.' pad-top-xs pad-bottom-xs">
+                            $episodeList.= '<div class="col12 media-card-episode '.$episodeDisabled.' '.$watchedClass.' pad-top-xs pad-bottom-xs">
                                 <div class="col-5 col-3-medium">
                                     <figure class="widescreen">
                                         <img data-img="'.loadImg('original', $episodeBackdrop).'" alt="'.$title.'">
