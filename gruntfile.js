@@ -8,15 +8,10 @@ module.exports = function(grunt) {
             root: ''
         },
         jsResources: [
-            //'<%= config.root %>js/basics/jquery-3.6.0.min.js',
-            //'<%= config.root %>js/plugins/fancybox5.js',
-            //'<%= config.root %>js/plugins/videojs.js',
             '<%= config.root %>js/plugins/scrolltrigger.js',
-            //'<%= config.root %>js/plugins/swiper-bundle.min.js',
-            //'<%= config.root %>js/plugins/jstree.min.js',
             '<%= config.root %>js/basics/menu.js',
-            '<%= config.root %>js/basics/movie.js',
             '<%= config.root %>js/basics/custom.js',
+            '<%= config.root %>js/basics/api.js',
         ],
         cssResources: [],
 
