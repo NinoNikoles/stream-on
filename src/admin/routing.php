@@ -24,6 +24,7 @@ class routes {
             '/live-search' => 'views/actions/livesearch.php',
             '/highlight-status' => 'views/actions/highlight-status.php',
             '/media-popup' => 'views/actions/media-popup.php',
+            '/filter' => 'views/actions/filter.php',
         ],
         'admin' => [
             '/admin/settings' => 'views/backend/settings.php',

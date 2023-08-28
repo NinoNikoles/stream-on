@@ -11,6 +11,7 @@ echo '<div class="innerWrap marg-top-l marg-bottom-l">';
         echo '<div class="col-12 col-3-medium grid-padding marg-bottom-s">';
             echo '<label>'.lang_snippet('genres');
                 echo '<select id="genre-filter">';
+                    echo '<option value="all">'.lang_snippet('all').'</option>';
                     
                     $genres = getAllGenre();
                     foreach ( $genres as $genre ) {
@@ -18,6 +19,7 @@ echo '<div class="innerWrap marg-top-l marg-bottom-l">';
                     }
                 echo '</select>';
             echo '</label>';
+            echo '<span id="type-filter" data-type="show" style="display:none;">';
         echo '</div>';
         echo '<div class="col-12 col-3-medium marg-left-col6 grid-padding marg-bottom-s">';
             echo '<label>'.lang_snippet('sorting');

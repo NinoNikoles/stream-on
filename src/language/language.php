@@ -48,6 +48,8 @@ class langSnippets {
             'seasons' => 'Seasons',
             'watch_now' => 'Watch now',
             'continue_watching' => 'Continue',
+            'all' => 'All',
+            'menu' => 'Menu',
 
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -65,6 +67,7 @@ class langSnippets {
             'enable_edit_btn' => 'Do you want to allow media editing from the main pages? (concerns admins only)',
             'next_episode' => 'Next episode',
             'sorting' => 'Order',
+            'no_content_found' => 'No content was found.',
 
 			// Movie
 			'rating' => 'Rating',
@@ -183,6 +186,8 @@ class langSnippets {
             'episodes' => 'Folgen',
             'season' => 'Staffel',
             'seasons' => 'Staffeln',
+            'all' => 'Alle',
+            'menu' => 'Menü',
 
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
@@ -199,6 +204,7 @@ class langSnippets {
             'edit_user' => 'Benutzer bearbeiten',
             'next_episode' => 'Nächste Folge',
             'sorting' => 'Sortierung',
+            'no_content_found' => 'Es wurden keine Inhalte gefunden.',
 
 			// Movie
 			'rating' => 'Bewertung',

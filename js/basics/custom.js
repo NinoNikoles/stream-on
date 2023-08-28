@@ -423,7 +423,7 @@ $(document).ready(function() {
                     $(showContainer+' ul.sub-menu#'+listID).addClass('active');
                 });
 
-                $(showContainer+' .menu li .sub-menu .back').on('click', function(e) {
+                $(showContainer+' .sub-menu .back').on('click', function(e) {
                     e.preventDefault();
 
                     $(showContainer).removeClass('active-submenu');

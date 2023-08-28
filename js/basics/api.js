@@ -569,18 +569,21 @@ $(document).ready(function() {
             function orderSetup() {
                 var genreID = $('#genre-filter').val();
                 var order = $('#title-filter').val();
+                var type = $('#type-filter').attr('data-type');
 
                 $.ajax({
-                    url: '/sorting',
+                    url: '/filter',
                     type: 'post',
                     data: { 
                         genreID: genreID,
-                        order: order
+                        order: order,
+                        type: type,
                     },
                     success: function(response) {
                         var mediaSrc = response;
                         $('#media-list').empty();
                         $('#media-list').append(mediaSrc);
+                        self.fancyLoad();
                     }, error: function(xhr, status, error) {
                         // Hier wird eine Fehlermeldung ausgegeben
                         console.log('Fehler: ' + error);
