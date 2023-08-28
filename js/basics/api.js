@@ -1,14 +1,5 @@
-var inputTimer,
-throttel = function(e) {
-    clearTimeout(resizeTimer);
-    inputTimer = setTimeout(function() {
-        page.resizeHook();
-    }, 50);
-};
-
-
 $(document).ready(function() {
-    page = {
+    api = {
         $window: $(window),
         $html: $('html'),
         $body: $('body'),
@@ -601,5 +592,5 @@ $(document).ready(function() {
         },
     }
 
-    page.init();
+    api.init();
 });
