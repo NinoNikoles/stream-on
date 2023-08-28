@@ -1,0 +1,17 @@
+label {
+    &.select {
+        &::before {
+            content: $icon-chevron-down;
+            font: {
+                family: $icon-font;
+                size: rem-calc(28);
+            }
+            line-height: 1;
+            position: absolute;
+            right: rem-calc(12);
+            bottom: rem-calc(12);
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+}

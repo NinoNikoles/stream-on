@@ -9,7 +9,7 @@ echo '<div class="innerWrap marg-top-l marg-bottom-l">';
     // Sorting
     echo '<div class="grid-row">';
         echo '<div class="col-12 col-3-medium grid-padding marg-bottom-s">';
-            echo '<label>'.lang_snippet('genres');
+            echo '<label class="select">'.lang_snippet('genres');
                 echo '<select id="genre-filter">';
                     echo '<option value="all">'.lang_snippet('all').'</option>';
                     
@@ -22,7 +22,7 @@ echo '<div class="innerWrap marg-top-l marg-bottom-l">';
             echo '<span id="type-filter" data-type="show" style="display:none;">';
         echo '</div>';
         echo '<div class="col-12 col-3-medium marg-left-col6 grid-padding marg-bottom-s">';
-            echo '<label>'.lang_snippet('sorting');
+            echo '<label class="select">'.lang_snippet('sorting');
                 echo '<select id="title-filter">';
                     echo '<option value="ASC">A - Z</option>';
                     echo '<option value="DESC">Z - A</option>';

@@ -91,9 +91,11 @@ a.icon-right:hover {
 .icon {
     &-add { &::before { content: $icon-add; } }
     &-add-user { &::before { content: $icon-add-user; } }
+    &-arrow-right { &::before { content: $icon-arrow-right; } }
     &-arrow-back { &::before { content: $icon-arrow-back; } }
+    &-arrow-left { &::before { content: $icon-arrow-back; } }
     &-check { &::before { content: $icon-check; } }
-    &-chevron-down { &::before { content: $icon-chevron-down; transform: translate(-50%, -50%) !important; rotate: 90deg !important; } }
+    &-chevron-down { &::before { content: $icon-chevron-down; } }
     &-chevron-left { &::before { content: $icon-chevron-left; } }
     &-chevron-up { &::before { content: $icon-chevron-up; } }
     &-chevron-right { &::before { content: $icon-chevron-right; } }
