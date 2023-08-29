@@ -492,13 +492,6 @@
         visibility: visible;
         opacity: 1;
     }
-
-    &.vjs-user-inactive {
-        .next-episode-btn,
-        #show-container {
-            //bottom: rem-calc($space-base);
-        }
-    }
 }
 
 #player-sek-forward,
