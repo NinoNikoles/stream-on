@@ -532,8 +532,8 @@ $(document).ready(function() {
                         videoPlayer.on('play', () => {
                             // Sende Aktion "Play" an den Server
                             if ( isFirstPlay ) {
-                                isFirstPlay = false;
                                 videoPlayer.pause();
+                                isFirstPlay = false;
                             } else {
                                 synchTime();
                                 socket.send('play');
@@ -541,16 +541,16 @@ $(document).ready(function() {
                         });
                 
                         videoPlayer.on('pause', () => {
-                            // Sende Aktion "Pause" an den Server
-                            synchTime();
-                            socket.send('pause');
+                            if ( !isFirstPlay ) {
+                                // Sende Aktion "Pause" an den Server
+                                synchTime();
+                                socket.send('pause');
+                            }
                         });
                 
                         videoPlayer.on('seeking', function () {
                             if ( videoPlayer.hasClass('vjs-scrubbing') ) {
-                                const currentTime = videoPlayer.currentTime();
-                                const actionTimeUpdate = `timeupdate:${currentTime}`;
-                                socket.send(actionTimeUpdate);
+                                synchTime();
                             }            
                         });
     
@@ -564,17 +564,25 @@ $(document).ready(function() {
 
                         $('.play-trigger').on('click', function(e) {
                             e.preventDefault();
-                            var url = $(this).attr('href');
-                            socket.send(`url:${url}`)
-                            window.location.href = url;
+                            changeMedia(this);
                         });
 
                         $('#next-episode-btn').on('click', function(e) {
                             e.preventDefault();
-                            var url = $(this).attr('href');
+                            changeMedia(this);
+                        });
+
+                        function changeMedia($his) {
+                            var url = $($his).attr('href');
                             socket.send(`url:${url}`)
                             window.location.href = url;
-                        });
+                        }
+
+                        function synchTime() {
+                            const currentTime = videoPlayer.currentTime();
+                            const actionTimeUpdate = `timeupdate:${currentTime}`;
+                            socket.send(actionTimeUpdate);
+                        }
                 
                         socket.onmessage = (event) => {
                             console.log(event.data);
@@ -591,12 +599,6 @@ $(document).ready(function() {
                                 window.location.href = url;
                             }
                         };
-    
-                        function synchTime() {
-                            const currentTime = videoPlayer.currentTime();
-                            const actionTimeUpdate = `timeupdate:${currentTime}`;
-                            socket.send(actionTimeUpdate);
-                        }
                     }
                 });
             }
