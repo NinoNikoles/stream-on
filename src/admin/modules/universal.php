@@ -374,4 +374,29 @@ function loadImg($size, $img) {
     //return "http://image.tmdb.org/t/p/$size$img";
     return '/views/build/css/images/img_preview.webp';
 }
+
+//-- User Volume --
+function getVolume($userID) {
+    $conn = dbConnect();
+    $sql = "SELECT media_volume FROM users WHERE id = $userID;";
+
+    $volume = $conn->query($sql)->fetch_assoc()['media_volume'];
+    if ( $volume === NULL ) {
+        $volume = 1;
+    }
+    
+    return $volume;
+}
+
+function getUUID() {
+    if (function_exists('random_bytes')) {
+        $data = random_bytes(16);
+    } elseif (function_exists('openssl_random_pseudo_bytes')) {
+        $data = openssl_random_pseudo_bytes(16);
+    } else {
+        $data = uniqid(mt_rand(), true);
+    }
+
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4)); 
+}
 ?>

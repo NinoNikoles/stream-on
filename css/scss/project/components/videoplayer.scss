@@ -309,12 +309,13 @@
         }
     }
 
-    #player-back-btn {
+    #player-back-btn,
+    #player-session-btn {
         display: block;
         color: var(--white);
         flex: none;
-        width: rem-calc(50);
-        height: rem-calc(50);
+        width: rem-calc(40);
+        height: rem-calc(40);
         position: absolute;
         top: rem-calc($grid-padding);
         left: rem-calc($grid-padding);
@@ -322,16 +323,9 @@
         opacity: 0;
         @include transition(opacity $transition-default);
 
-        &:hover {
-            cursor: pointer;
-
-            &::before {
-                @include MQ(medium) {
-                    font: {
-                        size: rem-calc(56);
-                    }    
-                }
-            }
+        @include MQ(medium) {
+            width: rem-calc(60);
+            height: rem-calc(60);
         }
 
         &::before {
@@ -339,25 +333,42 @@
             display: block;
             font: {
                 family: $icon-font;
-                size: rem-calc(40);
+                size: rem-calc(30);
             }
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             @include transition(all $transition-default);
+
+            @include MQ(medium) {
+                font: {
+                    size: rem-calc(40);
+                }    
+            }
+        }
+    }
+
+    #player-session-btn {
+        right: rem-calc($grid-padding);
+        left: unset;
+
+        &::before {
+            content: "\e925";
         }
     }
 
     &.vjs-has-started {
-        #player-back-btn {
+        #player-back-btn,
+        #player-session-btn {
             visibility: visible;
             opacity: 1;
             flex: none;
         }
 
         &.vjs-user-inactive {
-            #player-back-btn {
+            #player-back-btn,
+            #player-session-btn {
                 visibility: hidden;
                 opacity: 0;
             }
@@ -372,7 +383,8 @@
     }
 }
 
-#player-back-btn {
+#player-back-btn,
+#player-session-btn {
     display: none;
 }
 
@@ -723,6 +735,7 @@
 }
 
 #player-back-btn::before,
+#player-session-btn::before,
 #player-sek-forward::before,
 #player-sek-back::before,
 #show-eps-btn::before,

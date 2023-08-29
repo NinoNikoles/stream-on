@@ -14,6 +14,7 @@ class routes {
             '/movies' => 'views/movies.php',
             '/shows' => 'views/shows.php',
             '/watch/$id' => 'views/templates/watch.php',
+            '/watchtogether/$id' => 'views/templates/watchtogether.php',
             '/search' => 'views/search.php',
             '/my-list' => 'views/my-list.php',
         ],
@@ -25,6 +26,7 @@ class routes {
             '/highlight-status' => 'views/actions/highlight-status.php',
             '/media-popup' => 'views/actions/media-popup.php',
             '/filter' => 'views/actions/filter.php',
+            '/save-volume' => 'views/actions/save-volume.php',
         ],
         'admin' => [
             '/admin/settings' => 'views/backend/settings.php',

@@ -1,5 +1,5 @@
 <?php
-function movieVideoPlayer($movieID, $fullscreen = false) {
+function movieVideoPlayer($movieID, $fullscreen = false, $session = false) {
     $conn = dbConnect();
     $sql = "SELECT id, file_path, overview, backdrop FROM media WHERE tmdbID='$movieID' AND mediaType='movie'";
     $filePath = $conn->query($sql)->fetch_assoc()['file_path'];
@@ -23,6 +23,9 @@ function movieVideoPlayer($movieID, $fullscreen = false) {
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
+                if(!$session) {
+                    echo '<a href="/watchtogether/?id='.$movieID.'&uuid='.getUUID().'" id="player-session-btn" title="Start group session"></a>';
+                }
                 echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
                 echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
             echo '</figure>';
@@ -34,13 +37,21 @@ function movieVideoPlayer($movieID, $fullscreen = false) {
                 echo '</video>';
             echo '</figure>';
         }
-        echo '<span data-time="'.$watchedTime.'" data-show="'.$movieID.'" id="time"></span>';
+
+        if ( isset($_GET['uuid']) ) {
+            $sessionData = 'data-session="'.$_GET['uuid'].'"';
+        } else {
+            $sessionData = "";
+        }
+
+        $volume = getVolume($userID);
+        echo '<span data-time="'.$watchedTime.'" data-show="'.$movieID.'" '.$sessionData.' data-volume="'.$volume.'" id="time"></span>';
     }
 
     $conn->close();
 }
 
-function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
+function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = false) {
     $conn = dbConnect();
     $sql = "SELECT id, tmdbID, episode_number, file_path, overview, backdrop FROM episodes WHERE tmdbID=$episodeID AND show_id=$showID;";
 
@@ -55,7 +66,7 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
         }
     }
 
-    $nextEpisodeID = null;
+    $nextTMDBID = null;
 
     // Nun die nächstmögliche id mit derselben show_id und größerer episode_number finden
     $sql = "SELECT id, tmdbID, episode_number, file_path, backdrop FROM episodes WHERE show_id = $showID AND id > $id AND episode_number > $episodeNumber ORDER BY episode_number ASC, id ASC LIMIT 1;";
@@ -68,10 +79,17 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
             $nextBackdrop = $nextEpisode['backdrop'];
 
             if ( !($nextFilePath == NULL) || !($nextFilePath == '') ) {
-                $nextBTN = '<a href="/watch/?s='.$showID.'&id='.$nextTMDBID.'" id="next-episode-btn" class="next-episode-btn">
-                    <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
-                    <span>'.lang_snippet('next_episode').'</span>
-                </a>';
+                if ( $session ) {
+                    $nextBTN = '<a href="/watchtogether/?s='.$showID.'&id='.$nextTMDBID.'&uuid='.$_GET['uuid'].'" id="next-episode-btn" class="next-episode-btn">
+                        <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
+                        <span>'.lang_snippet('next_episode').'</span>
+                    </a>';
+                } else {
+                    $nextBTN = '<a href="/watch/?s='.$showID.'&id='.$nextTMDBID.'" id="next-episode-btn" class="next-episode-btn">
+                        <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
+                        <span>'.lang_snippet('next_episode').'</span>
+                    </a>';
+                }                
             } else {
                 $nextBTN = '';  
             } 
@@ -124,13 +142,23 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                         
 
                         if ( $episodeRow['file_path'] != "" ) {
-                            $episodeWatchTrigger = '<div class="link-wrapper">
-                                <a href="/watch/?s='.$showID.'&id='.$episodeIDrun.'" class="play-trigger" title="'.lang_snippet('episode').' '.$episodeNumberRun.': '.$episodeTitleRun.'">
-                                    <span class="icon-wrap col-3 pad-top-xs pad-bottom-xs">
-                                        <i class="icon-play"></i>
-                                    </span>
-                                </a>
-                                </div>';
+                            if($session) {
+                                $episodeWatchTrigger = '<div class="link-wrapper">
+                                    <a href="/watchtogether/?s='.$showID.'&id='.$episodeID.'&uuid='.$_GET['uuid'].'" class="play-trigger" title="'.lang_snippet('episode').' '.$episodeNumberRun.': '.$episodeTitleRun.'">
+                                            <span class="icon-wrap col-3 pad-top-xs pad-bottom-xs">
+                                            <i class="icon-play"></i>
+                                        </span>
+                                    </a>
+                                    </div>';
+                            } else {
+                                $episodeWatchTrigger = '<div class="link-wrapper">
+                                    <a href="/watch/?s='.$showID.'&id='.$episodeIDrun.'" class="play-trigger" title="'.lang_snippet('episode').' '.$episodeNumberRun.': '.$episodeTitleRun.'">
+                                        <span class="icon-wrap col-3 pad-top-xs pad-bottom-xs">
+                                            <i class="icon-play"></i>
+                                        </span>
+                                    </a>
+                                    </div>';
+                            }
                             $episodeDisabled = '';
                         }
 
@@ -185,6 +213,9 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
+                if($session) {
+                    echo '<a href="/watchtogether/?s='.$showID.'&id='.$episodeID.'&uuid='.getUUID().'" id="player-session-btn" title="Start group session"></a>';
+                }
                 echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
                 echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
                 echo '<a href="#" id="show-eps-btn" class="icon icon-multilayer" title="All episodes"></a>';
@@ -204,7 +235,15 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false) {
                 echo '</video>';
             echo '</figure>';
         }
-        echo '<span data-time="'.$watchedTime.'" data-show="'.$showID.'" id="time"></span>';
+
+        if ( isset($_GET['uuid']) ) {
+            $sessionData = 'data-session="'.$_GET['uuid'].'"';
+        } else {
+            $sessionData = "";
+        }
+
+        $volume = getVolume($userID);
+        echo '<span data-time="'.$watchedTime.'" data-show="'.$showID.'" '.$sessionData.' data-volume="'.$volume.'" id="time"></span>';
     }
 
     $conn->close();

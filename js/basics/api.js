@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    api = {
+    custom = {
         $window: $(window),
         $html: $('html'),
         $body: $('body'),
@@ -21,13 +21,14 @@ $(document).ready(function() {
 
         init: function() {
             var self = this;
-
+            console.log();
             self.movieLiveSearch();
             self.showLiveSearch();
             self.jstreeMovie();
             self.jstreeEpisode();
             self.myList();
             self.movieTimeSafe();
+            self.remoteWatch();
             self.highlight();
             self.mediaPopUp();
             self.sorting();
@@ -405,30 +406,40 @@ $(document).ready(function() {
             var self = this;
 
             if ( $('#mainPlayer').length > 0 ) {
-                video = $('#player')[0];
+                videoJS = $('video')[0];
+                videoJSPlayer = videojs('player');
                 
                 // Ausführen, wenn die Metadaten geladen sind
-                $(video).on('loadedmetadata', function() {
+                videoJS.addEventListener("loadedmetadata", function() {
+                    videoJS.currentTime = parseInt($('span#time').attr('data-time'));
+                    videoJSPlayer.volume( parseFloat($('span#time').attr('data-volume')) );
                     var interval = false;
                     var isVideoEnded = false;
 
-                    $(video).on('play', function() {
+                    $(videoJS).on('play', function() {
                         isVideoEnded = false;
-                        saveTime(video.currentTime, video.duration);
+                        saveTime(videoJS.currentTime, videoJS.duration);
                         clearInterval(interval);
                         interval = setInterval(saveTime, 30000);
                     });
 
-                    $(video).on('ended', function() {
+                    $(videoJS).on('ended', function() {
                         isVideoEnded = true;
                         clearInterval(interval);
-                        saveTime(video.duration, video.duration);
+                        saveTime(videoJS.duration, videoJS.duration);
                     });
 
-                    $(video).on('pause', function() {
-                        if (!isVideoEnded && video.currentTime !== video.duration ) {
+                    $(videoJS).on('seeking', function () {
+                        if ( $(videoJS).hasClass('vjs-scrubbing') ) {
                             clearInterval(interval);
-                            saveTime(video.currentTime, video.duration);
+                            saveTime(videoJS.duration, videoJS.duration);
+                        }            
+                    });
+
+                    $(videoJS).on('pause', function() {
+                        if (!isVideoEnded && videoJS.currentTime !== videoJS.duration ) {
+                            clearInterval(interval);
+                            saveTime(videoJS.currentTime, videoJS.duration);
                         }
                     });
 
@@ -448,7 +459,7 @@ $(document).ready(function() {
                             url: '/movie-watch-time',
                             type: 'post',
                             data: { 
-                                mediaID: $(video).attr('data-id'),
+                                mediaID: $(videoJS).attr('data-id'),
                                 show: showID,
                                 time: currentSecond,
                                 watched: watched,
@@ -462,6 +473,101 @@ $(document).ready(function() {
                                 console.log('Fehler: ' + error);
                             }
                         });
+                    }
+
+                    videoJSPlayer.on('volumechange', () => {
+                        console.log('test');
+                        var currentVolume = videoJSPlayer.volume();
+                        saveVolume(currentVolume);
+                    });
+
+                    function saveVolume(currentVolume) {
+                        $resultList = $('#time');
+
+                        $.ajax({
+                            url: '/save-volume',
+                            type: 'post',
+                            data: { 
+                                volume: currentVolume
+                            },
+                            success: function(response) {
+                                $resultList.attr('data-volume', currentVolume);
+                            }, error: function(xhr, status, error) {
+                                // Hier wird eine Fehlermeldung ausgegeben
+                                console.log('Fehler: ' + error);
+                            }
+                        });
+                    }
+                });
+            }
+        },
+
+        remoteWatch: function() {
+            var self = this;
+
+            if ( $('#mainPlayer').length > 0 ) {
+                videoPlayer = videojs('player');
+                const startButton = document.querySelector('.vjs-big-play-button');
+
+                // Ausführen, wenn die Metadaten geladen sind
+                videoPlayer.on("loadedmetadata", () => {
+                    const remotesessionID = $('span#time').attr('data-session');
+                    
+                    if ( remotesessionID ) {
+                        const socket = new WebSocket(`ws://localhost:3000/?remotesessionID=${remotesessionID}`);
+                        let isFirstPlay = true;
+                
+                        videoPlayer.on('play', () => {
+                            // Sende Aktion "Play" an den Server
+                            if ( isFirstPlay ) {
+                                isFirstPlay = false;
+                                videoPlayer.pause();
+                            } else {
+                                synchTime();
+                                socket.send('play');
+                            }
+                        });
+                
+                        videoPlayer.on('pause', () => {
+                            // Sende Aktion "Pause" an den Server
+                            synchTime();
+                            socket.send('pause');
+                        });
+                
+                        videoPlayer.on('seeking', function () {
+                            if ( videoPlayer.hasClass('vjs-scrubbing') ) {
+                                const currentTime = videoPlayer.currentTime();
+                                const actionTimeUpdate = `timeupdate:${currentTime}`;
+                                socket.send(actionTimeUpdate);
+                            }            
+                        });
+    
+                        $('#player-sek-forward').on('click', function() {
+                            synchTime();
+                        });
+    
+                        $('#player-sek-back').on('click', function() {
+                            synchTime();
+                        });
+                
+                        socket.onmessage = (event) => {
+                            console.log(event.data);
+                            // Empfange Aktionen von anderen Benutzern und steuere den Video-Player entsprechend
+                            if (event.data === 'play') {
+                                videoPlayer.play();
+                            } else if (event.data === 'pause') {
+                                videoPlayer.pause();
+                            } else if (event.data.startsWith('timeupdate:')) {
+                                const newTime = parseFloat(event.data.split(':')[1]);
+                                videoPlayer.currentTime(newTime);
+                            }
+                        };
+    
+                        function synchTime() {
+                            const currentTime = videoPlayer.currentTime();
+                            const actionTimeUpdate = `timeupdate:${currentTime}`;
+                            socket.send(actionTimeUpdate);
+                        }
                     }
                 });
             }
@@ -592,5 +698,5 @@ $(document).ready(function() {
         },
     }
 
-    api.init();
+    custom.init();
 });

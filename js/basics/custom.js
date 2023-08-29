@@ -357,12 +357,11 @@ $(document).ready(function() {
             if ( $('#player').length > 0 ) {
                 var player = videojs('player');
                 video = $('video')[0];
-                sekunde = $('span[data-time]').attr('data-time');
 
                 // Warten Sie auf das "loadedmetadata"-Ereignis, um sicherzustellen, dass das Video geladen ist
                 video.addEventListener("loadedmetadata", function() {
-                    video.currentTime = sekunde;
                     $('#player-back-btn').appendTo(".video-js");
+                    $('#player-session-btn').appendTo(".video-js");
                     $('#player-sek-forward').appendTo(".video-js .vjs-control-bar");
                     $('#player-sek-back').appendTo(".video-js .vjs-control-bar");
                     

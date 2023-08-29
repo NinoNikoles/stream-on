@@ -200,6 +200,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword) {
         password varchar(255),
         user_img varchar(255),
         role VARCHAR(10),
+        media_volume FLOAT,
         created TIMESTAMP,
         UNIQUE (username),
         PRIMARY KEY (id)

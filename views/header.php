@@ -7,6 +7,10 @@
     }
 
     $siteTitle = getSiteTitle();
+
+    if (!empty($_GET['remotesessionID'])) {
+        $remotesessionID = $_GET['remotesessionID'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark" >
