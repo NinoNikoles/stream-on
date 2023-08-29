@@ -443,6 +443,18 @@ $(document).ready(function() {
                         }
                     });
 
+                    $('.play-trigger').on('click', function(e) {
+                        e.preventDefault();
+                        clearInterval(interval);
+                        saveTime(videoJS.duration, videoJS.duration);
+                    });
+
+                    $('#next-episode-btn').on('click', function(e) {
+                        e.preventDefault();
+                        clearInterval(interval);
+                        saveTime(videoJS.duration, videoJS.duration);
+                    });
+
                     function saveTime(currentVideoTime, videoDuration) {
                         var currentSecond = currentVideoTime;
                         var totalDuration = videoDuration;
@@ -512,7 +524,7 @@ $(document).ready(function() {
                 // Ausführen, wenn die Metadaten geladen sind
                 videoPlayer.on("loadedmetadata", () => {
                     const remotesessionID = $('span#time').attr('data-session');
-                    
+
                     if ( remotesessionID ) {
                         const socket = new WebSocket(`ws://localhost:3000/?remotesessionID=${remotesessionID}`);
                         let isFirstPlay = true;
@@ -549,6 +561,20 @@ $(document).ready(function() {
                         $('#player-sek-back').on('click', function() {
                             synchTime();
                         });
+
+                        $('.play-trigger').on('click', function(e) {
+                            e.preventDefault();
+                            var url = $(this).attr('href');
+                            socket.send(`url:${url}`)
+                            window.location.href = url;
+                        });
+
+                        $('#next-episode-btn').on('click', function(e) {
+                            e.preventDefault();
+                            var url = $(this).attr('href');
+                            socket.send(`url:${url}`)
+                            window.location.href = url;
+                        });
                 
                         socket.onmessage = (event) => {
                             console.log(event.data);
@@ -560,6 +586,9 @@ $(document).ready(function() {
                             } else if (event.data.startsWith('timeupdate:')) {
                                 const newTime = parseFloat(event.data.split(':')[1]);
                                 videoPlayer.currentTime(newTime);
+                            } else if (event.data.startsWith('url:')) {
+                                const url = event.data.split(':')[1];
+                                window.location.href = url;
                             }
                         };
     

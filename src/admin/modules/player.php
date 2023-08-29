@@ -144,7 +144,7 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = fa
                         if ( $episodeRow['file_path'] != "" ) {
                             if($session) {
                                 $episodeWatchTrigger = '<div class="link-wrapper">
-                                    <a href="/watchtogether/?s='.$showID.'&id='.$episodeID.'&uuid='.$_GET['uuid'].'" class="play-trigger" title="'.lang_snippet('episode').' '.$episodeNumberRun.': '.$episodeTitleRun.'">
+                                    <a href="/watchtogether/?s='.$showID.'&id='.$episodeIDrun.'&uuid='.$_GET['uuid'].'" class="play-trigger" title="'.lang_snippet('episode').' '.$episodeNumberRun.': '.$episodeTitleRun.'">
                                             <span class="icon-wrap col-3 pad-top-xs pad-bottom-xs">
                                             <i class="icon-play"></i>
                                         </span>
@@ -213,7 +213,7 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = fa
                     echo '<source src="'.$filePath.'" type="video/mp4"/>';
                 echo '</video>';
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
-                if($session) {
+                if(!$session) {
                     echo '<a href="/watchtogether/?s='.$showID.'&id='.$episodeID.'&uuid='.getUUID().'" id="player-session-btn" title="Start group session"></a>';
                 }
                 echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
