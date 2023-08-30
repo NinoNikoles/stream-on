@@ -1,4 +1,5 @@
 <?php 
+$conn = dbConnect();
 $siteTitle = getSiteTitle();
 
 if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
