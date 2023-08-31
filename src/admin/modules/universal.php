@@ -39,11 +39,15 @@ function tmdbConfig() {
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Querys --///////////
 
-function insert($table, $data, $values) {
+function insert($table, $data, $values, $conditon = "") {
     $values = json_encode($values);
     $replace = array('[', ']');
     $values = str_replace($replace, '', $values);
-    echo "INSERT INTO $table ($data) VALUES ($values)";
+    echo "INSERT INTO $table ($data) VALUES ($values) ".$conditon;
+}
+
+function update($table, $data, $conditon = "") {
+    echo "UPDATE $table SET $data WHERE ".$conditon;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +198,8 @@ function get_apikey_db() {
             $conn->close();
             return $row['setting_option'];
         }
+    } else {
+        return false;
     }
 }
 
