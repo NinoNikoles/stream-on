@@ -121,6 +121,7 @@ $(document).ready(function() {
             self.fixedHeader();
             self.navMobile();
             self.fancyLoad();
+            self.repositionPlayerButtons();
         },
 
         initScrolltrigger: function(){
@@ -374,27 +375,13 @@ $(document).ready(function() {
                     }
                     if ( $('#show-eps-btn').length > 0 ) {
                         $('#show-eps-btn').appendTo(".video-js .vjs-control-bar");
-                    }                    
+                    }
+                    
                 });
 
                 player.on('play', function() {
-                    $fullscreen = $('.vjs-fullscreen-control');
-                    $currTime = $('.vjs-current-time');
-                    $divider = $('.vjs-time-divider');
-                    $duration = $('.vjs-duration');
-
-                    if ( $('#show-eps-btn').length > 0 ) {
-                        $epsBtnWidth = $('#show-eps-btn').outerWidth();
-                        $('#show-eps-btn').css('right', $fullscreen.outerWidth());
-                    } else {
-                        $epsBtnWidth = 0;
-                    }
-
-                    $duration.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth ));
-                    $divider.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth + $duration.outerWidth() ));
-                    $currTime.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth + $duration.outerWidth() + $divider.outerWidth() ));
-                });
-
+                    self.repositionPlayerButtons();
+                });                
 
                 $nextEpisodeBtn = $("#next-episode-btn");
 
@@ -460,6 +447,24 @@ $(document).ready(function() {
                     $('#chat').toggleClass('hidden');
                 });
             }
+        },
+
+        repositionPlayerButtons: function() {
+            $fullscreen = $('.vjs-fullscreen-control');
+            $currTime = $('.vjs-current-time');
+            $divider = $('.vjs-time-divider');
+            $duration = $('.vjs-duration');
+
+            if ( $('#show-eps-btn').length > 0 ) {
+                $epsBtnWidth = $('#show-eps-btn').outerWidth();
+                $('#show-eps-btn').css('right', $fullscreen.outerWidth());
+            } else {
+                $epsBtnWidth = 0;
+            }
+
+            $duration.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth ));
+            $divider.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth + $duration.outerWidth() ));
+            $currTime.css('right', ( $fullscreen.outerWidth() + $epsBtnWidth + $duration.outerWidth() + $divider.outerWidth() ));
         },
 
         userMenuBtn: function() {

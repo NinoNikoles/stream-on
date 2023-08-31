@@ -416,41 +416,44 @@ $(document).ready(function() {
                     var interval = false;
                     var isVideoEnded = false;
 
-                    $(videoJS).on('play', function() {
+                    videoJSPlayer.on('play', function() {
                         isVideoEnded = false;
-                        saveTime(videoJS.currentTime, videoJS.duration);
                         clearInterval(interval);
-                        interval = setInterval(saveTime, 30000);
+                        saveTime(videoJS.currentTime, videoJS.duration);
+                        interval = setInterval(function() {
+                            saveTime(videoJS.currentTime, videoJS.duration)
+                        }, 30000);
                     });
 
-                    $(videoJS).on('ended', function() {
+                    videoJSPlayer.on('ended', function() {
                         isVideoEnded = true;
                         clearInterval(interval);
                         saveTime(videoJS.duration, videoJS.duration);
                     });
 
-                    $(videoJS).on('seeking', function () {
+                    videoJSPlayer.on('seeking', function () {
                         if ( $(videoJS).hasClass('vjs-scrubbing') ) {
                             clearInterval(interval);
                             saveTime(videoJS.duration, videoJS.duration);
+                            interval = setInterval(function() {
+                                saveTime(videoJS.currentTime, videoJS.duration)
+                            }, 30000);
                         }            
                     });
 
-                    $(videoJS).on('pause', function() {
-                        if (!isVideoEnded && videoJS.currentTime !== videoJS.duration ) {
+                    videoJSPlayer.on('pause', function() {                        
+                        if ( videoJS.currentTime != videoJS.duration) {
                             clearInterval(interval);
                             saveTime(videoJS.currentTime, videoJS.duration);
                         }
                     });
 
-                    $('.play-trigger').on('click', function(e) {
-                        e.preventDefault();
+                    $('.play-trigger').on('click', function() {
                         clearInterval(interval);
                         saveTime(videoJS.duration, videoJS.duration);
                     });
 
-                    $('#next-episode-btn').on('click', function(e) {
-                        e.preventDefault();
+                    $('#next-episode-btn').on('click', function() {
                         clearInterval(interval);
                         saveTime(videoJS.duration, videoJS.duration);
                     });

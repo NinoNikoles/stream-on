@@ -207,19 +207,28 @@ function loadFavicon() {
     $iconPath = '/views/assets/icons';
     $conn = dbConnect();
 
-    $sql = "SELECT setting_option FROM settings WHERE setting_name='favicon_path'";
-    $result = $conn->query($sql);
-    if ( !($conn->connect_error) ) {
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<link rel="icon" type="image/png" href="'.$iconPath.'/'.$row['setting_option'].'">';
+    if ( file_exists( ROOT_PATH.'/config.php') ) {
+        if ( tablesExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+            $sql = "SELECT setting_option FROM settings WHERE setting_name='favicon_path'";
+            $result = $conn->query($sql);
+            if ( !($conn->connect_error) ) {
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<link rel="icon" type="image/png" href="'.$iconPath.'/'.$row['setting_option'].'">';
+                    }
+                } else {
+                    favicon($iconPath);
+                }
+            } else {
+                favicon($iconPath);
             }
         } else {
             favicon($iconPath);
-        }
+        }        
     } else {
         favicon($iconPath);
     }
+
 };
 
 function favicon($iconPath) {
@@ -398,8 +407,8 @@ function runtimeToString($runtime) {
 
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
-    //return "http://image.tmdb.org/t/p/$size$img";
-    return '/views/build/css/images/img_preview.webp';
+    return "http://image.tmdb.org/t/p/$size$img";
+    //return '/views/build/css/images/img_preview.webp';
 }
 
 //-- User Volume --
