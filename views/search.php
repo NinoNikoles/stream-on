@@ -1,4 +1,6 @@
-<?php include(ROOT_PATH.'/views/header.php');
+<?php 
+$pageTitle = pageTitle(lang_snippet(('search')));
+include(ROOT_PATH.'/views/header.php');
 
 $conn = dbConnect();
 ?>

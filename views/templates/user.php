@@ -1,4 +1,5 @@
 <?php 
+    $pageTitle = pageTitle(lang_snippet(('profile')));
     include(ROOT_PATH.'/views/header.php');
 
     userCheck();

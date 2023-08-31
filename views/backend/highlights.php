@@ -1,4 +1,5 @@
 <?php
+$pageTitle = pageTitle(lang_snippet(('highlights')));
 include(ROOT_PATH.'/views/header.php');
             
 // Add Movie

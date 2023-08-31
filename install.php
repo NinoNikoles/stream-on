@@ -1,4 +1,5 @@
 <?php
+$pageTitle = pageTitle('Install');
 require_once ROOT_PATH.'/views/head.php';
 
 if ( file_exists( ROOT_PATH.'/config.php') ) {
@@ -26,7 +27,7 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
         ?>
 
             <div class="innerWrap">
-                <div class="col8 marg-left-col2">
+                <div class="col4 marg-left-col4">
                     <form method="post" action="/install">
                         <div class="col12">
                             <label for="host">Page Title
@@ -73,7 +74,7 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
 ?>
 
     <div class="innerWrap">
-        <div class="col8 marg-left-col2">
+        <div class="col4 marg-left-col4">
             <form method="post" action="/install">
                 <div class="col12">
                     <label for="host">Host

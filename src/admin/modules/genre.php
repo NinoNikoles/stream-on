@@ -4,6 +4,7 @@ function initGenres() {
     $tmdb = setupTMDB();
 
     $genres = $tmdb->getGenres();
+    var_dump($genres);
 
     $data = [];
     foreach ($genres as $genre) {

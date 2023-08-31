@@ -1,4 +1,6 @@
-<?php include(ROOT_PATH.'/views/header.php');
+<?php 
+$pageTitle = pageTitle('');
+include(ROOT_PATH.'/views/header.php');
 
 getHighlight();
 

@@ -1,4 +1,5 @@
-<?php 
+<?php
+$pageTitle = pageTitle(lang_snippet(('users')));
 include(ROOT_PATH.'/views/header.php');
 $conn = dbConnect();
 ?>

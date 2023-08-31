@@ -1,6 +1,6 @@
 <?php
     $conn = dbConnect();
-    //715a116161a63d95a6f2d7199c7051be
+    $pageTitle = pageTitle('Login');
 
     // Benutzeranmeldung
     if(isset($_POST['login'])) {

@@ -1,4 +1,6 @@
 <?php
+$pageTitle = pageTitle(getMediaTitle($_GET['id']));
+
 include(ROOT_PATH.'/views/header.php');
 $conn = dbConnect();
 $tmdb = setupTMDB();

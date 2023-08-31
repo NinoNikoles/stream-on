@@ -953,23 +953,24 @@ class TMDB {
 		$genres = array();
 
 		$resultMovie = $this->_call('genre/movie/list');
-
-		foreach($resultMovie['genres'] as $data){
-			$genres[] = new Genre($data);
-		}
-
-		$resultTV = $this->_call('genre/tv/list');
-
-		foreach($resultTV['genres'] as $data){
-			$genre = new Genre($data);
-
-			if(!in_array($genre, $genres)) {
-				$genres[] = $genre;
+		if ( $resultMovie > 0 ) {
+			foreach($resultMovie['genres'] as $data){
+				$genres[] = new Genre($data);
 			}
-			
-		}
-
-		return $genres;
+	
+			$resultTV = $this->_call('genre/tv/list');
+	
+			foreach($resultTV['genres'] as $data){
+				$genre = new Genre($data);
+	
+				if(!in_array($genre, $genres)) {
+					$genres[] = $genre;
+				}
+				
+			}
+	
+			return $genres;
+		}	
 	}
 
 	//------------------------------------------------------------------------------

@@ -1,11 +1,12 @@
 <?php 
 $conn = dbConnect();
-$siteTitle = getSiteTitle();
 
-if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
-    destroySesssion();
-    if ( !pageCheck("/login") ) {
-        page_redirect("/login");
+if ( !($pageTitle[0] === 'Install') ) {
+    if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
+        destroySesssion();
+        if ( !pageCheck("/login") ) {
+            page_redirect("/login");
+        }
     }
 }
 ?>
@@ -14,9 +15,9 @@ if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSIO
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php loadFavicon(); ?>
+    <?php //loadFavicon(); ?>
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <title><?php echo $siteTitle;?></title>
+    <title><?php echo $pageTitle[0].$pageTitle[1];?></title>
 </head>
 <body>

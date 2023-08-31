@@ -6,8 +6,6 @@
         }
     }
 
-    $siteTitle = getSiteTitle();
-
     if (!empty($_GET['remotesessionID'])) {
         $remotesessionID = $_GET['remotesessionID'];
     }
@@ -18,14 +16,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Enjoy your local movies and shows with a nice look">
-    <?php loadFavicon(); ?>
+    <?php //loadFavicon(); ?>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/style.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css" integrity="sha512-Chxzu1hIgdTWzvBYD6rifXuhsG91mXCtYP/hKHSHPRyYUluMJt3PVEE6k4ThFrE4l0NVnq9dfYSj7mEubGCTvw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
-    <title><?php echo $siteTitle; ?></title>
+    <title><?php echo $pageTitle[0].$pageTitle[1]; ?></title>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body class="loading">
@@ -44,7 +42,7 @@
 			<!-- Logo -->
 			<div class="header--logo">
 				<a class="logo--small" title="Zur Startseite" href="/">
-                    <span class="bold"><?php echo getSiteTitle();?></span>
+                    <span class="bold"><?php echo $pageTitle[1];?></span>
                 </a>
             </div>
 

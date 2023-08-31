@@ -1,4 +1,5 @@
 <?php
+$pageTitle = pageTitle(lang_snippet(('genres')));
 include(ROOT_PATH.'/views/header.php');
 $conn = dbConnect();
 $sql = 'SELECT COUNT(*) as num_rows FROM genres';

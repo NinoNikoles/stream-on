@@ -1,4 +1,5 @@
 <?php
+$pageTitle = pageTitle(lang_snippet(('movies')));
 include(ROOT_PATH.'/views/header.php');
 $conn = dbConnect();
 $tmdb = setupTMDB();

@@ -85,8 +85,15 @@ function destroySesssion() {
 ///////////////////////////////////////////////////////////////////////////////////////////
 //////////-- Page infos --///////////
 
-function getSiteTitle() {
+function pageTitle($page) {
     $conn = dbConnect();
+    $title = [];
+    $title[0] = 'Install';
+    $title[1] = '';
+
+    if ( !($page === '') ) {
+        $page = $page . ' - ';
+    }
 
     if ( file_exists( ROOT_PATH.'/config.php') ) {
         $query = "SHOW TABLES LIKE 'settings'";
@@ -95,22 +102,25 @@ function getSiteTitle() {
         if ($result->num_rows > 0) {
             $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
             if ( $conn->connect_error ) {
-                return 'Install';
+                return $title;
             } else {
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $conn->close();
-                        return $row['setting_option'];
+                        
+                        $title[0] = $page;
+                        $title[1] = $row['setting_option'];
+                        return $title;
                     }
                 }
             }
         } else {
-            return 'Install';
+            return $title;
         }
     } else {
-        return 'Install';
-    }    
+        return $title;
+    }
 }
 
 //-- Set Browserlanguage --
@@ -193,20 +203,28 @@ function loadFavicon() {
 
     $sql = "SELECT setting_option FROM settings WHERE setting_name='favicon_path'";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '<link rel="icon" type="image/png" href="'.$iconPath.'/'.$row['setting_option'].'">';
+    if ( !($conn->connect_error) ) {
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<link rel="icon" type="image/png" href="'.$iconPath.'/'.$row['setting_option'].'">';
+            }
+        } else {
+            favicon($iconPath);
         }
     } else {
-        echo '<link rel="apple-touch-icon" sizes="180x180" href="'.$iconPath.'/apple-touch-icon.png">';
-        echo '<link rel="icon" type="image/png" sizes="32x32" href="'.$iconPath.'/favicon-32x32.png">';
-        echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$iconPath.'/favicon-16x16.png">';
-        echo '<link rel="manifest" href="'.$iconPath.'/site.webmanifest">';
-        echo '<link rel="mask-icon" href="'.$iconPath.'/safari-pinned-tab.svg" color="#5bbad5">';
-        echo '<meta name="msapplication-TileColor" content="#da532c">';
-        echo '<meta name="theme-color" content="#ffffff">';
+        favicon($iconPath);
     }
 };
+
+function favicon($iconPath) {
+    echo '<link rel="apple-touch-icon" sizes="180x180" href="'.$iconPath.'/apple-touch-icon.png">';
+    echo '<link rel="icon" type="image/png" sizes="32x32" href="'.$iconPath.'/favicon-32x32.png">';
+    echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$iconPath.'/favicon-16x16.png">';
+    echo '<link rel="manifest" href="'.$iconPath.'/site.webmanifest">';
+    echo '<link rel="mask-icon" href="'.$iconPath.'/safari-pinned-tab.svg" color="#5bbad5">';
+    echo '<meta name="msapplication-TileColor" content="#da532c">';
+    echo '<meta name="theme-color" content="#ffffff">';
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -238,29 +256,32 @@ function callout() {
 //////////-- Menu --///////////
 
 function adminMenu($menu) {
+    $returnMenu = '';
     if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
         if ( $menu === 'main-menu' ) {
-            $genreCheck = genreCheck();
-            if ( $genreCheck === true) {
-                return '
-                <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">'.lang_snippet('users').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">'.lang_snippet('genres').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/movies" title="'.lang_snippet('movies').'">'.lang_snippet('movies').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/shows" title="'.lang_snippet('shows').'">'.lang_snippet('shows').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/highlights" title="'.lang_snippet('highlights').'">'.lang_snippet('highlights').'</a></li>';
-            } else {
-                return '
-                <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">'.lang_snippet('users').'</a></li>
-                <li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">'.lang_snippet('genres').'</a></li>';
-            }
+            $returnMenu .= '
+            <li class="menu-item"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>
+            <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">'.lang_snippet('users').'</a></li>';
             
+            $apikey = get_apikey_db();
+            var_dump($apikey);
+            if ( !($apikey === NULL) ) {
+                $returnMenu .= '<li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">'.lang_snippet('genres').'</a></li>';
+            
+                $genreCheck = genreCheck();
+                if ( $genreCheck === true) {
+                    $returnMenu .= '
+                    <li class="menu-item mobile-only"><a href="/admin/movies" title="'.lang_snippet('movies').'">'.lang_snippet('movies').'</a></li>
+                    <li class="menu-item mobile-only"><a href="/admin/shows" title="'.lang_snippet('shows').'">'.lang_snippet('shows').'</a></li>
+                    <li class="menu-item mobile-only"><a href="/admin/highlights" title="'.lang_snippet('highlights').'">'.lang_snippet('highlights').'</a></li>';
+                }
+            }            
         } else if ( 'user-menu' ) {
-            return '<li class="menu-item desktop-only"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
+            $returnMenu .=  '<li class="menu-item desktop-only"><a href="/admin/settings" title="'.lang_snippet('settings').'">'.lang_snippet('settings').'</a></li>';
         }
-        
     }
+
+    return $returnMenu;
 }
 
 //-- Loads the backend menu --
