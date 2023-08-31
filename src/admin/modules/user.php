@@ -44,6 +44,28 @@ function userProfileImg() {
     return $userProfileImg;
 }
 
+function userProfileImgByID($userID) {
+    $conn = dbConnect();
+    $sql = "SELECT user_img FROM users WHERE id=$userID;";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+     
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            
+            if ($row['user_img'] === NULL || $row['user_img'] === '') {
+                $userProfileImg = '/views/build/css/images/placeholder.webp';
+            } else {
+                $userProfileImg = '/uploads/'.$row['user_img'];
+            }
+        }
+    } else {
+        $userProfileImg = '/views/build/css/images/placeholder.webp';
+    }
+
+    return $userProfileImg;
+}
+
 function registerUser($post) {
     $conn = dbConnect();
     $username = mysqli_real_escape_string($conn, $post['username']);

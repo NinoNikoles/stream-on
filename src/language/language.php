@@ -68,6 +68,9 @@ class langSnippets {
             'next_episode' => 'Next episode',
             'sorting' => 'Order',
             'no_content_found' => 'No content was found.',
+            'has_joined_the_chat' => 'has joined the chat.',
+            'message' => 'Message',
+            'send' => 'Send',
 
 			// Movie
 			'rating' => 'Rating',
@@ -205,6 +208,9 @@ class langSnippets {
             'next_episode' => 'Nächste Folge',
             'sorting' => 'Sortierung',
             'no_content_found' => 'Es wurden keine Inhalte gefunden.',
+            'has_joined_the_chat' => 'ist dem Chat beigetreten.',
+            'message' => 'Nachricht',
+            'send' => 'Senden',
 
 			// Movie
 			'rating' => 'Bewertung',

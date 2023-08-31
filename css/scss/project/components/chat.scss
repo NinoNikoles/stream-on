@@ -45,7 +45,7 @@
                 }
                 width: fit-content;
                 max-width: 80%;
-                padding: rem-calc(10);
+                padding: rem-calc(10) rem-calc(16);
 
                 &.joint-msg {
                     width: 100%;
@@ -100,7 +100,7 @@
         height: 90%;
         position: absolute;
         top: 50%;
-        left: 0;
+        right: 0;
         transform: translateY(-50%);
 
         &:hover {

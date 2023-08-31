@@ -8,11 +8,11 @@ if ( isset($_POST['joined']) ) {
     <div class="message joint-msg marg-bottom-xs">
         <span class="imgWrap">
             <figure class="square">
-                <img src="'.userProfileImg().'">
+                <img src="'.userProfileImgByID($userID).'">
             </figure>
         </span>    
         <div class="message-content-wrap">
-            <span class="message-text marg-left-xs small">'.$username.' has joined.</span>
+            <span class="message-text marg-left-xs small"><strong>'.$username.'</strong> '.lang_snippet('has_joined_the_chat').'</span>
         </div>
     </div>';
 } else {
@@ -32,7 +32,7 @@ if ( isset($_POST['joined']) ) {
         </div>
         <span class="imgWrap">
             <figure class="square">
-                <img src="'.userProfileImg().'">
+                <img src="'.userProfileImgByID($userID).'">
             </figure>
         </span>
     </div>';
