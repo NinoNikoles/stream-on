@@ -21,7 +21,6 @@ $(document).ready(function() {
 
         init: function() {
             var self = this;
-            console.log();
             self.movieLiveSearch();
             self.showLiveSearch();
             self.jstreeMovie();
@@ -32,6 +31,7 @@ $(document).ready(function() {
             self.highlight();
             self.mediaPopUp();
             self.sorting();
+            self.chatMessage();
         },
 
         bindHandlers: function () {
@@ -488,7 +488,6 @@ $(document).ready(function() {
                     }
 
                     videoJSPlayer.on('volumechange', () => {
-                        console.log('test');
                         var currentVolume = videoJSPlayer.volume();
                         saveVolume(currentVolume);
                     });
@@ -528,7 +527,43 @@ $(document).ready(function() {
                     if ( remotesessionID ) {
                         const socket = new WebSocket(`ws://localhost:3000/?remotesessionID=${remotesessionID}`);
                         let isFirstPlay = true;
-                
+
+                        socket.onopen = () => {
+                            var userID = $('#message-use-id').val();
+                                username = $('#message-use-name').val();
+                                send = `joined:${userID}:${username}`;
+                            joinedMessage(userID, username);
+                            socket.send(send);                            
+                        }
+
+                        socket.onerror = (error) => {
+                            console.error('WebSocket error:', error);
+                        };
+
+                        socket.onmessage = (event) => {
+                            // Empfange Aktionen von anderen Benutzern und steuere den Video-Player entsprechend
+                            if (event.data.startsWith('joined:')) {
+                                const userID = event.data.split(':')[1];
+                                const username = event.data.split(':')[2];
+                                joinedMessage(userID, username);
+                            } else if (event.data === 'play') {
+                                videoPlayer.play();
+                            } else if (event.data === 'pause') {
+                                videoPlayer.pause();
+                            } else if (event.data.startsWith('timeupdate:')) {
+                                const newTime = parseFloat(event.data.split(':')[1]);
+                                videoPlayer.currentTime(newTime);
+                            } else if (event.data.startsWith('url:')) {
+                                const url = event.data.split(':')[1];
+                                window.location.href = url;
+                            } else if (event.data.startsWith('msg:')) {
+                                const message = event.data.split(':')[1];
+                                const userID = event.data.split(':')[2];
+                                const username = event.data.split(':')[3];
+                                ajaxMessage(message, userID, username);
+                            }
+                        };
+
                         videoPlayer.on('play', () => {
                             // Sende Aktion "Play" an den Server
                             if ( isFirstPlay ) {
@@ -583,22 +618,64 @@ $(document).ready(function() {
                             const actionTimeUpdate = `timeupdate:${currentTime}`;
                             socket.send(actionTimeUpdate);
                         }
-                
-                        socket.onmessage = (event) => {
-                            console.log(event.data);
-                            // Empfange Aktionen von anderen Benutzern und steuere den Video-Player entsprechend
-                            if (event.data === 'play') {
-                                videoPlayer.play();
-                            } else if (event.data === 'pause') {
-                                videoPlayer.pause();
-                            } else if (event.data.startsWith('timeupdate:')) {
-                                const newTime = parseFloat(event.data.split(':')[1]);
-                                videoPlayer.currentTime(newTime);
-                            } else if (event.data.startsWith('url:')) {
-                                const url = event.data.split(':')[1];
-                                window.location.href = url;
-                            }
-                        };
+
+                        $('#chatMSG').on('click', function() {
+                                var message = $('#message-input').val(),
+                                userID = $('#message-use-id').val();
+                                username = $('#message-use-name').val();
+                                send = `msg:${message}:${userID}:${username}`;
+
+                                $('#message-input').val("");
+
+                            if ( message.length > 0) {
+                                socket.send(send);
+                                ajaxMessage(message, userID, username)
+                            }                            
+                        });
+
+                        function joinedMessage(userID, username) {
+                            const joined = 'true';
+
+                            $.ajax({
+                                url: '/msg',
+                                type: 'post',
+                                data: { 
+                                    joined: joined,
+                                    userID: userID,
+                                    username: username,
+                                },
+                                success: function(response) {
+                                    var newMessage = response;
+                                    $('#message-wrap').append(newMessage);
+                                    var objDiv = document.getElementById("message-wrap");
+                                    objDiv.scrollTop = objDiv.scrollHeight;
+                                }, error: function(xhr, status, error) {
+                                    // Hier wird eine Fehlermeldung ausgegeben
+                                    console.log('Fehler: ' + error);
+                                }
+                            });
+                        }
+
+                        function ajaxMessage(ajaxMessage, ajaxUserID, ajaxUsername) {
+                            $.ajax({
+                                url: '/msg',
+                                type: 'post',
+                                data: { 
+                                    message: ajaxMessage,
+                                    userID: ajaxUserID,
+                                    username: ajaxUsername
+                                },
+                                success: function(response) {
+                                    var newMessage = response;
+                                    $('#message-wrap').append(newMessage);
+                                    var objDiv = document.getElementById("message-wrap");
+                                    objDiv.scrollTop = objDiv.scrollHeight;
+                                }, error: function(xhr, status, error) {
+                                    // Hier wird eine Fehlermeldung ausgegeben
+                                    console.log('Fehler: ' + error);
+                                }
+                            });
+                        }
                     }
                 });
             }
@@ -727,6 +804,10 @@ $(document).ready(function() {
                 orderSetup();
             });
         },
+
+        chatMessage: function() {
+            
+        }
     }
 
     custom.init();

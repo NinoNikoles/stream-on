@@ -362,6 +362,7 @@ $(document).ready(function() {
                 video.addEventListener("loadedmetadata", function() {
                     $('#player-back-btn').appendTo(".video-js");
                     $('#player-session-btn').appendTo(".video-js");
+                    $('#chat-open').appendTo(".video-js");
                     $('#player-sek-forward').appendTo(".video-js .vjs-control-bar");
                     $('#player-sek-back').appendTo(".video-js .vjs-control-bar");
                     
@@ -448,6 +449,15 @@ $(document).ready(function() {
                     e.preventDefault();
 
                     player.currentTime(player.currentTime() - 10);
+                });
+
+                $('#chat-open').on('click', function(e) {
+                    e.preventDefault();
+                    $('#chat').toggleClass('hidden');
+                });
+
+                $('#chat-close').on('click', function() {
+                    $('#chat').toggleClass('hidden');
                 });
             }
         },

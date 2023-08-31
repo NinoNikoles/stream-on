@@ -25,6 +25,8 @@ function movieVideoPlayer($movieID, $fullscreen = false, $session = false) {
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
                 if(!$session) {
                     echo '<a href="/watchtogether/?id='.$movieID.'&uuid='.getUUID().'" id="player-session-btn" title="Start group session"></a>';
+                } else {
+                    echo '<a href="#" id="chat-open"></a>';
                 }
                 echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
                 echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
@@ -46,6 +48,10 @@ function movieVideoPlayer($movieID, $fullscreen = false, $session = false) {
 
         $volume = getVolume($userID);
         echo '<span data-time="'.$watchedTime.'" data-show="'.$movieID.'" '.$sessionData.' data-volume="'.$volume.'" id="time"></span>';
+
+        if ( isset($_GET['uuid']) ) {
+            require_once ROOT_PATH.'/views/includes/chat.php';
+        }
     }
 
     $conn->close();
@@ -215,6 +221,8 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = fa
                 echo '<a href="/" id="player-back-btn" title="Back"></a>';
                 if(!$session) {
                     echo '<a href="/watchtogether/?s='.$showID.'&id='.$episodeID.'&uuid='.getUUID().'" id="player-session-btn" title="Start group session"></a>';
+                } else {
+                    echo '<a href="#" id="chat-open"></a>';
                 }
                 echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
                 echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
@@ -244,6 +252,10 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = fa
 
         $volume = getVolume($userID);
         echo '<span data-time="'.$watchedTime.'" data-show="'.$showID.'" '.$sessionData.' data-volume="'.$volume.'" id="time"></span>';
+    
+        if ( isset($_GET['uuid']) ) {
+            require_once ROOT_PATH.'/views/includes/chat.php';
+        }
     }
 
     $conn->close();

@@ -1,0 +1,114 @@
+#chat {
+    display: flex;
+    flex-direction: column;
+    background: {
+        color: var(--dark-light);
+    }
+    width: rem-calc(320);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    @include transition(right $transition-default);
+
+    @include MQ(medium) {
+        width: rem-calc(460);
+    }
+
+    &.hidden {
+        right: -100%;
+    }
+
+    .chat-wrap {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        #chat-headline {
+            border-bottom: 1px solid var(--white-50);
+            position: relative;
+        }
+
+        #message-wrap {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+
+            .message {
+                display: flex;
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                background: {
+                    color: var(--dark);
+                }
+                width: fit-content;
+                max-width: 80%;
+                padding: rem-calc(10);
+
+                &.joint-msg {
+                    width: 100%;
+                    max-width: 100%;
+                }
+
+                &.self {
+                    align-self: flex-end;
+                    background: {
+                        color: var(--white-10);
+                    }
+                }
+
+                span {
+                    margin: {
+                        bottom: 0;
+                    }
+                }
+
+                .imgWrap {
+                    border-radius: 100px;
+                    width: rem-calc(40);
+                    min-width: rem-calc(40);
+                    overflow: hidden;
+                }
+            }
+        }
+
+        #input-wrap {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: flex-end;
+            border-top: 1px solid var(--white-50);
+            width: 100%;
+            label {
+                width: 100%;
+
+            }
+            button {
+                height: fit-content;
+            }
+        }
+    }
+
+    #chat-close {
+        aspect-ratio: 1/1;
+        background: transparent;
+        border: none;
+        color: var(--white);
+        font-size: rem-calc(30);
+        height: 90%;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus {
+            opacity: 0.7;
+        }
+    }
+}

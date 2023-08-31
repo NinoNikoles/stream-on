@@ -27,6 +27,7 @@ class routes {
             '/media-popup' => 'views/actions/media-popup.php',
             '/filter' => 'views/actions/filter.php',
             '/save-volume' => 'views/actions/save-volume.php',
+            '/msg' => 'views/actions/send-message.php',
         ],
         'admin' => [
             '/admin/settings' => 'views/backend/settings.php',

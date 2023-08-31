@@ -310,7 +310,8 @@
     }
 
     #player-back-btn,
-    #player-session-btn {
+    #player-session-btn,
+    #chat-open {
         display: block;
         color: var(--white);
         flex: none;
@@ -358,9 +359,19 @@
         }
     }
 
+    #chat-open {
+        right: rem-calc($grid-padding);
+        left: unset;
+
+        &::before {
+            content: $icon-chat;
+        }
+    }
+
     &.vjs-has-started {
         #player-back-btn,
-        #player-session-btn {
+        #player-session-btn,
+        #chat-open {
             visibility: visible;
             opacity: 1;
             flex: none;
@@ -368,7 +379,8 @@
 
         &.vjs-user-inactive {
             #player-back-btn,
-            #player-session-btn {
+            #player-session-btn,
+            #chat-open {
                 visibility: hidden;
                 opacity: 0;
             }
@@ -384,7 +396,8 @@
 }
 
 #player-back-btn,
-#player-session-btn {
+#player-session-btn,
+#chat-open {
     display: none;
 }
 
@@ -729,6 +742,7 @@
 
 #player-back-btn::before,
 #player-session-btn::before,
+#chat-open::before,
 #player-sek-forward::before,
 #player-sek-back::before,
 #show-eps-btn::before,
