@@ -622,19 +622,31 @@ $(document).ready(function() {
                             socket.send(actionTimeUpdate);
                         }
 
-                        $('#chatMSG').on('click', function() {
-                                var message = $('#message-input').val(),
-                                userID = $('#message-use-id').val();
-                                username = $('#message-use-name').val();
-                                send = `msg:${message}:${userID}:${username}`;
+                        $msgInput = $('#message-input');
+                        
+                        $msgInput.on('keyup', function(event) {
+                            if (event.key === 'Enter') {
+                                sendMessage();
+                            }
+                        });
 
-                                $('#message-input').val("");
+                        $('#chatMSG').on('click', function() {
+                            sendMessage();                           
+                        });
+
+                        function sendMessage() {
+                            var message = $('#message-input').val(),
+                            userID = $('#message-use-id').val();
+                            username = $('#message-use-name').val();
+                            send = `msg:${message}:${userID}:${username}`;
+
+                            $('#message-input').val("");
 
                             if ( message.length > 0) {
                                 socket.send(send);
                                 ajaxMessage(message, userID, username)
-                            }                            
-                        });
+                            }   
+                        }
 
                         function joinedMessage(userID, username) {
                             const joined = 'true';
