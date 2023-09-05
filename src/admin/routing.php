@@ -28,6 +28,7 @@ class routes {
             '/filter' => 'views/actions/filter.php',
             '/save-volume' => 'views/actions/save-volume.php',
             '/msg' => 'views/actions/send-message.php',
+            '/updateUserImg' => 'views/actions/update-user-img.php',
         ],
         'admin' => [
             '/admin/settings' => 'views/backend/settings.php',

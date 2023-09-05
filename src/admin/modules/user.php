@@ -66,6 +66,11 @@ function userProfileImgByID($userID) {
     return $userProfileImg;
 }
 
+function uploadedIMG($uploadedImg) {
+    $img = '/uploads/'.$uploadedImg;
+    return $img;
+}
+
 function registerUser($post) {
     $conn = dbConnect();
     $username = mysqli_real_escape_string($conn, $post['username']);

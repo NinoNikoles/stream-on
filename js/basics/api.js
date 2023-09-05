@@ -31,7 +31,7 @@ $(document).ready(function() {
             self.highlight();
             self.mediaPopUp();
             self.sorting();
-            self.chatMessage();
+            self.updateUserImg();
         },
 
         bindHandlers: function () {
@@ -820,8 +820,37 @@ $(document).ready(function() {
             });
         },
 
-        chatMessage: function() {
-            
+        updateUserImg: function() {
+            $('input[name="userImg"]').on('click', function() {
+                console.log($(this).attr('data-current'));
+                if ( $(this).attr('data-current') == 0 ) {
+                    $('#updateUserImg').css('visibility', 'visible');
+                } else {
+                    $('#updateUserImg').css('visibility', 'hidden');
+                }
+            });
+
+            $('#updateUserImg').on('click', function(e) {
+                e.preventDefault();
+
+                var img = $('.user-img-select input[type="radio"]:checked').val();
+                var userID = $('.user-img-select input[type="radio"]:checked').attr('data-id');
+
+                $.ajax({
+                    url: '/updateUserImg',
+                    type: 'post',
+                    data: { 
+                        img: img,
+                        userID: userID,
+                    },
+                    success: function(response) {
+                        $('body').append(response);
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
+                    }
+                });
+            });
         }
     }
 

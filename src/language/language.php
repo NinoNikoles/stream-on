@@ -71,6 +71,7 @@ class langSnippets {
             'has_joined_the_chat' => 'has joined the chat.',
             'message' => 'Message',
             'send' => 'Send',
+            'all_uploads' => 'All uploads',
 
 			// Movie
 			'rating' => 'Rating',
@@ -110,6 +111,7 @@ class langSnippets {
 
             'logout_message' => 'Successfully logged out!',
             'user_img_upload_success' => 'Image successfully uploaded!',
+            'user_img_update_success' => 'Image successfully updated!',
 
             // Alert
 			'failed_to_save' => 'Save failed!',
@@ -191,6 +193,7 @@ class langSnippets {
             'seasons' => 'Staffeln',
             'all' => 'Alle',
             'menu' => 'Menü',
+            'all_uploads' => 'Alle Uploads',
 
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',
@@ -255,7 +258,8 @@ class langSnippets {
             'delete_season_success' => 'Staffel wurde erfolgreich gelöscht werden!',
 
             'logout_message' => 'Du hast dich erfolgreich abgemeldet!',
-            'user_img_upload_success' => 'Bild erfolgreich hochgeladen',
+            'user_img_upload_success' => 'Bild erfolgreich hochgeladen!',
+            'user_img_update_success' => 'Bild erfolgreich aktualisiert!',
 
             // Alert
 			'failed_to_save' => 'Speichern fehlgeschlagen!',

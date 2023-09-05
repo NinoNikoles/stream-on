@@ -15,3 +15,17 @@ label {
         }
     }
 }
+
+input[type="file"] {
+    display: block;
+
+    &::file-selector-button {
+        @include button();
+        @include button-colors(var(--font-color-invert), var(--font-color-invert), var(--white), var(--primary));
+
+        margin: {
+            right: rem-calc($space-base*2);
+            bottom: 0;
+        }
+    }
+}

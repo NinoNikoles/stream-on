@@ -32,9 +32,30 @@
                     // Bild in den Zielordner verschieben
                     move_uploaded_file($bildTmpName, $ziel);
 
-                    $sql = "UPDATE users SET user_img='$neuerName' WHERE id='".$_POST['id']."'";
+                    $imgArray = [];
+
+                    $sql = "SELECT uploads FROM users WHERE id=".$_SESSION['userID'].";";
+                    $result = $conn->query($sql);
+                    while ( $resultImages = $result->fetch_assoc() ) {
+                        $images = json_decode($resultImages['uploads']);
+                    }
+
+                    if ( $images ) {
+                        foreach ( $images as $image ) {
+                            $imgArray[] = $image;
+                        }
+                    }
+
+                    $imgArray[] = $neuerName;
+                    $imgArray = json_encode($imgArray);
+                    $sql = "UPDATE users SET uploads='$imgArray' WHERE id=".$_SESSION['userID'].";";
+                    if ( !($conn->query($sql) === TRUE) ) {
+                        set_callout('alert','user_img_upload_alert');
+                        page_redirect("/user/?id=".$_POST['id']);
+                    }
+
+                    $sql = "UPDATE users SET user_img='$neuerName' WHERE id=".$_SESSION['userID'].";";
                     if ($conn->query($sql) === TRUE) {
-                        echo "Record updated successfully";
                         set_callout('success','user_img_upload_success');
                         page_redirect("/user/?id=".$_POST['id']);
                     } else {
@@ -54,32 +75,87 @@
 ?>
 
 <div class="col12">
-    <div class="innerWrap marg-top-l">
-        <?php callout(); ?>
+    <div class="innerWrap marg-top-xxl">
+        
+        <div class="col8 marg-left-col2">
+            <?php callout(); ?>
+        </div>
 
-        <div class="col8 marg-left-col2 marg-right-col4">
-            <div class="col4 marg-left-col4 marg-right-col4">
-                <h1 class="text-center"><?php echo $_SESSION['username']; ?></h1>
+        <div class="col8 marg-left-col2">
+            <div class="col5 marg-right-col1">
                 <figure class="square">
                     <img data-img="<?php echo userProfileImg(); ?>" loading="lazy" alt="">
-                </figure>
-
-
-                
-
+                </figure>                
+            </div>
+            <div class="col6 pad-top-xs">
+                <h1><?php echo $_SESSION['username']; ?></h1>
 
                 <form action="/user/?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="number" name="id" value="<?php echo $_GET['id']; ?>" style="display:none;">
                     <p>
-                        <lable for="user-img">User img <input type="file" name="user-img" accept="image/*"></lable>
+                        <lable for="user-img">User img
+                            <input type="file" name="user-img" accept="image/*">
+                        </lable>
                     </p>
-                    <p>
-                        <button type="submit" class="btn btn-small" name="submit" value="Hochladen">Hochladen</button>
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-small btn-success" name="submit" value="Hochladen">Hochladen</button>
                     </p>
                 </form>
             </div>
         </div>
 
+        <?php
+        $sql = "SELECT user_img, uploads FROM users WHERE id=".$_SESSION['userID'].";";
+        $result = $conn->query($sql);
+        while ( $resultImages = $result->fetch_assoc() ) {
+            $images = json_decode($resultImages['uploads']);
+            $currentImg = $resultImages['user_img'];
+        }
+        
+        if ( $images) {
+            $i = 0;
+        ?>
+
+        <div class="col8 marg-top-xl marg-left-col2">
+            <div class="col6">
+                <h2 class="h3"><?php echo lang_snippet('all_uploads'); ?></h2>
+            </div>
+
+            <div class="col6 text-right">
+                <a href="#" class="btn btn-small btn-success" id="updateUserImg" style="visibility:hidden"><?php echo lang_snippet('save'); ?></a>
+            </div>
+
+            <div class="col12 grid-row">
+
+                <?php
+                    foreach ( $images as $image ) {
+                        if ( !($image === $currentImg) ) {
+                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding">';
+                                echo '<div class="user-img-select">';
+                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
+                                    echo '<figure class="square">';
+                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
+                                    echo '</figure>';
+                                echo '</div>';
+                            echo '</div>';
+                            $i++;
+                        } else {
+                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding">';
+                                echo '<div class="user-img-select">';
+                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
+                                    echo '<figure class="square">';
+                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
+                                    echo '</figure>';
+                                echo '</div>';
+                            echo '</div>';
+                            $i++;
+                        }
+                    }
+                ?>
+            </div>
+        </div>
+
+        <?php } ?>
     </div>
 </div>
 
