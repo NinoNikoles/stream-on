@@ -43,14 +43,14 @@ $conn = dbConnect();
 
             <table>
                 <thead>
+                    <th><?php echo lang_snippet('user_img'); ?></th>
                     <th><?php echo lang_snippet('username'); ?></th>
                     <th><?php echo lang_snippet('role'); ?></th>
                     <th><?php echo lang_snippet('edit'); ?></th>
                     <th><?php echo lang_snippet('delete'); ?></th>
                 </thead>
                 <?php
-var_dump($_SESSION);
-                    $sql = "SELECT id, username, role FROM users";
+                    $sql = "SELECT id, username, user_img, role FROM users";
                     $results = $conn->query($sql);
                     while($row = $results->fetch_assoc()) {
                         
@@ -63,10 +63,9 @@ var_dump($_SESSION);
                         }
 
                         echo '<tr>';
+                            echo '<td><figure class="square"><img data-img="'.uploadedIMG($row['user_img']).'" loading="lazy" alt=""></figure></td>';
                             echo '<td>'.$row['username'].'</td>';
                             echo '<td>'.$role.'</td>';
-
-                            
 
                             if ( $row['role'] === 'superadmin' && $_SESSION['role'] === 'superadmin' ) {
                                 echo '<td><button data-src="#edit-user-'.$row['id'].'" title="'.lang_snippet('edit').'" class="btn btn-small btn-warning icon-only icon-pen marg-no" data-fancybox></button></td>';

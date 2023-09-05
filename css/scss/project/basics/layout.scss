@@ -7,3 +7,21 @@ body {
         top: rem-calc(50) !important;
     }
 }
+
+table,
+.table {
+    table-layout: fixed;
+
+    thead,
+    .thead {
+        th,
+        .th {
+            color: var(--font-color);
+            font-weight: $font-weight-base;
+        }
+    }
+
+    figure {
+        max-width: rem-calc(100);
+    }
+}

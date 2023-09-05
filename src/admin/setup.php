@@ -199,6 +199,7 @@ function createTables($pageTitle, $adminUsername, $adminPassword) {
         lastname varchar(255),
         password varchar(255),
         user_img varchar(255),
+        uploads TEXT,
         role VARCHAR(10),
         media_volume FLOAT,
         created TIMESTAMP,

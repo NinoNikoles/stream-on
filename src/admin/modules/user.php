@@ -67,7 +67,12 @@ function userProfileImgByID($userID) {
 }
 
 function uploadedIMG($uploadedImg) {
-    $img = '/uploads/'.$uploadedImg;
+    if ( $uploadedImg === NULL || $uploadedImg === "" ) {
+        $img = '/views/build/css/images/placeholder.webp';
+    } else {
+        $img = '/uploads/'.$uploadedImg;
+    }
+
     return $img;
 }
 
