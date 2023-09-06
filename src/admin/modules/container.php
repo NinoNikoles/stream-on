@@ -83,8 +83,8 @@ function genreSlider() {
                             echo '<h3>'.$genre['genre_name'].'</h3>';
                         echo '</div>';
 
-                        echo '<div class="column">'; 
-                            echo '<div class="swiper card-slider">';
+                        echo '<div class="col12">'; 
+                            echo '<div class="swiper card-slider column">';
                                 echo '<div class="swiper-wrapper">';
                                     echo $mediaRow;
                                 echo '</div>';

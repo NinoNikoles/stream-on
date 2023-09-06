@@ -3,7 +3,7 @@
     .column {
         .swiper-slide {
             z-index: 0;
-            transition: scale $transition-default;
+            //transition: scale $transition-default;
 
             // &:hover {
             //     @include MQ(medium) {
@@ -16,7 +16,11 @@
 }
 
 .card-slider {
-    overflow: initial;
+    //overflow: initial;
+}
+
+.swiper-wrapper {
+    //overflow: hidden;
 }
 
 .swiper-button-prev,
@@ -37,7 +41,7 @@
 
 .swiper-button-prev {
     background: linear-gradient(90deg, var(--dark), transparent);
-    left: rem-calc(-16);
+    left: 0;
 
     &::after {
         left: 50%;
@@ -46,7 +50,7 @@
 
 .swiper-button-next {
     background: linear-gradient(270deg, var(--dark), transparent);
-    right: rem-calc(-16);
+    right: 0;
 
     &::after {
         left: 50%;
