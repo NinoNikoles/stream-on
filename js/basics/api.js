@@ -816,9 +816,9 @@ $(document).ready(function() {
             $('input[name="userImg"]').on('click', function() {
                 console.log($(this).attr('data-current'));
                 if ( $(this).attr('data-current') == 0 ) {
-                    $('#updateUserImg').css('visibility', 'visible');
+                    $('#updateUserImg').css('display', 'flex');
                 } else {
-                    $('#updateUserImg').css('visibility', 'hidden');
+                    $('#updateUserImg').css('display', 'none');
                 }
             });
 

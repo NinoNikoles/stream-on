@@ -108,7 +108,7 @@
         $sql = "SELECT user_img, uploads FROM users WHERE id=".$_SESSION['userID'].";";
         $result = $conn->query($sql);
         while ( $resultImages = $result->fetch_assoc() ) {
-            $images = json_decode($resultImages['uploads']);
+            $images = array_reverse(json_decode($resultImages['uploads']));
             $currentImg = $resultImages['user_img'];
         }
         
@@ -116,21 +116,16 @@
             $i = 0;
         ?>
 
-        <div class="col8 marg-top-xl marg-left-col2">
-            <div class="col6">
+        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2">
+            <div class="col12">
                 <h2 class="h3"><?php echo lang_snippet('all_uploads'); ?></h2>
             </div>
 
-            <div class="col6 text-right">
-                <a href="#" class="btn btn-small btn-success" id="updateUserImg" style="visibility:hidden"><?php echo lang_snippet('save'); ?></a>
-            </div>
-
             <div class="col12 grid-row">
-
                 <?php
                     foreach ( $images as $image ) {
                         if ( !($image === $currentImg) ) {
-                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding">';
+                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
                                 echo '<div class="user-img-select">';
                                     echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
                                     echo '<figure class="square">';
@@ -140,7 +135,7 @@
                             echo '</div>';
                             $i++;
                         } else {
-                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding">';
+                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
                                 echo '<div class="user-img-select">';
                                     echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
                                     echo '<figure class="square">';
@@ -152,6 +147,10 @@
                         }
                     }
                 ?>
+            </div>
+
+            <div class="col12 text-right">
+                <a href="#" class="btn btn-small btn-success marg-no" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
             </div>
         </div>
 
