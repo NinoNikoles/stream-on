@@ -51,6 +51,7 @@ class langSnippets {
             'continue_watching' => 'Continue',
             'all' => 'All',
             'menu' => 'Menu',
+            'search' => 'Search',
 
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -73,6 +74,7 @@ class langSnippets {
             'message' => 'Message',
             'send' => 'Send',
             'all_uploads' => 'All uploads',
+            'search_result' => 'Search results for:',
 
 			// Movie
 			'rating' => 'Rating',
@@ -216,6 +218,8 @@ class langSnippets {
             'has_joined_the_chat' => 'ist dem Chat beigetreten.',
             'message' => 'Nachricht',
             'send' => 'Senden',
+            'search' => 'Suche',
+            'search_result' => 'Suchergebnisse für:',
 
 			// Movie
 			'rating' => 'Bewertung',

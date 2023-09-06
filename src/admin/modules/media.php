@@ -211,7 +211,7 @@ function selectAllMoviesByTitle($order = '') {
     if ( $order != '' ) {
         $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, file_path, releaseDate, runtime, genres, mediaType FROM media WHERE mediaType='movie' ORDER BY title $order";
     } else {
-        $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, file_path, releaseDate, runtime, genres, mediaType FROM WHERE mediaType='movie'";
+        $sql = "SELECT tmdbID, title, tagline, overview, poster, backdrop, rating, file_path, releaseDate, runtime, genres, mediaType FROM media WHERE mediaType='movie'";
     }
     
     $results = $conn->query($sql);
@@ -238,6 +238,31 @@ function selectMovieByTitle($title){
         
         if ( $results->num_rows > 0 ) {
             $movies[] = $results->fetch_assoc();
+        }
+    }
+
+    $conn->close();
+    return $movies;
+}
+
+//-- Returns all local database movies ordered by A-Z or Z-A --
+function selectAllMediaByTitle($title, $order = '') {
+    $conn = dbConnect();
+    $movies = [];
+    $i = 0;
+
+    if ( $order != '' ) {
+        $sql = "SELECT * FROM media WHERE title LIKE '%$title%' ORDER BY title $order;";
+    } else {
+        $sql = "SELECT * FROM media WHERE title LIKE '%$title%' ORDER BY title ASC;";
+    }
+    
+    $results = $conn->query($sql);
+    
+    if ( $results->num_rows > 0 ) {
+        while ( $movie = $results->fetch_assoc() ) {
+            $movies[$i] = $movie;
+            $i++;
         }
     }
 

@@ -50,14 +50,14 @@
 			<div class="navWrap">
 
                 <!-- Suche -->
-                <!-- <div class="search-bar">
-                    <form method="post" action="/search">
+                <div class="search-bar">
+                    <div class="searchbar-wrap">
                         <div class="search-bar-fix"></div>
                         <input type="text" id="movie-live-search" name="search" placeholder="Suchen">
-                        <button type="submit" class="search-btn"></button>
-                    </form>
+                        <button class="btn search-btn"></button>
+                    </div>
                     <div id="movieLivesearchResults"></div>
-                </div>-->
+                </div>
 
 				<!-- Navigation -->
 				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">

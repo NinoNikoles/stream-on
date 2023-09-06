@@ -151,7 +151,8 @@ body {
         @include transition(transform $transition-default);
     }
 
-    &.active-menu {
+    &.active-menu,
+    &.active-search {
         overflow: hidden;
         
         #wrapper,
@@ -163,7 +164,8 @@ body {
     }
 
     &[data-overlay="true"] {
-        &.active-menu {
+        &.active-menu,
+        &.active-search {
             #wrapper,
             footer,
             #masterWrap > div {

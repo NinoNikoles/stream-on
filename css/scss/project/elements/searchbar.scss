@@ -29,7 +29,7 @@
         }
     }
 
-    form {
+    .searchbar-wrap {
         height: rem-calc(40);
         position: relative;
 
@@ -114,7 +114,7 @@
     }
 
     &:not(.active-search) {
-        form {
+        .searchbar-wrap {
             input {
                 top: 0;
                 border: {

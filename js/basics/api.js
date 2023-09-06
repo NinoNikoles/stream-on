@@ -44,6 +44,12 @@ $(document).ready(function() {
         movieLiveSearch: function() {
             var self = this;
 
+            $('#close-search').on('click', function(e) {
+                e.preventDefault();
+                $('#searchpage').removeClass('hidden');
+                $('body').removeClass('active-search');
+            });
+
             self.$apiSearch.on('input', function() {
                 $this = $(this);
                 $resultList = $('#movieSearchResults');
@@ -78,38 +84,23 @@ $(document).ready(function() {
                 $resultList = $('#movieLivesearchResults');
                 $resultPageList = $('#moviePageLivesearchResults');
                 $searchValueEl = $('#search-value');
+                $searchPage = $('#searchpage');
 
                 setTimeout(function() {
-                    var movieName = $this.val();
+                    $searchPage.removeClass('hidden');
+                    $('body').addClass('active-search');
+
+                    var mediaName = $this.val();
 
                     if ( $('#searchpage').length > 0 ) {
-                        $searchValueEl.text(movieName);
+                        $searchValueEl.text(mediaName);
 
                         $.ajax({
                             url: '/live-search',
                             type: 'post',
-                            data: { movie: movieName },
+                            data: { media: mediaName },
                             success: function(response) {
                                 $resultPageList.html(response);
-                                self.fancyLoad();
-                            }, error: function(xhr, status, error) {
-                                // Hier wird eine Fehlermeldung ausgegeben
-                                console.log('Fehler: ' + error);
-                            }
-                        });
-                    } else {
-                        if (movieName.length == 0) {
-                            $resultList.addClass('hidden'); ;
-                        } else {
-                            $resultList.removeClass('hidden'); 
-                        }
-
-                        $.ajax({
-                            url: '/searchbar',
-                            type: 'post',
-                            data: { movie: movieName },
-                            success: function(response) {
-                                $resultList.html(response);
                                 self.fancyLoad();
                             }, error: function(xhr, status, error) {
                                 // Hier wird eine Fehlermeldung ausgegeben
@@ -121,15 +112,16 @@ $(document).ready(function() {
             });
 
             self.$searchBtn.on('click', function(e) {
-                if ( !(self.$liveSearch.val().length > 0) ) {
-                    e.preventDefault();
-                    if ( !$('.search-bar').hasClass('active-search') ) {
-                        $('.search-bar').addClass('active-search');
-                    } else {
-                        self.$liveSearch.val('');
-                        $('.search-bar').removeClass('active-search');
-                    }
-                }
+                e.preventDefault();
+                $('.search-bar').toggleClass('active-search');
+
+                if ( $('.search-bar').hasClass('active-search') ) {
+                    $('#searchpage').removeClass('hidden');
+                    $('body').addClass('active-search');
+                } else {
+                    $('#searchpage').addClass('hidden');
+                    $('body').removeClass('active-search');
+                }                
             });
         },
 

@@ -1,0 +1,34 @@
+#searchpage {
+    background: {
+        color: var(--body-bg);
+    }
+    width: 100%;
+    height: calc(100% - 50px);
+    position: absolute;
+    top: rem-calc(50);
+    left: 0;
+    z-index: 5;
+    overflow: auto;
+    @include transition(opacity $transition-default, visibility 0s);
+
+    &.hidden {
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        z-index: -1;
+        @include transitions(opacity $transition-default, visibility 0s ease 0.3s, z-index 0s ease 0.3s);
+    }
+
+    #close-search {
+        color: var(--font-color);
+        font: {
+            size: rem-calc(40)
+        }
+        width: rem-calc(40);
+        height: rem-calc(40);
+        margin: 0;
+        position: absolute;
+        top: rem-calc($grid-padding);
+        right: rem-calc($grid-padding);
+    }
+}

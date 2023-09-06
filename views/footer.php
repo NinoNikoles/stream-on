@@ -4,5 +4,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.5.1/video.min.js"></script>
 <script src="/views/build/combined.min.js"></script>
+
+<?php include(ROOT_PATH.'/views/includes/search.php'); ?>
+
 </body>
 </html>
