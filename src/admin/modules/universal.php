@@ -5,13 +5,22 @@
 
 //-- DB connection --
 function dbConnect() {
-    if ( file_exists( ROOT_PATH.'/config.php') ) {    
-        $servername = DB_HOST;
-        $username = DB_USER;
-        $password = DB_PASSWORD;
-        $dbname = DB_NAME;
+    if ( file_exists( ROOT_PATH.'/config.php') ) {
+        if ( errorCatch('ignore') ) {
+            $servername = DB_HOST;
+            $username = DB_USER;
+            $password = DB_PASSWORD;
+            $dbname = DB_NAME;
+    
+            return new mysqli($servername, $username, $password, $dbname);  
+        } else {
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
 
-        return new mysqli($servername, $username, $password, $dbname);
+            return new mysqli($servername, $username, $password);
+        }
+      
     } else {
         $servername = "localhost";
         $username = "root";
@@ -21,18 +30,18 @@ function dbConnect() {
     }    
 }
 
+function tmdbConfig() {
+    include ROOT_PATH.'/src/tmdb/configuration/default.php';
+    return $cnf;
+}
+
 //-- Returns TMDB Class --
 function setupTMDB() {
-    include ROOT_PATH.'/src/tmdb/configuration/default.php';
+    $cnf = tmdbConfig();
     require_once ROOT_PATH.'/src/tmdb/tmdb-api.php';
     $tmdb = new TMDB($cnf);
 
     return $tmdb;
-}
-
-function tmdbConfig() {
-    include ROOT_PATH.'/src/tmdb/configuration/default.php';
-    return $cnf;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,37 +109,36 @@ function pageTitle($page) {
     }
 
     if ( file_exists( ROOT_PATH.'/config.php') ) {
-        $query = "SHOW TABLES LIKE 'settings'";
-        $result = $conn->query($query);
-
-        if ($result->num_rows > 0) {
-            $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
-            if ( $conn->connect_error ) {
-                return $title;
-            } else {
-                $result = $conn->query($sql);
+        if ( databaseExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+            if ( tablesExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+                $query = "SHOW TABLES LIKE 'settings'";
+                $result = $conn->query($query);
+    
                 if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $conn->close();
-                        
-                        $title[0] = $page;
-                        $title[1] = $row['setting_option'];
-                        return $title;
-                    }
+                    $sql = "SELECT setting_option FROM settings WHERE setting_name='site_title'";
+                    if ( !($conn->connect_error) ) {
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $conn->close();
+                                
+                                $title[0] = $page;
+                                $title[1] = $row['setting_option'];
+                                return $title;
+                            }
+                        }
+                    } 
                 }
-            }
-        } else {
-            return $title;
+            } 
         }
-    } else {
-        return $title;
     }
+
+    return $title;
 }
 
 //-- Set Browserlanguage --
 function get_browser_language( $available = [], $default = 'en' ) {
 	if ( isset( $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ] ) ) {
-
 		$langs = explode( ',', $_SERVER['HTTP_ACCEPT_LANGUAGE'] );
 
 		if ( empty( $available ) ) {
@@ -144,6 +152,7 @@ function get_browser_language( $available = [], $default = 'en' ) {
 			}
 		}
 	}
+
 	return $default;
 }
 
@@ -205,30 +214,7 @@ function get_apikey_db() {
 
 function loadFavicon() {
     $iconPath = '/views/assets/icons';
-    $conn = dbConnect();
-
-    if ( file_exists( ROOT_PATH.'/config.php') ) {
-        if ( tablesExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
-            $sql = "SELECT setting_option FROM settings WHERE setting_name='favicon_path'";
-            $result = $conn->query($sql);
-            if ( !($conn->connect_error) ) {
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<link rel="icon" type="image/png" href="'.$iconPath.'/'.$row['setting_option'].'">';
-                    }
-                } else {
-                    favicon($iconPath);
-                }
-            } else {
-                favicon($iconPath);
-            }
-        } else {
-            favicon($iconPath);
-        }        
-    } else {
-        favicon($iconPath);
-    }
-
+    favicon($iconPath);
 };
 
 function favicon($iconPath) {
@@ -407,8 +393,8 @@ function runtimeToString($runtime) {
 
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
-    return "http://image.tmdb.org/t/p/$size$img";
-    //return '/views/build/css/images/img_preview.webp';
+    //return "http://image.tmdb.org/t/p/$size$img";
+    return '/views/build/css/images/img_preview.webp';
 }
 
 //-- User Volume --
@@ -434,5 +420,19 @@ function getUUID() {
     }
 
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4)); 
+}
+
+function userNameStringFormatter() {
+    $username = $_SESSION['username'];
+    // String in Kleinbuchstaben umwandeln
+    $formattedString = strtolower($username);
+    
+    // Sonderzeichen durch "-" ersetzen (außer Leerzeichen, die durch "_" ersetzt werden)
+    $formattedString = preg_replace('/[^a-z0-9\s]/', '-', $formattedString);
+    
+    // Leerzeichen durch "_" ersetzen
+    $formattedString = str_replace(' ', '_', $formattedString);
+    
+    return $formattedString;
 }
 ?>

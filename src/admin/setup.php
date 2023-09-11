@@ -6,30 +6,56 @@ function configCheck() {
     }
 }
 
-function init() {
-    if ( file_exists( ROOT_PATH.'/config.php') ) {
-        if ( onetimesetup(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
-            require_once ROOT_PATH.'/src/routes/routes.php';
-        }
-        else if ( !databaseExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
-            get('/install', 'install.php');
-            post('/install', 'install.php');
-        
-            if ( !pageCheck("/install") ) {
-                page_redirect("/install");
+function hostCheck() {
+    require_once ROOT_PATH.'/config.php';
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD);
+
+    if ($conn->connect_error) {
+        // Fehler bei der Verbindung zur Datenbank
+        throw new mysqli_sql_exception("Verbindung zu MySQL fehlgeschlagen: " . $conn->connect_error);
+    } 
+}
+
+function connCheck() {
+    require_once ROOT_PATH.'/config.php';
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if ($conn->connect_error) {
+        // Fehler bei der Verbindung zur Datenbank
+        throw new mysqli_sql_exception("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
+    }  
+}
+
+function errorCatch($error) {
+    if ( !($error === 'ignore') ) {
+        if ( $error === 'host' ) {
+            try {
+                hostCheck();
+            } catch ( mysqli_sql_exception $e ) {
+                require_once( ROOT_PATH.'/error.php');
+                die("<p>Es ist ein Fehler bei der Verbingung zu MySQL aufgetreten. Bitte überprüfen Sie Ihre Zugangsdaten.</p>");
             }
-            
-        } else if ( !tablesExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
-            get('/install', 'install.php');
-            post('/install', 'install.php');
-    
-            if ( !pageCheck("/install") ) {
-                page_redirect("/install");
+        } else if ( $error === 'db' ) {
+            try {
+                connCheck();
+            } catch ( mysqli_sql_exception $e ) {
+                require_once( ROOT_PATH.'/error.php');
+                die("<p>Es ist ein Fehler bei der Datenbankverbindung aufgetreten. Bitte überprüfen Sie Ihre Zugangsdaten.</p>");
             }
-        } else {
-            require_once ROOT_PATH.'/src/routes/routes.php';
         }
     } else {
+        try {
+            connCheck();
+        } catch ( mysqli_sql_exception $e ) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+function init() {
+    if ( !file_exists(ROOT_PATH.'/config.php') ) {
         get('/install', 'install.php');
         post('/install', 'install.php');
     
@@ -37,6 +63,37 @@ function init() {
             page_redirect("/install");
         }
     }
+
+    errorCatch('host');
+
+    if ( !databaseExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+        get('/install', 'install.php');
+        post('/install', 'install.php');
+ 
+        if ( !pageCheck("/install") ) {
+            page_redirect("/install");
+        }
+    }
+
+    if ( !tablesExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+        get('/install', 'install.php');
+        post('/install', 'install.php');
+
+        if ( !pageCheck("/install") ) {
+            page_redirect("/install");
+        }
+    }
+
+    if ( !databaseExists(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ) {
+        get('/install', 'install.php');
+        post('/install', 'install.php');
+    
+        if ( !pageCheck("/install") ) {
+            page_redirect("/install");
+        }   
+    }
+
+    require_once ROOT_PATH.'/src/routes/routes.php';
 }
 
 function onetimesetup($servername, $username, $password, $dbname) {
@@ -60,15 +117,15 @@ function onetimesetup($servername, $username, $password, $dbname) {
 // Überprüfen, ob die erforderlichen Tabellen existieren
 function databaseExists($servername, $username, $password, $dbname) {
     $conn = new mysqli($servername, $username, $password);
-    if ($conn->connect_error) {
-        return false;
-    }
 
     $result = $conn->query("Show DATABASES LIKE '".$dbname."'");
-    $dbExists = $result->num_rows > 0;
-    
-    $conn->close();
-    return $dbExists;
+    if ( $result->num_rows > 0 ) {
+        $conn->close();
+        return true;
+    } else {
+        $conn->close();
+        return false;
+    }
 }
 
 // Überprüfen, ob die erforderlichen Tabellen existieren
@@ -79,10 +136,13 @@ function tablesExists($servername, $username, $password, $dbname) {
     }
     
     $result = $conn->query("SHOW TABLES LIKE 'settings'");
-    $tableExists = $result->num_rows > 0;
-    
-    $conn->close();
-    return $tableExists;
+    if ( $result->num_rows > 0 ) {
+        $conn->close();
+        return true;
+    } else {
+        $conn->close();
+        return false;
+    }  
 }
 
 function pageCheck($searchString) {

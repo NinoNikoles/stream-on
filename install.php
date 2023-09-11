@@ -10,22 +10,23 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
     $charset = DB_CHARSET;
     $collate = DB_COLLATE;
 
-    if ( !databaseExists($servername, $username, $password, $dbname) ) {
-        createDatabase($servername, $username, $password, $dbname, $charset, $collate);
-        page_redirect("/");
-
-    } else if ( isset($_POST['table-submit']) ) {
+    if ( isset($_POST['table-submit']) ) {
         $pageTitle = $_POST['page-title'];
         $adminUsername = $_POST['user'];
         $adminPassword = $_POST['password'];
 
-        createTables($pageTitle, $adminUsername, $adminPassword, $apikey, $pageLang);
+        createTables($pageTitle, $adminUsername, $adminPassword);
+        page_redirect("/");
+    }
+
+    if ( !databaseExists($servername, $username, $password, $dbname) ) {
+        createDatabase($servername, $username, $password, $dbname, $charset, $collate);
         page_redirect("/");
 
-    } else {
-        if ( !tablesExists($servername, $username, $password, $dbname) ) {
-        ?>
+    }
 
+    if ( !tablesExists($servername, $username, $password, $dbname) ) { 
+        ?>
             <div class="innerWrap">
                 <div class="col4 marg-left-col4">
                     <form method="post" action="/install">
@@ -50,9 +51,7 @@ if ( file_exists( ROOT_PATH.'/config.php') ) {
                     </form>
                 </div>
             </div>
-        
         <?php
-        }
     }
 } else {
     new mysqli('localhost', 'root', '');
