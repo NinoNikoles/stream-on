@@ -564,7 +564,6 @@ $(document).ready(function() {
                             // Sende Aktion "Play" an den Server
                             if ( isFirstPlay ) {
                                 videoPlayer.pause();
-                                isFirstPlay = false;
                             } else {
                                 synchTime();
                                 socket.send('play');
@@ -576,6 +575,8 @@ $(document).ready(function() {
                                 // Sende Aktion "Pause" an den Server
                                 synchTime();
                                 socket.send('pause');
+                            } else {
+                                isFirstPlay = false;
                             }
                         });
                 
