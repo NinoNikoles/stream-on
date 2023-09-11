@@ -21,16 +21,16 @@ if ( isset($_POST['joined']) ) {
     $msgClass = '';
     
     if ( $userID === $_SESSION['userID'] ) {
-        $msgClass = 'self'; 
+        $msgClass = 'self';  
     }
-    
+
     echo '
     <div class="message '.$msgClass.' marg-bottom-xs">
         <div class="message-content-wrap">
             <p class="message-username marg-bottom-no strong">'.$username.'</p>
-            <p class="message-text marg-right-xs small marg-bottom-no">'.$message.'</p>
+            <p class="message-text small marg-bottom-no">'.$message.'</p>
         </div>
-        <span class="imgWrap">
+        <span class="imgWrap marg-left-xs">
             <figure class="square">
                 <img src="'.userProfileImg($userID).'">
             </figure>

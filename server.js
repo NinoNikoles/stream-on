@@ -20,7 +20,6 @@ wss.on('connection', (ws, req) => {
     clients[remotesessionID].push(ws);
 
     ws.on('message', (message) => {
-        console.log('Received message:', message);
         // Hier empfängst du Nachrichten von einem Benutzer und sendest sie an alle anderen Benutzer
         clients[remotesessionID].forEach((client) => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -38,6 +37,7 @@ wss.on('connection', (ws, req) => {
     });
 });
 
+const port = process.env.PORT || 3000;
 server.listen(3000, () => {
-    console.log('Server is listening on port 3000');
+    console.log(`Server is listening on port ${port}`);
 });

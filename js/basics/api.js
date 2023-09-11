@@ -510,7 +510,7 @@ $(document).ready(function() {
 
         remoteWatch: function() {
             var self = this;
-
+            const host = window.location.hostname;
             if ( $('#mainPlayer').length > 0 ) {
                 videoPlayer = videojs('player');
                 const startButton = document.querySelector('.vjs-big-play-button');
@@ -520,7 +520,7 @@ $(document).ready(function() {
                     const remotesessionID = $('span#time').attr('data-session');
 
                     if ( remotesessionID ) {
-                        const socket = new WebSocket(`ws://localhost:3000/?remotesessionID=${remotesessionID}`);
+                        const socket = new WebSocket(`ws://${host}:3000/?remotesessionID=${remotesessionID}`);
                         let isFirstPlay = true;
 
                         socket.onopen = () => {
@@ -816,7 +816,7 @@ $(document).ready(function() {
             $('input[name="userImg"]').on('click', function() {
                 console.log($(this).attr('data-current'));
                 if ( $(this).attr('data-current') == 0 ) {
-                    $('#updateUserImg').css('display', 'flex');
+                    $('#updateUserImg').css('display', 'inline-flex');
                 } else {
                     $('#updateUserImg').css('display', 'none');
                 }
