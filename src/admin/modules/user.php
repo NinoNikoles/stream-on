@@ -25,10 +25,10 @@ function userProfileImg($userID = false) {
     $conn = dbConnect();
 
     if ( $userID ) {
-        $sql = "SELECT user_img FROM users WHERE id=$userID;";
+        $sql = "SELECT username, user_img FROM users WHERE id=$userID;";
     } else {
         $sessionUserID = $_SESSION['userID'];
-        $sql = "SELECT user_img FROM users WHERE id='$sessionUserID'";
+        $sql = "SELECT username, user_img FROM users WHERE id='$sessionUserID'";
     }
     
     $result = $conn->query($sql);
@@ -40,7 +40,7 @@ function userProfileImg($userID = false) {
             if ($row['user_img'] === NULL || $row['user_img'] === '') {
                 $userProfileImg = '/views/build/css/images/avatar.webp';
             } else {
-                $userProfileImg = '/uploads/'.userNameStringFormatter().'/'.$row['user_img'];
+                $userProfileImg = '/uploads/'.userNameStringFormatter($row['username']).'/'.$row['user_img'];
             }
         }
     } else {
@@ -50,11 +50,11 @@ function userProfileImg($userID = false) {
     return $userProfileImg;
 }
 
-function uploadedIMG($uploadedImg) {
+function uploadedIMG($username, $uploadedImg) {
     if ( $uploadedImg === NULL || $uploadedImg === "" ) {
         $img = '/views/build/css/images/avatar.webp';
     } else {
-        $img = '/uploads/'.userNameStringFormatter().'/'.$uploadedImg;
+        $img = '/uploads/'.userNameStringFormatter($username).'/'.$uploadedImg;
     }
 
     return $img;

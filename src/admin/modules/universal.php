@@ -422,8 +422,7 @@ function getUUID() {
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4)); 
 }
 
-function userNameStringFormatter() {
-    $username = $_SESSION['username'];
+function userNameStringFormatter($username) {
     // String in Kleinbuchstaben umwandeln
     $formattedString = strtolower($username);
     

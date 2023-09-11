@@ -63,7 +63,7 @@ $conn = dbConnect();
                         }
 
                         echo '<tr>';
-                            echo '<td><figure class="square"><img data-img="'.uploadedIMG($row['user_img']).'" loading="lazy" alt=""></figure></td>';
+                            echo '<td><figure class="square"><img data-img="'.uploadedIMG($row['username'], $row['user_img']).'" loading="lazy" alt=""></figure></td>';
                             echo '<td>'.$row['username'].'</td>';
                             echo '<td>'.$role.'</td>';
 
