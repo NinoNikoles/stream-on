@@ -22,12 +22,18 @@
     
                 // Erlaubte Dateitypen festlegen
                 $erlaubteTypen = array('jpg', 'jpeg', 'png', 'gif', 'svg');
+
+                $uploadDir = ROOT_PATH.'/uploads/'.userNameStringFormatter();
+
+                if ( !is_dir($uploadDir) ) {
+                    mkdir($uploadDir, 0777, true);
+                }
     
                 // Überprüfen, ob die Datei ein Bild ist und erlaubte Dateitypen hat
                 if(in_array($bildExt, $erlaubteTypen)) {
                     // Dateinamen für das Bild generieren
                     $neuerName = uniqid('', true) . '.' . $bildExt;
-                    $ziel = ROOT_PATH.'/uploads/' . $neuerName;
+                    $ziel = $uploadDir.'/'. $neuerName;
         
                     // Bild in den Zielordner verschieben
                     move_uploaded_file($bildTmpName, $ziel);
@@ -105,56 +111,66 @@
         </div>
 
         <?php
-        $sql = "SELECT user_img, uploads FROM users WHERE id=".$_SESSION['userID'].";";
-        $result = $conn->query($sql);
-        while ( $resultImages = $result->fetch_assoc() ) {
-            $images = array_reverse(json_decode($resultImages['uploads']));
-            $currentImg = $resultImages['user_img'];
-        }
-        
-        if ( $images) {
-            $i = 0;
-        ?>
+            $images = false;
+            $currentImg = false;
+            $sql = "SELECT user_img, uploads FROM users WHERE id=".$_SESSION['userID'].";";
+            $result = $conn->query($sql);
 
-        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2">
-            <div class="col12">
-                <h2 class="h3"><?php echo lang_snippet('all_uploads'); ?></h2>
-            </div>
-
-            <div class="col12 grid-row">
-                <?php
-                    foreach ( $images as $image ) {
-                        if ( !($image === $currentImg) ) {
-                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
-                                echo '<div class="user-img-select">';
-                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
-                                    echo '<figure class="square">';
-                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
-                                    echo '</figure>';
-                                echo '</div>';
-                            echo '</div>';
-                            $i++;
-                        } else {
-                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
-                                echo '<div class="user-img-select">';
-                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
-                                    echo '<figure class="square">';
-                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
-                                    echo '</figure>';
-                                echo '</div>';
-                            echo '</div>';
-                            $i++;
-                        }
+            if ( $result->num_rows > 0 ) {
+                while ( $resultImages = $result->fetch_assoc() ) {
+                    if ( !($resultImages['uploads'] === NULL) ) {
+                        $images = array_reverse(json_decode($resultImages['uploads']));
                     }
-                ?>
-            </div>
 
-            <div class="col12 text-right">
-                <a href="#" class="btn btn-small btn-success marg-no" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
-            </div>
-        </div>
+                    if ( !($resultImages['user_img'] === NULL) ) {
+                        $currentImg = $resultImages['user_img'];
+                    }
+                }
+                
+                if ( $currentImg && $images ) {
+                    $i = 0;
+                    ?>
+                        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2">
+                            <div class="col12">
+                                <h2 class="h3"><?php echo lang_snippet('all_uploads'); ?></h2>
+                            </div>
 
-        <?php } ?>
+                            <div class="col12 grid-row">
+                                <?php
+                                    foreach ( $images as $image ) {
+                                        if ( !($image === $currentImg) ) {
+                                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
+                                                echo '<div class="user-img-select">';
+                                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
+                                                    echo '<figure class="square">';
+                                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
+                                                    echo '</figure>';
+                                                echo '</div>';
+                                            echo '</div>';
+                                            $i++;
+                                        } else {
+                                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
+                                                echo '<div class="user-img-select">';
+                                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
+                                                    echo '<figure class="square">';
+                                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
+                                                    echo '</figure>';
+                                                echo '</div>';
+                                            echo '</div>';
+                                            $i++;
+                                        }
+                                    }
+                                ?>
+                            </div>
+
+                            <div class="col12 text-right">
+                                <a href="#" class="btn btn-small btn-success marg-no" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
+                            </div>
+                        </div>
+                    <?php
+                }
+            }
+        ?>
     </div>
 </div>
 

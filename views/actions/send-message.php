@@ -8,7 +8,7 @@ if ( isset($_POST['joined']) ) {
     <div class="message joint-msg marg-bottom-xs">
         <span class="imgWrap">
             <figure class="square">
-                <img src="'.userProfileImgByID($userID).'">
+                <img src="'.userProfileImg($userID).'">
             </figure>
         </span>    
         <div class="message-content-wrap">
@@ -32,7 +32,7 @@ if ( isset($_POST['joined']) ) {
         </div>
         <span class="imgWrap">
             <figure class="square">
-                <img src="'.userProfileImgByID($userID).'">
+                <img src="'.userProfileImg($userID).'">
             </figure>
         </span>
     </div>';

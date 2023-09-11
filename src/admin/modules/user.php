@@ -21,32 +21,16 @@ function userCheck() {
     }
 }
 
-function userProfileImg() {
+function userProfileImg($userID = false) {
     $conn = dbConnect();
-    $sessionUserID = $_SESSION['userID'];
-    $sql = "SELECT user_img FROM users WHERE id='$sessionUserID'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-     
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            
-            if ($row['user_img'] === NULL || $row['user_img'] === '') {
-                $userProfileImg = '/views/build/css/images/placeholder.webp';
-            } else {
-                $userProfileImg = '/uploads/'.$row['user_img'];
-            }
-        }
+
+    if ( $userID ) {
+        $sql = "SELECT user_img FROM users WHERE id=$userID;";
     } else {
-        $userProfileImg = '/views/build/css/images/placeholder.webp';
+        $sessionUserID = $_SESSION['userID'];
+        $sql = "SELECT user_img FROM users WHERE id='$sessionUserID'";
     }
-
-    return $userProfileImg;
-}
-
-function userProfileImgByID($userID) {
-    $conn = dbConnect();
-    $sql = "SELECT user_img FROM users WHERE id=$userID;";
+    
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
      
@@ -54,13 +38,13 @@ function userProfileImgByID($userID) {
         while($row = $result->fetch_assoc()) {
             
             if ($row['user_img'] === NULL || $row['user_img'] === '') {
-                $userProfileImg = '/views/build/css/images/placeholder.webp';
+                $userProfileImg = '/views/build/css/images/avatar.webp';
             } else {
-                $userProfileImg = '/uploads/'.$row['user_img'];
+                $userProfileImg = '/uploads/'.userNameStringFormatter().'/'.$row['user_img'];
             }
         }
     } else {
-        $userProfileImg = '/views/build/css/images/placeholder.webp';
+        $userProfileImg = '/views/build/css/images/avatar.webp';
     }
 
     return $userProfileImg;
@@ -68,9 +52,9 @@ function userProfileImgByID($userID) {
 
 function uploadedIMG($uploadedImg) {
     if ( $uploadedImg === NULL || $uploadedImg === "" ) {
-        $img = '/views/build/css/images/placeholder.webp';
+        $img = '/views/build/css/images/avatar.webp';
     } else {
-        $img = '/uploads/'.$uploadedImg;
+        $img = '/uploads/'.userNameStringFormatter().'/'.$uploadedImg;
     }
 
     return $img;
