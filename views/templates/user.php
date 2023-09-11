@@ -23,7 +23,7 @@
                 // Erlaubte Dateitypen festlegen
                 $erlaubteTypen = array('jpg', 'jpeg', 'png', 'gif', 'svg');
 
-                $uploadDir = ROOT_PATH.'/uploads/'.userNameStringFormatter();
+                $uploadDir = ROOT_PATH.'/uploads/'.userNameStringFormatter($_SESSION['username']);
 
                 if ( !is_dir($uploadDir) ) {
                     mkdir($uploadDir, 0777, true);
@@ -143,7 +143,7 @@
                                                 echo '<div class="user-img-select">';
                                                     echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
                                                     echo '<figure class="square">';
-                                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
+                                                        echo '<img data-img="'.uploadedIMG($_SESSION['username'], $image).'" loading="lazy" alt="">';
                                                     echo '</figure>';
                                                 echo '</div>';
                                             echo '</div>';
@@ -153,7 +153,7 @@
                                                 echo '<div class="user-img-select">';
                                                     echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
                                                     echo '<figure class="square">';
-                                                        echo '<img data-img="'.uploadedIMG($image).'" loading="lazy" alt="">';
+                                                        echo '<img data-img="'.uploadedIMG($_SESSION['username'], $image).'" loading="lazy" alt="">';
                                                     echo '</figure>';
                                                 echo '</div>';
                                             echo '</div>';
