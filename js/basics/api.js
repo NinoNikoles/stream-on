@@ -46,8 +46,9 @@ $(document).ready(function() {
 
             $('#close-search').on('click', function(e) {
                 e.preventDefault();
-                $('#searchpage').removeClass('hidden');
+                $('#searchpage').addClass('hidden');
                 $('body').removeClass('active-search');
+                $('.search-bar').removeClass('active-search');
             });
 
             self.$apiSearch.on('input', function() {
