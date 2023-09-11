@@ -21,19 +21,30 @@ if ( isset($_POST['joined']) ) {
     $msgClass = '';
     
     if ( $userID === $_SESSION['userID'] ) {
-        $msgClass = 'self';  
-    }
-
-    echo '
-    <div class="message '.$msgClass.' marg-bottom-xs">
-        <div class="message-content-wrap">
-            <p class="message-username marg-bottom-no strong">'.$username.'</p>
-            <p class="message-text small marg-bottom-no">'.$message.'</p>
-        </div>
-        <span class="imgWrap marg-left-xs">
-            <figure class="square">
-                <img src="'.userProfileImg($userID).'">
-            </figure>
-        </span>
-    </div>';
+        echo '
+        <div class="message self marg-bottom-xs">
+            <div class="message-content-wrap">
+                <p class="message-username marg-bottom-no strong">'.$username.'</p>
+                <p class="message-text small marg-bottom-no">'.$message.'</p>
+            </div>
+            <span class="imgWrap marg-left-xs">
+                <figure class="square">
+                    <img src="'.userProfileImg($userID).'">
+                </figure>
+            </span>
+        </div>';
+    } else {
+        echo '
+        <div class="message marg-bottom-xs">
+            <span class="imgWrap marg-right-xs">
+                <figure class="square">
+                    <img src="'.userProfileImg($userID).'">
+                </figure>
+            </span>
+            <div class="message-content-wrap">
+                <p class="message-username marg-bottom-no strong">'.$username.'</p>
+                <p class="message-text small marg-bottom-no">'.$message.'</p>
+            </div>
+        </div>';
+    }    
 }

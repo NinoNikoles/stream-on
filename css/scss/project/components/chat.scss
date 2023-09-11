@@ -69,6 +69,10 @@
                     align-items: center;
                     width: 100%;
                     max-width: 100%;
+
+                    &::before {
+                        display: none;
+                    }
                 }
 
                 &.self {
