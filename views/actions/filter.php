@@ -8,13 +8,13 @@ $mediaCard = "";
 
 if ( $genreID === 'all' ) {
     $sql = "SELECT * FROM media 
-    WHERE mediaType = '$type' ORDER BY title $order;";
+    WHERE mediaType = '$type' ORDER BY $order;";
 } else {
     $genreID = intval($genreID);
 
     $sql = "SELECT m.* FROM media AS m 
     JOIN media_genre AS mg ON m.tmdbID = mg.media_id
-    WHERE mg.genre_id = $genreID AND m.mediaType = '$type' ORDER BY m.title $order;";
+    WHERE mg.genre_id = $genreID AND m.mediaType = '$type' ORDER BY m.$order;";
 }
 
 $result = $conn->query($sql);
