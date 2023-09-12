@@ -4,7 +4,6 @@ function initGenres() {
     $tmdb = setupTMDB();
 
     $genres = $tmdb->getGenres();
-    var_dump($genres);
 
     $data = [];
     foreach ($genres as $genre) {
@@ -21,11 +20,9 @@ function initGenres() {
     $result = $conn->query($sql);
 
     if (!$result) {
-        set_callout('alert','genres_created_alert');
-        page_redirect("/admin/genres");
+        set_callout('alert',lang_snippet('genres_created_alert'));
     } else {
-        set_callout('success','genres_created_success');
-        page_redirect("/admin/genres");
+        set_callout('success',lang_snippet('genres_created_success'));
     }
 }
 

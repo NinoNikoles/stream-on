@@ -1,58 +1,29 @@
 <?php
     $conn = dbConnect();
     $pageTitle = pageTitle('Login');
-
-    // Benutzeranmeldung
-    if(isset($_POST['login'])) {
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $password = mysqli_real_escape_string($conn, $_POST['password']);
-
-        $sql = "SELECT * FROM users WHERE username='$username'";
-        $result = mysqli_query($conn, $sql);
-        if ( $result->num_rows > 0 ) {
-            $row = mysqli_fetch_assoc($result);
-
-            if(password_verify($password, $row['password'])) {
-                $_SESSION['userID'] = $row['id'];
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['role'] = $row['role'];
-                $_SESSION['logged_in'] = true;
-    
-                page_redirect('/');
-            } else {
-                echo '<div class="innerWrap">';
-                    echo '<div class="col4 marg-left-col4">';
-                        echo '<p class="text-alert">Benutzername oder Passwort falsch.';
-                    echo '</div>';
-                echo '</div>';
-            }
-        } else {
-            echo '<div class="innerWrap">';
-                echo '<div class="col4 marg-left-col4">';
-                    echo '<p class="text-alert">Benutzername exisitert nicht.';
-                echo '</div>';
-            echo '</div>';
-        }
-    }
-
     require_once ROOT_PATH.'/views/head.php';
 ?>
 
 <div class="innerWrap">
     <div class="col4 marg-left-col4 marg-top-xxl">
+        <h1>Login</h1>
         <?php callout(); ?>
-        <form method="post" action="/login">
+        <form>
             <p>
-                <label for="username">Benutzername
+                <label for="username"><?php echo lang_snippet('username'); ?>
                 <input type="text" name="username" id="username" placeholder="Benutzername" required></label>
             </p>
             <p>
-                <label for="password">Passwort
+                <label for="password"><?php echo lang_snippet('password'); ?>
                 <input type="password" name="password" id="password" placeholder="Passwort" required></label>
             </p>
             <div class="text-right">
-                <button class="btn btn-primary" type="submit" name="login">Anmelden</button>
+                <button class="btn btn-primary loading" type="submit" id="login" name="login"><?php echo lang_snippet('login'); ?></button>
             </div>
         </form>
     </div>
 </div>
+
+<?php
+    require_once ROOT_PATH.'/views/footer.php';
+?>

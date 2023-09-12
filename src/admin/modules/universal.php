@@ -74,6 +74,17 @@ function page_refresh() {
     exit();
 }
 
+function ajaxPage_redirect($location) {
+    $redirect = array(
+        "type" => 'redirect',
+        "location" => $location
+    );
+
+    $redirect = json_encode($redirect);
+
+    echo $redirect;
+}
+
 function checkIfUserExists($username) {
     $conn = dbConnect();
     $result = $conn->query("SELECT username FROM users WHERE username='$username'");
@@ -232,24 +243,19 @@ function favicon($iconPath) {
 //////////-- Callout --///////////
 
 function set_callout($type, $message) {
-    $_SESSION['callout_type'] = $type;
-    $_SESSION['callout_message'] = $message;
+    $callout = array(
+        "type" => $type,
+        "msg" => $message
+    );
+
+    $callout = json_encode($callout);
+
+    echo $callout;
 }
 
 function callout() {
-    if ( isset($_SESSION['callout_type']) && isset($_SESSION['callout_message']) ) {
-        if ( $_SESSION['callout_type'] != '' && $_SESSION['callout_message'] != '' ) {
-            $type = $_SESSION['callout_type'];
-            $message = lang_snippet($_SESSION['callout_message']);
-    
-            echo '<div class="callout '.$type.' mag-bottom-l">';
-                echo '<p>'.$message.'</p>';
-            echo '</div>';
-    
-            $_SESSION['callout_type'] = '';
-            $_SESSION['callout_message'] = '';
-        }
-    }
+    echo '<div id="callout" class="callout mag-bottom-l">';
+    echo '</div>';
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,11 +333,10 @@ function updateSettings($values) {
     $siteTitle = mysqli_real_escape_string($conn, $values['site_title']);
     $apikey = mysqli_real_escape_string($conn, $values['apikey']);
     $apiLang = mysqli_real_escape_string($conn, $values['language']);
+    $checked = "false";
     
-    if ( isset($values['enable-edit']) ) {
+    if ( $values['enable_edit'] === 'true' ) {
         $checked = "checked";
-    } else {
-        $checked = "false";
     }
 
     $sql = "INSERT INTO settings(setting_name, setting_option) VALUES 
@@ -343,12 +348,10 @@ function updateSettings($values) {
 
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
-        set_callout('alert','settings_update_failed');
-        page_redirect('/admin/settings');
+        set_callout('alert',lang_snippet('settings_update_failed'));
     } else {
         $conn->close();
-        set_callout('success','settings_update_success');
-        page_redirect('/admin/settings');
+        set_callout('success',lang_snippet('settings_update_success'));
     }
 }
 

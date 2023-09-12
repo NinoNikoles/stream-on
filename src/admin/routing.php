@@ -18,6 +18,11 @@ class routes {
             '/search' => 'views/search.php',
             '/my-list' => 'views/my-list.php',
         ],
+        'essentials' => [
+            '/login-request' => 'views/actions/essentials/login-request.php',
+            '/save-admin-settings' => 'views/actions/essentials/save-admin-settings.php',
+            '/get-genre' => 'views/actions/essentials/get-genre.php',
+        ],
         'ajax' => [
             '/add-to-list' => 'views/actions/add-to-list.php',
             '/searchbar' => 'views/actions/searchbar.php',

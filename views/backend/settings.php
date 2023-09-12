@@ -1,24 +1,14 @@
 <?php 
+    $conn = dbConnect();
     $pageTitle = pageTitle(lang_snippet(('settings')));
     include(ROOT_PATH.'/views/header.php');
 
-    $conn = dbConnect();
     $cnf = tmdbConfig();
 
     $siteTitle = $cnf['site_title'];
     $apikey = $cnf['apikey'];
     $apiLang = $cnf['lang'];
     $checked = $cnf['enable_edit_btn'];
-
-    // Benutzeranmeldung
-    if(isset($_POST['save-settings'])) {
-        updateSettings($_POST);
-    }
-
-    $siteTitle = $siteTitle;
-    $apikey = $apikey;
-    $apiLang = $apiLang;
-    $checked = $checked;
 ?>
 
 <div class="col12">
@@ -31,10 +21,12 @@
             <div class="col12">
                 <h1><?php echo lang_snippet('settings'); ?></h1>
             </div>
+            
             <div class="col12">
                 <?php callout(); ?>
             </div>
-            <form method="post" action="/admin/settings" class="row">
+            
+            <form class="row">
                  <div class="col12 column">
                     <p>
                         <label for="site_title"><?php echo lang_snippet('page_title'); ?>*
@@ -66,7 +58,7 @@
                     </p>
                 </div>
                 <div class="col12 column text-right marg-top-base">
-                    <button class="btn btn-small btn-success icon-left icon-save" type="submit" name="save-settings"><?php echo lang_snippet('save'); ?></button>
+                    <button class="btn btn-small btn-success icon-left icon-save loading" type="submit" id="save-admin-settings" name="save-settings"><?php echo lang_snippet('save'); ?></button>
                 </div>
             </form>
         </div>

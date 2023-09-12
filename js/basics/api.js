@@ -21,6 +21,11 @@ $(document).ready(function() {
 
         init: function() {
             var self = this;
+            self.login();
+            self.saveAdminSettings();
+            self.getGenre();
+
+
             self.movieLiveSearch();
             self.showLiveSearch();
             self.jstreeMovie();
@@ -39,6 +44,139 @@ $(document).ready(function() {
 
             window.addEventListener('resize', debounce);
             window.addEventListener('scroll', debounceScroll);
+        },
+
+        callout: function(response, $btn) {
+            $callout = $('#callout');
+            $success = 'success';
+            $warning = 'warning';
+            $alert = 'alert';
+            
+            // Removes old type class
+            if ( $callout.hasClass($success) ) { $callout.removeClass($success); }
+            if ( $callout.hasClass($warning) ) { $callout.removeClass($warning); }
+            if ( $callout.hasClass($alert) ) { $callout.removeClass($alert); }
+
+            // Clears old message
+            $callout.empty();
+            
+            // Sets message
+            if ( response.type === 'success' || response.type === 'warning' ||response.type === 'alert' ) {
+                setTimeout(function() {
+                    $callout.addClass(response.type);
+                    $callout.html('<p>'+response.msg+'</p>');
+                    $btn.toggleClass('is-loading')
+                }, 1000);                
+            }
+        },
+
+        redirect: function(location) {
+            window.location.href = location;
+        },
+
+        login: function() {
+            var self = this;
+
+            $('#login').on('click', function(e) {
+                $this = $(this);
+                e.preventDefault();
+                $this.toggleClass('is-loading');
+
+                var username = $('#username').val(),
+                    psswd = $('#password').val();
+
+                $.ajax({
+                    url: '/login-request',
+                    type: 'post',
+                    data: { 
+                        username: username,
+                        psswd: psswd
+                    },
+                    success: function(response) {
+                        var responseObj = $.parseJSON(response);
+
+                        if ( responseObj.type === 'redirect' ) {
+                            self.redirect(responseObj.location);
+                        } else {
+                            self.callout(responseObj, $this);
+                        }
+
+                        $this.toggleClass('is-loading');
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
+                    }
+                });
+            });
+        },
+
+        saveAdminSettings: function() {
+            var self = this;
+
+            $('#save-admin-settings').on('click', function(e) {
+                e.preventDefault();
+                $this = $(this);                
+                $this.toggleClass('is-loading');
+
+                var siteTitle = $('#site_title').val(),
+                    apikey = $('#apikey').val(),
+                    language = $('#language').val(),
+                    edit = $('#enable-edit').prop('checked');
+
+                $.ajax({
+                    url: '/save-admin-settings',
+                    type: 'post',
+                    data: { 
+                        site_title: siteTitle,
+                        apikey: apikey,
+                        language: language,
+                        enable_edit: edit,
+                    },
+                    success: function(response) {
+                        var responseObj = $.parseJSON(response);
+                        
+                        if ( responseObj.type === 'redirect' ) {
+                            self.redirect(responseObj.location);
+                        } else {
+                            self.callout(responseObj, $this);
+                        }
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
+                    }
+                });
+            });
+        },
+
+        getGenre: function() {
+            var self = this;
+
+            $('#generate-genres').on('click', function(e) {
+                e.preventDefault();
+                $this = $(this);                
+                $this.toggleClass('is-loading');
+
+                $.ajax({
+                    url: '/get-genre',
+                    type: 'post',
+                    success: function(response) {
+                        var responseObj = $.parseJSON(response);
+                        
+                        if ( responseObj.type === 'redirect' ) {
+                            self.redirect(responseObj.location);
+                        } else {
+                            self.callout(responseObj, $this);
+                        }
+
+                        setTimeout(function() {
+                            self.redirect('/admin/genres');
+                        }, 1500)
+                    }, error: function(xhr, status, error) {
+                        // Hier wird eine Fehlermeldung ausgegeben
+                        console.log('Fehler: ' + error);
+                    }
+                });
+            });
         },
 
         movieLiveSearch: function() {

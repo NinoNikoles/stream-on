@@ -4,10 +4,6 @@ include(ROOT_PATH.'/views/header.php');
 $conn = dbConnect();
 $sql = 'SELECT COUNT(*) as num_rows FROM genres';
 $result = $conn->query($sql);
-
-if(isset($_POST['generate-genres'])) {
-    initGenres();
-}
 ?>
 
 <div class="col12">
@@ -29,8 +25,8 @@ if(isset($_POST['generate-genres'])) {
                     // Überprüfen, ob die Tabelle leer ist
                     if ($numRows == 0) {
                         echo '<div class="col12 marg-bottom-m">';
-                            echo '<form method="post" action="/admin/genres">';
-                                echo '<button type="submit" class="btn btn-small btn-warning icon-left icon-update" name="generate-genres">'.lang_snippet('load_genres').'</button>';
+                            echo '<form>';
+                                echo '<button type="submit" class="btn btn-small btn-warning icon-left icon-update loading" id="generate-genres" name="generate-genre">'.lang_snippet('load_genres').'</button>';
                             echo '</form>';
                         echo '</div>';
                     }

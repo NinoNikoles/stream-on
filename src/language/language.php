@@ -9,6 +9,7 @@ class langSnippets {
             'users' => 'Users',
             'shows' => 'TV Shows',
             'genres' => 'Genres',
+            'login' => 'Login',
             'logout' => 'Logout',
             'highlights' => 'Highlights',
 
@@ -143,7 +144,10 @@ class langSnippets {
 
             'user_img_upload_alert' => 'Img could not be uploaded!',
 
+            'username_pw_wrong' => 'Username or password not correct!',
+
             // Warnings
+            'username_not_found' => 'Username not found!',
             'no_movies_found' => 'No movies found!',
             'no_movies_available' => 'No movies available!',
 
@@ -157,6 +161,7 @@ class langSnippets {
             'users' => 'Benutzer',
             'shows' => 'Serien',
             'genres' => 'Genre',
+            'login' => 'Anmelden',
             'logout' => 'Ausloggen',
             'highlights' => 'Highlights',
 
@@ -295,7 +300,10 @@ class langSnippets {
 
             'user_img_upload_alert' => 'Bild konnte hochgeladen werden!',
 
+            'username_pw_wrong' => 'Benutzername oder Passwort falsch!',
+
             // Warnings
+            'username_not_found' => 'Benutzername exisitert nicht!',
             'no_movies_found' => 'Es konnten eine Filme gefunden werden!',
             'no_movies_available' => 'Keine Filme verfügbar!',
 
