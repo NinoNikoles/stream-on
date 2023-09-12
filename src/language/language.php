@@ -74,6 +74,7 @@ class langSnippets {
             'has_joined_the_chat' => 'has joined the chat.',
             'message' => 'Message',
             'send' => 'Send',
+            'upload_new_img' => 'Upload new profile image',
             'all_uploads' => 'All uploads',
             'search_result' => 'Search results for:',
 
@@ -202,6 +203,7 @@ class langSnippets {
             'seasons' => 'Staffeln',
             'all' => 'Alle',
             'menu' => 'Menü',
+            'upload_new_img' => 'Lade ein neues Benutzerbild hoch',
             'all_uploads' => 'Alle Uploads',
 
 			'load_genres' => 'Genres laden',

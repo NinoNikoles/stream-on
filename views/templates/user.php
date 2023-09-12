@@ -26,7 +26,7 @@
                 <form>
                     <input type="number" name="id" value="<?php echo $_GET['id']; ?>" style="display:none;">
                     <p>
-                        <lable for="user-img">User img
+                        <lable for="user-img"><?php echo lang_snippet('upload_new_img'); ?>
                             <input type="file" name="user-img" id="userImgInput" accept="image/*">
                         </lable>
                     </p>
@@ -62,7 +62,7 @@
                                 <h2 class="h3"><?php echo lang_snippet('all_uploads'); ?></h2>
                             </div>
 
-                            <div class="col12 grid-row">
+                            <div class="col12 grid-row" id="allUserUploads">
                                 <?php
                                     foreach ( $images as $image ) {
                                         if ( !($image === $currentImg) ) {

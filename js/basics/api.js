@@ -107,7 +107,7 @@ $(document).ready(function() {
                             } else {
                                 self.callout(responseObj, $this);
                             }
-                            
+
                             inAction = false;
                         }, error: function(xhr, status, error) {
                             // Hier wird eine Fehlermeldung ausgegeben
@@ -192,12 +192,24 @@ $(document).ready(function() {
                         processData: false,
                         success: function(response) {
                             var responseObj = $.parseJSON(response);
-    
+                            
                             $('#userImgInput').val('');
                             self.callout(responseObj, $this);
     
                             setTimeout(function() {
                                 self.refreshUserImg(userID);
+
+                                $('.user-img-select input[type="radio"]').attr('data-current', 0);
+
+
+                                setTimeout(function() {
+                                    var fullPath = $('#user-img').attr('src');
+                                    var pathParts = fullPath.split('/');
+                                    var path = fullPath.replace(/\/[^\/]*$/, '/');
+                                    var newImg = pathParts[pathParts.length - 1];
+    
+                                    $('#allUserUploads').prepend('<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s"><div class="user-img-select"><input type="radio" id="img-0" name="userImg" value="'+newImg+'" data-current="1" data-id="1" checked=""><figure class="square"><img loading="lazy" alt="" src="'+path+newImg+'"></figure></div></div>');
+                                }, 500)
                                 inAction = false;
                             }, 1000);   
                             
