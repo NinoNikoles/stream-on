@@ -23,6 +23,8 @@ $(document).ready(function() {
             var self = this;
             self.login();
             self.saveAdminSettings();
+            self.uploadUserImg();
+            self.updateUserImg();
             self.getGenre();
 
 
@@ -36,7 +38,7 @@ $(document).ready(function() {
             self.highlight();
             self.mediaPopUp();
             self.sorting();
-            self.updateUserImg();
+            
         },
 
         bindHandlers: function () {
@@ -65,7 +67,7 @@ $(document).ready(function() {
                 setTimeout(function() {
                     $callout.addClass(response.type);
                     $callout.html('<p>'+response.msg+'</p>');
-                    $btn.toggleClass('is-loading')
+                    $btn.toggleClass('is-loading');
                 }, 1000);                
             }
         },
@@ -76,75 +78,205 @@ $(document).ready(function() {
 
         login: function() {
             var self = this;
+            var inAction = false;
 
             $('#login').on('click', function(e) {
-                $this = $(this);
+                
                 e.preventDefault();
-                $this.toggleClass('is-loading');
 
-                var username = $('#username').val(),
-                    psswd = $('#password').val();
+                if ( inAction === false ) {
+                    inAction = true;
+                    $this = $(this);
+                    $this.toggleClass('is-loading');
 
-                $.ajax({
-                    url: '/login-request',
-                    type: 'post',
-                    data: { 
-                        username: username,
-                        psswd: psswd
-                    },
-                    success: function(response) {
-                        var responseObj = $.parseJSON(response);
+                    var username = $('#username').val(),
+                        psswd = $('#password').val();
 
-                        if ( responseObj.type === 'redirect' ) {
-                            self.redirect(responseObj.location);
-                        } else {
-                            self.callout(responseObj, $this);
+                    $.ajax({
+                        url: '/login-request',
+                        type: 'post',
+                        data: { 
+                            username: username,
+                            psswd: psswd
+                        },
+                        success: function(response) {
+                            var responseObj = $.parseJSON(response);
+
+                            if ( responseObj.type === 'redirect' ) {
+                                self.redirect(responseObj.location);
+                            } else {
+                                self.callout(responseObj, $this);
+                            }
+                            
+                            inAction = false;
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
                         }
-
-                        $this.toggleClass('is-loading');
-                    }, error: function(xhr, status, error) {
-                        // Hier wird eine Fehlermeldung ausgegeben
-                        console.log('Fehler: ' + error);
-                    }
-                });
+                    });
+                }
             });
         },
 
         saveAdminSettings: function() {
             var self = this;
+            var inAction = false;
 
             $('#save-admin-settings').on('click', function(e) {
                 e.preventDefault();
-                $this = $(this);                
-                $this.toggleClass('is-loading');
 
-                var siteTitle = $('#site_title').val(),
-                    apikey = $('#apikey').val(),
-                    language = $('#language').val(),
-                    edit = $('#enable-edit').prop('checked');
+                if ( inAction === false ) {
+                    inAction = true;
+                    $this = $(this);                
+                    $this.toggleClass('is-loading');
 
-                $.ajax({
-                    url: '/save-admin-settings',
-                    type: 'post',
-                    data: { 
-                        site_title: siteTitle,
-                        apikey: apikey,
-                        language: language,
-                        enable_edit: edit,
-                    },
-                    success: function(response) {
-                        var responseObj = $.parseJSON(response);
-                        
-                        if ( responseObj.type === 'redirect' ) {
-                            self.redirect(responseObj.location);
-                        } else {
-                            self.callout(responseObj, $this);
+                    var siteTitle = $('#site_title').val(),
+                        apikey = $('#apikey').val(),
+                        language = $('#language').val(),
+                        edit = $('#enable-edit').prop('checked');
+
+                    $.ajax({
+                        url: '/save-admin-settings',
+                        type: 'post',
+                        data: { 
+                            site_title: siteTitle,
+                            apikey: apikey,
+                            language: language,
+                            enable_edit: edit,
+                        },
+                        success: function(response) {
+                            var responseObj = $.parseJSON(response);
+                            
+                            if ( responseObj.type === 'redirect' ) {
+                                self.redirect(responseObj.location);
+                            } else {
+                                self.callout(responseObj, $this);
+                            }
+
+                            inAction = false;
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
                         }
-                    }, error: function(xhr, status, error) {
-                        // Hier wird eine Fehlermeldung ausgegeben
-                        console.log('Fehler: ' + error);
-                    }
-                });
+                    });
+                }
+            });
+        },
+
+        uploadUserImg: function() {
+            var self = this;
+            var inAction = false;
+
+            $('#userImgUpload').on('click', function(e) {
+                e.preventDefault();
+                
+                if ( inAction === false ) {
+                    inAction = true;
+                    $this = $(this);
+                    $this.toggleClass('is-loading');
+    
+                    var userID = $('input[name="id"]').val();
+                    var imgInput = document.getElementById('userImgInput');
+                    var img = $('#userImgInput').val();
+                    var file = imgInput.files[0];
+                    var formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('img', img);
+                    formData.append('userID', userID);
+    
+                    $.ajax({
+                        url: '/uploadUserImg',
+                        type: 'post',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            var responseObj = $.parseJSON(response);
+    
+                            $('#userImgInput').val('');
+                            self.callout(responseObj, $this);
+    
+                            setTimeout(function() {
+                                self.refreshUserImg(userID);
+                                inAction = false;
+                            }, 1000);   
+                            
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
+                        }
+                    });
+                }
+            })
+        },
+
+        updateUserImg: function() {
+            var self = this;
+            var inAction = false;
+
+            $('input[name="userImg"]').on('click', function() {
+                if ( $(this).attr('data-current') == 0 ) {
+                    $('#updateUserImg').css('display', 'inline-flex');
+                } else {
+                    $('#updateUserImg').css('display', 'none');
+                }
+            });
+
+            $('#updateUserImg').on('click', function(e) {
+                e.preventDefault();
+
+                if ( inAction === false ) {
+                    inAction = true;
+
+                    $this = $(this);
+                    $this.toggleClass('is-loading');
+    
+                    var img = $('.user-img-select input[type="radio"]:checked').val();
+                    var userID = $('.user-img-select input[type="radio"]:checked').attr('data-id');
+    
+                    $('input[name="userImg"]').attr('data-current', 0);
+                    $('.user-img-select input[name="userImg"]:checked').attr('data-current', 1);
+    
+                    $.ajax({
+                        url: '/updateUserImg',
+                        type: 'post',
+                        data: { 
+                            img: img,
+                            userID: userID,
+                        },
+                        success: function(response) {
+                            var responseObj = $.parseJSON(response);
+                            
+                            self.callout(responseObj, $this);
+                            
+                            setTimeout(function() {
+                                self.refreshUserImg(userID);
+                                inAction = false;
+                            }, 1000);   
+                            
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
+                        }
+                    });
+                }
+                
+            });
+        },
+
+        refreshUserImg: function(userID) {
+            $.ajax({
+                url: '/refresh-user-img',
+                type: 'post',
+                data: {
+                    userID: userID,
+                },
+                success: function(response) {
+                    $('#user-img').attr('src', response);
+                }, error: function(xhr, status, error) {
+                    // Hier wird eine Fehlermeldung ausgegeben
+                    console.log('Fehler: ' + error);
+                }
             });
         },
 
@@ -949,39 +1081,6 @@ $(document).ready(function() {
 
             $('#title-filter').on('change', function() {
                 orderSetup();
-            });
-        },
-
-        updateUserImg: function() {
-            $('input[name="userImg"]').on('click', function() {
-                console.log($(this).attr('data-current'));
-                if ( $(this).attr('data-current') == 0 ) {
-                    $('#updateUserImg').css('display', 'inline-flex');
-                } else {
-                    $('#updateUserImg').css('display', 'none');
-                }
-            });
-
-            $('#updateUserImg').on('click', function(e) {
-                e.preventDefault();
-
-                var img = $('.user-img-select input[type="radio"]:checked').val();
-                var userID = $('.user-img-select input[type="radio"]:checked').attr('data-id');
-
-                $.ajax({
-                    url: '/updateUserImg',
-                    type: 'post',
-                    data: { 
-                        img: img,
-                        userID: userID,
-                    },
-                    success: function(response) {
-                        $('body').append(response);
-                    }, error: function(xhr, status, error) {
-                        // Hier wird eine Fehlermeldung ausgegeben
-                        console.log('Fehler: ' + error);
-                    }
-                });
             });
         }
     }

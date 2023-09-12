@@ -21,6 +21,9 @@ class routes {
         'essentials' => [
             '/login-request' => 'views/actions/essentials/login-request.php',
             '/save-admin-settings' => 'views/actions/essentials/save-admin-settings.php',
+            '/uploadUserImg' => 'views/actions/essentials/upload-user-img.php',
+            '/updateUserImg' => 'views/actions/essentials/update-user-img.php',
+            '/refresh-user-img' => 'views/actions/essentials/refresh-user-img.php',
             '/get-genre' => 'views/actions/essentials/get-genre.php',
         ],
         'ajax' => [
@@ -33,7 +36,7 @@ class routes {
             '/filter' => 'views/actions/filter.php',
             '/save-volume' => 'views/actions/save-volume.php',
             '/msg' => 'views/actions/send-message.php',
-            '/updateUserImg' => 'views/actions/update-user-img.php',
+            //'/updateUserImg' => 'views/actions/update-user-img.php',
         ],
         'admin' => [
             '/admin/settings' => 'views/backend/settings.php',

@@ -5,79 +5,6 @@
     userCheck();
 
     $conn = dbConnect();
-
-        // Überprüfen, ob das Formular abgeschickt wurde
-        if(isset($_POST['submit'])) {
-            // Überprüfen, ob ein Bild ausgewählt wurde
-            if(isset($_FILES['user-img'])) {
-                // Bildinformationen aus dem $_FILES-Array extrahieren
-                $bildName = $_FILES['user-img']['name'];
-                $bildTmpName = $_FILES['user-img']['tmp_name'];
-                $bildSize = $_FILES['user-img']['size'];
-                $bildError = $_FILES['user-img']['error'];
-                $bildType = $_FILES['user-img']['type'];
-    
-                // Dateiendung des Bildes extrahieren
-                $bildExt = strtolower(pathinfo($bildName, PATHINFO_EXTENSION));
-    
-                // Erlaubte Dateitypen festlegen
-                $erlaubteTypen = array('jpg', 'jpeg', 'png', 'gif', 'svg');
-
-                $uploadDir = ROOT_PATH.'/uploads/'.userNameStringFormatter($_SESSION['username']);
-
-                if ( !is_dir($uploadDir) ) {
-                    mkdir($uploadDir, 0777, true);
-                }
-    
-                // Überprüfen, ob die Datei ein Bild ist und erlaubte Dateitypen hat
-                if(in_array($bildExt, $erlaubteTypen)) {
-                    // Dateinamen für das Bild generieren
-                    $neuerName = uniqid('', true) . '.' . $bildExt;
-                    $ziel = $uploadDir.'/'. $neuerName;
-        
-                    // Bild in den Zielordner verschieben
-                    move_uploaded_file($bildTmpName, $ziel);
-
-                    $imgArray = [];
-
-                    $sql = "SELECT uploads FROM users WHERE id=".$_SESSION['userID'].";";
-                    $result = $conn->query($sql);
-                    while ( $resultImages = $result->fetch_assoc() ) {
-                        $images = json_decode($resultImages['uploads']);
-                    }
-
-                    if ( $images ) {
-                        foreach ( $images as $image ) {
-                            $imgArray[] = $image;
-                        }
-                    }
-
-                    $imgArray[] = $neuerName;
-                    $imgArray = json_encode($imgArray);
-                    $sql = "UPDATE users SET uploads='$imgArray' WHERE id=".$_SESSION['userID'].";";
-                    if ( !($conn->query($sql) === TRUE) ) {
-                        set_callout('alert','user_img_upload_alert');
-                        page_redirect("/user/?id=".$_POST['id']);
-                    }
-
-                    $sql = "UPDATE users SET user_img='$neuerName' WHERE id=".$_SESSION['userID'].";";
-                    if ($conn->query($sql) === TRUE) {
-                        set_callout('success','user_img_upload_success');
-                        page_redirect("/user/?id=".$_POST['id']);
-                    } else {
-                        set_callout('alert','user_img_upload_alert');
-                        page_redirect("/user/?id=".$_POST['id']);
-                    }
-                } else {
-                    echo 'Das hochgeladene File muss ein Bild sein (JPG, JPEG, PNG, GIF).';
-                    set_callout('warning','user_img_upload_wrong_file');
-                    page_redirect("/user/?id=".$_POST['id']);
-                }
-            } else {
-                set_callout('warning','user_img_upload_no_file');
-                page_redirect("/user/?id=".$_POST['id']);
-            }
-        }
 ?>
 
 <div class="col12">
@@ -90,21 +17,21 @@
         <div class="col8 marg-left-col2">
             <div class="col5 marg-right-col1">
                 <figure class="square">
-                    <img data-img="<?php echo userProfileImg(); ?>" loading="lazy" alt="">
+                    <img data-img="<?php echo userProfileImg(); ?>" id="user-img" loading="lazy" alt="">
                 </figure>                
             </div>
             <div class="col6 pad-top-xs">
                 <h1><?php echo $_SESSION['username']; ?></h1>
 
-                <form action="/user/?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+                <form>
                     <input type="number" name="id" value="<?php echo $_GET['id']; ?>" style="display:none;">
                     <p>
                         <lable for="user-img">User img
-                            <input type="file" name="user-img" accept="image/*">
+                            <input type="file" name="user-img" id="userImgInput" accept="image/*">
                         </lable>
                     </p>
                     <p class="text-right">
-                        <button type="submit" class="btn btn-small btn-success" name="submit" value="Hochladen">Hochladen</button>
+                        <button id="userImgUpload" type="submit" class="btn btn-small btn-success loading" name="submit" value="Hochladen">Hochladen</button>
                     </p>
                 </form>
             </div>
@@ -164,7 +91,7 @@
                             </div>
 
                             <div class="col12 text-right">
-                                <a href="#" class="btn btn-small btn-success marg-no" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
+                                <a href="#" class="btn btn-small btn-success loading marg-no" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
                             </div>
                         </div>
                     <?php
