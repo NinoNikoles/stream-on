@@ -53,6 +53,7 @@ class langSnippets {
             'all' => 'All',
             'menu' => 'Menu',
             'search' => 'Search',
+            'similar' => 'Similar',
 
 			'load_genres' => 'Load genres',
 			'movie_title' => 'Movie title',
@@ -205,6 +206,7 @@ class langSnippets {
             'menu' => 'Menü',
             'upload_new_img' => 'Lade ein neues Benutzerbild hoch',
             'all_uploads' => 'Alle Uploads',
+            'similar' => 'Ähnliche',
 
 			'load_genres' => 'Genres laden',
 			'movie_title' => 'Movie Title',

@@ -229,7 +229,9 @@ if ( $movie == 0 ) {
             
             <?php
             if ( !($currentMovieCollection == 0) ) {
-                echo '<div class="col12">';
+                echo '<div class="col12 marg-top-l">';
+                    echo '<h2>'.lang_snippet('similar').':</h2>';
+
                     echo '<div class="row">';
                     $collection = $tmdb->getCollection($currentMovieCollection);
                     $movies = $collection->getMovies();
