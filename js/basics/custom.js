@@ -65,6 +65,7 @@ $(document).ready(function() {
             self.fancyBox();
             self.updateOverlay();
             self.pageReady();
+            self.passwordChange();
         },
 
         bindHandlers: function () {
@@ -505,6 +506,44 @@ $(document).ready(function() {
 
             $(document).on('click', '#addHighlight', loader);            
         },
+
+        passwordChange: function() {
+            var password = false;
+            var passwordCheck = false;
+            var inputCheckID = false;
+
+            $('input[name="password"]').on('input', function() {
+                $this = $(this);
+                inputCheckID = '#'+$this.attr('id')+'-check';
+                password = $this.val();
+
+                if ( password.length > 0) {
+                    $(inputCheckID).removeAttr('disabled');
+                } else {
+                    $(inputCheckID).attr('disabled', 'disabled');
+                }
+
+                if ( passwordCheck === password ) {
+                    $('.change-user-pw').removeClass('disabled').removeAttr('disabled');
+                } else {
+                    $('.change-user-pw').addClass('disabled').attr('disabled', 'disabled');
+                }
+            });
+
+            $('input[name="password-check"]').on('input', function() {
+                $this = $(this);
+
+                if ( ('#'+$this.attr('id')) === inputCheckID ) {
+                    passwordCheck = $this.val();
+                    
+                    if ( passwordCheck === password ) {
+                        $('.change-user-pw').removeClass('disabled').removeAttr('disabled');
+                    } else {
+                        $('.change-user-pw').addClass('disabled').attr('disabled', 'disabled');
+                    }
+                }                
+            });
+        }
     }
 
     page.init();

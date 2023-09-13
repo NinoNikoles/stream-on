@@ -26,6 +26,7 @@ $(document).ready(function() {
             self.uploadUserImg();
             self.updateUserImg();
             self.getGenre();
+            self.changeUserPassword();
 
 
             self.movieLiveSearch();
@@ -320,6 +321,60 @@ $(document).ready(function() {
                         console.log('Fehler: ' + error);
                     }
                 });
+            });
+        },
+
+        changeUserPassword: function() {
+            var self = this;
+            var inAction = false;
+
+            $(document).on('click', '.change-user-pw', function(e) {
+                e.preventDefault();
+                $this = $(this);
+
+                if ( inAction === false ) {
+                    inAction = true;
+                    $this.toggleClass('is-loading');
+
+                    var userID = $this.val(),
+                        username = $('#username-'+userID).val();
+                        psswd = $('.password-'+userID).val();
+
+                    if ( $('.password-'+userID).val().length > 1 && ($('.password-'+userID+'-check').val() === $('.password-'+userID).val()) ) {
+                        
+                        $.ajax({
+                            url: '/changeUserPW',
+                            type: 'post',
+                            data: { 
+                                userID: userID,
+                                username: username,
+                                password: psswd
+                            },
+                            success: function(response) {
+                                var responseObj = $.parseJSON(response);
+    
+                                if ( responseObj.type === 'redirect' ) {
+                                    self.redirect(responseObj.location);
+                                } else {
+                                    self.callout(responseObj, $this);
+                                }
+    
+                                $('body .password-'+userID).val('');
+                                $('body .password-'+userID+'-check').val('').attr('disabled', 'disabled');
+                                $('body .change-user-pw').addClass('disabled').attr('disabled', 'disabled');
+
+                                setTimeout(function() {
+                                    Fancybox.close();
+                                }, 500);                            
+    
+                                inAction = false;
+                            }, error: function(xhr, status, error) {
+                                // Hier wird eine Fehlermeldung ausgegeben
+                                console.log('Fehler: ' + error);
+                            }
+                        });
+                    }
+                }
             });
         },
 

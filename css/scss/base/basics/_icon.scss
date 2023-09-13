@@ -106,6 +106,7 @@ a.icon-right:hover {
     &-help { &::before { content: $icon-help; } }
     &-home { &::before { content: $icon-home; } }
     &-info { &::before { content: $icon-info; } }
+    &-key { &::before { content: $icon-key; } }
     &-location { &::before { content: $icon-location; } }
     &-mail { &::before { content: $icon-mail; } }
     &-media { &::before { content: $icon-media; } }
@@ -125,6 +126,8 @@ a.icon-right:hover {
     &-search { &::before { content: $icon-search; } }
     &-skip-next { &::before { content: $icon-skip-next; } }
     &-skip-previous { &::before { content: $icon-skip-previous; } }
+    &-skip-time { &::before { content: $icon-skip-time; } }
+    &-time-back { &::before { content: $icon-time-back; } }
     &-spotify { &::before { content: $icon-spotify; } }
     &-stop { &::before { content: $icon-stop; } }
     &-sun { &::before { content: $icon-sun; } }

@@ -90,10 +90,8 @@ function editUser($post) {
     } else {
         $role = 'user';
     }
-    $password = mysqli_real_escape_string($conn, $post['password']);
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "UPDATE users SET username='$username', password='$hashed_password', role='$role' WHERE id='$userID'";
+    $sql = "UPDATE users SET username='$username', role='$role' WHERE id='$userID'";
 
     if (!($conn->query($sql) === TRUE)) {
         set_callout('alert','delete_user_alert');
@@ -107,6 +105,26 @@ function editUser($post) {
         }
 
         page_redirect('/admin/users');
+    }
+}
+
+function changeUserPassword($post) {
+    $conn = dbConnect();
+    $userID = mysqli_real_escape_string($conn, $post['userID']);
+    $username = mysqli_real_escape_string($conn, $post['username']);
+
+    $password = mysqli_real_escape_string($conn, $post['password']);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "UPDATE users SET `password`='$hashed_password' WHERE id=$userID";
+
+    if (!($conn->query($sql) === TRUE)) {
+        echo set_callout('alert',lang_snippet('delete_user_alert'));
+    } else {
+        if ( intval($_SESSION['userID']) === intval($post['userID']) ) {
+            $_SESSION['username'] = $username;
+            $_SESSION['logged_in'] = true;
+        }
+        echo set_callout('success',lang_snippet('edit_user_success'));
     }
 }
 

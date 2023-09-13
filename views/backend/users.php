@@ -47,6 +47,7 @@ $conn = dbConnect();
                     <th><?php echo lang_snippet('username'); ?></th>
                     <th><?php echo lang_snippet('role'); ?></th>
                     <th><?php echo lang_snippet('edit'); ?></th>
+                    <th><?php echo lang_snippet('password'); ?></th>
                     <th><?php echo lang_snippet('delete'); ?></th>
                 </thead>
                 <?php
@@ -69,9 +70,12 @@ $conn = dbConnect();
 
                             if ( $row['role'] === 'superadmin' && $_SESSION['role'] === 'superadmin' ) {
                                 echo '<td><button data-src="#edit-user-'.$row['id'].'" title="'.lang_snippet('edit').'" class="btn btn-small btn-warning icon-only icon-pen marg-no" data-fancybox></button></td>';
+                                echo '<td><button data-src="#pw-user-'.$row['id'].'" title="'.lang_snippet('change_password').'" class="btn btn-small btn-warning icon-only icon-key marg-no" data-fancybox></button></td>';
                             } else if ( $row['role'] === 'admin' && $_SESSION['role'] !== 'user' || $row['role'] === 'user' && $_SESSION['role'] !== 'user' ) {
                                 echo '<td><button data-src="#edit-user-'.$row['id'].'" title="'.lang_snippet('edit').'" class="btn btn-small btn-warning icon-only icon-pen marg-no" data-fancybox></button></td>';
+                                echo '<td><button data-src="#pw-user-'.$row['id'].'" title="'.lang_snippet('change_password').'" class="btn btn-small btn-warning icon-only icon-key marg-no" data-fancybox></button></td>';
                             } else {
+                                echo '<td></td>';
                                 echo '<td></td>';
                             }
                             
@@ -113,11 +117,28 @@ $conn = dbConnect();
                             } 
                             
                             echo '<p>';
-                                echo '<lable for="password-'.$row['id'].'">'.lang_snippet('password').' <input type="password" id="password-'.$row['id'].'" name="password" required></lable>';
                                 echo '<input type="number" name="userID" id="userID-'.$row['id'].'" value="'.$row['id'].'" style="display:none;" required>';
                             echo '</p>';
                             echo '<p class="text-right marg-no">';
                                 echo '<button class="btn btn-success icon-left icon-save" title="'.lang_snippet('save').'" type="submit" name="edit-user">'.lang_snippet('save').'</button>';
+                            echo '</p>';
+                        echo '</form>';
+                    echo '</div>';
+
+                    // Change User Password Box
+                    echo '<div id="pw-user-'.$row['id'].'" style="display:none;">';
+                        echo '<h2 class="h4">'.lang_snippet('edit_user').'</h2>';
+                        echo '<form>';
+                            echo '<p>';
+                                echo '<lable for="password-'.$row['id'].'">'.lang_snippet('password').' <input type="password" id="password-'.$row['id'].'" class="password-'.$row['id'].'" name="password" required></lable>';
+                                echo '<input type="text" id="username-'.$row['id'].'" name="username" value="'.$row['username'].'" style="display:none;" required>';
+                                echo '<input type="number" name="userID" id="userID-'.$row['id'].'" value="'.$row['id'].'" style="display:none;" required>';
+                            echo '</p>';
+                            echo '<p>';
+                                echo '<lable for="password-check-'.$row['id'].'">'.lang_snippet('password').' <input type="password" disabled id="password-'.$row['id'].'-check" class="password-'.$row['id'].'-check" name="password-check" required></lable>';
+                            echo '</p>';
+                            echo '<p class="text-right marg-no">';
+                                echo '<button disabled class="btn btn-success icon-left icon-save disabled change-user-pw" value="'.$row['id'].'" title="'.lang_snippet('save').'" type="submit" name="change-user-pw">'.lang_snippet('save').'</button>';
                             echo '</p>';
                         echo '</form>';
                     echo '</div>';

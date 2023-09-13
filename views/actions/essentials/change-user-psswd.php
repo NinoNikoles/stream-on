@@ -1,0 +1,3 @@
+<?php
+changeUserPassword($_POST);
+?>
