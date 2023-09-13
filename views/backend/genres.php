@@ -38,7 +38,7 @@ $result = $conn->query($sql);
 
                 <table>
                     <thead>
-                        <th><?php echo lang_snippet('id'); ?></th>
+                        <th class="desktop-only"><?php echo lang_snippet('id'); ?></th>
                         <th><?php echo lang_snippet('tmdb_id'); ?></th>
                         <th><?php echo lang_snippet('name'); ?></th>
                     </thead>
@@ -48,7 +48,7 @@ $result = $conn->query($sql);
                         $results = $conn->query($sql);
                         while($row = $results->fetch_assoc()) {
                             echo '<tr>';
-                                echo '<td>'.$row['id'].'</td>';
+                                echo '<td class="desktop-only">'.$row['id'].'</td>';
                                 echo '<td>'.$row['genre_id'].'</td>';
                                 echo '<td>'.$row['genre_name'].'</td>';
                             echo '</tr>';

@@ -43,9 +43,9 @@ $conn = dbConnect();
 
             <table>
                 <thead>
-                    <th><?php echo lang_snippet('user_img'); ?></th>
+                    <th class="desktop-only"><?php echo lang_snippet('user_img'); ?></th>
                     <th><?php echo lang_snippet('username'); ?></th>
-                    <th><?php echo lang_snippet('role'); ?></th>
+                    <th class="desktop-only"><?php echo lang_snippet('role'); ?></th>
                     <th><?php echo lang_snippet('edit'); ?></th>
                     <th><?php echo lang_snippet('password'); ?></th>
                     <th><?php echo lang_snippet('delete'); ?></th>
@@ -64,9 +64,9 @@ $conn = dbConnect();
                         }
 
                         echo '<tr>';
-                            echo '<td><figure class="square"><img data-img="'.uploadedIMG($row['username'], $row['user_img']).'" loading="lazy" alt=""></figure></td>';
+                            echo '<td class="desktop-only"><figure class="square"><img data-img="'.uploadedIMG($row['username'], $row['user_img']).'" loading="lazy" alt=""></figure></td>';
                             echo '<td>'.$row['username'].'</td>';
-                            echo '<td>'.$role.'</td>';
+                            echo '<td class="desktop-only">'.$role.'</td>';
 
                             if ( $row['role'] === 'superadmin' && $_SESSION['role'] === 'superadmin' ) {
                                 echo '<td><button data-src="#edit-user-'.$row['id'].'" title="'.lang_snippet('edit').'" class="btn btn-small btn-warning icon-only icon-pen marg-no" data-fancybox></button></td>';
@@ -90,6 +90,7 @@ $conn = dbConnect();
 
                 ?>
             </table>
+            
             <?php
                 $sql = "SELECT id, username, firstname, lastname, role FROM users";
                 $results = $conn->query($sql);
