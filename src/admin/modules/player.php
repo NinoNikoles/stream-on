@@ -28,8 +28,8 @@ function movieVideoPlayer($movieID, $fullscreen = false, $session = false) {
                 } else {
                     echo '<a href="#" id="chat-open"></a>';
                 }
-                echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
-                echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
+                echo '<a href="#" id="player-sek-forward" class="icon icon-skip-time" title="Skip 10 Sek"></a>';
+                echo '<a href="#" id="player-sek-back" class="icon icon-time-back" title="Go 10 Sek back"></a>';
             echo '</figure>';
             //
         } else {
@@ -224,8 +224,8 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = fa
                 } else {
                     echo '<a href="#" id="chat-open"></a>';
                 }
-                echo '<a href="#" id="player-sek-forward" class="icon icon-arrow-right" title="Skip 10 Sek"></a>';
-                echo '<a href="#" id="player-sek-back" class="icon icon-arrow-left" title="Go 10 Sek back"></a>';
+                echo '<a href="#" id="player-sek-forward" class="icon icon-skip-time" title="Skip 10 Sek"></a>';
+                echo '<a href="#" id="player-sek-back" class="icon icon-time-back" title="Go 10 Sek back"></a>';
                 echo '<a href="#" id="show-eps-btn" class="icon icon-multilayer" title="All episodes"></a>';
                 echo $nextBTN;
                 echo $showContainer;
