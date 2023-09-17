@@ -9,7 +9,7 @@ echo '<div class="innerWrap marg-top-l marg-bottom-l">';
     echo '<h1>'.lang_snippet('shows').'</h1>';
 
     // Filter
-    include(ROOT_PATH.'/views/includes/mediafilter.php');
+    include_filter('show');
 
     // Media Output
     echo '<div class="grid-row" id="media-list">';
