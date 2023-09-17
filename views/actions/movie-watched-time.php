@@ -16,15 +16,31 @@
         $showID = NULL;
     }
 
-    if ( $watched === 1 ) {
-        $watchedTime = 0;
-    }
+    // if ( $watched === 1 ) {
+    //     $watchedTime = 0;
+    // }
     
-    $sql = "INSERT INTO media_watched(user_id, media_id, show_id, watched_seconds, total_length, watched) VALUES
-    ($userID, $mediaID, $showID, $watchedTime, $totalLength,  $watched)
-    ON DUPLICATE KEY UPDATE watched_seconds = VALUES(watched_seconds), watched = VALUES(watched)";
+    $sql = "INSERT INTO media_watched(user_id, media_id, show_id, watched_seconds, total_length, watched, last_watched) VALUES
+    ($userID, $mediaID, $showID, $watchedTime, $totalLength,  $watched, current_timestamp())
+    ON DUPLICATE KEY UPDATE watched_seconds = VALUES(watched_seconds), total_length = VALUES(total_length), watched = VALUES(watched), last_watched = VALUES(last_watched);";
 
     if (!($conn->query($sql) === TRUE)) {
         die('Error creating table: ' . $conn->error);
+    }
+
+    if ( isset($_POST['show']) ) {
+        $mediaID = intval($_POST['nextMediaID']);
+        $watchedTime = floatval($_POST['nextTime']);
+        $watched = intval($_POST['nextWatched']);
+        $totalLength = floatval($_POST['nextTotalLength']);
+        $watchedInPercent = ($watchedTime/$totalLength)*100;
+
+        $sql = "INSERT INTO media_watched(user_id, media_id, show_id, watched_seconds, total_length, watched, last_watched) VALUES
+        ($userID, $mediaID, $showID, $watchedTime, $totalLength,  $watched, current_timestamp())
+        ON DUPLICATE KEY UPDATE watched_seconds = VALUES(watched_seconds), total_length = VALUES(total_length), watched = VALUES(watched), last_watched = VALUES(last_watched);";
+    
+        if (!($conn->query($sql) === TRUE)) {
+            die('Error creating table: ' . $conn->error);
+        }
     }
 ?>

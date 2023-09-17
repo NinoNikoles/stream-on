@@ -741,7 +741,14 @@ $(document).ready(function() {
                 
                 // Ausführen, wenn die Metadaten geladen sind
                 videoJS.addEventListener("loadedmetadata", function() {
-                    videoJS.currentTime = parseInt($('span#time').attr('data-time'));
+                    currentTime = parseFloat($('span#time').attr('data-time'));
+                    videoDuration = videoJS.duration;
+
+                    if ( currentTime == videoDuration ) {
+                        currentTime = 0;
+                    }
+
+                    videoJS.currentTime = currentTime;
                     videoJSPlayer.volume( parseFloat($('span#time').attr('data-volume')) );
                     var interval = false;
                     var isVideoEnded = false;
@@ -749,43 +756,46 @@ $(document).ready(function() {
                     videoJSPlayer.on('play', function() {
                         isVideoEnded = false;
                         clearInterval(interval);
-                        saveTime(videoJS.currentTime, videoJS.duration);
+                        saveTime(videoJS.currentTime, videoDuration);
                         interval = setInterval(function() {
-                            saveTime(videoJS.currentTime, videoJS.duration)
+                            saveTime(videoJS.currentTime, videoDuration)
                         }, 30000);
                     });
 
                     videoJSPlayer.on('ended', function() {
                         isVideoEnded = true;
                         clearInterval(interval);
-                        saveTime(videoJS.duration, videoJS.duration);
+                        saveTime(videoDuration, videoDuration);
                     });
 
                     videoJSPlayer.on('seeking', function () {
                         if ( $(videoJS).hasClass('vjs-scrubbing') ) {
                             clearInterval(interval);
-                            saveTime(videoJS.duration, videoJS.duration);
+                            saveTime(videoDuration, videoDuration);
                             interval = setInterval(function() {
-                                saveTime(videoJS.currentTime, videoJS.duration)
+                                saveTime(videoJS.currentTime, videoDuration)
                             }, 30000);
                         }            
                     });
 
-                    videoJSPlayer.on('pause', function() {                        
-                        if ( videoJS.currentTime != videoJS.duration) {
-                            clearInterval(interval);
-                            saveTime(videoJS.currentTime, videoJS.duration);
+                    videoJSPlayer.on('pause', function() {     
+                        clearInterval(interval);                   
+                        if ( videoJS.currentTime !== videoJS.duration) {
+                            saveTime(videoJS.currentTime, videoDuration);
+                        } else {
+                            isVideoEnded = true;
+                            saveTime(videoDuration, videoDuration);
                         }
                     });
 
                     $('.play-trigger').on('click', function() {
                         clearInterval(interval);
-                        saveTime(videoJS.duration, videoJS.duration);
+                        saveTime(videoDuration, videoDuration);
                     });
 
                     $('#next-episode-btn').on('click', function() {
                         clearInterval(interval);
-                        saveTime(videoJS.duration, videoJS.duration);
+                        saveTime(videoDuration, videoDuration);
                     });
 
                     function saveTime(currentVideoTime, videoDuration) {
@@ -793,9 +803,25 @@ $(document).ready(function() {
                         var totalDuration = videoDuration;
                         $resultList = $('#time');
                         var showID = $resultList.attr('data-show');
+                        var mediaID = $(videoJS).attr('data-id');
+                        var nextMediaID = false;
+                        var nextCurrentSecond = false;
+                        var nextTotalDuration = false;
+                        var nextWatched = false;
 
                         if ( currentSecond === totalDuration ) {
                             watched = 1;
+
+                            if ( $('#next-episode-btn').length > 0 ) {
+                                $nextBtn = $('#next-episode-btn');
+                                nextMediaID = $nextBtn.attr('data-id');
+                                nextCurrentSecond = $nextBtn.attr('data-current-time');
+                                if ( nextCurrentSecond == 0 ) {
+                                    nextCurrentSecond = 0.000001;
+                                }
+                                nextTotalDuration = $nextBtn.attr('data-length');
+                                nextWatched = 0;
+                            }
                         } else {
                             watched = 0;
                         }
@@ -804,11 +830,15 @@ $(document).ready(function() {
                             url: '/movie-watch-time',
                             type: 'post',
                             data: { 
-                                mediaID: $(videoJS).attr('data-id'),
+                                mediaID: mediaID,
+                                nextMediaID: nextMediaID,
                                 show: showID,
                                 time: currentSecond,
+                                nextTime: nextCurrentSecond,
                                 watched: watched,
+                                nextWatched: nextWatched,
                                 totalLength: totalDuration,
+                                nextTotalLength: nextTotalDuration,
                             },
                             success: function(response) {
                                 $resultList.attr('data-time', currentSecond);

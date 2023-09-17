@@ -82,24 +82,37 @@ function showVideoPlayer($episodeID, $showID, $fullscreen = false, $session = fa
         while ( $nextEpisode = $nextResult->fetch_assoc() ) {
             $nextTMDBID = $nextEpisode['tmdbID'];
             $nextFilePath = $nextEpisode['file_path'];
-            $nextBackdrop = $nextEpisode['backdrop'];
-
-            if ( !($nextFilePath == NULL) || !($nextFilePath == '') ) {
-                if ( $session ) {
-                    $nextBTN = '<a href="/watchtogether/?s='.$showID.'&id='.$nextTMDBID.'&uuid='.$_GET['uuid'].'" id="next-episode-btn" class="next-episode-btn">
-                        <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
-                        <span>'.lang_snippet('next_episode').'</span>
-                    </a>';
-                } else {
-                    $nextBTN = '<a href="/watch/?s='.$showID.'&id='.$nextTMDBID.'" id="next-episode-btn" class="next-episode-btn">
-                        <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
-                        <span>'.lang_snippet('next_episode').'</span>
-                    </a>';
-                }                
-            } else {
-                $nextBTN = '';  
-            } 
+            $nextBackdrop = $nextEpisode['backdrop'];            
         }
+
+        $timeSelect = "SELECT watched_seconds, total_length FROM media_watched WHERE media_id=".$nextTMDBID." AND user_id=".$_SESSION['userID'].";";
+        $timeResult = $conn->query($timeSelect);
+
+        if ($timeResult->num_rows > 0) {
+            while ( $timeEpisode = $timeResult->fetch_assoc() ) {
+                $nextTimeWatched = $timeEpisode['watched_seconds'];
+                $nextTotalTime = $timeEpisode['total_length'];
+            }
+        } else {
+            $nextTimeWatched = 0;
+            $nextTotalTime = 10000;
+        }
+
+        if ( !($nextFilePath == NULL) || !($nextFilePath == '') ) {
+            if ( $session ) {
+                $nextBTN = '<a href="/watchtogether/?s='.$showID.'&id='.$nextTMDBID.'&uuid='.$_GET['uuid'].'" id="next-episode-btn" class="next-episode-btn">
+                    <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
+                    <span>'.lang_snippet('next_episode').'</span>
+                </a>';
+            } else {
+                $nextBTN = '<a href="/watch/?s='.$showID.'&id='.$nextTMDBID.'" id="next-episode-btn" class="next-episode-btn" data-id="'.$nextTMDBID.'" data-current-time="'.$nextTimeWatched.'" data-length="'.$nextTotalTime.'">
+                    <figure class="widescreen"><img src="'.loadImg('original', $nextBackdrop).'"><i class="icon icon-play"></i></figure>
+                    <span>'.lang_snippet('next_episode').'</span>
+                </a>';
+            }                
+        } else {
+            $nextBTN = '';  
+        } 
     } else {
         $nextBTN = '';
     }
