@@ -565,8 +565,12 @@ $(document).ready(function() {
             function onPlayerStateChange(event) {
                 // Wenn das Video beendet ist
                 if (event.data == YT.PlayerState.ENDED) {
-                    player['g'].style.display = 'none';
                     $('.content-wrap.desktop-only').css('opacity', '1');
+                    player['g'].style.opacity = '0';
+                    
+                    setTimeout(function() {
+                        player['g'].style.display = 'none';
+                    }, 300);
                     // Hier können Sie weitere Aktionen ausführen
                 }
             }
