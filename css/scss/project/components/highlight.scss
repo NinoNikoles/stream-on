@@ -1,9 +1,9 @@
 .highlight {
     &-wrapper {
         display: flex;
-        max-height: 70vh;
+        height: 100vh;
         margin: {
-            bottom: rem-calc(-60);
+            bottom: rem-calc(-180);
         }
         position: relative;
         overflow: hidden;
@@ -19,7 +19,7 @@
             display: block;
             //background: rgb(0,0,0);
             //background: linear-gradient(0deg, rgba(18,18,18,1) 10%, rgba(18,18,18,0.95) 15%, rgba(18,18,18,0.9) 20%, rgba(18,18,18,0.08) 90%, rgba(18,18,18,0.06) 92%, rgba(18,18,18,0.04) 94%, rgba(18,18,18,0.02) 96%, rgba(18,18,18,0.01) 98%);
-            background-image: linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#121212 68%,#121212);
+            background-image: linear-gradient(180deg,#14141400 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#121212ab 68%,#121212);
             content: "";
             width: 100%;
             height: 20%;
@@ -56,14 +56,7 @@
 
             @include MQ(medium) {
                 width: 75%;
-            }
-
-            img {
-                @include MQ(medium) {
-                    max-height: 70vh;
-                }
-            }
-            
+            }            
         }
 
         .button-wrap {
@@ -114,13 +107,14 @@
             height: 100%;
             padding: {
                 right: rem-calc($space-base);
-                bottom: rem-calc(140);
+                bottom: rem-calc(180);
                 left: rem-calc($space-base);
             }
             position: absolute;            
             right: 0;
             bottom: 0;
             width: 100%;
+            pointer-events: none;
 
             @include MQ(xsmall) {
                 padding: {
@@ -133,6 +127,7 @@
                 width: 75%;
                 padding: {
                     right: rem-calc($space-base*16);
+                    bottom: rem-calc(140);
                     left: rem-calc($space-base*8);
                 }
             }
@@ -140,7 +135,7 @@
             &::before {
                 display: block;
                 background: {
-                    image: linear-gradient(180deg, rgba(20,20,20,0) 0, rgba(20,20,20,0.15) 15%, rgba(20,20,20,0.35) 29%, rgba(20,20,20,0.58) 44%, #121212 90%, #121212);
+                    image: linear-gradient(180deg,#14141400 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#121212ab 68%,#121212);
                 }
                 content: "";
                 width: 100%;

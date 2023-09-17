@@ -2,7 +2,7 @@
 
 function getHighlight() {
     $conn = dbConnect();
-    $hightlightSelect = "SELECT highlights.highlight_id, media.title, media.overview, media.poster, media.backdrop, media.mediaType
+    $hightlightSelect = "SELECT highlights.highlight_id, media.title, media.overview, media.poster, media.backdrop, media.mediaType, media.trailer
     FROM highlights INNER JOIN media ON highlights.highlight_id = media.tmdbID
     WHERE highlights.highlight_status = 1
     ORDER BY RAND() LIMIT 1";
@@ -15,6 +15,14 @@ function getHighlight() {
             $description = $highlight['overview'];
             $poster = $highlight['poster'];
             $backdrop = $highlight['backdrop'];
+            $trailerID = $highlight['trailer'];
+        }
+
+        $trailer = "";
+        $style = "";
+        if ( !($trailerID === NULL) ) {
+            $trailer = '<iframe id="highlightTrailer" type="text/html" src="http://www.youtube.com/embed/'.$trailerID.'?enablejsapi=1&origin='.$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'&autoplay=1&controls=0&modestbranding=1&iv_load_policy=3&showinfo=0&rel=0" style="height:100vh!important;position:absolute;" frameborder="0"></iframe>';
+            $style = "style='opacity:0; transition:opacity 0.3s ease-in;'";
         }
 
         $hightlight = "
@@ -23,14 +31,15 @@ function getHighlight() {
         </figure>
         <figure class='widescreen'>
             <img data-img=".loadImg('original', $backdrop)." loading='lazy' alt='".$title."'>
+            ".$trailer."
         </figure>
         <div class='content-wrap mobile-only'>
             <h1 class='h1 text-center'>".$title."</h1>
             <p class='small'>".truncate($description, 450)."</p>
         </div>
-        <div class='content-wrap desktop-only'>
+        <div class='content-wrap desktop-only' ".$style.">
             <h1 class='h2'>".$title."</h1>
-            <p>".truncate($description, 450)."</p>
+            <p>".$description."</p>
         </div>
         <div class='button-wrap'>
             <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='#content-$mediaID' class='btn btn-small btn-white icon-left icon-info info-trigger' data-modal data-src='$mediaID'>Mehr erfahren</a></div>

@@ -66,6 +66,7 @@ $(document).ready(function() {
             self.updateOverlay();
             self.pageReady();
             self.passwordChange();
+            self.highlightIFrame();
         },
 
         bindHandlers: function () {
@@ -543,6 +544,32 @@ $(document).ready(function() {
                     }
                 }                
             });
+        },
+
+        highlightIFrame: function() {
+            var player;
+
+            // Player erstellen, wenn die API bereit ist
+            player = new YT.Player('highlightTrailer', {
+                events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+                }
+            });
+
+            function onPlayerReady(event) {
+                // Das Video ist bereit
+                event.target.playVideo(); // Video abspielen
+            }
+
+            function onPlayerStateChange(event) {
+                // Wenn das Video beendet ist
+                if (event.data == YT.PlayerState.ENDED) {
+                    player['g'].style.display = 'none';
+                    $('.content-wrap.desktop-only').css('opacity', '1');
+                    // Hier können Sie weitere Aktionen ausführen
+                }
+            }
         }
     }
 
