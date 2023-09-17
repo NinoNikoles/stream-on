@@ -44,7 +44,7 @@ while ( $media = $result->fetch_assoc() ) {
             while ( $seasonRow = $seasonResults->fetch_assoc() ) {
 
                 // fetch all episodes of season
-                $fetchEpisodes = "SELECT tmdbID, title, overview, backdrop, season_number, file_path FROM episodes WHERE show_id=$mediaID and season_number = ".$seasonRow['season_number']." ORDER BY episode_number ASC";
+                $fetchEpisodes = "SELECT * FROM episodes WHERE show_id=$mediaID and season_number = ".$seasonRow['season_number']." ORDER BY episode_number ASC";
                 $episodesResult = $conn->query($fetchEpisodes);
 
                 $episodeList = '';
@@ -56,6 +56,8 @@ while ( $media = $result->fetch_assoc() ) {
                             $episodeID = $episodeRow['tmdbID'];
                             $episodeBackdrop = $episodeRow['backdrop'];
                             $episodeOverview = $episodeRow['overview'];
+                            $episodeNumberRun = $episodeRow['episode_number'];
+                            $episodeTitleRun = $episodeRow['title'];
                             $episodeWatchTrigger = '';
                             $episodeDisabled = 'disabled';
                             $watchedClass = '';
@@ -88,6 +90,7 @@ while ( $media = $result->fetch_assoc() ) {
                                     </figure>
                                 </div>
                                 <div class="col-7 col-9-medium pad-left-xs">
+                                    <p class="small strong marg-no">'.lang_snippet('episode').' '.$episodeNumberRun.': '.truncate($episodeTitleRun, 50).'</p>
                                     <p class="small">'.truncate($episodeOverview, 100).'</p>
                                 </div>
                                 '.$episodeWatchTrigger.'
