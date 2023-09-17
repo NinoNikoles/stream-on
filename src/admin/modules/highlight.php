@@ -21,7 +21,8 @@ function getHighlight() {
         $trailer = "";
         $style = "";
         if ( !($trailerID === NULL) ) {
-            $trailer = '<iframe id="highlightTrailer" type="text/html" src="http://www.youtube.com/embed/'.$trailerID.'?enablejsapi=1&origin='.$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'&autoplay=1&controls=0&modestbranding=1&iv_load_policy=3&showinfo=0&rel=0" style="height:100vh!important;position:absolute;transition:opacity 0.3s ease-in;" frameborder="0"></iframe>';
+            $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $trailer = '<iframe id="highlightTrailer" type="text/html" src="http://www.youtube.com/embed/'.$trailerID.'?enablejsapi=1&origin='.$fullUrl.'&autoplay=1&controls=0&modestbranding=1&iv_load_policy=3&showinfo=0&rel=0" style="height:100vh!important;position:absolute;transition:opacity 0.3s ease-in;" frameborder="0"></iframe>';
             $style = "style='opacity:0; transition:opacity 0.3s ease-in;'";
         }
 
