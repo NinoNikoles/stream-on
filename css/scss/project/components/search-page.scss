@@ -4,7 +4,7 @@
     }
     width: 100%;
     height: calc(100% - 50px);
-    position: absolute;
+    position: fixed;
     top: rem-calc(50);
     left: 0;
     z-index: 5;
@@ -30,5 +30,13 @@
         position: absolute;
         top: rem-calc($grid-padding);
         right: rem-calc($grid-padding);
+    }
+}
+
+.active-search {
+    #header {
+        background: {
+            color: var(--header-bg);
+        }
     }
 }
