@@ -549,30 +549,32 @@ $(document).ready(function() {
         highlightIFrame: function() {
             var player;
 
-            // Player erstellen, wenn die API bereit ist
-            player = new YT.Player('highlightTrailer', {
-                events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
+            if ( $('#highlightTrailer').length > 0 ) {
+                // Player erstellen, wenn die API bereit ist
+                player = new YT.Player('highlightTrailer', {
+                    events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                    }
+                });
+
+                function onPlayerReady(event) {
+                    // Das Video ist bereit
+                    event.target.playVideo(); // Video abspielen
                 }
-            });
 
-            function onPlayerReady(event) {
-                // Das Video ist bereit
-                event.target.playVideo(); // Video abspielen
-            }
+                function onPlayerStateChange(event) {
+                    // Wenn das Video beendet ist
+                    if (event.data == YT.PlayerState.ENDED) {
+                        $('.content-wrap.desktop-only').css('opacity', '1');
+                        $('.content-wrap.desktop-only').css('pointer-events', 'all');
+                        player['g'].style.opacity = '0';
 
-            function onPlayerStateChange(event) {
-                // Wenn das Video beendet ist
-                if (event.data == YT.PlayerState.ENDED) {
-                    $('.content-wrap.desktop-only').css('opacity', '1');
-                    $('.content-wrap.desktop-only').css('pointer-events', 'all');
-                    player['g'].style.opacity = '0';
-
-                    setTimeout(function() {
-                        player['g'].style.display = 'none';
-                    }, 300);
-                    // Hier können Sie weitere Aktionen ausführen
+                        setTimeout(function() {
+                            player['g'].style.display = 'none';
+                        }, 300);
+                        // Hier können Sie weitere Aktionen ausführen
+                    }
                 }
             }
         }

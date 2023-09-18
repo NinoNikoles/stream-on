@@ -23,6 +23,7 @@ class routes {
             '/save-admin-settings' => 'views/actions/essentials/save-admin-settings.php',
             '/uploadUserImg' => 'views/actions/essentials/upload-user-img.php',
             '/updateUserImg' => 'views/actions/essentials/update-user-img.php',
+            '/deleteUserImg' => 'views/actions/essentials/delete-user-img.php',
             '/refresh-user-img' => 'views/actions/essentials/refresh-user-img.php',
             '/get-genre' => 'views/actions/essentials/get-genre.php',
             '/changeUserPW' => 'views/actions/essentials/change-user-psswd.php',

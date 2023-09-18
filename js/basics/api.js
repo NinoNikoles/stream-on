@@ -25,6 +25,7 @@ $(document).ready(function() {
             self.saveAdminSettings();
             self.uploadUserImg();
             self.updateUserImg();
+            self.deleteUserImg();
             self.getGenre();
             self.changeUserPassword();
 
@@ -264,8 +265,57 @@ $(document).ready(function() {
                             
                             setTimeout(function() {
                                 self.refreshUserImg(userID);
+                                if ( $('#allUserUploads').children().length > 0 ) {
+                                    $('#uploads').css('display', 'inline-block');
+                                }
                                 inAction = false;
                             }, 1000);   
+                            
+                        }, error: function(xhr, status, error) {
+                            // Hier wird eine Fehlermeldung ausgegeben
+                            console.log('Fehler: ' + error);
+                        }
+                    });
+                }
+                
+            });
+        },
+
+        deleteUserImg: function() {
+            var self = this;
+            var inAction = false;
+
+            $('#deleteUserImg').on('click', function(e) {
+                e.preventDefault();
+
+                if ( inAction === false ) {
+                    inAction = true;
+
+                    $this = $(this);
+                    $this.toggleClass('is-loading');
+    
+                    var img = $('.user-img-select input[type="radio"]:checked').val();
+                    var userID = $('.user-img-select input[type="radio"]:checked').attr('data-id');
+    
+                    $.ajax({
+                        url: '/deleteUserImg',
+                        type: 'post',
+                        data: { 
+                            img: img,
+                        },
+                        success: function(response) {
+                            var responseObj = $.parseJSON(response);
+                            console.log(responseObj);
+                            self.callout(responseObj, $this);
+                            
+                            setTimeout(function() {
+                                self.refreshUserImg(userID);
+                                $('.user-img-select input[type="radio"]:checked').closest('.select-item').remove();
+                                if ( $('#allUserUploads').children().length === 0 ) {
+                                    $('#uploads').css('display', 'none');
+                                }
+                                inAction = false;
+                            }, 1000);
                             
                         }, error: function(xhr, status, error) {
                             // Hier wird eine Fehlermeldung ausgegeben

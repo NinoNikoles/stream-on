@@ -197,7 +197,7 @@ function setFavicon($PATH) {
 
     if (!($conn->query($sql) === TRUE)) {
         $conn->close();
-        set_callout('alert','update_file_apth_alert');
+        set_callout('alert','update_file_path_alert');
         page_refresh();
     } else {
         $conn->close();
@@ -394,8 +394,8 @@ function runtimeToString($runtime) {
 
 //-- TMDB IMG Path --
 function loadImg($size, $img) {
-    return "http://image.tmdb.org/t/p/$size$img";
-    //return '/views/build/css/images/img_preview.webp';
+    //return "http://image.tmdb.org/t/p/$size$img";
+    return '/views/build/css/images/img_preview.webp';
 }
 
 //-- User Volume --

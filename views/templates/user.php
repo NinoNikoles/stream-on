@@ -54,44 +54,47 @@
                     }
                 }
                 
-                if ( $currentImg && $images ) {
+                if ( $images ) {
                     $i = 0;
                     ?>
-                        <div class="col8 marg-top-xl marg-bottom-xl marg-left-col2">
+                        <div id="uploads" class="col8 marg-top-xl marg-bottom-xl marg-left-col2">
                             <div class="col12">
                                 <h2 class="h3"><?php echo lang_snippet('all_uploads'); ?></h2>
                             </div>
 
-                            <div class="col12 grid-row" id="allUserUploads">
-                                <?php
-                                    foreach ( $images as $image ) {
-                                        if ( !($image === $currentImg) ) {
-                                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
-                                                echo '<div class="user-img-select">';
-                                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
-                                                    echo '<figure class="square">';
-                                                        echo '<img data-img="'.uploadedIMG($_SESSION['username'], $image).'" loading="lazy" alt="">';
-                                                    echo '</figure>';
+                            <div class="col10">
+                                <div class="col12 grid-row" id="allUserUploads">
+                                    <?php
+                                        foreach ( $images as $image ) {
+                                            if ( !($image === $currentImg) ) {
+                                                echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s select-item">';
+                                                    echo '<div class="user-img-select">';
+                                                        echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="0" data-id="'.$_SESSION['userID'].'">';
+                                                        echo '<figure class="square">';
+                                                            echo '<img data-img="'.uploadedIMG($_SESSION['username'], $image).'" loading="lazy" alt="">';
+                                                        echo '</figure>';
+                                                    echo '</div>';
                                                 echo '</div>';
-                                            echo '</div>';
-                                            $i++;
-                                        } else {
-                                            echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s">';
-                                                echo '<div class="user-img-select">';
-                                                    echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
-                                                    echo '<figure class="square">';
-                                                        echo '<img data-img="'.uploadedIMG($_SESSION['username'], $image).'" loading="lazy" alt="">';
-                                                    echo '</figure>';
+                                                $i++;
+                                            } else {
+                                                echo '<div class="col-6 col-3-xsmall col-2-medium grid-padding marg-bottom-s select-item">';
+                                                    echo '<div class="user-img-select">';
+                                                        echo '<input type="radio" id="img-'.$i.'" name="userImg" value="'.$image.'" data-current="1" data-id="'.$_SESSION['userID'].'" checked>';
+                                                        echo '<figure class="square">';
+                                                            echo '<img data-img="'.uploadedIMG($_SESSION['username'], $image).'" loading="lazy" alt="">';
+                                                        echo '</figure>';
+                                                    echo '</div>';
                                                 echo '</div>';
-                                            echo '</div>';
-                                            $i++;
+                                                $i++;
+                                            }
                                         }
-                                    }
-                                ?>
+                                    ?>
+                                </div>
                             </div>
 
-                            <div class="col12 text-right">
-                                <a href="#" class="btn btn-small btn-success loading marg-no" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
+                            <div class="col2 text-right">
+                                <a href="#" class="btn btn-small btn-success icon-left icon-save loading" id="updateUserImg" style="display:none"><?php echo lang_snippet('save'); ?></a>
+                                <a href="#" class="btn btn-small btn-alert icon-left icon-trash loading marg-no" id="deleteUserImg"><?php echo lang_snippet('delete'); ?></a>
                             </div>
                         </div>
                     <?php
