@@ -928,6 +928,7 @@ $(document).ready(function() {
 
         remoteWatch: function() {
             var self = this;
+
             const host = window.location.hostname;
             if ( $('#mainPlayer').length > 0 ) {
                 videoPlayer = videojs('player');
@@ -940,6 +941,7 @@ $(document).ready(function() {
                     if ( remotesessionID ) {
                         const socket = new WebSocket(`ws://${host}:3000/?remotesessionID=${remotesessionID}`);
                         let isFirstPlay = true;
+                        delimiter = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Hex);
 
                         socket.onopen = () => {
                             var userID = $('#message-use-id').val();
@@ -954,27 +956,37 @@ $(document).ready(function() {
                         };
 
                         socket.onmessage = (event) => {
-                            // Empfange Aktionen von anderen Benutzern und steuere den Video-Player entsprechend
-                            if (event.data.startsWith('joined:')) {
-                                const userID = event.data.split(':')[1];
-                                const username = event.data.split(':')[2];
-                                joinedMessage(userID, username);
-                            } else if (event.data === 'play') {
-                                videoPlayer.play();
-                            } else if (event.data === 'pause') {
-                                videoPlayer.pause();
-                            } else if (event.data.startsWith('timeupdate:')) {
-                                const newTime = parseFloat(event.data.split(':')[1]);
-                                videoPlayer.currentTime(newTime);
-                            } else if (event.data.startsWith('url:')) {
-                                const url = event.data.split(':')[1];
-                                window.location.href = url;
-                            } else if (event.data.startsWith('msg:')) {
-                                const message = event.data.split(':')[1];
-                                const userID = event.data.split(':')[2];
-                                const username = event.data.split(':')[3];
-                                ajaxMessage(message, userID, username);
-                            }
+                            try {
+                                const jsonData = JSON.parse(event.data);
+
+                                if (typeof jsonData === 'object' && jsonData !== null) {
+                                    const cutter = jsonData[0];
+                                    const parts = jsonData[1].split(`${cutter}`);
+                                    const message = parts[1];
+                                    const userID = parts[2];
+                                    const username = parts[3];
+                                    ajaxMessage(message, userID, username);
+                                } else {
+                                    // Empfange Aktionen von anderen Benutzern und steuere den Video-Player entsprechend
+                                    if (event.data.startsWith('joined:')) {
+                                        const userID = event.data.split(':')[1];
+                                        const username = event.data.split(':')[2];
+                                        joinedMessage(userID, username);
+                                    } else if (event.data === 'play') {
+                                        videoPlayer.play();
+                                    } else if (event.data === 'pause') {
+                                        videoPlayer.pause();
+                                    } else if (event.data.startsWith('timeupdate:')) {
+                                        const newTime = parseFloat(event.data.split(':')[1]);
+                                        videoPlayer.currentTime(newTime);
+                                    } else if (event.data.startsWith('url:')) {
+                                        const url = event.data.split(':')[1];
+                                        window.location.href = url;
+                                    }
+                                }
+                            } catch (error) {
+                                
+                            }                            
                         };
 
                         videoPlayer.on('play', () => {
@@ -1049,8 +1061,10 @@ $(document).ready(function() {
                             var message = $('#message-input').val(),
                             userID = $('#message-use-id').val();
                             username = $('#message-use-name').val();
-                            send = `msg:${message}:${userID}:${username}`;
-
+                            var send = [];
+                            send[0] = `${delimiter}`;
+                            send[1] = `msg${delimiter}${message}${delimiter}${userID}${delimiter}${username}`;
+                            send = JSON.stringify(send);
                             $('#message-input').val("");
 
                             if ( message.length > 0) {
