@@ -1,10 +1,5 @@
-<?php $conn = dbConnect(); 
-    if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
-        destroySesssion();
-        if ( !pageCheck("/login") ) {
-            page_redirect("/login");
-        }
-    }
+<?php $conn = dbConnect();
+    loggedInCheck();
 
     if (!empty($_GET['remotesessionID'])) {
         $remotesessionID = $_GET['remotesessionID'];
@@ -23,7 +18,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
-    <title><?php echo $pageTitle[0].$pageTitle[1]; ?></title>
+    <link rel="manifest" href="/site.webmanifest">
+
+    <title><?php echo $pageTitle[0] /*.$pageTitle[1]*/; ?></title>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body class="loading">

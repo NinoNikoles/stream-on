@@ -2,12 +2,7 @@
 $conn = dbConnect();
 
 if ( !($pageTitle[0] === 'Install') ) {
-    if( $_SESSION > 0 && !isset($_SESSION['logged_in']) || $_SESSION > 0 && $_SESSION['logged_in'] !== true ) {
-        destroySesssion();
-        if ( !pageCheck("/login") ) {
-            page_redirect("/login");
-        }
-    }
+    loggedInCheck();
 }
 ?>
 <!DOCTYPE html>
@@ -18,6 +13,7 @@ if ( !($pageTitle[0] === 'Install') ) {
     <?php loadFavicon(); ?>
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <title><?php echo $pageTitle[0].$pageTitle[1];?></title>
+    <link rel="manifest" href="/site.webmanifest">
+    <title><?php echo $pageTitle[0] /*.$pageTitle[1]*/;?></title>
 </head>
 <body>
