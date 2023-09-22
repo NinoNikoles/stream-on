@@ -97,10 +97,47 @@ function checkIfUserExists($username) {
     }
 }
 
+function loggedInCheck() {
+    if( !isset($_SESSION) ) {
+        if ( !pageCheck("/login") ) {
+            page_redirect("/login");
+        }
+    }
+
+    if ( !isset($_SESSION['logged_in'])) {
+        if ( !pageCheck("/login") ) {
+            page_redirect("/login");
+        }
+    }
+
+    if ( isset($_SESSION['logged_in']) &&  !($_SESSION['logged_in'] === true) ) {
+        if ( !pageCheck("/login") ) {
+            page_redirect("/login");
+        }
+    }
+}
+
 function destroySesssion() {
     session_unset();
     session_destroy();
     session_write_close();
+
+        // Lösche den Session-Cookie
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+    }
+
+    // Optional: Beende die aktuelle PHP-Sitzung
+    session_abort();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +151,7 @@ function pageTitle($page) {
     $title[1] = '';
 
     if ( !($page === '') ) {
-        $page = $page . ' - ';
+        $page = $page;
     }
 
     if ( file_exists( ROOT_PATH.'/config.php') ) {
@@ -230,7 +267,6 @@ function favicon($iconPath) {
     echo '<link rel="apple-touch-icon" sizes="180x180" href="'.$iconPath.'/apple-touch-icon.png">';
     echo '<link rel="icon" type="image/png" sizes="32x32" href="'.$iconPath.'/favicon-32x32.png">';
     echo '<link rel="icon" type="image/png" sizes="16x16" href="'.$iconPath.'/favicon-16x16.png">';
-    echo '<link rel="manifest" href="'.$iconPath.'/site.webmanifest">';
     echo '<link rel="mask-icon" href="'.$iconPath.'/safari-pinned-tab.svg" color="#5bbad5">';
     echo '<meta name="msapplication-TileColor" content="#da532c">';
     echo '<meta name="theme-color" content="#ffffff">';
@@ -269,7 +305,6 @@ function adminMenu($menu) {
             <li class="menu-item mobile-only"><a href="/admin/users" title="'.lang_snippet('users').'">'.lang_snippet('users').'</a></li>';
             
             $apikey = get_apikey_db();
-            var_dump($apikey);
             if ( !($apikey === NULL) ) {
                 $returnMenu .= '<li class="menu-item mobile-only"><a href="/admin/genres" title="'.lang_snippet('genres').'">'.lang_snippet('genres').'</a></li>';
             
@@ -349,6 +384,7 @@ function updateSettings($values) {
         set_callout('alert',lang_snippet('settings_update_failed'));
     } else {
         $conn->close();
+        writeManifest($siteTitle);
         set_callout('success',lang_snippet('settings_update_success'));
     }
 }

@@ -75,6 +75,7 @@ $(document).ready(function() {
         },
 
         redirect: function(location) {
+            console.log(location);
             window.location.href = location;
         },
 

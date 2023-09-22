@@ -1,17 +1,32 @@
 .fancybox__content {
     >.f-button.is-close-btn {
-        --f-button-border-radius: 50%;
-        --f-button-color: #fff;
-        --f-button-hover-color: #fff;
-        --f-button-outline-color: #000;
-        --f-button-bg: rgba(0, 0, 0, 0.6);
-        --f-button-active-bg: rgba(0, 0, 0, 0.6);
-        --f-button-hover-bg: rgba(0, 0, 0, 0.6);
-        --f-button-svg-width: 18px;
-        --f-button-svg-height: 18px;
-        --f-button-svg-filter: none;
-        top: 5px;
-        right: 5px;
+        background: {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        opacity: 0.75;
+        width: rem-calc($grid-padding*2);
+        height: rem-calc($grid-padding*2);
+        @include transition(all 0.15s ease);
+        
+        svg {
+            display: none;
+        }
+
+        &::before {
+            content: "x";
+            color: var(--white) !important;
+            font-family: "Default";
+            font-size: 1.5rem;
+            line-height: 1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    
+        &:hover {
+            opacity: 1;
+        }
     }
 }
 
@@ -24,5 +39,26 @@
         width: 70%;
         height: auto;
         max-height: 90%;
+    }
+}
+
+.modal-close {
+    background: {
+        color: rgba(0, 0, 0, 0.6);
+    }
+    opacity: 0.75;
+    @include transition(all 0.15s ease);
+
+    &::before {
+        color: var(--white) !important;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    @include MQ(m) {
+        width: rem-calc($grid-padding*2);
+        height: rem-calc($grid-padding*2);
     }
 }

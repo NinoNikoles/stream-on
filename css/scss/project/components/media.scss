@@ -233,6 +233,14 @@
     }
 }
 
+.info-popup {
+    .media-card-episode:last-of-type {
+        padding: {
+            bottom: 0;
+        }
+    }
+}
+
 .media-card-episode {
     display: flex;
     align-items: center;

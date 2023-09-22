@@ -721,7 +721,6 @@ function updateShow($showID) {
                 $id
             ) 
             ON DUPLICATE KEY UPDATE tmdbID = VALUES(tmdbID);";
-            var_dump($sqlSeasons);
             $conn->query($sqlSeasons);
 
             $actualSeason = $tmdb->getSeason($id, $seasonNumber);

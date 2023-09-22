@@ -249,6 +249,8 @@ function createTables($pageTitle, $adminUsername, $adminPassword) {
         if (!($conn->query($sql) === TRUE)) {
             die('Error creating table: ' . $conn->error);
         }
+
+        writeManifest($pageTitle);
     }
     
     //-- User Table --
@@ -426,3 +428,72 @@ function createTables($pageTitle, $adminUsername, $adminPassword) {
         die('Error creating table: ' . $conn->error);
     }
 };
+
+function writeManifest($pageTitle) {
+    $fileContent = '{
+        "name": "'.$pageTitle.'",
+        "short_name": "'.$pageTitle.'",
+        "start_url": "/",
+        "display": "standalone",
+        "background_color": "#121212",
+        "theme_color": "#000000",
+        "icons": [
+            {
+                "src": "/views/assets/icons/android-chrome-192x192.png",
+                "sizes": "192x192",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/android-chrome-512x512.png",
+                "sizes": "512x512",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/apple-touch-icon.png",
+                "sizes": "180x180",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/favicon-16x16.png",
+                "sizes": "16x16",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/favicon-32x32.png",
+                "sizes": "32x32",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/mstile-70x70.png",
+                "sizes": "128x128",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/mstile-144x144.png",
+                "sizes": "144x144",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/mstile-150x150.png",
+                "sizes": "270x270",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/mstile-310x310.png",
+                "sizes": "558x558",
+                "type": "image/png"
+            },
+            {
+                "src": "/views/assets/icons/safari-pinned-tab.svg",
+                "sizes": "933x933",
+                "type": "image/svg"
+            }
+        ]
+    }';
+    
+    // Dateiname und Pfad für die neue Datei
+    $filename = fopen('site.webmanifest', "w") or die("Unable to open file!");
+
+    fwrite($filename, $fileContent);
+    fclose($filename);
+}

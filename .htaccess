@@ -1,7 +1,7 @@
 php_value display_errors 1
 
 RewriteEngine On
-RewriteCond %{REQUEST_URI}  !(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4|\.webmanifest|\.xml|\.text)$
+RewriteCond %{REQUEST_URI}  !(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4|\.webmanifest|\.xml|\.json|\.text)$
 RewriteRule (\.*) index.php [QSA,L]
 
 <IfModule mod_expires.c>
@@ -20,7 +20,7 @@ RewriteRule (\.*) index.php [QSA,L]
     </IfModule>
 
 <IfModule mod_headers.c>
-<FilesMatch "(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4|\.webmanifest|\.xml|\.text)$">
+<FilesMatch "(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4|\.webmanifest|\.xml|\.json|\.text)$">
 Header set Cache-Control "max-age=604800, public"
 </FilesMatch>
 
