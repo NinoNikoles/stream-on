@@ -31,7 +31,6 @@ extraMenuCtrl = {
 			
 
 			$(".shopNavWrap > ul li:has(ul)").each(function() {
-				// console.log($(this));
 				var link = $(this).find(">:first-child")[0].outerHTML;
 				var html = '<li class="submenu--header"><a href="#" class="backbutton" title="Untermenü schließen"></a>'+link+'</li>';
 				$(this).find("ul").first().prepend(html);			

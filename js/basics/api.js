@@ -305,7 +305,6 @@ $(document).ready(function() {
                         },
                         success: function(response) {
                             var responseObj = $.parseJSON(response);
-                            console.log(responseObj);
                             self.callout(responseObj, $this);
                             
                             setTimeout(function() {
@@ -336,6 +335,7 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     $('#user-img').attr('src', response);
+                    $('#user-menu-btn img').attr('src', response);
                 }, error: function(xhr, status, error) {
                     // Hier wird eine Fehlermeldung ausgegeben
                     console.log('Fehler: ' + error);
