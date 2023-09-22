@@ -4,12 +4,21 @@
     }
     width: 100%;
     height: calc(100% - 50px);
+    padding: {
+        top: rem-calc(25);
+    }
     position: fixed;
     top: rem-calc(50);
     left: 0;
     z-index: 5;
     overflow: auto;
     @include transition(opacity $transition-default, visibility 0s);
+
+    @include MQ(medium) {
+        padding: {
+            top: 0;
+        }
+    }
 
     &.hidden {
         pointer-events: none;
@@ -20,16 +29,29 @@
     }
 
     #close-search {
+        background: {
+            color: rgba(0,0,0,0.6);
+        }
         color: var(--font-color);
         font: {
             size: rem-calc(40)
         }
-        width: rem-calc(40);
-        height: rem-calc(40);
+        width: rem-calc(50);
+        height: rem-calc(50);
         margin: 0;
         position: absolute;
-        top: rem-calc($grid-padding);
+        top: rem-calc($grid-padding);//
         right: rem-calc($grid-padding);
+        opacity: 0.75;
+        @include transition(opacity $transition-default);
+
+        &::before {
+            line-height: 1;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
     }
 }
 
