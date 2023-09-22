@@ -98,19 +98,7 @@ function checkIfUserExists($username) {
 }
 
 function loggedInCheck() {
-    if( !isset($_SESSION) ) {
-        if ( !pageCheck("/login") ) {
-            page_redirect("/login");
-        }
-    }
-
-    if ( !isset($_SESSION['logged_in'])) {
-        if ( !pageCheck("/login") ) {
-            page_redirect("/login");
-        }
-    }
-
-    if ( isset($_SESSION['logged_in']) &&  !($_SESSION['logged_in'] === true) ) {
+    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         if ( !pageCheck("/login") ) {
             page_redirect("/login");
         }
