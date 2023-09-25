@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <link rel="stylesheet" href="/views/build/style.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="/views/build/font.min.css" type="text/css" media="screen">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" crossorigin="use-credentials" href="manifest.json"/>
 
     <title><?php echo $pageTitle[0] /*.$pageTitle[1]*/; ?></title>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -42,7 +42,7 @@
                     <span class="bold"><?php echo $pageTitle[1];?></span>
                 </a>
             </div>
-
+           
 			<!-- Hauptnavigation -->
 			<div class="navWrap">
 

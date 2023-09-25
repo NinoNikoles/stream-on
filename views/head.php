@@ -13,7 +13,7 @@ if ( !($pageTitle[0] === 'Install') ) {
     <?php loadFavicon(); ?>
     <link rel="stylesheet" type="text/css" href="/views/build/style.min.css">
     <link rel="stylesheet" type="text/css" href="/views/build/font.min.css">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" crossorigin="use-credentials" href="manifest.json"/>
     <title><?php echo $pageTitle[0] /*.$pageTitle[1]*/;?></title>
 </head>
 <body>
