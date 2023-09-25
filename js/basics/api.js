@@ -105,6 +105,7 @@ $(document).ready(function() {
                             var responseObj = $.parseJSON(response);
 
                             if ( responseObj.type === 'redirect' ) {
+                                //alert(responseObj.location);
                                 self.redirect(responseObj.location);
                             } else {
                                 self.callout(responseObj, $this);
