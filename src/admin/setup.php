@@ -492,7 +492,7 @@ function writeManifest($pageTitle) {
     }';
     
     // Dateiname und Pfad für die neue Datei
-    $filename = fopen('site.webmanifest', "w") or die("Unable to open file!");
+    $filename = fopen('manifest.json', "w") or die("Unable to open file!");
 
     fwrite($filename, $fileContent);
     fclose($filename);
