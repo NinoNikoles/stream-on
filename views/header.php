@@ -1,6 +1,4 @@
 <?php $conn = dbConnect();
-    loggedInCheck();
-
     if (!empty($_GET['remotesessionID'])) {
         $remotesessionID = $_GET['remotesessionID'];
     }

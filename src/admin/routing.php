@@ -4,7 +4,6 @@ class routes {
     public $routes = [
         'public' => [
             '/' => 'views/index.php',
-            '/login' => 'views/login.php',
             '/register' => 'views/register.php',
             '/logout' => 'views/logout.php',
 
@@ -17,6 +16,9 @@ class routes {
             '/watchtogether/$id' => 'views/templates/watchtogether.php',
             '/search' => 'views/search.php',
             '/my-list' => 'views/my-list.php',
+        ],
+        'login' => [
+            '/' => 'views/login.php',
         ],
         'essentials' => [
             '/login-request' => 'views/actions/essentials/login-request.php',

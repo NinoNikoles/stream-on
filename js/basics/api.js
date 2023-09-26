@@ -93,7 +93,7 @@ $(document).ready(function() {
 
                     var username = $('#username').val(),
                         psswd = $('#password').val();
-
+                        
                     $.ajax({
                         url: '/login-request',
                         type: 'post',

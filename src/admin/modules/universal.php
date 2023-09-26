@@ -99,9 +99,9 @@ function checkIfUserExists($username) {
 
 function loggedInCheck() {
     if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-        if ( !pageCheck("/login") ) {
-            page_redirect("/login");
-        }
+        return false;
+    } else {
+        return true;
     }
 }
 

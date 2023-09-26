@@ -1,4 +1,4 @@
 <?php
     destroySesssion();
-    page_redirect("/login");
+    page_redirect("/");
 ?>

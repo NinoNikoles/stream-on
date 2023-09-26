@@ -1,9 +1,6 @@
 <?php 
 $conn = dbConnect();
 
-if ( !($pageTitle[0] === 'Install') ) {
-    loggedInCheck();
-}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo get_browser_language(); ?>" data-theme="dark">

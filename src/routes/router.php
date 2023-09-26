@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 function get($route, $path_to_include){
     if( $_SERVER['REQUEST_METHOD'] == 'GET' ){ route($route, $path_to_include); }  
 }
