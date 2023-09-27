@@ -6,7 +6,7 @@ class routes {
             '/' => 'views/index.php',
             '/register' => 'views/register.php',
             '/logout' => 'views/logout.php',
-
+            '/login' => 'views/login.php',
             '/user/$id' => 'views/templates/user.php',
             '/user-img-upload' => 'views/actions/user-image-upload.php',
 
@@ -16,9 +16,6 @@ class routes {
             '/watchtogether/$id' => 'views/templates/watchtogether.php',
             '/search' => 'views/search.php',
             '/my-list' => 'views/my-list.php',
-        ],
-        'login' => [
-            '/' => 'views/login.php',
         ],
         'essentials' => [
             '/login-request' => 'views/actions/essentials/login-request.php',

@@ -98,10 +98,19 @@ function checkIfUserExists($username) {
 }
 
 function loggedInCheck() {
-    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-        return false;
-    } else {
-        return true;
+    if ( !isset($_SESSION) ) {
+        session_start();
+    }
+
+    if ( !in_array('logged_in', $_SESSION) ) {
+        $_SESSION['logged_in'] = false;
+    }
+
+    if ( $_SESSION['logged_in'] !== true ) {
+        if ( !pageCheck("/login") ) {
+            header("Location: /login");
+            exit;
+        }
     }
 }
 

@@ -1,8 +1,8 @@
-php_value display_errors 0
+php_value display_errors 1
 
 RewriteEngine On
-##RewriteCond %{HTTPS} !=on
-##RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+##RewriteCond %{HTTPS} off
+##RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Hier folgt Ihre bestehende RewriteCond und RewriteRule
 RewriteCond %{REQUEST_URI} !(\.ttf|\.svg|\.woff|\.png|\.jpg|\.webp|\.gif|\.jpeg|\.zip|\.css|\.map|\.svg|\.js|\.pdf|\.mp4|\.webmanifest|\.xml|\.json|\.text)$

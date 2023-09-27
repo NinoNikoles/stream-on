@@ -958,32 +958,30 @@ $(document).ready(function() {
 
                         socket.onmessage = (event) => {
                             try {
-                                const jsonData = JSON.parse(event.data);
-
-                                if (typeof jsonData === 'object' && jsonData !== null) {
-                                    const cutter = jsonData[0];
-                                    const parts = jsonData[1].split(`${cutter}`);
-                                    const message = parts[1];
-                                    const userID = parts[2];
-                                    const username = parts[3];
-                                    ajaxMessage(message, userID, username);
-                                } else {
-                                    // Empfange Aktionen von anderen Benutzern und steuere den Video-Player entsprechend
-                                    if (event.data.startsWith('joined:')) {
-                                        const userID = event.data.split(':')[1];
-                                        const username = event.data.split(':')[2];
-                                        joinedMessage(userID, username);
-                                    } else if (event.data === 'play') {
-                                        videoPlayer.play();
-                                    } else if (event.data === 'pause') {
-                                        videoPlayer.pause();
-                                    } else if (event.data.startsWith('timeupdate:')) {
-                                        const newTime = parseFloat(event.data.split(':')[1]);
-                                        videoPlayer.currentTime(newTime);
-                                    } else if (event.data.startsWith('url:')) {
-                                        const url = event.data.split(':')[1];
-                                        window.location.href = url;
+                                if ( event.data.startsWith('[') ) {
+                                    const jsonData = JSON.parse(event.data);
+                                    if ( typeof jsonData === 'object' && jsonData !== null ) {
+                                        const cutter = jsonData[0];
+                                        const parts = jsonData[1].split(`${cutter}`);
+                                        const message = parts[1];
+                                        const userID = parts[2];
+                                        const username = parts[3];
+                                        ajaxMessage(message, userID, username);
                                     }
+                                } else if ( event.data.startsWith('joined:') ) {
+                                    const userID = event.data.split(':')[1];
+                                    const username = event.data.split(':')[2];
+                                    joinedMessage(userID, username);
+                                } else if ( event.data === 'play' ) {
+                                    videoPlayer.play();
+                                } else if ( event.data === 'pause' ) {
+                                    videoPlayer.pause();
+                                } else if ( event.data.startsWith('timeupdate:') ) {
+                                    const newTime = parseFloat(event.data.split(':')[1]);
+                                    videoPlayer.currentTime(newTime);
+                                } else if ( event.data.startsWith('url:') ) {
+                                    const url = event.data.split(':')[1];
+                                    window.location.href = url;
                                 }
                             } catch (error) {
                                 
@@ -1076,7 +1074,7 @@ $(document).ready(function() {
 
                         function joinedMessage(userID, username) {
                             const joined = 'true';
-
+                            console.log('test');
                             $.ajax({
                                 url: '/msg',
                                 type: 'post',
@@ -1086,6 +1084,7 @@ $(document).ready(function() {
                                     username: username,
                                 },
                                 success: function(response) {
+                                    console.log(response);
                                     var newMessage = response;
                                     $('#message-wrap').append(newMessage);
                                     var objDiv = document.getElementById("message-wrap");

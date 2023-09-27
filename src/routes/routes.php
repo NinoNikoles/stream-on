@@ -1,10 +1,7 @@
 <?php
+loggedInCheck();
 
-if ( loggedInCheck() ) {
-    routes('public');
-} else {
-    routes('login');
-}
+routes('public');
 
 routes('essentials');
 
@@ -14,10 +11,8 @@ routes('ajax');
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Admin Check
-if ( loggedInCheck() ) {
-    if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
-        routes('admin');
-    }
+if ( $_SESSION['role'] === 'admin' || $_SESSION['role'] === 'superadmin' ) {
+    routes('admin');
 }
 
 routes('error');
