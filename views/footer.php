@@ -10,11 +10,6 @@ if ( !pageCheck('/login') ) include(ROOT_PATH.'/views/includes/search.php');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.5.1/video.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 <script src="/views/build/combined.min.js"></script>
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js');
-    }
-</script>
 
 </body>
 </html>

@@ -52,11 +52,7 @@
 
             @include MQ(xxsmall) {
                 display: flex;
-            }
-
-            @include MQ(medium) {
-                width: 75%;
-            }            
+            }          
         }
 
         .button-wrap {
@@ -124,7 +120,6 @@
             }
 
             @include MQ(medium) {
-                width: 75%;
                 padding: {
                     right: rem-calc($space-base*16);
                     bottom: rem-calc(140);

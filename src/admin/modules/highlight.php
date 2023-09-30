@@ -22,14 +22,19 @@ function getHighlight() {
         $style = "";
         if ( !($trailerID === NULL) ) {
             $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-            $trailer = '<iframe id="highlightTrailer" type="text/html" src="http://www.youtube.com/embed/'.$trailerID.'?enablejsapi=1&origin='.$fullUrl.'&autoplay=1&controls=0&modestbranding=1&iv_load_policy=3&showinfo=0&rel=0" style="height:100vh!important;position:absolute;transition:opacity 0.3s ease-in;" frameborder="0"></iframe>';
+            $trailer = '<iframe id="highlightTrailer" type="text/html" src="http://www.youtube.com/embed/'.$trailerID.'?enablejsapi=1&origin='.$fullUrl.'&autoplay=1&controls=0&modestbranding=1&iv_load_policy=3&showinfo=0&rel=0" style="min-height:100vh!important;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:opacity 0.3s ease-in;" frameborder="0"></iframe>';
             $style = "style='opacity:0; transition:opacity 0.3s ease-in;'";
         }
 
+    //     <figure class='poster'>
+    //     <img data-img=".loadImg('original', $poster)." loading='lazy' alt='".$title."'>
+    // </figure>
+
+//     <div class='button-wrap'>
+//     <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='#content-$mediaID' class='btn btn-small btn-white icon-left icon-info info-trigger' data-modal data-src='$mediaID'>Mehr erfahren</a></div>
+// </div>
+
         $hightlight = "
-        <figure class='poster'>
-            <img data-img=".loadImg('original', $poster)." loading='lazy' alt='".$title."'>
-        </figure>
         <figure class='widescreen'>
             <img data-img=".loadImg('original', $backdrop)." loading='lazy' alt='".$title."'>
             ".$trailer."
@@ -41,9 +46,6 @@ function getHighlight() {
         <div class='content-wrap desktop-only' ".$style.">
             <h1 class='h2'>".$title."</h1>
             <p>".$description."</p>
-        </div>
-        <div class='button-wrap'>
-            <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='#content-$mediaID' class='btn btn-small btn-white icon-left icon-info info-trigger' data-modal data-src='$mediaID'>Mehr erfahren</a></div>
         </div>
         ";
 
