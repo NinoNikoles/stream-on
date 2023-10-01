@@ -38,12 +38,7 @@
             @include MQ(xxsmall) {
                 display: none;
                 width: 25%;
-            }
-
-            @include MQ(medium) {
-                display: flex;
-            }
-            
+            }            
         }
 
         .widescreen {

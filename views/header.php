@@ -55,7 +55,7 @@
                 </div>
 
 				<!-- Navigation -->
-				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(100vh - 50px);">
+				<nav id="navMain" class="header-menu-main" style="top: 50px; height: calc(widescreen - 50px);">
                     <ul class="menu">
                         <div class="col12 mobile-only">
                             <li class="menu-item spacer"><span><?php echo lang_snippet('menu');?></span></li>

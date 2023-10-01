@@ -26,9 +26,7 @@ function getHighlight() {
             $style = "style='opacity:0; transition:opacity 0.3s ease-in;'";
         }
 
-    //     <figure class='poster'>
-    //     <img data-img=".loadImg('original', $poster)." loading='lazy' alt='".$title."'>
-    // </figure>
+
 
 //     <div class='button-wrap'>
 //     <div class='col-6 col-12-medium grid-padding text-center desktop-only'><a href='#content-$mediaID' class='btn btn-small btn-white icon-left icon-info info-trigger' data-modal data-src='$mediaID'>Mehr erfahren</a></div>
@@ -38,6 +36,9 @@ function getHighlight() {
         <figure class='widescreen'>
             <img data-img=".loadImg('original', $backdrop)." loading='lazy' alt='".$title."'>
             ".$trailer."
+        </figure>
+        <figure class='poster'>
+            <img data-img=".loadImg('original', $poster)." loading='lazy' alt='".$title."'>
         </figure>
         <div class='content-wrap mobile-only'>
             <h1 class='h1 text-center'>".$title."</h1>
