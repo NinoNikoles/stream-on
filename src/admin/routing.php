@@ -26,7 +26,6 @@ class routes {
             '/refresh-user-img' => 'views/actions/essentials/refresh-user-img.php',
             '/get-genre' => 'views/actions/essentials/get-genre.php',
             '/changeUserPW' => 'views/actions/essentials/change-user-psswd.php',
-            '/changeUserPW' => 'views/actions/essentials/change-user-psswd.php',
         ],
         'ajax' => [
             '/add-to-list' => 'views/actions/add-to-list.php',
